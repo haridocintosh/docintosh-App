@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@expo-google-fonts/inter": "^0.2.2",
+    "@gorhom/bottom-sheet": "^4.4.5",
     "@muhzi/react-native-user-avatar": "^1.0.7",
     "@react-native-async-storage/async-storage": "^1.17.9",
     "@react-native-community/slider": "4.2.1",
