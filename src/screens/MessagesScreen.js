@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, SafeAreaView, StatusBar, TouchableOpacity, Modal, Animated } from 'react-native'
+import { View, Text, SafeAreaView, StatusBar, Image, TouchableOpacity, Modal, Animated } from 'react-native'
 import { COLORS, SIZES } from '../components/constant';
 import data from '../model/data';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -7,7 +7,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 const Quiz = () => {
 
     const allQuestions = data;
-    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
     const [currentOptionSelected, setCurrentOptionSelected] = useState(null);
     const [correctOption, setCorrectOption] = useState(null);
     const [isOptionsDisabled, setIsOptionsDisabled] = useState(false);
@@ -31,8 +31,7 @@ const Quiz = () => {
         if(currentQuestionIndex== allQuestions.length-1){
             // Last Question
             // Show Score Modal
-            setShowScoreModal(true);
-            
+            setShowScoreModal(true)
         }else{
             setCurrentQuestionIndex(currentQuestionIndex+1);
             setCurrentOptionSelected(null);
@@ -75,16 +74,15 @@ const Quiz = () => {
                     flexDirection: 'row',
                     alignItems: 'flex-end'
                 }}>
-                    <Text style={{color: COLORS.black, fontSize: 20, opacity: 0.6, marginRight: 2}}>{currentQuestionIndex+1}/{allQuestions.length}</Text>
+                    <Text style={{color: COLORS.black, fontSize: 20, opacity: 0.6, marginRight: 2}}>{currentQuestionIndex+1}</Text>
+                    <Text style={{color: COLORS.black, fontSize: 18, opacity: 0.6}}>/ {allQuestions.length}</Text>
                 </View>
 
                 {/* Question */}
                 <Text style={{
                     color: COLORS.black,
                     fontSize: 30
-                }}>
-                    {allQuestions[currentQuestionIndex]?.question}
-                    </Text>
+                }}>{allQuestions[currentQuestionIndex]?.question}</Text>
             </View>
         )
     }
@@ -109,7 +107,7 @@ const Quiz = () => {
                             : option==currentOptionSelected 
                             ? COLORS.error +'20'
                             : COLORS.black+'20',
-                            height: 60, borderRadius: 10,
+                            height: 60, borderRadius: 20,
                             flexDirection: 'row',
                             alignItems: 'center', justifyContent: 'space-between',
                             paddingHorizontal: 20,

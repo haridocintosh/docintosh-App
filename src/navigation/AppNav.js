@@ -13,15 +13,15 @@ const [data, setdata] = useState();
 const [loader, setLoader] = useState(false);
  
 
-// let loading = useSelector((state)=>{
-//   //console.log(state);
-//   return state.mylogin.loading;
-// });
+let loading = useSelector((state)=>{
+  //console.log(state);
+  return state.mylogin.loading;
+});
 
-// let usertoken = useSelector((state)=>{
-//   //console.log(state);
-//   return state.mylogin.usertoken;
-// });
+let usertoken = useSelector((state)=>{
+  //console.log(state);
+  return state.mylogin.usertoken;
+});
 
 if(loader){
   return(

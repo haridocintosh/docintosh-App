@@ -14,7 +14,7 @@ export const getAllUniversity = createAsyncThunk("getAllUniversity", async ()=>{
     return allUniversity;
 })
 
-export const getcollegelist = createAsyncThunk("getcollegelist", async(university_id)=>{
+export const getcollegelist = createAsyncThunk("getcollegelist", async (university_id)=>{
     const response = await fetch(`${mainApi.baseUrl}/ApiController/regiUniversityChange`,{
         method : 'POST',
         headers:{

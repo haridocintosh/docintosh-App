@@ -1,10 +1,10 @@
 import React,{useState,useEffect } from 'react';
-import { View, Text ,TextInput,Image,SafeAreaView, ScrollView, Alert, StyleSheet, Pressable, FlatList,TouchableOpacity} from 'react-native';
+import { View, Text ,TextInput,Image,SafeAreaView, ScrollView, Alert, StyleSheet, Pressable, FlatList,} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 // import { SafeAreaView, ScrollView } from 'react-native-web';
 import profileimg from '../assets/images/p2.png';
 import { FontAwesome5,FontAwesome,Feather,Fontisto } from '@expo/vector-icons';
-import icon from '../assets/images/celTick.png';
+import icon from '../assets/images/Vector.png';
 import { Card } from 'react-native-paper';
 import d from '../assets/dr-icon/d.png';
 import discount1 from '../assets/dr-icon/discount1.png';
@@ -20,7 +20,6 @@ import publication from '../assets/dr-icon/publ.png';
 import p3 from '../assets/images/p3.png';
 import { Button } from 'react-native-elements';
 import Modal from "react-native-modal";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const ProfileScreen = () => {
@@ -35,7 +34,6 @@ const ProfileScreen = () => {
       nameOfAward:'',
       achivement:'',
     });
-    const [userdata,setuserdata]=useState([])
 
   const isValidemailRegex      =    /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
   const isValidmobileNoRegex   = /^[0]?[789]\d{9}$/; 
@@ -156,74 +154,46 @@ const ProfileScreen = () => {
   const InterestsModal = () => {
     setInterests(!Interests);
   };
-
-  const asyncFetchDailyData = async () => {
-    const jsonValue = await AsyncStorage.getItem('USER_INFO');
-      const data = await JSON.parse(jsonValue);
-      console.log(JSON.parse(data)['data'])
-      const result=JSON.parse(data)['data'];
-      console.log("asdasd--result", result);
-      // setuserdata(JSON.parse(data)['data']['first_name']+" "+JSON.parse(data)['data']['last_name'])
-      setuserdata(result);
-
-    }
-  
-
-    useEffect(()=>{
-      asyncFetchDailyData();
-    },[])
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#F2FAFA'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
     <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true}>
       <View style={{paddingHorizontal:10}}>
         <Card style={{paddingBottom:20, marginVertical:10,borderRadius:10 }}>
-        {/* <View style={{backgroundColor:'#F5F5F5', borderRadius:50, width:80, height:80,alignSelf:'center',marginTop:20}}>
-        
-        </View> */}
-        <Image source={{uri:userdata.profileimage}} style={styles.profileimg}/>
+        <View style={{backgroundColor:'#F5F5F5', borderRadius:50, width:80, height:80,alignSelf:'center',marginTop:20}}>
+        <Image source={p3} style={{alignSelf:'center',marginTop:2}}></Image>
+        </View>
           <View>
-              <Text style={{alignSelf:'center',fontSize:20,fontWeight:'600'}}>{userdata.first_name} {userdata.last_name} <Image source={icon}/></Text>
-              <Text style={{color:'#51668A',alignSelf:'center',textAlign:'center', flexDirection:'row', width:300}}>
-                 {userdata.speciality}| {userdata.city}
-                 <TouchableOpacity onPress={toggleModal}>
-                  {/* <Entypo name="edit" size={20} color="black"  style={{marginLeft:10,color:'#2C8892'}}  /> */}
-                </TouchableOpacity>
+              <Text style={{alignSelf:'center',fontSize:20,fontWeight:'600'}}>Varun Kumar</Text>
+              <Text style={{alignSelf:'center'}}>Bangalore</Text>
+              <Text style={{alignSelf:'center'}}>Cardiologist | Bangalore  <Entypo name="edit" size={13} color="black"  style={{marginLeft:70,color:'#2C8892'}} onPress={toggleModal} />
+         
               </Text>
+                 
+              
+            
           </View>
-        <View style={{padding:20}}>
-        <View style={{marginBottom:10,marginTop:20}}>
-        <Text style={{fontSize:20, fontWeight:'600',}}>Basic Info</Text>
+        <View style={{paddingLeft:25}}>
+        <View style={{paddingLeft:8,marginBottom:10,marginTop:20}}>
+        <Text style={{fontSize:16, fontWeight:'600',}}>Basic Info</Text>
         </View>
        
-        <View style={{flexDirection:'row',paddingTop:16, justifyContent:'space-between'}}>
-            <Text style={{fontSize:14,fontWeight:'500'}}>
-            Mobile Number:  <Text style={{fontSize:14,fontWeight:'400',color:'#51668A', paddingLeft:10}}>{userdata.mobilenumber} </Text>
+        <View style={{flexDirection:'row',paddingTop:16}}>
+            <Text style={{paddingLeft:10,fontSize:14,fontWeight:'500'}}>
+            Mobile Number:  
             </Text>
-            <TouchableOpacity onPress={mobileModal}>
-              {/* <Entypo name="edit" size={20} color="black"  style={{marginLeft:70,color:'#2C8892'}}  /> */}
-            </TouchableOpacity>
-            
-        </View>
-        <View style={{flexDirection:'row',paddingTop:16,justifyContent:'space-between'}}>
-            <Text style={{fontSize:14,fontWeight:'500'}}>
-            Email ID:  <Text style={{paddingLeft:10,fontSize:14,fontWeight:'400',color:'#51668A'}}>{userdata.email}</Text>
-            </Text>
-            <TouchableOpacity onPress={emailModal}>
-              {/* <Entypo name="edit" size={20} color="black"  style={{marginLeft:70,color:'#2C8892'}}  /> */}
-            </TouchableOpacity>
+            <Text style={{paddingLeft:10,fontSize:14,fontWeight:'400',color:'#51668A'}}>9102839100 </Text>
+            <Entypo name="edit" size={13} color="black"  style={{marginLeft:70,color:'#2C8892'}} onPress={mobileModal} />
+
+          
         </View>
         <View style={{flexDirection:'row',paddingTop:16}}>
-            <Text style={{fontSize:14,fontWeight:'500'}}>
-            MRN:  
+            <Text style={{paddingLeft:10,fontSize:14,fontWeight:'500'}}>
+            Email ID:  
             </Text>
-            <Text style={{paddingLeft:10,fontSize:14,fontWeight:'400',color:'#51668A'}}>12345 | 2010</Text>
-        </View>
-        <View style={{flexDirection:'row',paddingTop:16}}>
-            <Text style={{fontSize:14,fontWeight:'500'}}>
-            MRN Reg:
-            </Text>
-            <Text style={{paddingLeft:10,fontSize:14,fontWeight:'400',color:'#51668A'}}>Himachal Pradesh</Text>
-        </View>
+            <Text style={{paddingLeft:10,fontSize:14,fontWeight:'400',color:'#51668A'}}>kiran.y@gmail.com </Text>
+            <Entypo name="edit" size={13} color="black"  style={{marginLeft:70,color:'#2C8892'}} onPress={emailModal} />
+
+            </View>
         </View>
     </Card>  
 
@@ -231,7 +201,7 @@ const ProfileScreen = () => {
     <Card style={{marginVertical:10, borderRadius:10}}>
         <View style={{padding:20, display:'flex'}}>
         <Text style={{fontSize:16,fontWeight:'600'}}>About Me</Text>
-        {/* <Entypo name="edit" size={20} color="black"  style={{marginLeft:70,color:'#2C8892',alignSelf:'flex-end', marginTop:-20}} onPress={aboutMeModal} /> */}
+        <Entypo name="edit" size={18} color="black"  style={{marginLeft:70,color:'#2C8892',alignSelf:'flex-end', marginTop:-20}} onPress={aboutMeModal} />
 
         
         </View>
@@ -240,9 +210,9 @@ const ProfileScreen = () => {
     <Card style={{marginVertical:10, borderRadius:10}}>
         <View style={{padding:20, display:'flex'}}>
         <Text style={{fontSize:16,fontWeight:'600'}}>Qualification</Text>
-        <Text style={{fontSize:16,fontWeight:'400', marginTop:20, color:'#2376E5'}}><Entypo name="plus" size={15} color="#2376E5" /> Add Qualification</Text>
+        <Text style={{fontSize:16,fontWeight:'400', marginTop:20, color:'blue'}}><Entypo name="plus" size={15} color="blue" /> Add Qualification</Text>
         </View>
-        {/* <Entypo name="edit" size={20} color="black"  style={{marginRight:20,color:'#2C8892',alignSelf:'flex-end', marginBottom:-20}} onPress={qualificationModal} /> */}
+        <Entypo name="edit" size={18} color="black"  style={{marginRight:20,color:'#2C8892',alignSelf:'flex-end', marginBottom:-20}} onPress={qualificationModal} />
         
         <View style={{flexDirection:'row', paddingLeft:20}}>
         
@@ -256,7 +226,7 @@ const ProfileScreen = () => {
         </View>
         <View style={{backgroundColor:'#D5DEED',width:"90%", alignSelf:'center',height:1,marginTop:10}}></View>
     <View style={{marginTop:10,marginBottom:20}}>
-    <Text style={{alignSelf:'center',fontSize:16, fontWeight:'400',color:'#2376E5'}}>Show all 4 Qualification <Feather name="arrow-right" size={14} style={{paddingTop:20,zIndex:1}} color="#2376E5" /></Text>
+    <Text style={{alignSelf:'center',fontSize:16, fontWeight:'400',color:'blue'}}>Show all 4 Qualification <Feather name="arrow-right" size={14} style={{paddingTop:20,zIndex:1}} color="blue" /></Text>
 
     </View>
        
@@ -264,9 +234,9 @@ const ProfileScreen = () => {
     <Card style={{marginVertical:10, borderRadius:10}}>
         <View style={{padding:20, display:'flex'}}>
         <Text style={{fontSize:16,fontWeight:'600'}}>Awards</Text>
-        <Text style={{fontSize:16,fontWeight:'400', marginTop:20, color:'#2376E5'}}><Entypo name="plus" size={15} color="#2376E5" /> Add Awards</Text>
+        <Text style={{fontSize:16,fontWeight:'400', marginTop:20, color:'blue'}}><Entypo name="plus" size={15} color="blue" /> Add Awards</Text>
         </View>
-        {/* <Entypo name="edit" size={20} color="black"  style={{marginRight:20,color:'#2C8892',alignSelf:'flex-end', marginBottom:-20}} onPress={awardsModal} /> */}
+        <Entypo name="edit" size={18} color="black"  style={{marginRight:20,color:'#2C8892',alignSelf:'flex-end', marginBottom:-20}} onPress={awardsModal} />
         
         <View style={{flexDirection:'row', paddingLeft:20}}>
         
@@ -285,15 +255,18 @@ const ProfileScreen = () => {
     <Card style={{marginVertical:10, borderRadius:10}}>
         <View style={{padding:20, display:'flex'}}>
         <Text style={{fontSize:16,fontWeight:'600'}}>Publications</Text>
-        <Text style={{fontSize:16,fontWeight:'400', marginTop:20, color:'#2376E5'}}><Entypo name="plus" size={15} color="#2376E5" /> Add Publications</Text>
+        <Text style={{fontSize:16,fontWeight:'400', marginTop:20, color:'blue'}}><Entypo name="plus" size={15} color="blue" /> Add Publications</Text>
         </View>
-        {/* <Entypo name="edit" size={20} color="black"  style={{marginRight:20,color:'#2C8892',alignSelf:'flex-end', marginBottom:-20}} onPress={publicationModal} /> */}
+        <Entypo name="edit" size={18} color="black"  style={{marginRight:20,color:'#2C8892',alignSelf:'flex-end', marginBottom:-20}} onPress={publicationModal} />
         
         <View style={{flexDirection:'row', paddingLeft:20}}>
+        
             <Image source={publication}></Image>
             <View style={{paddingLeft:10}}>
             <Text style={{fontSize:16, fontWeight:'500'}}>Lorem ipsum dolor sit amet</Text>
+            
             <Text style={{fontSize:12, fontWeight:'400', color:'#51668A'}}>June 2021</Text>
+           
             </View>       
         </View>
         <View style={{backgroundColor:'#D5DEED',width:"90%", alignSelf:'center',height:1,marginTop:10}}></View>
@@ -305,20 +278,23 @@ const ProfileScreen = () => {
     <Card style={{marginVertical:10, borderRadius:10}}>
         <View style={{padding:20, display:'flex'}}>
         <Text style={{fontSize:16,fontWeight:'600'}}>Achievements</Text>
-        <Text style={{fontSize:16,fontWeight:'400', marginTop:20, color:'#2376E5'}}><Entypo name="plus" size={15} color="#2376E5" /> Add Achievements</Text>
+        <Text style={{fontSize:16,fontWeight:'400', marginTop:20, color:'blue'}}><Entypo name="plus" size={15} color="blue" /> Add Achievements</Text>
         </View>
-        {/* <Entypo name="edit" size={20} color="black"  style={{marginRight:20,color:'#2C8892',alignSelf:'flex-end', marginBottom:-20}} /> */}
+        <Entypo name="edit" size={18} color="black"  style={{marginRight:20,color:'#2C8892',alignSelf:'flex-end', marginBottom:-20}} />
         
         <View style={{flexDirection:'row', paddingLeft:20}}>
+        
+       
             <View style={{paddingLeft:10,paddingBottom:14}}>
-              <Text style={{fontSize:16, fontWeight:'500'}}>Lorem ipsum dolor sit amet</Text>
+            <Text style={{fontSize:16, fontWeight:'500'}}>Lorem ipsum dolor sit amet</Text>
+           
             </View>       
         </View>
     </Card>
     <Card style={{marginVertical:10, borderRadius:10}}>
         <View style={{padding:20, display:'flex'}}>
         <Text style={{fontSize:16,fontWeight:'600'}}>Interests</Text>
-        {/* <Entypo name="edit" size={20} color="black"  style={{marginLeft:70,color:'#2C8892',alignSelf:'flex-end', marginTop:-20}} onPress={InterestsModal} /> */}
+        <Entypo name="edit" size={18} color="black"  style={{marginLeft:70,color:'#2C8892',alignSelf:'flex-end', marginTop:-20}} onPress={InterestsModal} />
         </View>
        <View style={{flexDirection:'row', paddingLeft:20}}>
         <View style={{borderRadius:50, width:150, height:40, borderWidth:2,borderColor:'#45B5C0'}}>
@@ -350,28 +326,31 @@ const ProfileScreen = () => {
       </View>
         {/* edit Location MOdal start here */}
         <Modal
-          style={{}}
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setModalVisible(!modalVisible);
-          }}>
-          <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-          <Pressable
-          style={styles.closebtn}
-          onPress={() => setModalVisible(!modalVisible)}>
-          <Text><Entypo name="cross" size={20} color="black" /></Text>
-          </Pressable>
-          <Text style={styles.modalText}>Edit Location</Text>
-          <View style={styles.input}>
-          {/* <Text style={{fontSize:12, fontWeight:'400', color:'#071B36'}}>Edit Location*</Text> */}
-          <TextInput
-          placeholder="Location"
-          keyboardType='number-pad'
-          />
+
+style={{}}
+animationType="slide"
+transparent={true}
+visible={modalVisible}
+onRequestClose={() => {
+Alert.alert('Modal has been closed.');
+setModalVisible(!modalVisible);
+}}>
+<View style={styles.centeredView}>
+<View style={styles.modalView}>
+<Pressable
+style={styles.closebtn}
+onPress={() => setModalVisible(!modalVisible)}>
+<Text><Entypo name="cross" size={16} color="black" /></Text>
+</Pressable>
+<Text style={styles.modalText}>Edit Location</Text>
+<View style={styles.input}>
+<Text style={{fontSize:12, fontWeight:'400', color:'#071B36'}}>PIN Code*</Text>
+<TextInput
+
+placeholder="Location"
+keyboardType='number-pad'
+
+/>
 </View>
 <View style={{marginTop:20}}>
 <Button
@@ -411,7 +390,7 @@ setMobileNumber(!mobileNumber);
 <Pressable
 style={styles.closebtn}
 onPress={() => setMobileNumber(!mobileNumber)}>
-<Text><Entypo name="cross" size={20} color="black" /></Text>
+<Text><Entypo name="cross" size={16} color="black" /></Text>
 </Pressable>
 <Text style={styles.modalText}>Edit Mobile Number</Text>
 <View style={styles.input}>
@@ -464,7 +443,7 @@ setemailid(!emailid);
 <Pressable
 style={styles.closebtn}
 onPress={() => setemailid(!emailid)}>
-<Text><Entypo name="cross" size={20} color="black" /></Text>
+<Text><Entypo name="cross" size={16} color="black" /></Text>
 </Pressable>
 <Text style={styles.modalText}>Edit Email ID</Text>
 <View style={styles.input}>
@@ -519,7 +498,7 @@ setaboutMe(!aboutMe);
 <Pressable
 style={styles.closebtn}
 onPress={() => setaboutMe(!aboutMe)}>
-<Text><Entypo name="cross" size={20} color="black" /></Text>
+<Text><Entypo name="cross" size={16} color="black" /></Text>
 </Pressable>
 <Text style={styles.modalText}>Edit About Me</Text>
 <View style={styles.input}>
@@ -569,7 +548,7 @@ setQualification(!qualification);
 <Pressable
 style={styles.closebtn}
 onPress={() => setQualification(!qualification)}>
-<Text><Entypo name="cross" size={20} color="black" /></Text>
+<Text><Entypo name="cross" size={16} color="black" /></Text>
 </Pressable>
 <Text style={styles.modalText}>Edit Qualification</Text>
 <View style={styles.input}>
@@ -644,7 +623,7 @@ setAwards(!awards);
 <Pressable
 style={styles.closebtn}
 onPress={() => setAwards(!awards)}>
-<Text><Entypo name="cross" size={20} color="black" /></Text>
+<Text><Entypo name="cross" size={16} color="black" /></Text>
 </Pressable>
 <Text style={styles.modalText}>Edit Awards</Text>
 <View style={styles.input}>
@@ -704,7 +683,7 @@ setPublication(!publication);
 <Pressable
 style={styles.closebtn}
 onPress={() => setPublication(!publication)}>
-<Text><Entypo name="cross" size={20} color="black" /></Text>
+<Text><Entypo name="cross" size={16} color="black" /></Text>
 </Pressable>
 <Text style={styles.modalText}>Edit Publications</Text>
 <View style={styles.input}>
@@ -753,7 +732,7 @@ setInterests(!Interests);
 <Pressable
 style={styles.closebtn}
 onPress={() => setInterests(!Interests)}>
-<Text><Entypo name="cross" size={20} color="black" /></Text>
+<Text><Entypo name="cross" size={16} color="black" /></Text>
 </Pressable>
 <Text style={styles.modalText}>Edit Interests</Text>
 
@@ -869,19 +848,10 @@ const styles = StyleSheet.create({
     modalText: {
       marginBottom: 15,
       alignSelf:'flex-start',
-      marginLeft:5,
+      marginLeft:15,
       fontSize:18,
       fontWeight:'600'
      
-    },
-    profileimg:{
-      borderColor:"#DCE0E8",
-      borderWidth:5,
-      borderRadius:50,
-      width:72,
-      height:72,
-      alignSelf:'center',
-      marginVertical:10
     },
   });
 export default ProfileScreen;

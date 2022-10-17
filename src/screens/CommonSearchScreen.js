@@ -10,7 +10,6 @@ const showAlert=()=>{
 const FirstRoute = () => {
   const navigation = useNavigation();
   return (
-    
     <SafeAreaView style={styelcss.maindDivBannermcq}>
     <ScrollView
      showsVerticalScrollIndicator={false}
@@ -34,7 +33,7 @@ const FirstRoute = () => {
             </View>
             <View>
               <Text style={{marginBottom:6}}>9:43 am</Text>
-              <Text style={styelcss.communityCircule}>9 </Text>
+              <Text style={styelcss.communityCircule}>9</Text>
             </View>
        </View>
         <Text style={{paddingVertical:12,fontSize:16,fontWeight:"500"}}>Recommandations</Text>
