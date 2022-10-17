@@ -1,0 +1,2 @@
+export const LOGIN_DATA= "LOGIN_DATA";
+export const HOMESCREEN_DATA = "HOMESCREEN_DATA";
