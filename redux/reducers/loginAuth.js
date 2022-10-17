@@ -11,7 +11,7 @@ export const userLogin = createAsyncThunk("user/login", async(loginData)=>{
             body : JSON.stringify(loginData)
         });
         const userresult=  await responce.json();
-        console.log('slice',userresult);
+     //   console.log('slice',userresult);
         //result.data.token;
         return userresult
     }
