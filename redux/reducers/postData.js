@@ -1,31 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { mainApi } from "../../src/apis/constant";
 
-export const userPostData = createAsyncThunk("getAllPost", async (postDetails)=>{
-    // console.log('postdata1',postDetails.role);
-    // console.log('postdata1',postDetails.city_id);
-    // console.log('postdata1',postDetails.assoc_id);
-    // console.log('postdata1',postDetails.profileimage);
-    // console.log('postdata1',postDetails.userId);
+export const userPostData = createAsyncThunk("getAllPost", async (data)=>{
+   // console.log('passing',data);
     try{
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/getPost`, {
             method : 'POST',
             headers:{
                 'Content-Type': 'application/json'
             },
-            body :JSON.stringify({
-                postType:0,
-                role:postDetails.role,
-                circle_type:1,
-                city_id:postDetails.city_id,
-                assoc_id:postDetails.assoc_id,
-                pageCounter:600,
-                id:postDetails.userId,
-                profile:postDetails.profileimage,
-            })
+            body :JSON.stringify(data)
          });
         const result=  await responce.json();
-       // console.log('tara12345654',result);
+       // console.log('tara',result);
         return result;
      }
      catch(e){

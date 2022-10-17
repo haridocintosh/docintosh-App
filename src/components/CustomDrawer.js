@@ -37,6 +37,7 @@ const CustomDrawer = props => {
     fullname : "",
     profile:"",
     speciality:"",
+    
   })
   useEffect(() => {
     const asyncFetchDailyData = async () => {
@@ -92,7 +93,7 @@ const CustomDrawer = props => {
             source={{uri:userdata.profile}}
             style={{height: 64, width: 64, borderRadius: 40, marginTop: -10,alignSelf:'center'}}
           />
-          <Text style={{alignSelf:'center',color:'#fff',fontSize:16,fontWeight:'600',marginTop:5}}>{userdata?((userdata.role<='4')?'Dr.':''):''}{userdata['fullname']}</Text>
+          <Text style={{alignSelf:'center',color:'#fff',fontSize:16,fontWeight:'600',marginTop:5}}>{userdata?((userdata.role<='4')?'Dr.':''):''} {userdata['fullname']}</Text>
 
           <Text style={{alignSelf:'center', fontSize:12,fontWeight:'400',color:"#CCCCCC"}}> {userdata['speciality']} |</Text>
           

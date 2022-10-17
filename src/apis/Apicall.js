@@ -121,7 +121,6 @@ new Promise((resolve, reject) => {
   });
 
 
-
 const verifyOtp = (otp,user_id) =>
   new Promise((resolve, reject) => {
     axios({

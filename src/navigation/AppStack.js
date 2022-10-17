@@ -2,7 +2,7 @@ import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import ProfileScreen from '../screens/ProfileScreen';
+import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import EditProfileScreen from '../screens/EditProfileScreen';
 import MessagesScreen from '../screens/MessagesScreen';
 import MomentsScreen from '../screens/MomentsScreen';
@@ -31,8 +31,15 @@ import Sentimentrix3 from '../screens/Sentimentrix3';
 import Sentimentrix6 from '../screens/Sentimentrix6';
 //import ThankYouScreen from '../screens/ThankYouScreen';
 import FlowStart from '../screens/FlowStart';
+import QuizLevels from '../screens/QuizLevels/QuizLevels';
+import ProfileScreenFollowers from '../screens/ProfileScreen/ProfileScreenFollowers';
+import ProfileScreenFollowing from '../screens/ProfileScreen/ProfileScreenFollowing';
 //import PaymentScreen from '../screens/PaymentScreen';
 //import CommunityCreatedefault from '../screens/CommunityCreatedefault';
+
+
+
+
 
 
 const Drawer = createDrawerNavigator();
@@ -63,7 +70,7 @@ const AuthStack = () => {
       <Drawer.Screen
         name="Leaderboard"
         component={TabNavigator}
-        options={{headerShown: false,
+        options={{headerShown: true,
           drawerIcon: () => (
             <Ionicons name="trophy-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
           ),
@@ -91,9 +98,7 @@ const AuthStack = () => {
         }}
       />
       <Drawer.Screen
-      
         name="Gift DocCoins"
-      
         component={MessagesScreen}
         options={{
         
@@ -383,6 +388,25 @@ const AuthStack = () => {
       <Drawer.Screen
         name="Settings"
         component={SettingsScreen}
+        options={{
+          drawerIcon: () => (
+            <Ionicons name="settings-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+          ),
+        }}
+      />
+
+      <Drawer.Screen
+        name="ProfileScreenFollowers"
+        component={ProfileScreenFollowers}
+        options={{
+          drawerIcon: () => (
+            <Ionicons name="settings-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="ProfileScreenFollowing"
+        component={ProfileScreenFollowing}
         options={{
           drawerIcon: () => (
             <Ionicons name="settings-outline" size={22} style={{color:'#ffff',paddingRight:5}} />

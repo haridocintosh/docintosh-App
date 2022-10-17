@@ -66,9 +66,9 @@ const SelectInterest = () => {
       const newData = masterDataSource.filter(function (item) {
         // Applying filter for the inserted text in search bar
         const itemData = item.speciality
-          ? item.speciality
-          : '';
-        const textData = text;
+          ? item.speciality.toUpperCase()
+          : ''.toUpperCase();
+        const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
       setFilteredDataSource(newData);
@@ -86,7 +86,7 @@ const SelectInterest = () => {
       // Flat List Item
     <View style={styles.item}>
       <Text style={[styles.itemStyle]} onPress={() => getItem(item)}>
-        {'#'}{item.speciality}{item.isSelected? ' ': <Ionicons style={styles.searchIcon} name="close-circle" size={20} color="#000"/> }
+        {'#'}{item.speciality.toUpperCase()}{item.isSelected? ' ': <Ionicons style={styles.searchIcon} name="close-circle" size={20} color="#000"/> }
       </Text>
     </View>
     );

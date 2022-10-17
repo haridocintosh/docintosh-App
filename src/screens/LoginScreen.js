@@ -93,11 +93,12 @@ const LoginScreen = () => {
         }))
         //singlestoreData('usertoken','userloginData');
         singlestoreData('isloggedin','true'); 
-     //   Toast.show(token.payload.message);
+        Toast.show(token.payload.message);
           navigation.navigate('Home')
       }else{
         Toast.show(token.payload.message);
       }
+    
       // localStorage.setItem('auth', token.payload);
       // storeData('USER_INFO',JSON.stringify({
       //   login:true,
@@ -113,6 +114,8 @@ const LoginScreen = () => {
       setmessage('Please fill the above form');
     }
   }
+
+
 
   // const removeData = async (key) => {
   //   try {

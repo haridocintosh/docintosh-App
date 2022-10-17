@@ -151,6 +151,8 @@ const pickImage = async () => {
     setregister({ ...register, 
       mrnproof: result1,
     });
+
+
 };
 
 
@@ -166,9 +168,12 @@ const pickprofile = async () => {
   let localUri = result.uri;
   setprofileurl(localUri)
       let filename = localUri.split('/').pop();
+    
       // Infer the type of the image
       let match = /\.(\w+)$/.exec(filename);
       let type = match ? `image/${match[1]}` : `image`;
+      
+
       let uriParts = localUri.split('.');
       let fileType = uriParts[uriParts.length - 1];
       let formData = new FormData();

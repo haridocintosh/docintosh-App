@@ -37,13 +37,12 @@ useEffect(() => {
   return (
     <SafeAreaView style={{flex: 1,}}>
     <ScrollView
-     showsVerticalScrollIndicator={false}
-    nestedScrollEnable={true}
-    style={{}}>
-
-<View style={{padding:10}}>
+        showsVerticalScrollIndicator={false}
+        nestedScrollEnable={true}
+        style={{}}>
+    <View style={{padding:10}}>
   
-  <Card style={{borderRadius:20/2,  marginTop:10,backgroundColor:'#f7f8ff'}} onPress={() => navigation.navigate('QuizGame')}>
+  <Card style={{borderRadius:20/2,  marginTop:10,backgroundColor:'#f7f8ff'}} onPress={() => navigation.navigate('QuizLevels')}>
   <View style={styles.infinity}>
     <View style={styles.infinityBefore} />
     <View style={styles.infinityAfter} />
@@ -75,7 +74,6 @@ useEffect(() => {
       <Image source={discount1} style={{width:16, height:16}}></Image>
     </View>
     <Text style={styles.paddingLeft}>4</Text>
-    
   </View>
   
    </View>
@@ -125,7 +123,7 @@ useEffect(() => {
    </View>
    </Card>
 
-   {userdata?((userdata.role<='4')?<>
+   {userdata?((userdata.role <='4')?<>
    <Card style={{borderRadius:20/2,  marginTop:10, backgroundColor:'#f9ffff'}} onPress={()=>{ navigation.navigate('Surveys') }} >
   <View style={styles.infinity}>
       <View style={styles.infinityBefore} />
@@ -206,7 +204,8 @@ useEffect(() => {
    <View style={styles.cardfooterstyle}>
     <Image source={cardfootimg3} style={styles.imgcolor}/>
    </View>
-   </Card></>:'<Text></Text>'):'<Text></Text>'}
+   </Card></>:<Text></Text>):<Text></Text>}
+
 </View>
    </ScrollView>
   </SafeAreaView>

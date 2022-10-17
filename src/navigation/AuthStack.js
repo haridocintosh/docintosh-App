@@ -18,10 +18,11 @@ import PracticeScreen from '../screens/PracticeScreen';
 import OnboardingScreen from '../screens/OnboardingScreen';
 import InvitePeers from '../screens/InvitePeers';
 import SelectInterest from '../screens/SelectInterest';
-import ContactPermission from '../screens/ContactPermission'; 
-import ImagePickerExample from '../screens/ImagePickerExample';
+import ContactPermission from '../screens/ContactPermission';
 import AppStack from './AppStack';
 import { useNavigation } from '@react-navigation/native';
+import QuizLevels from '../screens/QuizLevels/QuizLevels';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -30,7 +31,7 @@ const AuthStack = () => {
   const navigation = useNavigation();
   return (
       <Stack.Navigator screenOptions={{headerShown: false}}>
-      {/* <Stack.Screen name="ImagePickerExample" component={ImagePickerExample} /> */}
+      {/* <Stack.Screen name="RegisterStudentScreen" component={RegisterStudentScreen}  options={{ title: 'Register', headerShown: true}} /> */}
       <Stack.Screen name="Intro" component={IntroStack} />
       <Stack.Screen name="SelectInterest" component={SelectInterest} options={{ title: 'Select your Interest', headerShown: true,  headerRight: () => (
           <Text onPress={() => navigation.navigate('LoginScreen')} style={{color:"#2376E5", fontWeight:"700"}} >Skip</Text>)}} />
@@ -58,6 +59,7 @@ const AuthStack = () => {
       <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
       <Stack.Screen name="ForgotPasswordOTP" component={ForgotPasswordOTP} options={{ title: 'Verification OTP', headerShown: true}} />
       <Stack.Screen name="AppStack" component={AppStack} />
+      <Stack.Screen name="QuizLevels" component={QuizLevels} />
       <Stack.Screen 
         name="Home"
         component={AppStack}

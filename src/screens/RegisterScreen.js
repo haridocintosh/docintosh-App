@@ -28,13 +28,13 @@ export default function RegisterScreen() {
 
   const dispatch = useDispatch();
 
-//   const speciality = useSelector((state)=>{
-//     return state.myspeciality.speciality;
-//   });
+  const speciality = useSelector((state)=>{
+    return state.myspeciality.speciality;
+  });
 
-//   let loading = useSelector((state)=>{
-//     return state.myspeciality.loading;
-// });
+  let loading = useSelector((state)=>{
+    return state.myspeciality.loading;
+});
 
   const navigation = useNavigation();
   const [checked, setChecked] = useState(4);
@@ -275,7 +275,7 @@ const form_submit = async() =>{
 
         <TextInput style={styelcss.customInputVerifyFullMobile}  placeholder='Mobile Number' keyboardType="numeric" maxLength={10}  onChangeText={(e)=>{phonenumber(e)}}/>
 
-        <View style={{alignSelf:'center'}}>
+        <View style={{alignSelf: 'center' }}>
           <DropDownPicker style={styles.customInputVerify}
               open={openGender}
               value={valueGender}

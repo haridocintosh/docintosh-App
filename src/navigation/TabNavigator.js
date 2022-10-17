@@ -9,7 +9,6 @@ import CommunityScreen from '../screens/CommunityScreen';
 import GameDetailsScreen from '../screens/GameDetailsScreen';
 import KnowledgeScreen from '../screens/KnowledgeScreen';
 import Knowledge2Screen from '../screens/Knowledge2Screen';
-import ProfileScreen from '../screens/ProfileScreen';
 import logo from '../assets/images/logo.png';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
@@ -30,7 +29,17 @@ import { Dimensions, Image} from "react-native";
 import { useRef } from 'react';
 import 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
+import QuizLevels from '../screens/QuizLevels/QuizLevels';
+import McqSelection from '../screens/QuizLevels/McqSelection';
+import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
+import ProfileScreenFollowers from '../screens/ProfileScreen/ProfileScreenFollowers';
+import ProfileScreenFollowing from '../screens/ProfileScreen/ProfileScreenFollowing';
+
+
+
+
 // import { View } from 'react-native-web';
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -188,10 +197,43 @@ const HomeStack = () => {
         //   title: route.params?.title,
         // })}
       />
-
-
-
-
+      
+      <Stack.Screen
+        name="QuizLevels"
+        component={QuizLevels}
+        options={{headerShown: false,  
+          title: 'Search'}}
+        // options={({route}) => ({
+        //   title: route.params?.title,
+        // })}
+      />
+      <Stack.Screen
+        name="McqSelection"
+        component={McqSelection}
+        options={{headerShown: false,  
+          title: 'Search'}}
+        // options={({route}) => ({
+        //   title: route.params?.title,
+        // })}
+      />
+      <Stack.Screen
+        name="ProfileScreenFollowers"
+        component={ProfileScreenFollowers}
+        options={{headerShown: false,  
+          title: 'Search'}}
+        // options={({route}) => ({
+        //   title: route.params?.title,
+        // })}
+      />
+      <Stack.Screen
+        name="ProfileScreenFollowing"
+        component={ProfileScreenFollowing}
+        options={{headerShown: false,  
+          title: 'Search'}}
+        // options={({route}) => ({
+        //   title: route.params?.title,
+        // })}
+      />
     </Stack.Navigator>
   );
 };

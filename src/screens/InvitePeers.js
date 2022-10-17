@@ -87,7 +87,6 @@ const InvitePeers = ({route}) => {
            
             {
             contactData1.map((element,index) => {
-              //console.log('1111',element);
                 return (
                     <View style={styelcss.peersmaniListArea} key={index} >
                     <View style={styelcss.peersSubiListArea}>
