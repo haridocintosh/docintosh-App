@@ -16,9 +16,9 @@ import SharePost from '../screens/SharePost';
 import QuizGame from '../screens/QuizGame';
 import Polls from '../screens/Polls';
 import Polls1 from '../screens/Polls1';
-import Surveys from '../screens/Surveys';
-import Survey1 from '../screens/Survey1';
-import Survey2 from '../screens/Survey2';
+import Surveys from '../screens/Survay/Surveys';
+import SurveyMcq from '../screens/Survay/SurveyMcq';
+import SurvayCheckBoxMcq from '../screens/Survay/SurvayCheckBoxMcq';
 import SentimentixScreen from '../screens/SentimentixScreen';
 import Sentimentixscreen2 from '../screens/Sentimentixscreen2';
 import SentimentrixCong from '../screens/SentimentrixCong';
@@ -34,6 +34,10 @@ import McqSelection from '../screens/QuizLevels/McqSelection';
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import ProfileScreenFollowers from '../screens/ProfileScreen/ProfileScreenFollowers';
 import ProfileScreenFollowing from '../screens/ProfileScreen/ProfileScreenFollowing';
+import MultipleImagesUpload from '../screens/MiltipleImageUpload/MultipleImagesUpload';
+import TypoMcq from '../screens/Survay/TypoMcq';
+
+
 
 
 
@@ -124,14 +128,23 @@ const HomeStack = () => {
     />
 
     <Stack.Screen
-      name="Survey1"
-      component={Survey1}
-      options={{headerShown: true,  title: 'Surveys',}}     
+      name="SurveyMcq"
+      component={SurveyMcq}
+      options={{headerShown: false,  title: 'Surveys',}}     
     />
 
     <Stack.Screen
-      name="Survey2"
-      component={Survey2}
+      name="SurvayCheckBoxMcq"
+      component={SurvayCheckBoxMcq}
+      options={{headerShown: false}}
+      // options={({route}) => ({
+      //   title: route.params?.title,
+      // })}
+    />
+
+    <Stack.Screen
+      name="TypoMcq"
+      component={TypoMcq}
       options={{headerShown: false}}
       // options={({route}) => ({
       //   title: route.params?.title,
@@ -228,6 +241,15 @@ const HomeStack = () => {
       <Stack.Screen
         name="ProfileScreenFollowing"
         component={ProfileScreenFollowing}
+        options={{headerShown: false,  
+          title: 'Search'}}
+        // options={({route}) => ({
+        //   title: route.params?.title,
+        // })}
+      />
+      <Stack.Screen
+        name="MultipleImagesUpload"
+        component={MultipleImagesUpload}
         options={{headerShown: false,  
           title: 'Search'}}
         // options={({route}) => ({

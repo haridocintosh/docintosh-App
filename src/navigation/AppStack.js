@@ -20,10 +20,10 @@ import QuizGame from '../screens/QuizGame'
 import SharePost from '../screens/SharePost'
 import Polls from '../screens/Polls';
 import Polls1 from '../screens/Polls1';
-import Surveys from '../screens/Surveys';
+import Surveys from '../screens/Survay/Surveys';
 import KnowYourHeart from '../screens/KnowYourHeart';
-import Survey1 from '../screens/Survey1';
-import Survey2 from '../screens/Survey2';
+import Survey1 from '../screens/Survay/SurveyMcq';
+import Survey2 from '../screens/Survay/SurvayCheckBoxMcq';
 import SentimentixScreen from '../screens/SentimentixScreen';
 import Sentimentixscreen2 from '../screens/Sentimentixscreen2';
 import SentimentrixCong from '../screens/SentimentrixCong';
