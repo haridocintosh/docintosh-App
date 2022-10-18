@@ -4,8 +4,10 @@ import Svg, { Path } from 'react-native-svg';
 import Animated from 'react-native-reanimated';
 import TimeOutModal from './QuizLevels/TimeOutModal';
 import { useDispatch } from 'react-redux';
-import { GetQuizQuestions } from '../../redux/reducers/mcqSlice';
 import QuizGameQuetion from './QuizGameQuetion';
+import { GetQuizQuestions } from '../../redux/reducers/mcqSlice';
+
+
 
 const QuizGame = ({route}) => {
   const dispatch =  useDispatch();
