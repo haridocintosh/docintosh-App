@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { ProgressBar, Checkbox} from 'react-native-paper';
 
 const TypoMcq = () => {
-  const [updateAnswer, setUpdateAnswer]   = useState(null);
+  const [updateAnswer, setUpdateAnswer]   = useState(0);
     const navigation = useNavigation();
     
     console.log("updateAnswer",updateAnswer.length);
@@ -42,7 +42,7 @@ const TypoMcq = () => {
         <ProgressBar 
             style={styles.Progressbar}
             color={"#45B5C0"} 
-            progress={0.6}
+            progress={1/10}
         />
           
         {/* Question & Options */}
@@ -54,7 +54,7 @@ const TypoMcq = () => {
           maxLength={200}
          />
          <View style={styles.limitationTextContainer}>
-           <Text style={styles.limitationText}>{updateAnswer.length}/200</Text>
+           <Text style={styles.limitationText}>{updateAnswer ? updateAnswer.length: 0}/200</Text>
          </View>
       
         </View>
