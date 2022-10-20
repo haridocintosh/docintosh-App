@@ -12,12 +12,13 @@ import { useDispatch } from 'react-redux';
 import { quizPostData } from '../../../redux/reducers/mcqSlice';
 
 const QuizLevels = () => {
+    const dispatch = useDispatch();
     const [toggle, setToggle] = useState(false);
     const [quizData, setQuizData] = useState([]);
     const [topicId, setTopicId] = useState(null);
     const navigation = useNavigation();
 
-    const dispatch = useDispatch();
+ 
     
     const McqDataHandle = (topicId) => {
         setToggle(true);

@@ -3,14 +3,18 @@ import { View, Text,TouchableOpacity,StyleSheet, Dimensions,Modal,Animated } fro
 import * as Progress from 'react-native-progress';
 import { COLORS } from '../components/constant';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { saveQuizAnswer } from '../../redux/reducers/mcqSlice';
+import { useDispatch } from 'react-redux';
 
-const QuizGameQuetion = ({mcqQue,isTop}) => {
+const QuizGameQuetion = ({mcqQue,isTop, singleMcq}) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isOptionsDisabled, setIsOptionsDisabled] = useState(false);
   const [score, setScore] = useState(0);
   const [showScoreModal, setShowScoreModal] = useState(false)
   const TotalMcq = parseInt(mcqQue.length);
   const navigation = useNavigation();
+  const dispatch =  useDispatch()
 
   const [progress, setProgress] = useState(new Animated.Value(0));
     const progressAnim = progress.interpolate({
@@ -19,14 +23,22 @@ const QuizGameQuetion = ({mcqQue,isTop}) => {
     })
 
 
-const validateAnswer = (ans) =>{
+const validateAnswer = async (ans) =>{
+  const jsonValue = await AsyncStorage.getItem('USER_INFO');
+  const data=await JSON.parse(jsonValue);
+  const id =JSON.parse(data)['data'].id;
+  // console.log("id", id);
+  // console.log("qid", ans.qid);
+  // console.log("opt_id", ans.opt_id);
+  // console.log("basic_id====",singleMcq);
+  fetchPostData(id,ans.qid,ans.opt_id,singleMcq);
+
   if(currentQuestionIndex !== TotalMcq-1){
     setCurrentQuestionIndex(currentQuestionIndex+1);
   }else{
     setShowScoreModal(true);
-    
   }
-  if(ans == 1){
+  if(ans.is_correct == 1){
     setScore(score+1);
   }
   Animated.timing(progress, {
@@ -34,6 +46,12 @@ const validateAnswer = (ans) =>{
     duration: 1000,
     useNativeDriver: false
 }).start();
+}
+
+const fetchPostData = async (id,qid, opt_id,basic_id)=>{
+  const postDetails = {id:id,qid:qid,opt_id:opt_id,basic_id:basic_id}
+  const result = await dispatch(saveQuizAnswer(postDetails));
+  //  console.log('postDetails===',result);
 }
 
 const restartQuiz = () => {
@@ -56,7 +74,6 @@ const outOff = currentQuestionIndex / TotalMcq;
 useEffect(()=>{
   if(isTop == false){
    setIsOptionsDisabled(true);
-  //  console.log("setIsOptionsDisabled(true)");
   }
 },[isTop]);
 
@@ -81,7 +98,7 @@ useEffect(()=>{
             {mcqQue[currentQuestionIndex]?.options.map((data, i) => {
               return(
                 <TouchableOpacity  key={i} disabled={isOptionsDisabled}
-                  onPress={()=> validateAnswer(data.is_correct)}
+                  onPress={()=> validateAnswer(data)}
                   style={styling}
                 >
                   <Text style={styles.ans}>{data.options}</Text>

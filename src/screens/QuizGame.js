@@ -57,7 +57,7 @@ const QuizGame = ({route}) => {
         </Svg>
       </Animated.View>
       <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true} style={{padding:10}}>
-        <QuizGameQuetion mcqQue={mcqQue} isTop={isTop}/>
+        <QuizGameQuetion mcqQue={mcqQue} isTop={isTop} singleMcq={singleMcq}/>
       </ScrollView>
     </SafeAreaView>
   )

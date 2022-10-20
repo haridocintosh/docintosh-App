@@ -43,7 +43,26 @@ export const GetQuizQuestions = createAsyncThunk("getQuizQuestions", async (data
      catch(e){
         console.log(e);;
      }
-})
+});
+
+export const saveQuizAnswer = createAsyncThunk("saveQuizAnswer", async (data)=>{
+   console.log('saveQuizAnswer',data);
+    try{
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/saveQuizAnswer`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body :JSON.stringify(data)
+         });
+        const result=  await responce.json();
+     //   console.log('resultttdaata',result);
+        return result;
+     }
+     catch(e){
+        console.log(e);;
+     }
+});
 
 export const quizData = createSlice({
     name : "quiz",
@@ -82,6 +101,22 @@ export const quizData = createSlice({
                 state.postData = action.payload;
             }, 
         [GetQuizQuestions.rejected] : (state)=>
+            {
+                state.loading = false;
+                state.error   = true
+            }, 
+
+
+        [saveQuizAnswer.pending] : (state)=>
+            {
+                state.loading =  true;
+            }, 
+        [saveQuizAnswer.fulfilled] : (state, action)=>
+            {   
+                state.loading  =  false;
+                state.postData = action.payload;
+            }, 
+        [saveQuizAnswer.rejected] : (state)=>
             {
                 state.loading = false;
                 state.error   = true
