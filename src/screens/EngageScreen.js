@@ -7,7 +7,6 @@ import { useNavigation } from '@react-navigation/native';
 import { FontAwesome5 , MaterialCommunityIcons,AntDesign} from '@expo/vector-icons';
 import docintoshlgblk from '../assets/dr-icon/doclg1.png'
 import d from '../assets/dr-icon/d.png';
-import QuizGame from '../screens/QuizGame'
 
 import discount1 from '../assets/dr-icon/discount1.png';
 import cardfootimg from '../assets/images/cardfootimg.png';
@@ -34,6 +33,7 @@ useEffect(() => {
     userData();
   }, [])
 
+  //   QuizLevels
   return (
     <SafeAreaView style={{flex: 1,}}>
     <ScrollView

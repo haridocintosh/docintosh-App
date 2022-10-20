@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { mainApi } from "../../src/apis/constant";
 
 export const userPostData = createAsyncThunk("getAllPost", async (postDetails)=>{
-     console.log('postdata1',postDetails);
+    //  console.log('postdata1',postDetails);
     // console.log('postdata1',postDetails.city_id);
     // console.log('postdata1',postDetails.assoc_id);
     // console.log('postdata1',postDetails.profileimage);
@@ -25,7 +25,7 @@ export const userPostData = createAsyncThunk("getAllPost", async (postDetails)=>
             })
          });
         const result=  await responce.json();
-       console.log('tara12345654',result);
+    //    console.log('tara12345654',result);
         return result;
      }
      catch(e){
