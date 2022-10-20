@@ -270,7 +270,7 @@ console.log('1111',allPost);
   </View>
   <View style={{width:'100%', height:1, backgroundColor:'#D5DEED', marginTop:10, }}></View>
   <View  style={{flexDirection:'row',}}>
-    <Image source={profileimg} onPress={() => navigation.navigate('ProfileScreen2')} style={{margin:10,width:38, height:38,}} ></Image>
+    <Image source={element.profileimage &&{ uri:element.profileimage} } onPress={() => navigation.navigate('ProfileScreen2')} style={{margin:10,width:38, height:38, borderRadius:50 }} ></Image>
     <View style={{margin:0}}>
     <Text style={{marginTop:10, fontSize:14, fontWeight:'400'}}>{element.role =='4' ? 'Dr.' : ''} { element.first_name && element.first_name} {element.last_name && element.last_name} <MaterialCommunityIcons name="check-decagram" size={12} color="#0F9C69" /></Text>
     {/* <View style={{flexDirection:'row',}}>

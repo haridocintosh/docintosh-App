@@ -19,7 +19,7 @@ import {
   BottomSheetScrollView
 } from "@gorhom/bottom-sheet";
 import * as ImagePicker from 'expo-image-picker';
-import {Entypo, Ionicons, MaterialIcons, Fontisto,MaterialCommunityIcons, AntDesign, FontAwesome5,FontAwesome, Feather} from "@expo/vector-icons";
+import {Entypo, Ionicons, MaterialIcons, Fontisto, MaterialCommunityIcons, AntDesign, FontAwesome5,FontAwesome, Feather} from "@expo/vector-icons";
 import { TextInput } from "react-native-gesture-handler";
 import { List, Checkbox } from 'react-native-paper';
 import { useDispatch } from "react-redux";
@@ -203,6 +203,8 @@ const publishCheck = (e)=>{
     asyncFetchDailyData();
     fetchSpecialities();
   }, [])
+
+  
 
   return (
     <BottomSheetModalProvider>
