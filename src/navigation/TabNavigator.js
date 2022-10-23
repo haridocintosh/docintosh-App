@@ -36,6 +36,8 @@ import ProfileScreenFollowers from '../screens/ProfileScreen/ProfileScreenFollow
 import ProfileScreenFollowing from '../screens/ProfileScreen/ProfileScreenFollowing';
 import MultipleImagesUpload from '../screens/MiltipleImageUpload/MultipleImagesUpload';
 import TypoMcq from '../screens/Survay/TypoMcq';
+import KnowYourHeart from '../screens/QuizLevels/KnowYourHeart';
+
 
 
 
@@ -250,6 +252,15 @@ const HomeStack = () => {
       <Stack.Screen
         name="MultipleImagesUpload"
         component={MultipleImagesUpload}
+        options={{headerShown: false,  
+          title: 'Search'}}
+        // options={({route}) => ({
+        //   title: route.params?.title,
+        // })}
+      />
+      <Stack.Screen
+        name="KnowYourHeart"
+        component={KnowYourHeart}
         options={{headerShown: false,  
           title: 'Search'}}
         // options={({route}) => ({

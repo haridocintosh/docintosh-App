@@ -14,38 +14,38 @@ const QuizGameQuetion = ({mcqQue,isTop, singleMcq}) => {
   const [showScoreModal, setShowScoreModal] = useState(false)
   const TotalMcq = parseInt(mcqQue.length);
   const navigation = useNavigation();
-  const dispatch =  useDispatch()
+  const dispatch =  useDispatch();
+  
 
-  const [progress, setProgress] = useState(new Animated.Value(0));
-    const progressAnim = progress.interpolate({
-        inputRange: [0, TotalMcq],
-        outputRange: ['0%','100%']
-    })
+  // const [progress, setProgress] = useState(new Animated.Value(0));
+  //   const progressAnim = progress.interpolate({
+  //       inputRange: [0, TotalMcq],
+  //       outputRange: ['0%','100%']
+  //   })
 
 
 const validateAnswer = async (ans) =>{
   const jsonValue = await AsyncStorage.getItem('USER_INFO');
   const data=await JSON.parse(jsonValue);
   const id =JSON.parse(data)['data'].id;
-  // console.log("id", id);
-  // console.log("qid", ans.qid);
-  // console.log("opt_id", ans.opt_id);
-  // console.log("basic_id====",singleMcq);
+  
   fetchPostData(id,ans.qid,ans.opt_id,singleMcq);
 
   if(currentQuestionIndex !== TotalMcq-1){
     setCurrentQuestionIndex(currentQuestionIndex+1);
   }else{
     setShowScoreModal(true);
+    
   }
+
   if(ans.is_correct == 1){
     setScore(score+1);
   }
-  Animated.timing(progress, {
-    toValue: currentQuestionIndex+1,
-    duration: 1000,
-    useNativeDriver: false
-}).start();
+//   Animated.timing(progress, {
+//     toValue: currentQuestionIndex+1,
+//     duration: 1000,
+//     useNativeDriver: false
+// }).start();
 }
 
 const fetchPostData = async (id,qid, opt_id,basic_id)=>{
@@ -53,12 +53,13 @@ const fetchPostData = async (id,qid, opt_id,basic_id)=>{
   const result = await dispatch(saveQuizAnswer(postDetails));
   //  console.log('postDetails===',result);
 }
-
+ 
 const restartQuiz = () => {
-  setShowScoreModal(false);
-  setCurrentQuestionIndex(0);
-  setScore(0);
-  navigation.navigate("QuizLevels");
+  // setShowScoreModal(false);
+  // setCurrentQuestionIndex(0);
+  // setScore(0);
+  // navigation.navigate("QuizLevels");
+  navigation.navigate("KnowYourHeart");
 }
 
 const styling = {
@@ -115,14 +116,15 @@ useEffect(()=>{
                       </Text>
                       <View style={styles.ModalScore}>
                           <Text style={{fontSize: 30,color: score> (TotalMcq/2) ? COLORS.success : COLORS.error}}>
-                              {score}
+                              {score} 
                           </Text>
                           <Text style={{fontSize: 20, color: COLORS.black}}>
                             / { TotalMcq }
                           </Text>
                       </View>
                       <TouchableOpacity onPress={restartQuiz} style={{ backgroundColor: COLORS.accent, padding: 20, width: '100%', borderRadius: 20 }}>
-                          <Text style={{textAlign: 'center', color: COLORS.white, fontSize: 20}}>Retry Quiz</Text>
+                          {/* <Text style={{textAlign: 'center', color: COLORS.white, fontSize: 20}}>Retry Quiz</Text> */}
+                          <Text style={{textAlign: 'center', color: COLORS.white, fontSize: 20}}>Score Board</Text>
                       </TouchableOpacity>
                   </View>
               </View>

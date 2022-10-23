@@ -21,7 +21,7 @@ import SharePost from '../screens/SharePost'
 import Polls from '../screens/Polls';
 import Polls1 from '../screens/Polls1';
 import Surveys from '../screens/Survay/Surveys';
-import KnowYourHeart from '../screens/KnowYourHeart';
+
 import Survey1 from '../screens/Survay/SurveyMcq';
 import Survey2 from '../screens/Survay/SurvayCheckBoxMcq';
 import SentimentixScreen from '../screens/SentimentixScreen';
@@ -34,8 +34,10 @@ import FlowStart from '../screens/FlowStart';
 import QuizLevels from '../screens/QuizLevels/QuizLevels';
 import ProfileScreenFollowers from '../screens/ProfileScreen/ProfileScreenFollowers';
 import ProfileScreenFollowing from '../screens/ProfileScreen/ProfileScreenFollowing';
+import KnowYourHeart from '../screens/QuizLevels/KnowYourHeart';
 //import PaymentScreen from '../screens/PaymentScreen';
 //import CommunityCreatedefault from '../screens/CommunityCreatedefault';
+
 
 
 

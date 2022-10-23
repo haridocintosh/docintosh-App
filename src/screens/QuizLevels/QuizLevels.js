@@ -2,9 +2,6 @@ import { View, Text , TouchableOpacity, ScrollView} from 'react-native';
 import { styles } from './QuizLevelaStyles';
 import React, { useEffect, useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient'
-import {  Card } from 'react-native-paper';
-import axios from 'axios';
-import { mainApi } from '../../apis/constant';
 import { useNavigation } from '@react-navigation/native';
 import McqListModal from './McqListModal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -17,8 +14,6 @@ const QuizLevels = () => {
     const [quizData, setQuizData] = useState([]);
     const [topicId, setTopicId] = useState(null);
     const navigation = useNavigation();
-
- 
     
     const McqDataHandle = (topicId) => {
         setToggle(true);
