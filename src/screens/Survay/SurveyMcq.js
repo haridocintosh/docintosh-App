@@ -17,6 +17,7 @@ const SurveyMcq = ({route}) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [liftUpData, setLiftUpData] = useState(null);
   const {surveyid} = route.params;
+  
   const navigation = useNavigation();
   const dispatch =  useDispatch();
 
@@ -40,7 +41,7 @@ const SurveyMcq = ({route}) => {
 
   //-----------------save survay ans--------------------------
   const nextMcq = async (basic_id, qid) =>{
-    if(currentQuestionIndex !== allMCQs.length){
+    if(currentQuestionIndex !== allMCQs.length-1){
       const jsonValue = await AsyncStorage.getItem('USER_INFO');
       const data=await JSON.parse(jsonValue);
       const result=JSON.parse(data)['data'];
@@ -48,6 +49,8 @@ const SurveyMcq = ({route}) => {
       PosData(result.id,basic_id,qid, liftUpData, result.profileimage,);
       setCurrentQuestionIndex(currentQuestionIndex+1);
       setLiftUpData(null);
+    }else{
+      navigation.navigate('ScratchOffer')
     }
   }
 

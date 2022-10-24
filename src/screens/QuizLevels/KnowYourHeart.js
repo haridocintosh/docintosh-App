@@ -3,34 +3,22 @@ import {
   View,
   Text,
   SafeAreaView,
-  ScrollView,
   ImageBackground,
-  TextInput,
-  TouchableOpacity,
   Image,
   StyleSheet,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-// import reactangle from "../../assets/images/Rectangle.png";
-// import reactangle1 from "../../assets/images/Rectangle1.png";
-import oval from "../../assets/dr-icon/Oval.png";
-import { FontAwesome5 } from "@expo/vector-icons";
 import Path1 from "../../assets/dr-icon/Path1.png";
 import Path2 from "../../assets/dr-icon/Path2.png";
 import Path3 from "../../assets/dr-icon/Path3.png";
 import Path4 from "../../assets/dr-icon/Path4.png";
-// import knowheart from "../assets/images/knowhert.png";
 import d from "../../assets/dr-icon/d.png";
 import winner from "../../assets/dr-icon/winner.png";
 import king from "../../assets/dr-icon/king.png";
 import badge from "../../assets/dr-icon/badge.png";
 import badge1 from "../../assets/dr-icon/badge1.png";
 import { Button } from "react-native-elements";
-import { Ionicons } from "@expo/vector-icons";
-import Feather from "react-native-vector-icons/Feather";
 import UserAvatar from "../../assets/images/p2.png";
-import CustomSwitch from "../../components/CustomSwitch";
-import ListItem from "../../components/ListItem";
 import { Card } from "react-native-paper";
 
 const KnowYourHeart = () => {

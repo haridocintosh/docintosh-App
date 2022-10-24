@@ -1,11 +1,11 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { View, Text,TouchableOpacity,StyleSheet, Dimensions,Modal,Animated } from 'react-native'
 import * as Progress from 'react-native-progress';
-import { COLORS } from '../components/constant';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { saveQuizAnswer } from '../../redux/reducers/mcqSlice';
 import { useDispatch } from 'react-redux';
+import { COLORS } from '../../components/constant';
+import { saveQuizAnswer } from '../../../redux/reducers/mcqSlice';
 
 const QuizGameQuetion = ({mcqQue,isTop, singleMcq}) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);

@@ -9,7 +9,6 @@ import { useNavigation } from '@react-navigation/native';
 import { FontAwesome5 , MaterialCommunityIcons,AntDesign} from '@expo/vector-icons';
 import docintoshlgblk from '../assets/dr-icon/doclg1.png'
 import d from '../assets/dr-icon/d.png';
-import QuizGame from '../screens/QuizGame'
 
 import OBJECTS from '../assets/dr-icon/OBJECTS.png';
 

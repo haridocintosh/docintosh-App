@@ -2,35 +2,24 @@ import React, {useState} from 'react';
 import { View, Text , StyleSheet, Dimensions,SafeAreaView, ScrollView } from 'react-native'
 // import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { Checkbox } from 'react-native-paper';
+// import { Checkbox } from 'react-native-paper';
+import CheckBox from 'react-native-check-box'
 
 const SurvayCheckBoxMcq = ({setLiftUpData,currentIndex,allMCQs}) => {
-  const [allMcq, setAllMcq]   = useState(allMCQs[currentIndex]?.options);
-  const [checked, setChecked]   = useState(false);
-  const [isGivens, setIsGiven]   = useState(false);
-  const [index, setIndex]   = useState([]);
-  
-    const navigation = useNavigation();
-    // console.log("allMcq",allMCQs[0]);
+  const [allMcq, setAllMcq]   = useState(allMCQs[currentIndex]);
+  const navigation = useNavigation();
+
+    const handleChange = (value) => {
+      let temp = allMcq?.options.map((mcq) => {
+        if (value === mcq.opt_id) {
+          return { ...mcq, isGiven: !mcq.isGiven };
+        }
+        return mcq;
+      });
+      setAllMcq({ ...allMcq, options: temp });
+    };
     
-
-    const handleCheckBox  = (opt_id, isGiven,basic_id, qid) => {
-      setIndex(opt_id)
-      // setChecked(index)
-      // setIsGiven(!isGiven);
-      const newState = allMcq?.map(obj =>
-          obj.opt_id === opt_id ? { ...obj, isGiven : !obj.isGiven } : obj
-      );
-
-      const filterObj = newState.filter(d => d.isGiven == true)
-      console.log("filterObj",filterObj?.map(d => d?.isGiven))
-      // console.log("newState",newState);
-      setIndex(newState);
-    }
-    // console.log("isGivens",isGivens);
-
-    // console.log("allMCQs[currentIndex]?.options",allMCQs[currentIndex]?.options);
-    
+    console.log("allMcq",allMcq);
 
   return (
   <SafeAreaView style={{backgroundColor:'#ecf2f6',flex:1}}>
@@ -41,16 +30,14 @@ const SurvayCheckBoxMcq = ({setLiftUpData,currentIndex,allMCQs}) => {
         <View >
         <Text style={styles.SurvayQuestion}>{allMCQs[currentIndex]?.question_title}</Text>
             {
-              allMCQs[currentIndex]?.options.map((data, i) => {
+              allMcq?.options.map((data, i) => {
                 // console.log(data?.isGiven);
                 return(
                   <View style={styles.SurvayOptions} key={i}>
-                      <Checkbox style={{ width: 20, height: 20 }} 
-                        key={i}
-                        status={ i == index? 'checked' : 'unchecked'}
-                        color={'#2C8892'}
-                        checked={data.isGiven}
-                        onPress={() => handleCheckBox(data.opt_id,data.isGiven, allMCQs[currentIndex]?.basic_id, allMCQs[currentIndex]?.qid)}
+                      <CheckBox
+                        style={{  padding: 5}}
+                        onClick={() => handleChange(data.opt_id)}
+                        isChecked={data.isGiven}
                       />
                       <Text style={styles.optionS}>{data.options}</Text>
                   </View>

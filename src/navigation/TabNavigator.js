@@ -13,7 +13,6 @@ import logo from '../assets/images/logo.png';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import SharePost from '../screens/SharePost';
-import QuizGame from '../screens/QuizGame';
 import Polls from '../screens/Polls';
 import Polls1 from '../screens/Polls1';
 import Surveys from '../screens/Survay/Surveys';
@@ -37,14 +36,9 @@ import ProfileScreenFollowing from '../screens/ProfileScreen/ProfileScreenFollow
 import MultipleImagesUpload from '../screens/MiltipleImageUpload/MultipleImagesUpload';
 import TypoMcq from '../screens/Survay/TypoMcq';
 import KnowYourHeart from '../screens/QuizLevels/KnowYourHeart';
-
-
-
-
-
-
-
-// import { View } from 'react-native-web';
+import QuizGame from '../screens/QuizLevels/QuizGame';
+import QuizGameQuetion from '../screens/QuizLevels/QuizGameQuetion';
+import ScratchOffer from '../screens/Survay/ScratchOffer';
 
 
 const Tab = createBottomTabNavigator();
@@ -261,6 +255,15 @@ const HomeStack = () => {
       <Stack.Screen
         name="KnowYourHeart"
         component={KnowYourHeart}
+        options={{headerShown: false,  
+          title: 'Search'}}
+        // options={({route}) => ({
+        //   title: route.params?.title,
+        // })}
+      />
+      <Stack.Screen
+        name="ScratchOffer"
+        component={ScratchOffer}
         options={{headerShown: false,  
           title: 'Search'}}
         // options={({route}) => ({
