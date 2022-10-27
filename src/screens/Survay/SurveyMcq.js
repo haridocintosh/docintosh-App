@@ -16,6 +16,7 @@ const SurveyMcq = ({route}) => {
   const [allMCQs,setAllMCQs] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [liftUpData, setLiftUpData] = useState(null);
+  const [liftUpCheckData, setLiftUpCheckData] = useState(null);
   const {surveyid} = route.params;
   
   const navigation = useNavigation();
@@ -31,7 +32,7 @@ const SurveyMcq = ({route}) => {
   const fetchPostData = async (id,surveyid)=>{
      const postDetails = {surveyid:surveyid,id:id}
      const result = await dispatch(getSurveyQuestions(postDetails));
-     const data = await result.payload.questions
+     const data = await result.payload.questions;
     //  console.log("data",data);
      setAllMCQs(data);
   }
@@ -40,30 +41,41 @@ const SurveyMcq = ({route}) => {
   // console.log("allMCQs.length",allMCQs.length);
 
   //-----------------save survay ans--------------------------
+  
   const nextMcq = async (basic_id, qid) =>{
     if(currentQuestionIndex !== allMCQs.length-1){
       const jsonValue = await AsyncStorage.getItem('USER_INFO');
-      const data=await JSON.parse(jsonValue);
-      const result=JSON.parse(data)['data'];
-      // console.log("result",result);
-      PosData(result.id,basic_id,qid, liftUpData, result.profileimage,);
+      const data = await JSON.parse(jsonValue);
+      const result = JSON.parse(data)['data'];
+      console.log("liftUpCheckData",liftUpCheckData);
+      
+      if(liftUpCheckData){
+        liftUpCheckData.map(data =>
+          PosData(result.id,basic_id,qid, data, result.profileimage));
+          setLiftUpCheckData("");
+      }else{
+        PosData(result.id,basic_id,qid, liftUpData, result.profileimage);
+      }
+      
       setCurrentQuestionIndex(currentQuestionIndex+1);
-      setLiftUpData(null);
+      setLiftUpData("");
     }else{
-      navigation.navigate('ScratchOffer')
+      navigation.navigate('MultipleImagesUpload');
     }
   }
 
   const prevMcq = () =>{
     if(currentQuestionIndex > 0){
       setCurrentQuestionIndex(currentQuestionIndex-1);
+      setLiftUpData(null);
     }
   }
 
   const PosData = async (id,basic_id,qid,opt_id,profileimage)=>{
     const postDetails = {id:id,basic_id:basic_id,qid:qid,opt_id:opt_id,profileimage:profileimage}
-    const result = await dispatch(saveSurveyAnswers(postDetails));
-    // console.log('postDetails===',result);
+    // console.log('postDetails===',postDetails);
+      const result = await dispatch(saveSurveyAnswers(postDetails));
+    console.log('result===',result);
   }
 
   useEffect(()=>{
@@ -71,13 +83,14 @@ const SurveyMcq = ({route}) => {
   }, []);
 
   const outOff = currentQuestionIndex / allMCQs.length;
+
   return (
   <SafeAreaView style={{flex:1}}>
     <View style={{padding:15}}>
         <View style={styles.TopScoreContainer}>
           <View style={{flexDirection:'row'}}>
-            <Text style={styles.OutOff}>{currentQuestionIndex+1 > 9 ? currentQuestionIndex+1:`0${currentQuestionIndex+1}`} </Text> 
-            <Text style={styles.OutOffTotal}>/{allMCQs.length+1}</Text> 
+            <Text style={styles.OutOff}>{currentQuestionIndex > 9 ? currentQuestionIndex+1:`0${currentQuestionIndex+1}`}</Text> 
+            <Text style={styles.OutOffTotal}>/{allMCQs.length}</Text> 
           </View>
           <View style={styles.NexrPrevIcons}>
             <TouchableOpacity style={{marginRight:15}} onPress={() => prevMcq()}>
@@ -93,11 +106,13 @@ const SurveyMcq = ({route}) => {
         <ProgressBar 
             style={styles.Progressbar}
             color={"#45B5C0"} 
-            progress={outOff?outOff:0}
+            progress={outOff ? outOff : 0}
         />
-    </View>    
+    </View>   
+    <Text>
+    {liftUpCheckData && liftUpCheckData.map(data => data)}
+    </Text>
 
-        
 
       {
         allMCQs[currentQuestionIndex]?.question_type == 3 && 
@@ -109,16 +124,14 @@ const SurveyMcq = ({route}) => {
         /> 
       } 
 
-
       {
       allMCQs[currentQuestionIndex]?.question_type == 2 && 
       <SurvayCheckBoxMcq 
-        setLiftUpData={setLiftUpData}  
+        setLiftUpData={setLiftUpCheckData}  
         currentIndex={currentQuestionIndex}
         allMCQs={allMCQs}
       /> 
       } 
-
 
       {
       allMCQs[currentQuestionIndex]?.question_type == 1 && 

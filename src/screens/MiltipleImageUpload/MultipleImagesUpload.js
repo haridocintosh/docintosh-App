@@ -1,29 +1,54 @@
-import { View, Text , StyleSheet, TouchableOpacity, FlatList, Image} from 'react-native'
-import React, {useState} from 'react'
-// import * as ImagePicker from 'expo-image-picker';
+import { View, Text , StyleSheet, TouchableOpacity, FlatList, Image, Platform, PermissionsAndroid} from 'react-native'
+import React, {useEffect, useState} from 'react'
 // import ImagePicker from 'react-native-image-crop-picker';
-// import { AssetsSelector } from 'expo-images-picker'
-// import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 
 const MultipleImagesUpload = () => {
-    const [image, setImage] = useState([]);
+    const [images, setImages] = useState([]);
 
-
-
-    const pickImage = async () => {
+    const requestExternalWritePermission = async () => {
+      if (Platform.OS === 'android'){
         try {
-            const response = await ImagePicker.openPicker({
-                multiple: true
-              }).then(images => {
-                console.log(images);
-              });
-            console.log('response: ', response);
-            // setImage(response);
-          } catch (e) {
-            console.log(e.code, e.message);
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.CAMERA,
+            {
+              title: 'Access to photos',
+              message: 'Our App would like to access your photos on your device',
+              buttonNegative: 'Deny',
+              buttonPositive: 'Allow',
+            },
+          );
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            return granted;
+          } else {
+            console.log('Camera permission denied');
           }
-        };
-        
+        } catch (err) {
+          console.warn(err);
+        }
+      } else {
+        return true;
+      }
+    };
+
+
+    const openImageLibrary = async () => {
+      let isStoragePermitted = await requestExternalWritePermission();
+      if (isStoragePermitted) {
+        await openPicker({
+          multiple: true,
+          mediaType: 'photo',
+          maxFiles: `4`,
+          showsSelectedCount: true,
+        }).then(imgs => {
+          if (imgs.length <= 4) {
+            setImages([...images, ...imgs]);
+          } else {
+            setImages([...images]);
+            // ToastAndroid.show("Maximum of 4 images allowed", ToastAndroid.SHORT);
+          }
+        });
+      }
+    };
 
   return (
     <View>
@@ -39,7 +64,7 @@ const MultipleImagesUpload = () => {
         )}
         keyExtractor={(item) => item.url}
     /> */}
-        <TouchableOpacity onPress={() => pickImage()} style={styles.flatlist}>
+        <TouchableOpacity onPress={() => openImageLibrary()} style={styles.flatlist}>
           <Text style={styles.selectPhoto}>Select Photos</Text>
         </TouchableOpacity>
     </View>
@@ -47,6 +72,7 @@ const MultipleImagesUpload = () => {
 }
 
 export default MultipleImagesUpload;
+
 const styles = StyleSheet.create({
     flatlist:{
         backgroundColor:"blue",
@@ -60,5 +86,4 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize:18,
      },
-
 });

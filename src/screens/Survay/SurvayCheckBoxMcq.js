@@ -1,25 +1,28 @@
 import React, {useState} from 'react';
 import { View, Text , StyleSheet, Dimensions,SafeAreaView, ScrollView } from 'react-native'
-// import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-// import { Checkbox } from 'react-native-paper';
 import CheckBox from 'react-native-check-box'
 
 const SurvayCheckBoxMcq = ({setLiftUpData,currentIndex,allMCQs}) => {
   const [allMcq, setAllMcq]   = useState(allMCQs[currentIndex]);
+  const [optIdL, setOptIdL]   = useState(0);
   const navigation = useNavigation();
 
-    const handleChange = (value) => {
+    const handleChange = (opt_id) => {
       let temp = allMcq?.options.map((mcq) => {
-        if (value === mcq.opt_id) {
+        if (opt_id === mcq.opt_id) {
           return { ...mcq, isGiven: !mcq.isGiven };
         }
         return mcq;
       });
       setAllMcq({ ...allMcq, options: temp });
+      const optId = temp.filter(val => val.isGiven == true).map(temp => temp.opt_id);
+
+      // setOptIdL(optId.length)
+      
+      setLiftUpData(optId);
     };
     
-    console.log("allMcq",allMcq);
 
   return (
   <SafeAreaView style={{backgroundColor:'#ecf2f6',flex:1}}>
