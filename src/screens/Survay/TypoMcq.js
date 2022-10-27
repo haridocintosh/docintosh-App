@@ -1,67 +1,30 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import { View, Text , StyleSheet, Dimensions,SafeAreaView, ScrollView, TextInput} from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
-import { AntDesign } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import { ProgressBar, Checkbox} from 'react-native-paper';
 
-const TypoMcq = () => {
-  const [updateAnswer, setUpdateAnswer]   = useState(0);
-    const navigation = useNavigation();
-    
-    console.log("updateAnswer",updateAnswer.length);
-    // const updateAnswer = (text) =>{
+const TypoMcq = ({ setLiftUpData,currentIndex,allMCQs,length}) => {
 
-    // }
   return (
   <SafeAreaView style={{backgroundColor:'#ecf2f6',flex:1}}>
-    <ScrollView
+    <ScrollView keyboardShouldPersistTaps={'handled'}
     showsVerticalScrollIndicator={false}
     nestedScrollEnable={true}>
       <View style={{padding:15}}>
-        
         <View >
-        <View style={styles.TopScoreContainer}>
-          <View style={{flexDirection:'row'}}>
-            <Text style={styles.OutOff}>02</Text> 
-            <Text style={styles.OutOffTotal}>/05</Text> 
+          <Text style={styles.SurvayQuestion}>{allMCQs[currentIndex]?.question_title}</Text>
+          <TextInput style={styles.inputText}
+            autoCapitalize="none"
+            placeholder='Type Here'
+            onChangeText={(text)=>setLiftUpData(text)}
+            maxLength={200}
+            value={length}
+          />
+          <View style={styles.limitationTextContainer}>
+            <Text style={styles.limitationText}>{length ? length.length: 0}/200</Text>
           </View>
-
-          <View style={styles.NexrPrevIcons}>
-            <View style={{marginRight:15}}>
-              <AntDesign name="leftcircle" size={25} color="#2C8892" onPress={() => navigation.navigate('Survey1')} />
-            </View>
-            <View style={styles.iconStyle} >
-              <AntDesign name="rightcircle" size={25} color="#2C8892"  onPress={() => navigation.navigate('Survey1')} />
-            </View>
-          </View>
-
-        </View>
-
-        {/* score bar */}
-        <ProgressBar 
-            style={styles.Progressbar}
-            color={"#45B5C0"} 
-            progress={1/10}
-        />
-          
-        {/* Question & Options */}
-        <Text style={styles.SurvayQuestion}>For treating allergic rhinitis, would you recommend an intake of probiotics for your patients?</Text>
-        <TextInput style={styles.inputText}
-          autoCapitalize="none"
-          placeholder='Type Here'
-          onChangeText={(text)=>setUpdateAnswer(text)}
-          maxLength={200}
-         />
-         <View style={styles.limitationTextContainer}>
-           <Text style={styles.limitationText}>{updateAnswer ? updateAnswer.length: 0}/200</Text>
-         </View>
-      
         </View>
       </View>
       </ScrollView>
     </SafeAreaView>
-     
   )
 }
 const styles = StyleSheet.create({

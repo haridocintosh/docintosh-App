@@ -9,9 +9,7 @@ import Svg, { Path } from 'react-native-svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch } from 'react-redux';
 import { survayList } from '../../../redux/reducers/survaySlice';
-import { color } from 'react-native-reanimated';
 import moment from "moment";
-
 
 const Surveys = () => {
   const[survayData,setSurvayData] = useState([]);
@@ -26,18 +24,15 @@ const Surveys = () => {
   }
     
   const fetchPostData = async (assoc_id,id)=>{
-    const postDetails = {assoc_id:assoc_id,id:id,earntype:0}
+    const postDetails = {speciality_id:null,city_id:null,assoc_id:assoc_id,earntype:0,id:id}
+    // console.log("postDetails",postDetails);
     const result = await dispatch(survayList(postDetails));
-    // console.log('survayList===',result.payload);
     setSurvayData(result.payload);
-
   }
 
     useEffect(()=>{
       asyncFetchDailyData();
     }, [])
-    // console.log("survayData",survayData.surveylist && survayData?.surveylist.map(data=> data.surveyid));
-    // console.log("survayData",survayData[].surveylist.map(data=> data.statuscode));
 
   return (
   <SafeAreaView style={{backgroundColor:'#E6E6E6',flex:1}}>
@@ -95,7 +90,6 @@ const Surveys = () => {
                         </View>
                       </View>
                     </View>
-
                 </Card>
               </View>
               )

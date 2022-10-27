@@ -1,76 +1,35 @@
 import React,{useState} from 'react';
-import { View, Text , StyleSheet, Dimensions,SafeAreaView, ScrollView} from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
-import { AntDesign } from '@expo/vector-icons';
-import { ProgressBar} from 'react-native-paper';
+import { View, Text , StyleSheet, Dimensions,SafeAreaView, ScrollView,TouchableOpacity} from 'react-native'
 
-const RadioMcq = ({radioMcq}) => {
-    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
-    console.log("radioMcq",radioMcq);
+const RadioMcq = ({setLiftUpData,currentIndex,allMCQs,nextMcq}) => {
 
-    // const outOff = currentQuestionIndex / radioMcq.length;
-    // console.log("outOff",outOff);
-
+  const validateAnswer = async (ans,basic_id,qid) =>{
+    setLiftUpData(ans.opt_id);
+    nextMcq(basic_id,qid)
+  }
+  
   return (
     <SafeAreaView style={{backgroundColor:'#ecf2f6',flex:1}}>
     <ScrollView
     showsVerticalScrollIndicator={false}
-    nestedScrollEnable={true}
-    >
+    nestedScrollEnable={true}>
       <View style={{padding:15}}>
         <View >
-        <View style={styles.TopScoreContainer}>
-          <View style={{flexDirection:'row'}}>
-            <Text style={styles.OutOff}>0{currentQuestionIndex+1}</Text> 
-            <Text style={styles.OutOffTotal}>/05</Text> 
-          </View>
-
-          <View style={styles.NexrPrevIcons}>
-            <View style={{marginRight:15}}>
-              <AntDesign name="leftcircle" size={25} color="#2C8892" onPress={() => navigation.navigate('SurvayCheckBoxMcq')} />
-            </View>
-            <View style={styles.iconStyle} >
-              <AntDesign name="rightcircle" size={25} color="#2C8892"  onPress={() => navigation.navigate('SurvayCheckBoxMcq')} />
-            </View>
-          </View>
-
-        </View>
-
-        {/* score bar */}
-        <ProgressBar 
-            style={styles.Progressbar}
-            color={"#45B5C0"} 
-            progress={0.3}
-        />
-          
-        {/* Question & Options */}
-        <Text style={styles.SurvayQuestion}>{radioMcq[currentQuestionIndex]?.question_title}</Text>
-  
-        <TouchableOpacity style={styles.SurvayOptions}>
-            <View style={styles.count}>
-              <Text style={styles.optionSeriel}>A</Text>
-            </View>
-            <Text style={styles.optionS}>he flow of blood to tissues beyond the clot may be cut off</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.SurvayOptions}>
-            <View style={styles.count}>
-              <Text style={styles.optionSeriel}>B</Text>
-            </View>
-            <Text style={styles.optionS}>Platelets stick to the edges of the cut and to one another, forming a plug</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.SurvayOptions}>
-            <View style={styles.count}>
-              <Text style={styles.optionSeriel}>C</Text>
-            </View>
-            <Text style={styles.optionS}>You would bleed to death</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.SurvayOptions}>
-            <View style={styles.count}>
-              <Text style={styles.optionSeriel}>D</Text>
-            </View>
-            <Text style={styles.optionS}>A scab will form on the skin surface</Text>
-        </TouchableOpacity>
+        <Text style={styles.SurvayQuestion}>{allMCQs[currentIndex]?.question_title}</Text>
+           {allMCQs[currentIndex]?.options.map((data, i) => {
+              return(
+                <TouchableOpacity style={styles.SurvayOptions} 
+                 onPress={()=> validateAnswer(data ,allMCQs[currentIndex]?.basic_id, allMCQs[currentIndex]?.qid)} key={i}>
+                  <View style={styles.count}>
+                    <Text style={styles.optionSeriel}>
+                      {i == 0 ?"A":i == 1? "B":i == 2? "C":i == 3? "D": i == 4 ?"E": "F"}
+                    </Text>
+                  </View>
+                  <Text style={styles.optionS}> {data.options}</Text>
+                </TouchableOpacity>
+              )
+            })}
         </View>
       </View>
       </ScrollView>

@@ -1,87 +1,52 @@
 import React, {useState} from 'react';
-import { View, Text , StyleSheet, Dimensions,SafeAreaView, ScrollView} from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
-import { AntDesign } from '@expo/vector-icons';
+import { View, Text , StyleSheet, Dimensions,SafeAreaView, ScrollView } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import { ProgressBar, Checkbox} from 'react-native-paper';
+import CheckBox from 'react-native-check-box'
 
-const SurvayCheckBoxMcq = () => {
-  const [checked, setChecked]   = useState(false);
-    const navigation = useNavigation();
+const SurvayCheckBoxMcq = ({setLiftUpData,currentIndex,allMCQs}) => {
+  const [allMcq, setAllMcq]   = useState(allMCQs[currentIndex]);
+  const [optIdL, setOptIdL]   = useState(0);
+  const navigation = useNavigation();
+
+    const handleChange = (opt_id) => {
+      let temp = allMcq?.options.map((mcq) => {
+        if (opt_id === mcq.opt_id) {
+          return { ...mcq, isGiven: !mcq.isGiven };
+        }
+        return mcq;
+      });
+      setAllMcq({ ...allMcq, options: temp });
+      const optId = temp.filter(val => val.isGiven == true).map(temp => temp.opt_id);
+
+      // setOptIdL(optId.length)
+      
+      setLiftUpData(optId);
+    };
     
+
   return (
   <SafeAreaView style={{backgroundColor:'#ecf2f6',flex:1}}>
     <ScrollView
     showsVerticalScrollIndicator={false}
     nestedScrollEnable={true}>
       <View style={{padding:15}}>
-        
         <View >
-        <View style={styles.TopScoreContainer}>
-          <View style={{flexDirection:'row'}}>
-            <Text style={styles.OutOff}>02</Text> 
-            <Text style={styles.OutOffTotal}>/05</Text> 
-          </View>
-
-          <View style={styles.NexrPrevIcons}>
-            <View style={{marginRight:15}}>
-              <AntDesign name="leftcircle" size={25} color="#2C8892" onPress={() => navigation.navigate('TypoMcq')} />
-            </View>
-            <View style={styles.iconStyle} >
-              <AntDesign name="rightcircle" size={25} color="#2C8892"  onPress={() => navigation.navigate('TypoMcq')} />
-            </View>
-          </View>
-
-        </View>
-
-        {/* score bar */}
-        <ProgressBar 
-            style={styles.Progressbar}
-            color={"#45B5C0"} 
-            progress={0.6}
-        />
-          
-        {/* Question & Options */}
-        <Text style={styles.SurvayQuestion}>For treating allergic rhinitis, would you recommend an intake of probiotics for your patients?</Text>
-  
-        <View style={styles.SurvayOptions}>
-            <Checkbox style={{ width: 20, height: 20 }} 
-              hideBox
-              status={checked ? 'checked' : 'unchecked'}
-              color={'#2C8892'}
-              onPress={() => {
-              setChecked(!checked);
-              
-            }}/>
-            <Text style={styles.optionS}>he flow of blood to tissues beyond the clot may be cut off</Text>
-        </View>
-        <View style={styles.SurvayOptions}>
-            <Checkbox style={styles.CheckBox}
-              status={checked ? 'checked' : 'unchecked'}
-              color={'#2C8892'}
-              onPress={() => {
-              setChecked(!checked);
-            }}/>
-            <Text style={styles.optionS}>Platelets stick to the edges of the cut and to one another, forming a plug</Text>
-        </View>
-        <View style={styles.SurvayOptions}>
-            <Checkbox style={styles.CheckBox}
-              status={checked ? 'checked' : 'unchecked'}
-              color={'#2C8892'}
-              onPress={() => {
-              setChecked(!checked);
-            }}/>
-            <Text style={styles.optionS}>You would bleed to death</Text>
-        </View>
-        <View style={styles.SurvayOptions}>
-            <Checkbox style={styles.CheckBox}
-              color={'#2C8892'}
-              status={checked ? 'checked' : 'unchecked'}
-              onPress={() => {
-              setChecked(!checked);
-            }}/>
-            <Text style={styles.optionS}>A scab will form on the skin surface</Text>
-        </View>
+        <Text style={styles.SurvayQuestion}>{allMCQs[currentIndex]?.question_title}</Text>
+            {
+              allMcq?.options.map((data, i) => {
+                // console.log(data?.isGiven);
+                return(
+                  <View style={styles.SurvayOptions} key={i}>
+                      <CheckBox
+                        style={{  padding: 5}}
+                        onClick={() => handleChange(data.opt_id)}
+                        isChecked={data.isGiven}
+                      />
+                      <Text style={styles.optionS}>{data.options}</Text>
+                  </View>
+                )
+              })
+            }
         </View>
       </View>
       </ScrollView>

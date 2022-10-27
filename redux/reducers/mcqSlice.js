@@ -46,7 +46,7 @@ export const GetQuizQuestions = createAsyncThunk("getQuizQuestions", async (data
 });
 
 export const saveQuizAnswer = createAsyncThunk("saveQuizAnswer", async (data)=>{
-   console.log('saveQuizAnswer',data);
+//    console.log('saveQuizAnswer',data);
     try{
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/saveQuizAnswer`, {
             method : 'POST',

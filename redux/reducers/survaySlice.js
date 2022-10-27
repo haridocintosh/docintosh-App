@@ -38,6 +38,24 @@ export const getSurveyQuestions = createAsyncThunk("getSurveyQuestions", async (
         console.log(e);
      }
 });
+export const saveSurveyAnswers = createAsyncThunk("saveSurveyAnswers", async (data)=>{
+    //  console.log("saveSurveyAnswers",data);
+    try{
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/saveSurveyAnswers`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body :JSON.stringify(data)
+         });
+        const result=  await responce.json();
+        // console.log('saveSurveyAnswers',result);
+        return result;
+     }
+     catch(e){
+        console.log(e);
+     }
+});
 
 export const surveyData = createSlice({
     name : "survey",
@@ -75,6 +93,22 @@ export const surveyData = createSlice({
                 state.postData = action.payload;
             }, 
         [getSurveyQuestions.rejected] : (state)=>
+            {
+                state.loading = false;
+                state.error   = true
+            }, 
+
+
+        [saveSurveyAnswers.pending] : (state)=>
+            {
+                state.loading =  true;
+            }, 
+        [saveSurveyAnswers.fulfilled] : (state, action)=>
+            {   
+                state.loading  =  false;
+                state.postData = action.payload;
+            }, 
+        [saveSurveyAnswers.rejected] : (state)=>
             {
                 state.loading = false;
                 state.error   = true
