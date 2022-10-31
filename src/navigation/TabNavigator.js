@@ -39,6 +39,8 @@ import KnowYourHeart from '../screens/QuizLevels/KnowYourHeart';
 import QuizGame from '../screens/QuizLevels/QuizGame';
 import QuizGameQuetion from '../screens/QuizLevels/QuizGameQuetion';
 import ScratchOffer from '../screens/Survay/ScratchOffer';
+import ThankYouPage from '../screens/Survay/ThankYouPage';
+
 
 
 const Tab = createBottomTabNavigator();
@@ -264,6 +266,15 @@ const HomeStack = () => {
       <Stack.Screen
         name="ScratchOffer"
         component={ScratchOffer}
+        options={{headerShown: false,  
+          title: 'Search'}}
+        // options={({route}) => ({
+        //   title: route.params?.title,
+        // })}
+      />
+      <Stack.Screen
+        name="ThankYouPage"
+        component={ThankYouPage}
         options={{headerShown: false,  
           title: 'Search'}}
         // options={({route}) => ({

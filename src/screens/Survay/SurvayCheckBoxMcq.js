@@ -5,42 +5,36 @@ import CheckBox from 'react-native-check-box'
 
 const SurvayCheckBoxMcq = ({setLiftUpData,currentIndex,allMCQs}) => {
   const [allMcq, setAllMcq]   = useState(allMCQs[currentIndex]);
-  const [optIdL, setOptIdL]   = useState(0);
-  const navigation = useNavigation();
 
     const handleChange = (opt_id) => {
       let temp = allMcq?.options.map((mcq) => {
         if (opt_id === mcq.opt_id) {
-          return { ...mcq, isGiven: !mcq.isGiven };
+          return { ...mcq, checked: !mcq.checked };
         }
         return mcq;
       });
+      // console.log("temp",temp);
       setAllMcq({ ...allMcq, options: temp });
-      const optId = temp.filter(val => val.isGiven == true).map(temp => temp.opt_id);
-
-      // setOptIdL(optId.length)
-      
+      const optId = temp.filter(val => val.checked == true).map(temp => temp.opt_id);
       setLiftUpData(optId);
+      // console.log("optId",optId);
     };
     
 
   return (
   <SafeAreaView style={{backgroundColor:'#ecf2f6',flex:1}}>
-    <ScrollView
-    showsVerticalScrollIndicator={false}
-    nestedScrollEnable={true}>
-      <View style={{padding:15}}>
+   
+      <View style={{paddingHorizontal:15}}>
         <View >
-        <Text style={styles.SurvayQuestion}>{allMCQs[currentIndex]?.question_title}</Text>
             {
               allMcq?.options.map((data, i) => {
-                // console.log(data?.isGiven);
+                // console.log("isChecked",data?.checked);
                 return(
                   <View style={styles.SurvayOptions} key={i}>
                       <CheckBox
-                        style={{  padding: 5}}
+                        style={{ padding: 5}}
                         onClick={() => handleChange(data.opt_id)}
-                        isChecked={data.isGiven}
+                        isChecked={data.checked}
                       />
                       <Text style={styles.optionS}>{data.options}</Text>
                   </View>
@@ -49,7 +43,6 @@ const SurvayCheckBoxMcq = ({setLiftUpData,currentIndex,allMCQs}) => {
             }
         </View>
       </View>
-      </ScrollView>
     </SafeAreaView>
      
   )
@@ -94,7 +87,6 @@ const styles = StyleSheet.create({
     borderRadius:7,
     height:6
   },
-  SurvayQuestion:{marginVertical:18, fontSize:16, fontWeight:'600', color:'#071B36',lineHeight:24},
 
   SurvayOptions:{
     backgroundColor: "#fff",
@@ -102,7 +94,7 @@ const styles = StyleSheet.create({
     borderRadius:4,
     flexDirection:'row',
     paddingVertical:10,
-    marginVertical:10,
+    marginBottom:10,
     alignItems:'center',
     paddingHorizontal:10,
     borderColor:'#D5DEED',

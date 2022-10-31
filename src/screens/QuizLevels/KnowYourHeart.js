@@ -21,7 +21,10 @@ import { Button } from "react-native-elements";
 import UserAvatar from "../../assets/images/p2.png";
 import { Card } from "react-native-paper";
 
-const KnowYourHeart = () => {
+const KnowYourHeart = ({route}) => {
+  const { score } = route?.params;
+  const { TotalMcq } = route?.params;
+
     const [gamesTab, setGamesTab] = useState(1);
     const navigation = useNavigation();
     const onSelectSwitch = (value) => {
@@ -33,7 +36,9 @@ const KnowYourHeart = () => {
         >
           <Card style={styles.cardbody}>
             <View>
+              
               <View>
+              <Text style={styles.score} >{score}/{TotalMcq}</Text>
                 <Text style={styles.cardheading}>
                   386 Coins Left to reach Level 5!!!
                 </Text>
@@ -211,7 +216,12 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     fontSize: 14,
     fontWeight: "500",
-    marginTop: 20,
+    marginTop: 10,
+  },
+  score: {
+    alignSelf: "center",
+    fontSize: 20,
+    fontWeight: "600",
   },
   badgeparent: {
     flexDirection: "row",

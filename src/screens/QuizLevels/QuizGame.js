@@ -13,7 +13,7 @@ import { GetQuizQuestions } from '../../../redux/reducers/mcqSlice';
 const QuizGame = ({route}) => {
   const dispatch =  useDispatch();
   // const { basicId } = route?.params;
-  const { singleMcq } = route?.params;
+  const { basicId } = route?.params;
     
     const animatedValue = useRef(new Animated.Value(0)).current;
     const [isTop, setIsTop] = useState(true);
@@ -31,7 +31,7 @@ const QuizGame = ({route}) => {
     }
 
     const Mcqs = async() => {
-      const result = await dispatch(GetQuizQuestions({basic_id : singleMcq}));
+      const result = await dispatch(GetQuizQuestions({basic_id : basicId}));
       setMcqQue(result.payload.questions);
     };
 
@@ -58,7 +58,7 @@ const QuizGame = ({route}) => {
         </Svg>
       </Animated.View>
       <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true} style={{padding:10}}>
-        <QuizGameQuetion mcqQue={mcqQue} isTop={isTop} singleMcq={singleMcq}/>
+        <QuizGameQuetion mcqQue={mcqQue} isTop={isTop} singleMcq={basicId}/>
       </ScrollView>
     </SafeAreaView>
   )

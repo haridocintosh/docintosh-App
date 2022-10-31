@@ -34,8 +34,8 @@ const validateAnswer = async (ans) =>{
   if(currentQuestionIndex !== TotalMcq-1){
     setCurrentQuestionIndex(currentQuestionIndex+1);
   }else{
-    setShowScoreModal(true);
-    
+    // setShowScoreModal(true);
+    navigation.navigate("KnowYourHeart", {score: score, TotalMcq: TotalMcq});
   }
 
   if(ans.is_correct == 1){
@@ -59,7 +59,7 @@ const restartQuiz = () => {
   // setCurrentQuestionIndex(0);
   // setScore(0);
   // navigation.navigate("QuizLevels");
-  navigation.navigate("KnowYourHeart");
+  
 }
 
 const styling = {
@@ -108,7 +108,7 @@ useEffect(()=>{
             })}
           </View>
 
-          <Modal animationType="slide" transparent={true} visible={showScoreModal}>
+          {/* <Modal animationType="slide" transparent={true} visible={showScoreModal}>
               <View style={styles.ModalContainer}>
                   <View style={styles.ModalCart}>
                       <Text style={styles.ModalGeet}>
@@ -123,12 +123,11 @@ useEffect(()=>{
                           </Text>
                       </View>
                       <TouchableOpacity onPress={restartQuiz} style={{ backgroundColor: COLORS.accent, padding: 20, width: '100%', borderRadius: 20 }}>
-                          {/* <Text style={{textAlign: 'center', color: COLORS.white, fontSize: 20}}>Retry Quiz</Text> */}
-                          <Text style={{textAlign: 'center', color: COLORS.white, fontSize: 20}}>Score Board</Text>
+                          <Text style={{textAlign: 'center', color: COLORS.white, fontSize: 20}}>Jump On Score Board</Text>
                       </TouchableOpacity>
                   </View>
               </View>
-               </Modal>
+          </Modal> */}
         </View>
   )
 }

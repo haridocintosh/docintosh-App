@@ -13,32 +13,38 @@ const QuizLevels = () => {
     const [toggle, setToggle] = useState(false);
     const [quizData, setQuizData] = useState([]);
     const [topicId, setTopicId] = useState(null);
+    const [basicId, setBasicId] = useState(null);
+    const [title, setTitle] = useState(null);
     const navigation = useNavigation();
     
-    const McqDataHandle = (topicId) => {
+    const McqDataHandle = (topicId,title,basic_id) => {
         setToggle(true);
-       // console.log("topicId",topicId);
+      //  console.log("topicId",topicId);
+      //  console.log("title",title);
+      //  console.log("basic_id",basic_id);
         setTopicId(topicId);
+        setTitle(title);
+        setBasicId(basic_id);
     }
   
 const asyncFetchDailyData = async () => {
   const jsonValue = await AsyncStorage.getItem('USER_INFO');
   const data=await JSON.parse(jsonValue);
   const result=JSON.parse(data)['data'];
-
   fetchPostData(result['role'],result['city_id'], result['assoc_id'], result['circle_type'], result['id'])
  }
  
  const fetchPostData = async (role,city_id,assoc_id,circle_type,userId)=>{
  const postDetails = {role,city_id,assoc_id,circle_type,userId}
  const result = await dispatch(quizPostData(postDetails));
-  // console.log('jdjdbj',result.payload.mcq_data);
- setQuizData(result.payload.mcq_data);
-}
+ // console.log('jdjdbj',result.payload);
+  setQuizData(result.payload);
 
-    useEffect(()=>{
-      asyncFetchDailyData();
-    }, [])
+}
+  //console.log('checkData',Object.values(quizData))
+  useEffect(()=>{
+    asyncFetchDailyData();
+  }, [])
 
   return (
     <View style={styles.container}>
@@ -47,11 +53,12 @@ const asyncFetchDailyData = async () => {
 
     <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true}>
         
-     {quizData.reverse().map((user, index) => {  
+     {quizData && quizData?.map((user, index) => {  
           return(
-            <TouchableOpacity onPress={() => McqDataHandle(user.topic_id)} key={index}>
+            <TouchableOpacity onPress={() => McqDataHandle(user?.topic_id, user?.title,user?.basic_id)} 
+            key={index}>
               <LinearGradient colors={[ '#43c5bf', '#15b3ac']} start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }} style={styles.cartGradiant}>
-                  <Text style={styles.cartText}>{user.topic}</Text>
+                  <Text style={styles.cartText}>{user.title}</Text>
               </LinearGradient>
             </TouchableOpacity>
            )

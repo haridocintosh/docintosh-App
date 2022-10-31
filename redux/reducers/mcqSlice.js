@@ -3,7 +3,7 @@ import { mainApi } from "../../src/apis/constant";
 
 export const quizPostData = createAsyncThunk("getAllPost", async (data)=>{
     try{
-        const responce = await fetch(`${mainApi.baseUrl}/ApiController/getMcqData`, {
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/getQuizData`, {
             method : 'POST',
             headers:{
                 'Content-Type': 'application/json'
@@ -19,7 +19,7 @@ export const quizPostData = createAsyncThunk("getAllPost", async (data)=>{
             })
          });
         const result=  await responce.json();
-     //   console.log('resultttdaata',result);
+    //   console.log('resultttdaata',result);
         return result;
      }
      catch(e){
