@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { 
   View,
   Text,
@@ -19,13 +19,17 @@ import badge1 from "../../assets/dr-icon/badge1.png";
 import { Button } from "react-native-elements";
 import { Card } from "react-native-paper";
 import { useNavigation } from '@react-navigation/native';
+import ScratchOffer from "./ScratchOffer";
+
 
 const ThankYouPage = () => {
+  const [showOffer, setShowOffer] = useState(true)
   const navigation = useNavigation();
   return (
     <SafeAreaView
           style={{ flex: 1, backgroundColor: "#2C8892", position: "relative" }}
         >
+          {showOffer && <ScratchOffer setShowOffer={setShowOffer}/>}
           <Card style={styles.cardbody}>
             <View>
               <View>
@@ -132,7 +136,7 @@ const styles = StyleSheet.create({
       shadowColor: "#000",
       shadowOpacity: 0.3,
       elevation: 2,
-      zIndex: 99999,
+      // zIndex: 99999,
       position: "absolute",
       width: "100%",
       bottom: 0,
