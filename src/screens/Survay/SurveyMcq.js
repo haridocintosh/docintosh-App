@@ -8,15 +8,14 @@ import RadioMcq from './RadioMcq';
 import TypoMcq from './TypoMcq';
 import SurvayCheckBoxMcq from './SurvayCheckBoxMcq';
 import { AntDesign } from '@expo/vector-icons';
-import { ProgressBar, Checkbox} from 'react-native-paper';
+import { ProgressBar} from 'react-native-paper';
 
 
 const SurveyMcq = ({route}) => {
-
   const [allMCQs,setAllMCQs] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [liftUpData, setLiftUpData] = useState(null);
-  const [liftUpCheckData, setLiftUpCheckData] = useState(null);
+  const [liftUpCheckData, setLiftUpCheckData] = useState([]);
   const {surveyid} = route.params;
   
   const navigation = useNavigation();
@@ -33,35 +32,32 @@ const SurveyMcq = ({route}) => {
      const postDetails = {surveyid:surveyid,id:id}
      const result = await dispatch(getSurveyQuestions(postDetails));
      const data = await result.payload.questions;
-    //  console.log("data",data);
      setAllMCQs(data);
   }
 
-  // console.log("allMCQs.length-1",allMCQs.length-1);
-  // console.log("allMCQs.length",allMCQs.length);
-
+  const MCQsLength = parseInt(allMCQs.length);
   //-----------------save survay ans--------------------------
   
   const nextMcq = async (basic_id, qid) =>{
-    if(currentQuestionIndex !== allMCQs.length-1){
-      const jsonValue = await AsyncStorage.getItem('USER_INFO');
-      const data = await JSON.parse(jsonValue);
-      const result = JSON.parse(data)['data'];
-      console.log("liftUpCheckData",liftUpCheckData);
-      
-      if(liftUpCheckData){
+    const jsonValue = await AsyncStorage.getItem('USER_INFO');
+    const data = await JSON.parse(jsonValue);
+    const result = JSON.parse(data)['data'];
+    if(liftUpCheckData){
         liftUpCheckData.map(data =>
-          PosData(result.id,basic_id,qid, data, result.profileimage));
-          setLiftUpCheckData("");
-      }else{
-        PosData(result.id,basic_id,qid, liftUpData, result.profileimage);
-      }
-      
-      setCurrentQuestionIndex(currentQuestionIndex+1);
-      setLiftUpData("");
-    }else{
-      navigation.navigate('MultipleImagesUpload');
+        PosData(result.id,basic_id,qid,data,result.profileimage));
+        setLiftUpCheckData(null);
     }
+    if(liftUpData){
+      PosData(result.id,basic_id,qid, liftUpData, result.profileimage);
+      setLiftUpData(null);
+    }
+    if(currentQuestionIndex !== MCQsLength-1){
+      setCurrentQuestionIndex(currentQuestionIndex+1);
+    }else{
+      // navigation.navigate('ScratchOffer');
+      navigation.navigate('ThankYouPage');
+    }
+    
   }
 
   const prevMcq = () =>{
@@ -85,7 +81,7 @@ const SurveyMcq = ({route}) => {
   const outOff = currentQuestionIndex / allMCQs.length;
 
   return (
-  <SafeAreaView style={{flex:1}}>
+  <SafeAreaView style={{flex:1,backgroundColor:'#ecf2f6'}}>
     <View style={{padding:15}}>
         <View style={styles.TopScoreContainer}>
           <View style={{flexDirection:'row'}}>
@@ -102,17 +98,17 @@ const SurveyMcq = ({route}) => {
             </TouchableOpacity>
           </View>
         </View>
+
         {/* score bar */}
         <ProgressBar 
             style={styles.Progressbar}
             color={"#45B5C0"} 
             progress={outOff ? outOff : 0}
         />
-    </View>   
-    <Text>
-    {liftUpCheckData && liftUpCheckData.map(data => data)}
-    </Text>
+        <Text style={styles.SurvayQuestion}>{allMCQs[currentQuestionIndex]?.question_title}</Text>
+      </View>
 
+    
 
       {
         allMCQs[currentQuestionIndex]?.question_type == 3 && 
@@ -134,14 +130,18 @@ const SurveyMcq = ({route}) => {
       } 
 
       {
-      allMCQs[currentQuestionIndex]?.question_type == 1 && 
-      <RadioMcq 
-        setLiftUpData={setLiftUpData}  
-        currentIndex={currentQuestionIndex}
-        allMCQs={allMCQs}
-        nextMcq={nextMcq}
-      /> 
+        allMCQs[currentQuestionIndex]?.question_type == 1 && 
+        <RadioMcq 
+          setLiftUpData={setLiftUpData}  
+          liftUpData={liftUpData}  
+          currentIndex={currentQuestionIndex}
+          allMCQs={allMCQs}
+          nextMcq={nextMcq}
+        /> 
       } 
+      
+      
+      
   </SafeAreaView>
   )
 }
@@ -169,5 +169,6 @@ const styles = StyleSheet.create({
     borderRadius:7,
     height:6,
   },
+  SurvayQuestion:{marginTop:40, fontSize:16, fontWeight:'600', color:'#071B36',lineHeight:24},
 
 })

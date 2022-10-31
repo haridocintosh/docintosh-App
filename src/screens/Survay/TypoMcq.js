@@ -8,9 +8,8 @@ const TypoMcq = ({ setLiftUpData,currentIndex,allMCQs,length}) => {
     <ScrollView keyboardShouldPersistTaps={'handled'}
     showsVerticalScrollIndicator={false}
     nestedScrollEnable={true}>
-      <View style={{padding:15}}>
+      <View style={{paddingHorizontal:15}}>
         <View >
-          <Text style={styles.SurvayQuestion}>{allMCQs[currentIndex]?.question_title}</Text>
           <TextInput style={styles.inputText}
             autoCapitalize="none"
             placeholder='Type Here'
@@ -67,13 +66,6 @@ const styles = StyleSheet.create({
     borderRadius:7,
     height:6
   },
-  SurvayQuestion:{
-    marginVertical:18, 
-    fontSize:16, 
-    fontWeight:'600', 
-    color:'#071B36',
-    lineHeight:24,
-},
 
   SurvayOptions:{
     backgroundColor: "#fff",
