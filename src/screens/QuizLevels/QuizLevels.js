@@ -1,4 +1,4 @@
-import { View, Text , TouchableOpacity, ScrollView} from 'react-native';
+import { View, Text , TouchableOpacity, ScrollView,ActivityIndicator} from 'react-native';
 import { styles } from './QuizLevelaStyles';
 import React, { useEffect, useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient'
@@ -13,18 +13,12 @@ const QuizLevels = () => {
     const [toggle, setToggle] = useState(false);
     const [quizData, setQuizData] = useState([]);
     const [topicId, setTopicId] = useState(null);
-    const [basicId, setBasicId] = useState(null);
-    const [title, setTitle] = useState(null);
+    const [loader, setLoader] = useState(true);
     const navigation = useNavigation();
     
-    const McqDataHandle = (topicId,title,basic_id) => {
+    const McqDataHandle = (topicId) => {
         setToggle(true);
-      //  console.log("topicId",topicId);
-      //  console.log("title",title);
-      //  console.log("basic_id",basic_id);
         setTopicId(topicId);
-        setTitle(title);
-        setBasicId(basic_id);
     }
   
 const asyncFetchDailyData = async () => {
@@ -39,6 +33,7 @@ const asyncFetchDailyData = async () => {
  const result = await dispatch(quizPostData(postDetails));
  // console.log('jdjdbj',result.payload);
   setQuizData(result.payload);
+  setLoader(false)
 
 }
   //console.log('checkData',Object.values(quizData))
@@ -46,25 +41,33 @@ const asyncFetchDailyData = async () => {
     asyncFetchDailyData();
   }, [])
 
+  if(loader){
+    return(
+    <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+        <ActivityIndicator size={'large'} color={"#2C8892"}/>
+    </View>)
+  }
+
   return (
     <View style={styles.container}>
     {toggle && <McqListModal toggle={setToggle} quizData={quizData} topicId={topicId}/>}
       {/* <LinearGradient colors={['transparent', '#08A099']} style={styles.circleView}/> */}
 
-    <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true}>
-        
-     {quizData && quizData?.map((user, index) => {  
-          return(
-            <TouchableOpacity onPress={() => McqDataHandle(user?.topic_id, user?.title,user?.basic_id)} 
-            key={index}>
-              <LinearGradient colors={[ '#43c5bf', '#15b3ac']} start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }} style={styles.cartGradiant}>
-                  <Text style={styles.cartText}>{user.title}</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-           )
-          }
-        )}
-        </ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true}>
+         {/* <ActivityIndicator color={"#2C8892"}/> */}
+          
+         {quizData && quizData?.map((user, index) => {  
+            return(
+              <TouchableOpacity onPress={() => McqDataHandle(user?.topic_id, user?.title,user?.basic_id)} 
+              key={index}>
+                <LinearGradient colors={[ '#43c5bf', '#15b3ac']} start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }} style={styles.cartGradiant}>
+                    <Text style={styles.cartText}>{user.title}</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            )
+            }
+          )}
+      </ScrollView>
 
     </View>
   )

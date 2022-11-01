@@ -1,202 +1,213 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
   SafeAreaView,
-  ImageBackground,
   Image,
   StyleSheet,
+  ScrollView,
+  ActivityIndicator,
+  TouchableOpacity
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Path1 from "../../assets/dr-icon/Path1.png";
-import Path2 from "../../assets/dr-icon/Path2.png";
-import Path3 from "../../assets/dr-icon/Path3.png";
-import Path4 from "../../assets/dr-icon/Path4.png";
-import d from "../../assets/dr-icon/d.png";
-import winner from "../../assets/dr-icon/winner.png";
-import king from "../../assets/dr-icon/king.png";
-import badge from "../../assets/dr-icon/badge.png";
-import badge1 from "../../assets/dr-icon/badge1.png";
+import beginnerBadge from "../../assets/dr-icon/beginnerBadge.png";
+import intermediateBadge from "../../assets/dr-icon/intermediateBadge.png";
+import ExpertBadge from "../../assets/dr-icon/ExpertBadge.png";
+import legendBadge from "../../assets/dr-icon/legendBadge.png";
+import Accesstime from "../../assets/dr-icon/Accesstime.png";
+import outoffBadge from "../../assets/dr-icon/outoffBadge.png";
+import dcoin from "../../assets/dr-icon/dcoin.png";
+import goldCrown from "../../assets/dr-icon/gold-crown.png";
+import outoffWhiteBadge from "../../assets/dr-icon/outoffWhiteBadge.png";
+import whiteAccesstime from "../../assets/dr-icon/whiteAccesstime.png";
 import { Button } from "react-native-elements";
 import UserAvatar from "../../assets/images/p2.png";
 import { Card } from "react-native-paper";
+import axios from "axios";
+import { mainApi } from "../../apis/constant";
 
-const KnowYourHeart = ({route}) => {
+const KnowYourHeart = ({ route }) => {
   const { score } = route?.params;
   const { TotalMcq } = route?.params;
 
-    const [gamesTab, setGamesTab] = useState(1);
-    const navigation = useNavigation();
-    const onSelectSwitch = (value) => {
-         setGamesTab(value);
-    };
+  const [userData, setUserData] = useState([]);
+  const [loader, setLoader] = useState(true);
+  const [sliceData, setSliceData] = useState(10);
+  const navigation = useNavigation();
+
+  const getLeaderboardData = () => {
+    axios
+      .get(`${mainApi.baseUrl}/ApiController/global_leaderboard`)
+      .then((res) => {
+        // console.log("res",res.data);
+        setUserData(res.data);
+        setLoader(false);
+      });
+  };
+  // console.log("userData",userData);
+  useEffect(() => {
+    getLeaderboardData();
+  }, []);
   return (
     <SafeAreaView
-          style={{ flex: 1, backgroundColor: "#2C8892", position: "relative" }}
-        >
-          <Card style={styles.cardbody}>
-            <View>
+      style={{ flex: 1, backgroundColor: "#2C8892", position: "relative" }}
+    >
+      <Card style={styles.cardbody}>
+        <View style={styles.scoreboard}>
+          <Image source={outoffWhiteBadge} style={styles.outoffBadge} />
+          <Text style={styles.scoreboardText}>
+            {score}/{TotalMcq}
+          </Text>
+          <Text style={styles.WhiteDevider} />
+          <Image source={whiteAccesstime} style={styles.Accesstime} />
+          <Text style={styles.scoreboardText}>2:30 min</Text>
+        </View>
+        <View>
+          <View style={styles.badgeConatiner}>
+            <Text style={styles.cardheading}>
+              386 Coins Left to reach Level 5!!!
+            </Text>
+            <View style={styles.badgeparent}>
+              <View style={styles.levelsBadge}>
+                <Image source={beginnerBadge} style={styles.badgeimg} />
+                <View>
+                  <Text style={styles.levelText}>Beginner</Text>
+                  <View style={styles.row}>
+                    <Image source={dcoin} style={styles.imaguser} />
+                    <Text style={styles.coinsCount}>200</Text>
+                  </View>
+                </View>
+              </View>
+
+              <View style={styles.levelsBadge}>
+                <Image source={intermediateBadge} style={styles.badgeimg} />
+                <View>
+                  <Text style={styles.levelText}>Intermediate</Text>
+                  <View style={styles.row}>
+                    <Image source={dcoin} style={styles.imaguser} />
+                    <Text style={styles.coinsCount}>400</Text>
+                  </View>
+                </View>
+              </View>
+
+              <View style={styles.levelsBadge}>
+                <Image source={ExpertBadge} style={styles.badgeimg} />
+                <View>
+                  <Text style={styles.levelText}>Expert</Text>
+                  <View style={styles.row}>
+                    <Image source={dcoin} style={styles.imaguser} />
+                    <Text style={styles.coinsCount}>600</Text>
+                  </View>
+                </View>
+              </View>
+
+              <View style={styles.levelsBadge}>
+                <Image source={legendBadge} style={styles.badgeimg} />
+                <View>
+                  <Text style={styles.levelText}>Legend</Text>
+                  <View style={styles.row}>
+                    <Image source={dcoin} style={styles.imaguser} />
+                    <Text style={styles.coinsCount}>800</Text>
+                  </View>
+                </View>
+              </View>
               
-              <View>
-              <Text style={styles.score} >{score}/{TotalMcq}</Text>
-                <Text style={styles.cardheading}>
-                  386 Coins Left to reach Level 5!!!
-                </Text>
-              </View>
-              <View style={styles.badgeparent}>
-                <View style={{}}>
-                  <ImageBackground source={Path1} style={styles.badgeimg}>
-                    <Image source={badge} style={styles.badgeimg} />
-                  </ImageBackground>
-                  <View>
-                    <Text>Beginner</Text>
-                    <View style={styles.row}>
-                      <Image source={d} style={styles.imaguser} />
-                      <Text style={{ fontSize: 12 }}>200</Text>
-                    </View>
-                  </View>
-                </View>
-                <View>
-                  <ImageBackground source={Path2} style={styles.badgeimg}>
-                    <Image source={winner} style={styles.badgeimg} />
-                  </ImageBackground>
-                  <View>
-                    <Text style={{ alignSelf: "center" }}>Intermediate</Text>
-                    <View style={styles.row}>
-                      <Image source={d} style={styles.imaguser} />
-                      <Text style={{ fontSize: 12 }}>200</Text>
-                    </View>
-                  </View>
-                </View>
-                <View>
-                  <ImageBackground source={Path3} style={styles.badgeimg}>
-                    <Image source={badge1} style={styles.badgeimg} />
-                  </ImageBackground>
-                  <View>
-                    <Text>Expert</Text>
-                    <View style={styles.row}>
-                      <Image source={d} style={styles.imaguser} />
-                      <Text style={{ fontSize: 12 }}>200</Text>
-                    </View>
-                  </View>
-                </View>
-                <View>
-                  <ImageBackground source={Path4} style={styles.badgeimg}>
-                    <Image source={king} style={styles.badgeimg} />
-                  </ImageBackground>
-                  <View>
-                    <Text style={{ marginBottom: 1 }}>Legend</Text>
-                    <View style={styles.row}>
-                      <Image source={d} style={styles.imaguser} />
-                      <Text style={{ fontSize: 12 }}>200</Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View
-                style={{ paddingLeft: 20, backgroundColor: "#ffff", marginTop: 10 }}
+            </View>
+          </View>
+
+          <View style={{ backgroundColor: "#ffff", padding: 15 }}>
+            <View style={{ height: 300 }}>
+              <ScrollView
+                showsVerticalScrollIndicator={false}
+                nestedScrollEnable={true}
               >
-                <Text style={{ fontSize: 18, fontWeight: "600", marginBottom: 10 }}>
+                <Text style={{ fontSize: 18, fontWeight: "600" }}>
                   Winners for this Challenge
                 </Text>
-                <View style={styles.row}>
-                  <Text style={styles.count}>1</Text>
-                  <View>
-                    <Image style={styles.avtatsize} source={UserAvatar} />
-                  </View>
-                  <View style={styles.marginleft}>
-                    <Text style={styles.listitemtst}>Dr. Kiran Raj</Text>
-                    <Text style={styles.itemlisttxt2}>9140 DocCoin Collected</Text>
-                  </View>
-                </View>
-                <View style={styles.margintop}></View>
-    
-                <View style={styles.row}>
-                  <Text style={styles.count}>2</Text>
-    
-                  <View>
-                    <Image style={styles.avtatsize} source={UserAvatar} />
-                  </View>
-                  <View style={styles.marginleft}>
-                    <Text style={styles.listitemtst}>Dr. Kiran Raj</Text>
-                    <Text style={styles.itemlisttxt2}>9140 DocCoin Collected</Text>
-                  </View>
-                </View>
-                <View style={styles.margintop}></View>
-    
-                <View style={styles.row}>
-                  <Text style={styles.count}>3</Text>
-    
-                  <View>
-                    <Image style={styles.avtatsize} source={UserAvatar} />
-                  </View>
-                  <View style={styles.marginleft}>
-                    <Text style={styles.listitemtst}>Dr. Kiran Raj</Text>
-                    <Text style={styles.itemlisttxt2}>9140 DocCoin Collected</Text>
-                  </View>
-                </View>
-                <View style={styles.margintop}></View>
-    
-                <View style={styles.row}>
-                  <Text style={styles.count}>4</Text>
-    
-                  <View>
-                    <Image style={styles.avtatsize} source={UserAvatar} />
-                  </View>
-                  <View style={styles.marginleft}>
-                    <Text style={styles.listitemtst}>Dr. Kiran Raj</Text>
-                    <Text style={styles.itemlisttxt2}>9140 DocCoin Collected</Text>
-                  </View>
-                </View>
-                <View style={styles.margintop}></View>
-                <View style={styles.row}>
-                  <Text style={styles.count}>5</Text>
-    
-                  <View>
-                    <Image style={styles.avtatsize} source={UserAvatar} />
-                  </View>
-                  <View style={styles.marginleft}>
-                    <Text style={styles.listitemtst}>Dr. Kiran Raj</Text>
-                    <Text style={styles.itemlisttxt2}>9140 DocCoin Collected</Text>
-                  </View>
-                </View>
-                <View>
-                  <Text
-                    style={{ color: "blue", alignSelf: "center", marginTop: 16 }}
-                  >
-                    View All
-                  </Text>
-                </View>
-              </View>
+
+                {loader && (
+                  <ActivityIndicator
+                    color={"#2C8892"}
+                    style={{ marginTop: 130 }}
+                  />
+                )}
+
+                {userData &&
+                  userData?.slice(0, sliceData).map((data, index) => {
+                    return (
+                      <View style={styles.collectedUsers} key={index}>
+                        <View style={styles.row}>
+                          <Text style={styles.count}>{index + 1}</Text>
+                          <View style={styles.picContainer}>
+                            <Image
+                              style={styles.avtatsize}
+                              source={{ uri: data.profileimage }}
+                            />
+                            <Image
+                              style={styles.goldCrown}
+                              source={goldCrown}
+                            />
+                          </View>
+                          <View style={styles.marginleft}>
+                            <Text style={styles.listitemtst}>
+                              Dr. {data.username}
+                            </Text>
+                            <View style={styles.userScoreCount}>
+                              <Image
+                                source={outoffBadge}
+                                style={styles.outoffBadge}
+                              />
+                              <Text style={styles.itemlisttxt2}>
+                                {data.mcq_contest}
+                              </Text>
+                              <Text style={styles.devider}> | </Text>
+                              <Image
+                                source={Accesstime}
+                                style={styles.Accesstime}
+                              />
+                              <Text style={styles.itemlisttxt2}>
+                                {parseInt(data.total_time.split(".")[0]) % 60}
+                                {data.total_time.split(".")[1] &&
+                                  `:` +
+                                    (parseInt(
+                                      data.total_time.split(".")[1]
+                                    ).toFixed(2) %
+                                      60)}{" "}
+                                min
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                        <View style={styles.row}>
+                          <Image source={dcoin} style={styles.imaguser} />
+                          <Text style={styles.TotalDCoins}> 20976</Text>
+                        </View>
+                      </View>
+                    );
+                  })}
+              </ScrollView>
+            </View>
+            <View>
+
+              <TouchableOpacity onPress={() => setSliceData()}>
+                <Text style={styles.ViewAllText}>View All</Text>
+              </TouchableOpacity>
+
               <Button
                 title="Back to Categories"
-                buttonStyle={{
-                  marginTop: 30,
-                  bottom: 10,
-                  width: "100%",
-                  height: 48,
-                  alignSelf: "center",
-                  borderColor: "#fff",
-                  borderRadius: 15 / 2,
-                  backgroundColor: "#2C8892",
-                }}
-                titleStyle={{
-                  color: "#fff",
-                }}
+                buttonStyle={styles.buttonStyle}
+                titleStyle={{ color: "#fff" }}
                 onPress={() => navigation.navigate("QuizLevels")}
               />
             </View>
-          </Card>
-          {/* <View>
-          <Image source={knowheart} style={{width:'100%', height:230, marginTop:20}}></Image>
+          </View>
         </View>
-     */}
-        </SafeAreaView>
-  )
-}
+      </Card>
+    </SafeAreaView>
+  );
+};
 
 export default KnowYourHeart;
-
 
 const styles = StyleSheet.create({
   cardbody: {
@@ -206,17 +217,17 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOpacity: 0.3,
     elevation: 2,
-    zIndex: 99999,
+    // zIndex: 99999,
     position: "absolute",
     width: "100%",
     bottom: 0,
-    padding: 15,
+    // padding: 15,
   },
   cardheading: {
     alignSelf: "center",
     fontSize: 14,
     fontWeight: "500",
-    marginTop: 10,
+    // marginTop: 10,
   },
   score: {
     alignSelf: "center",
@@ -226,30 +237,44 @@ const styles = StyleSheet.create({
   badgeparent: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 30,
+    PaddingTop: 20,
+  },
+  badgeConatiner: {
+    padding: 15,
+    backgroundColor: "rgba(213, 222, 237, 0.2)",
   },
   badgeimg: {
-    width: 30,
-    height: 30,
+    width: 35,
+    height: 42,
   },
   avtatsize: {
-    width: 40,
-    height: 40,
+    width: 45,
+    height: 45,
+    borderRadius: 50,
+  },
+  goldCrown: {
+    width: 30,
+    height: 30,
+    position: "absolute",
+    right: -9,
+    top: -13,
   },
   imaguser: {
-    width: 14,
-    fontSize: 14,
-    height: 14,
+    width: 15,
+    height: 15,
+    marginRight: 5,
   },
-
   row: {
     flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  line: {
-    borderWidth: 1,
-    borderColor: "#D5DEED",
-    marginTop: 17,
+  collectedUsers: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 20,
   },
+
   listitemtst: {
     fontSize: 14,
     fontWeight: "600",
@@ -257,17 +282,88 @@ const styles = StyleSheet.create({
   },
   count: {
     paddingRight: 10,
-    marginTop: 10,
+    color: "#51668A",
   },
   itemlisttxt2: {
     color: "#51668A",
-    fontWeight: "400",
+    fontWeight: "600",
     fontSize: 12,
   },
-  margintop: {
-    marginTop: 20,
-  },
   marginleft: {
-    marginLeft: 20,
+    marginLeft: 15,
+    alignItems: "flex-start",
   },
+  levelsBadge: {
+    justifyContent: "center",
+    alignItems: "center",
+    // borderWidth:1,
+    width: 90,
+  },
+  levelText: {
+    color: "#51668A",
+  },
+  coinsCount: {
+    color: "#51668A",
+    fontSize: 12,
+  },
+  userScoreCount: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 3,
+  },
+  devider: {
+    color: "#51668A",
+    fontSize: 18,
+    marginTop: -3,
+  },
+  Accesstime: {
+    height: 20,
+    width: 20,
+    marginRight: 5,
+  },
+  outoffBadge: {
+    height: 20,
+    width: 13,
+    marginRight: 5,
+  },
+  TotalDCoins: {
+    color: "#51668A",
+  },
+  picContainer: {
+    position: "relative",
+  },
+  scoreboard: {
+    position: "absolute",
+    borderWidth: 1,
+    borderRadius: 5,
+    backgroundColor: "#0D2A82",
+    flexDirection: "row",
+    alignSelf: "center",
+    top: -40,
+    paddingVertical: 7,
+    paddingHorizontal: 10,
+    borderColor: "#96AEF8",
+    alignItems: "center",
+  },
+  scoreboardText: {
+    color: "#fff",
+    fontSize: 12,
+    fontWeight: "600",
+  },
+  WhiteDevider: {
+    marginHorizontal: 15,
+    backgroundColor: "#96AEF8",
+    width: 1,
+  },
+  ViewAllText:{ color: "#2376E5", alignSelf: "center", fontWeight:'600',marginTop:10 },
+  buttonStyle:{
+    marginTop: 10,
+    width: "100%",
+    height: 48,
+    alignSelf: "center",
+    borderColor: "#fff",
+    borderRadius: 15 / 2,
+    backgroundColor: "#2C8892",
+  }
 });
