@@ -10,6 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch } from 'react-redux';
 import { survayList } from '../../../redux/reducers/survaySlice';
 import moment from "moment";
+import dcoin from "../../assets/dr-icon/dcoin.png";
 
 const Surveys = () => {
   const[survayData,setSurvayData] = useState([]);
@@ -28,6 +29,7 @@ const Surveys = () => {
     // console.log("postDetails",postDetails);
     const result = await dispatch(survayList(postDetails));
     setSurvayData(result.payload);
+    // console.log("result.payload",result.payload);
   }
 
     useEffect(()=>{
@@ -43,10 +45,11 @@ const Surveys = () => {
       
       <View style={{padding:15}} >
           {survayData?.surveylist && survayData?.surveylist.map((data,i) => {
+            console.log("data",data.isSolved);
             return(
               <View style={{marginTop:10}} key={i}>
                 <Card style={styles.CartStyle} 
-                onPress={()=>{ navigation.navigate('SurveyMcq', {surveyid:data.surveyid}) }} >
+                onPress={()=>{data.isSolved == 'No' && navigation.navigate('SurveyMcq', {surveyid:data.surveyid}) }} >
 
                   <View style={styles.ExpiringContainer}>
                     <View 
@@ -79,13 +82,13 @@ const Surveys = () => {
                     <View style={styles.ScoreContainer}>
                       <View style={styles.doccoin}>
                         <View style={styles.d}>
-                          <Image source={d} style={{width:20, height:20, marginRight:5}}/>
+                          <Image source={dcoin} style={{width:20, height:20, marginRight:5}}/>
                           <Text>25</Text>
                         </View>
                       </View>
                       <View style={styles.doccoin}>
                         <View style={styles.d}>
-                          <Image source={coupon} style={{width:20, height:20, marginRight:5}}/>
+                          <Image source={coupon} style={{width:22, height:22, marginRight:5}}/>
                           <Text>1</Text>
                         </View>
                       </View>
