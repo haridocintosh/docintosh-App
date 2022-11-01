@@ -29,7 +29,7 @@ export const userPostData = createAsyncThunk("getAllPost", async (postDetails)=>
         return result;
      }
      catch(e){
-        console.log(e);;
+        console.log(e);
      }
 })
 
