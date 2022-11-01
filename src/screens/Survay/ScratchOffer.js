@@ -4,10 +4,11 @@ import scratchCard from '../../assets/images/scratchCard.png';
 import amazon from '../../assets/images/amazon.png';
 import Svg, {Path} from 'react-native-svg';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import BottomSheet, {BottomSheetView,BottomSheetScrollView} from "@gorhom/bottom-sheet";
-import { TapGestureHandler } from 'react-native-gesture-handler';
+import BottomSheet, {BottomSheetView} from "@gorhom/bottom-sheet";
+import { TapGestureHandler,ScrollView } from 'react-native-gesture-handler';
 import tankyouCelebration from "../../assets/dr-icon/tankyouCelebration.png";
 import { color } from 'react-native-reanimated';
+
 import coupon from '../../assets/dr-icon/coupon1.png'
 
 const ScratchOffer = ({setShowOffer}) => {
@@ -26,16 +27,9 @@ const ScratchOffer = ({setShowOffer}) => {
       ToastAndroid.CENTER
     );
   }
-  // function handlePresentModal() {
-  //   bottomSheetRef.current?.present();
-  //   setTimeout(() => {
-  //     setIsOpen(true);
-  //   }, 100);
-  // }
 
   const handleRemoveScratch = () => {
      setRemoveScratch(false);
-    //  handlePresentModal();
   }
 
   const closeModal = () =>{
@@ -82,7 +76,7 @@ const ScratchOffer = ({setShowOffer}) => {
              snapPoints={snapPoints}
            >
             <BottomSheetView>
-            {/* <BottomSheetScrollView> */}
+            <ScrollView>
               {removeScratch ?
                 <View style={styles.SheetContentContainer}>
                     <Image source={coupon} style={{width:30,height:30}}/>
@@ -90,23 +84,25 @@ const ScratchOffer = ({setShowOffer}) => {
                 </View>
                :
                <View style={styles.SheetContentContainer}>
-                  
                     <Text style={styles.CongratsText}>Congrats! You won an amazon voucher worth ₹ 100 </Text>
                     <Text style={styles.AboutVoucherText}>About this Voucher </Text>
                     <Text style={styles.DetailsVoucherText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi aliquet cursus pellentesque. Mauris gravida libero nec sapien ultricies blandit.</Text>
-                    <Text style={styles.TermsAndCondVoucher}>Use of this voucher is subjected to 
-                    <Text style={styles.termsCondText}>Terms & Conditions</Text></Text>
+                    <View style={styles.TermsAndCondContainer}>
+                      <Text style={styles.TermsAndCondVoucher}>Use of this voucher is subjected to </Text>
+                      <TouchableOpacity>
+                        <Text style={styles.termsCondText}>Terms & Conditions</Text>
+                      </TouchableOpacity>
+                    </View>
                     <Image source={amazon}  style={{marginTop:20,width:80,height:30,alignSelf:'flex-end'}}/>
-                  
                </View>
               }
-              {/* </BottomSheetScrollView> */}
+              </ScrollView>
             </BottomSheetView>
 
            </BottomSheet>
            {/* ------------------------BottomSheet Design  End----------------------------------- */}
 
-           </View>
+       </View>
            
   )
 }
@@ -213,12 +209,16 @@ const styles = StyleSheet.create({
     marginTop:10,
   },
   TermsAndCondVoucher:{
-    marginTop:10,
-    color:'#071B36'
+    color:'#071B36',
 
   },
   termsCondText:{
-    color:'#2376E5'
+    color:'#2376E5',
+  },
+  TermsAndCondContainer:{
+    flexDirection:'row',
+    alignItems:'center',
+    marginTop:10
   },
 
 })
