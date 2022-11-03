@@ -12,25 +12,16 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from "react-redux";
 import d  from '../assets/dr-icon/d.png'
 import discount1  from '../assets/dr-icon/discount1.png';
-import p2 from '../assets/images/p2.png';
 import Modal from "react-native-modal";
 import { Button , } from "react-native-elements";
-import Carousel from 'react-native-snap-carousel';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Entypo,Ionicons,MaterialCommunityIcons,AntDesign,FontAwesome5,FontAwesome,Foundation,Feather} from '@expo/vector-icons';
 import profileimg from '../assets/images/p2.png';
-import grid6 from '../assets/images/grid6.png';
-import grid2 from '../assets/images/grid2.png';
 import oval from '../assets/dr-icon/Oval.png';
-import ban1 from '../assets/images/ban1.png';
-import ban2 from '../assets/images/ban2.png';
 import SmilingFacewithHeart from '../assets/images/SmilingFacewithHeart-Eyes.png';
 import bgtophome from '../assets/images/bg-top-home.png';
-import CarouselCardItem, { SLIDER_WIDTH, ITEM_WIDTH } from '../components/CarouselCardItem'
-import Slider from '@react-native-community/slider';
 import { userPostData } from '../../redux/reducers/postData';
 import Svg, {Path} from 'react-native-svg';
-import { style } from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
 
 
 
@@ -48,58 +39,18 @@ const HomeScreen = ()=> {
   const tooglePlay =() =>{
      isPlaying === false ? setIsPlaying(true) : setIsPlaying(false);
   };
-  const maximumValue =3.15;
-  const [duration , setDuration] = useState(0.0);
   const [visible, setVisible] = useState(false);
-  const isCarousel = React.useRef(null);
   const navigation = useNavigation();
-  const [isActive, setIsActive] = useState(false);
-  const handleClick = () => {
-    // 👇️ toggle
-    setIsActive(current => !current);
-    // 👇️ or set to true
-    // setIsActive(true);
-  };
+ 
   const [isModalVisible, setModalVisible] = useState(false);
   const [liked, setLiked] = useState(false)
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   }
-  const onSelectSwitch = value => {
-    setGamesTab(value);
-  };
+
   const closeModal = () => {
     setVisible(false);
   };
-  const data = [
-    {
-      title: "Aenean leoxdfggds",
-      body: "Ut tincidunt tincidunt eratdgfds. Sed cursus turpis vitae tortor. Quisque malesuada placerat nisl. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.",
-      imgUrl: "https://picsum.photos/id/11/200/300",
-    },
-    {
-      title: "In turpis",
-      body: "Aenean ut eros et nisl sagittis vestibulum. Donec posuere vulputate arcu. Proin faucibus arcu quis ante. Curabitur at lacus ac velit ornare lobortis. ",
-      imgUrl: "https://picsum.photos/id/10/200/300",
-    },
-    {
-      title: "Lorem Ipsum",
-      body: "Phasellus ullamcorper ipsum rutrum nunc. Nullam quis ante. Etiam ultricies nisi vel augue. Aenean tellus metus, bibendum sed, posuere ac, mattis non, nunc.",
-      imgUrl: "https://picsum.photos/id/12/200/300",
-    },
-    {
-      title: "In turpis",
-      body: "Aenean ut eros et nisl sagittis vestibulum. Donec posuere vulputate arcu. Proin faucibus arcu quis ante. Curabitur at lacus ac velit ornare lobortis. ",
-      imgUrl: "https://picsum.photos/id/10/200/300",
-    },
-    {
-      title: "In turpis",
-      body: "Aenean ut eros et nisl sagittis vestibulum. Donec posuere vulputate arcu. Proin faucibus arcu quis ante. Curabitur at lacus ac velit ornare lobortis. ",
-      imgUrl: "https://picsum.photos/id/10/200/300",
-    },
-  ];
-
-
 
   useEffect(()=>{
     asyncFetchDailyData();
@@ -109,20 +60,6 @@ const HomeScreen = ()=> {
     const jsonValue = await AsyncStorage.getItem('USER_INFO');
     const data=await JSON.parse(jsonValue);
     const result=JSON.parse(data)['data'];
-    // if(result == null){
-    //  // setuserdata([]);
-    // }else{
-    //   // setuserdata({...userdata,
-    //   //   postType:0,
-    //   //   role:result['role'],
-    //   //   circle_type:1,
-    //   //   city_id:result['city_id'],
-    //   //   assoc_id:result['assoc_id'],
-    //   //   pageCounter:600,
-    //   //   id:result['id'],
-    //   //   profile:result['profileimage'],
-    //   // });
-    // }
     setuserdata({
       profile:result['profileimage']
     });
@@ -131,46 +68,12 @@ const HomeScreen = ()=> {
   }
 
   const fetchPostData = async (role,city_id,assoc_id,profileimage,userId)=>{ 
-     // console.log(role,city_id,assoc_id,userId,profileimage);
     const postDetails = {role,city_id,assoc_id,profileimage,userId}
     const result = await dispatch(userPostData(postDetails));
     setallPost(result.payload);
-    // console.log('latestfetchdata',result.payload);
   }
 
 
-//   useEffect(()=>{
-//     async function fetchPostData(){
-//      //console.log('fetchDataConsole', userdata)
-//        const result = await dispatch(userPostData(userdata));
-//        if(result == null){
-//        }else{
-//          setallPost(result.payload);
-//         // console.log('updatePostData',allPost);
-//        }
-//       // console.log('lgitokm', result.payload);
-//        //console.log('lgitokm', result);
-      
-//      }
-// fetchPostData();
-//  },[userdata]);
-
-
-// const fetchPostDataOld = async () => {
-// console.log('fetchDataConsole', userdata)
-//   const result = await dispatch(userPostData(userdata));
-//  // console.log('lgitokm', result.payload);
-//   console.log('lgitokm', result);
-//  // setallPost(result.payload);
-// }
-// console.log('1111',allPost);
-
-  const loadMore = () => {
-    // setSliceData(sliceData+10);
-    // const newData = allPost.slice(0,sliceData+10)
-    // console.log("sliceData",sliceData);
-    // setallPost({...allPost, ...newData})
-  }
 
     const renderItem = ({item}) => {
       return(

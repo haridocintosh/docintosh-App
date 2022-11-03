@@ -50,11 +50,11 @@ const AuthStack = () => {
         drawerInactiveTintColor: '#fff',
         drawerStyle: {
           backgroundColor: '#071B36',
-          width: 304,
+          width: 325,
         },
         drawerLabelStyle: {
-          marginLeft: -25,
-         //fontFamily: 'Inter_900Black',
+          // marginLeft: -25,
+          //fontFamily: 'Inter_900Black',
           fontSize: 15,
         },
       }}
@@ -63,30 +63,30 @@ const AuthStack = () => {
       <Drawer.Screen
         name="Leaderboard"
         component={TabNavigator}
-        options={{headerShown: true,
+        options={{headerShown: false,
           drawerIcon: () => (
-            <Ionicons name="trophy-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="trophy-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
         
       />
 
-    <Drawer.Screen
+    {/* <Drawer.Screen
         name="LoginScreen"
         component={LoginScreen}
         options={{headerShown: false,
           drawerIcon: () => (
-            <Ionicons name="trophy-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="trophy-outline" size={22} style={{color:'#ffff'}} />
           ),
      }}
         
-      />
+      /> */}
       <Drawer.Screen
         name="Invite"
         component={ProfileScreen}
         options={{
           drawerIcon: () => (
-            <Ionicons name="person-add-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="person-add-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
       />
@@ -94,9 +94,9 @@ const AuthStack = () => {
         name="Gift DocCoins"
         component={MessagesScreen}
         options={{
-        
+          headerShown: false,
           drawerIcon: () => (
-            <Ionicons name="gift-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="gift-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
       />
@@ -105,7 +105,16 @@ const AuthStack = () => {
         component={MomentsScreen}
         options={{
           drawerIcon: () => (
-            <Ionicons name="timer-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="timer-outline" size={22} style={{color:'#ffff'}} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="What’s New"
+        component={MomentsScreen}
+        options={{
+          drawerIcon: () => (
+            <Ionicons name="timer-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
       />
@@ -115,83 +124,83 @@ const AuthStack = () => {
         component={MomentsScreen}
         options={{
           drawerIcon: () => (
-            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="Engage1Screen"
         component={Engage1Screen}
         options={{
           drawerIcon: () => (
-            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
-      />
-      <Drawer.Screen
+      /> */}
+      {/* <Drawer.Screen
         name="ProfileScreen"
         component={ProfileScreen}
         options={{
           // headerShown:true,
           drawerIcon: () => (
-            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
-      />
-       <Drawer.Screen
+      /> */}
+       {/* <Drawer.Screen
         name="EditProfileScreen"
         component={EditProfileScreen}
         options={{
           // headerShown:true,
           drawerIcon: () => (
-            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
-      />
-      <Drawer.Screen
+      /> */}
+      {/* <Drawer.Screen
         name="Knowledge2Screen"
         component={Knowledge2Screen}
         
         options={{
           headerShown:false,
           drawerIcon: () => (
-            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
-      />
-      <Drawer.Screen
+      /> */}
+      {/* <Drawer.Screen
         name="PostUpdateScreen"
         component={PostUpdateScreen}
         
         options={{
           headerShown:false,
           drawerIcon: () => (
-            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
-      />
-       <Drawer.Screen
+      /> */}
+       {/* <Drawer.Screen
         name="ReportPost"
         component={ReportPost}
         
         options={{
           headerShown:false,
           drawerIcon: () => (
-            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
-      />
-       <Drawer.Screen
+      /> */}
+       {/* <Drawer.Screen
         name="CreateCommunity"
         component={CreateCommunity}
         
         options={{
           headerShown:false,
           drawerIcon: () => (
-            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
-      />
+      /> */}
        {/* <Drawer.Screen
         name="CommunityCreatedefault"
         component={CommunityCreatedefault}
@@ -199,7 +208,7 @@ const AuthStack = () => {
         options={{
           headerShown:false,
           drawerIcon: () => (
-            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
       />
@@ -209,20 +218,20 @@ const AuthStack = () => {
         options={{
           headerShown:false,
           drawerIcon: () => (
-            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
       /> */}
-       <Drawer.Screen
+       {/* <Drawer.Screen
         name="SharePost"
         component={SharePost}
         options={{
           headerShown:false,
           drawerIcon: () => (
-            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
-      />
+      /> */}
       {/* <Drawer.Screen
         name="Polls"
         component={Polls}
@@ -230,7 +239,7 @@ const AuthStack = () => {
         options={{
           headerShown:false,
           drawerIcon: () => (
-            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
       /> */}
@@ -241,21 +250,21 @@ const AuthStack = () => {
         options={{
           headerShown:false,
           drawerIcon: () => (
-            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
       /> */}
-        <Drawer.Screen
+        {/* <Drawer.Screen
         name="KnowYourHeart"
         component={KnowYourHeart}
         
         options={{
           headerShown:false,
           drawerIcon: () => (
-            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
-      />
+      /> */}
       {/* <Drawer.Screen
         name="Survey1"
         component={Survey1}
@@ -263,7 +272,7 @@ const AuthStack = () => {
         options={{
           headerShown:false,
           drawerIcon: () => (
-            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
       />
@@ -274,7 +283,7 @@ const AuthStack = () => {
         options={{
           headerShown:false,
           drawerIcon: () => (
-            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
       /> */}
@@ -285,7 +294,7 @@ const AuthStack = () => {
         options={{
           headerShown:false,
           drawerIcon: () => (
-            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
       /> 
@@ -296,7 +305,7 @@ const AuthStack = () => {
         options={{
           headerShown:false,
           drawerIcon: () => (
-            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
       />
@@ -307,7 +316,7 @@ const AuthStack = () => {
         options={{
           headerShown:false,
           drawerIcon: () => (
-            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
       />
@@ -318,7 +327,7 @@ const AuthStack = () => {
         options={{
           headerShown:false,
           drawerIcon: () => (
-            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
       />
@@ -329,7 +338,7 @@ const AuthStack = () => {
         options={{
           headerShown:false,
           drawerIcon: () => (
-            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
       />
@@ -340,7 +349,7 @@ const AuthStack = () => {
         options={{
           headerShown:false,
           drawerIcon: () => (
-            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
       />*/}
@@ -351,21 +360,21 @@ const AuthStack = () => {
         options={{
           headerShown:false,
           drawerIcon: () => (
-            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
       /> */}
-       <Drawer.Screen
+       {/* <Drawer.Screen
         name="FlowStart"
         component={FlowStart}
         
         options={{
           headerShown:false,
           drawerIcon: () => (
-            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
-      />
+      /> */}
        {/* <Drawer.Screen
         name="PaymentScreen"
         component={PaymentScreen}
@@ -373,7 +382,7 @@ const AuthStack = () => {
         options={{
           headerShown:false,
           drawerIcon: () => (
-            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
       />
@@ -383,29 +392,29 @@ const AuthStack = () => {
         component={SettingsScreen}
         options={{
           drawerIcon: () => (
-            <Ionicons name="settings-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="settings-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
       />
 
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="ProfileScreenFollowers"
         component={ProfileScreenFollowers}
         options={{
           drawerIcon: () => (
-            <Ionicons name="settings-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="settings-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
-      />
-      <Drawer.Screen
+      /> */}
+      {/* <Drawer.Screen
         name="ProfileScreenFollowing"
         component={ProfileScreenFollowing}
         options={{
           drawerIcon: () => (
-            <Ionicons name="settings-outline" size={22} style={{color:'#ffff',paddingRight:5}} />
+            <Ionicons name="settings-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
-      />
+      /> */}
     </Drawer.Navigator>
   );
 };

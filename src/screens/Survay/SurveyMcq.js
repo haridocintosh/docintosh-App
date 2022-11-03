@@ -55,7 +55,7 @@ const SurveyMcq = ({route}) => {
       setCurrentQuestionIndex(currentQuestionIndex+1);
     }else{
       // navigation.navigate('ScratchOffer');
-      navigation.navigate('ThankYouPage');
+      navigation.navigate('ThankYouPage', {surveyid:surveyid});
     }
     
   }
@@ -71,7 +71,7 @@ const SurveyMcq = ({route}) => {
     const postDetails = {id:id,basic_id:basic_id,qid:qid,opt_id:opt_id,profileimage:profileimage}
     // console.log('postDetails===',postDetails);
       const result = await dispatch(saveSurveyAnswers(postDetails));
-    console.log('result===',result);
+    // console.log('result===',result);
   }
 
   useEffect(()=>{

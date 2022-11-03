@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   View,
   Text,
@@ -17,10 +17,18 @@ import { Button } from "react-native-elements";
 import { Card } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import ScratchOffer from "./ScratchOffer";
+import { useSelector } from "react-redux";
 
-const ThankYouPage = () => {
+
+const ThankYouPage = ({route}) => {
   const [showOffer, setShowOffer] = useState(true);
   const navigation = useNavigation();
+  const {surveyid} = route.params;
+  // console.log("surveyid",surveyid);
+
+
+ 
+
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "#2C8892", position: "relative" }}
@@ -111,7 +119,7 @@ const ThankYouPage = () => {
               title="Back to Categories"
               buttonStyle={styles.buttonStyle}
               titleStyle={{color: "#fff",}}
-              onPress={() => navigation.navigate("Surveys")}
+              onPress={() => navigation.navigate("Surveys",{surveyid: surveyid})}
             />
           </View>
 

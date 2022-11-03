@@ -36,8 +36,6 @@ const ScratchOffer = ({setShowOffer}) => {
       setShowOffer(false);
   }
  
-  
-
   return (
         <View style={styles.container}>
            <View style={styles.ScratchCard}>
@@ -74,6 +72,7 @@ const ScratchOffer = ({setShowOffer}) => {
            <BottomSheet
              ref={bottomSheetRef}
              snapPoints={snapPoints}
+            //  enablePanDownToClose={true}
            >
             <BottomSheetView>
             <ScrollView>
