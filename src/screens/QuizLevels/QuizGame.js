@@ -6,6 +6,7 @@ import TimeOutModal from './TimeOutModal';
 import { useDispatch } from 'react-redux';
 import QuizGameQuetion from './QuizGameQuetion';
 import { GetQuizQuestions } from '../../../redux/reducers/mcqSlice';
+import { useNavigation } from '@react-navigation/native';
 
 
 
@@ -14,10 +15,14 @@ const QuizGame = ({route}) => {
   const dispatch =  useDispatch();
   // const { basicId } = route?.params;
   const { basicId } = route?.params;
+  const { title } = route?.params;
+  const navigation = useNavigation();
     
     const animatedValue = useRef(new Animated.Value(0)).current;
     const [isTop, setIsTop] = useState(true);
     const [mcqQue, setMcqQue] = useState([]);
+
+    navigation.setOptions({ title: title })
 
     const startAnimation = toValue => {
         Animated.timing(animatedValue, {

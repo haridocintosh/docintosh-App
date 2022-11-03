@@ -58,7 +58,7 @@ const asyncFetchDailyData = async () => {
           
          {quizData && quizData?.map((user, index) => {  
             return(
-              <TouchableOpacity onPress={() => McqDataHandle(user?.topic_id, user?.title,user?.basic_id)} 
+              <TouchableOpacity onPress={() => McqDataHandle(user?.topic_id, user?.title)} 
               key={index}>
                 <LinearGradient colors={[ '#43c5bf', '#15b3ac']} start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }} style={styles.cartGradiant}>
                     <Text style={styles.cartText}>{user.title}</Text>

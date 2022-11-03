@@ -22,11 +22,6 @@ const Surveys = ({route}) => {
     const recall = route?.params?.surveyid;
 
     
-    console.log("reload",recall);
-
-  //  const surveyGetList =  useSelector((state)=> {return state.surveyGetList.survayList} );
-  //  console.log('selectorData', surveyGetList);
-
   const asyncFetchDailyData = async () => {
     const jsonValue = await AsyncStorage.getItem('USER_INFO');
     const data=await JSON.parse(jsonValue);
@@ -36,10 +31,8 @@ const Surveys = ({route}) => {
     
   const fetchPostData = async (assoc_id,id)=>{
     const postDetails = {speciality_id:null,city_id:null,assoc_id:assoc_id,earntype:0,id:id}
-    // console.log("postDetails",postDetails);
     const result = await dispatch(survayList(postDetails));
     setSurvayData(result.payload);
-    // console.log("result.payload",result.payload);
   }
 
    

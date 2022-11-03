@@ -7,10 +7,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 const McqListModal = ({toggle, quizData, topicId}) => {
     const navigation = useNavigation();
     const filterId = quizData.filter(el => el.topic_id === topicId);
+    
     const basicId = filterId[0].basic_id;
-    // console.log("filterId---------------------------------------------",basicId);
+    console.log("filterId---------------------------------------------",filterId[0].title);
     const goToNext = () => {
-        navigation.navigate("QuizGame", {basicId : basicId});
+        navigation.navigate("QuizGame", {basicId : basicId,title: filterId[0].title});
+        // 
     toggle(false);
     }
 
