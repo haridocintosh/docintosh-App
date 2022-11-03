@@ -40,6 +40,9 @@ import QuizGame from '../screens/QuizLevels/QuizGame';
 import QuizGameQuetion from '../screens/QuizLevels/QuizGameQuetion';
 import ScratchOffer from '../screens/Survay/ScratchOffer';
 import ThankYouPage from '../screens/Survay/ThankYouPage';
+import Engage from '../assets/dr-icon/Engage.png'
+import Knowledge from '../assets/dr-icon/Knowledge.png'
+import Community from '../assets/dr-icon/Community.png'
 
 
 
@@ -331,7 +334,7 @@ const TabNavigator = () => {
           tabBarLabel: 'Engage',
           tabBarBadgeStyle: {backgroundColor: 'yellow'},
           tabBarIcon: ({color, size}) => (
-            <Feather name="target" color={color} size={size} />
+            <Image source={Engage} style={{width:40,height:40}} />
           ),
         }}
         listeners ={({navigation, route})=>({
@@ -350,7 +353,8 @@ const TabNavigator = () => {
         component={CommunityScreen}
         options={{
           tabBarIcon: ({color, size}) => (
-            <Feather name="users" color={color} size={size} />
+            // <Feather name="users" color={color} size={size} />
+            <Image source={Community} style={{width:35,height:35}} />
           ),
         }}
         listeners ={({navigation, route})=>({
@@ -372,7 +376,8 @@ const TabNavigator = () => {
           title: 'Knowledge',
           tabBarBadgeStyle: {backgroundColor: 'yellow'},
           tabBarIcon: ({color, size}) => (
-            <Ionicons name="person-outline" color={color} size={size} />
+            // <Ionicons name="person-outline" color={color} size={size} />
+            <Image source={Knowledge} style={{width:35,height:35}} />
             
 
           ),

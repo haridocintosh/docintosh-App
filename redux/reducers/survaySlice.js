@@ -14,9 +14,9 @@ export const survayList = createAsyncThunk("getSurveyList", async (data) => {
         body: JSON.stringify(data),
       }
     );
-    const result = await responce.json();
+    const surveyDatalist = await responce.json();
     // console.log('resultttdaataxgdgfhfhf',result);
-    return result;
+    return surveyDatalist;
   } catch (e) {
     console.log(e);
   }
@@ -73,6 +73,7 @@ export const surveyData = createSlice({
   name: "survey",
   initialState: {
     postData: [],
+    survayList:[],
     loading: false,
     error: false,
   },
@@ -83,7 +84,7 @@ export const surveyData = createSlice({
     },
     [survayList.fulfilled]: (state, action) => {
       state.loading = false;
-      state.postData = action.payload;
+      state.survayList = action.payload;
     },
     [survayList.rejected]: (state) => {
       state.loading = false;
@@ -116,4 +117,5 @@ export const surveyData = createSlice({
   },
 });
 
-export const { reducer: result } = surveyData;
+
+export const { reducer: surveyDatalist } = surveyData;

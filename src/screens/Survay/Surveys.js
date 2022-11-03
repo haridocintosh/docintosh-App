@@ -1,26 +1,36 @@
 import React,{useEffect, useState} from 'react';
-import { View, Text , StyleSheet, Image,SafeAreaView, ScrollView} from 'react-native'
+import { View, Text , StyleSheet, Image,SafeAreaView, ScrollView, ToastAndroid} from 'react-native'
 import { MaterialCommunityIcons} from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import d from '../../assets/dr-icon/d.png';
 import coupon from '../../assets/dr-icon/coupon1.png';
 import { Card } from 'react-native-paper';
 import Svg, { Path } from 'react-native-svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { survayList } from '../../../redux/reducers/survaySlice';
 import moment from "moment";
 import dcoin from "../../assets/dr-icon/dcoin.png";
+import SweetAlert from '../SweetAlert/SweetAlert';
 
-const Surveys = () => {
+const Surveys = ({route}) => {
   const[survayData,setSurvayData] = useState([]);
+  const [ isAlertVisible, setIsAlertVisible ] = useState(false);
+
     const navigation = useNavigation();
-    const dispatch =  useDispatch()
+    const dispatch =  useDispatch();
+
+    const recall = route?.params?.surveyid;
+
+    
+    console.log("reload",recall);
+
+  //  const surveyGetList =  useSelector((state)=> {return state.surveyGetList.survayList} );
+  //  console.log('selectorData', surveyGetList);
 
   const asyncFetchDailyData = async () => {
     const jsonValue = await AsyncStorage.getItem('USER_INFO');
     const data=await JSON.parse(jsonValue);
-    const result=JSON.parse(data)['data'];
+    const result = JSON.parse(data)['data'];
     fetchPostData(result.assoc_id, result.id);
   }
     
@@ -32,24 +42,38 @@ const Surveys = () => {
     // console.log("result.payload",result.payload);
   }
 
+   
+
+    const handleCardEntry = (value) => {
+      if(value.isSolved == 'No'){
+          navigation.navigate('SurveyMcq', {surveyid:value.surveyid});
+      }else{
+        setIsAlertVisible(true);
+        setTimeout(() => {
+              setIsAlertVisible(false);
+        }, 2000);
+      }
+    }
+
     useEffect(()=>{
       asyncFetchDailyData();
-    }, [])
+    }, [recall]);
 
   return (
   <SafeAreaView style={{backgroundColor:'#E6E6E6',flex:1}}>
+    {isAlertVisible && <SweetAlert/>}
     <ScrollView
-    showsVerticalScrollIndicator={false}
-    nestedScrollEnable={true}
+      showsVerticalScrollIndicator={false}
+      nestedScrollEnable={true}
     >
       
-      <View style={{padding:15}} >
+      
+      <View style={{padding:10}} >
           {survayData?.surveylist && survayData?.surveylist.map((data,i) => {
-            console.log("data",data.isSolved);
             return(
-              <View style={{marginTop:10}} key={i}>
+              <View style={{marginBottom:10}} key={i}>
                 <Card style={styles.CartStyle} 
-                onPress={()=>{data.isSolved == 'No' && navigation.navigate('SurveyMcq', {surveyid:data.surveyid}) }} >
+                onPress={()=> handleCardEntry(data)} >
 
                   <View style={styles.ExpiringContainer}>
                     <View 

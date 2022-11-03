@@ -7,7 +7,7 @@ import {
   StyleSheet,
   ScrollView,
   ActivityIndicator,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import beginnerBadge from "../../assets/dr-icon/beginnerBadge.png";
@@ -36,6 +36,7 @@ const KnowYourHeart = ({ route }) => {
   const navigation = useNavigation();
 
   const getLeaderboardData = () => {
+    
     axios
       .get(`${mainApi.baseUrl}/ApiController/global_leaderboard`)
       .then((res) => {
@@ -48,6 +49,10 @@ const KnowYourHeart = ({ route }) => {
   useEffect(() => {
     getLeaderboardData();
   }, []);
+
+  const handleAlldata = () => {
+    setSliceData();
+  }
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "#2C8892", position: "relative" }}
@@ -189,7 +194,7 @@ const KnowYourHeart = ({ route }) => {
             </View>
             <View>
 
-              <TouchableOpacity onPress={() => setSliceData()}>
+              <TouchableOpacity onPress={() => handleAlldata()}>
                 <Text style={styles.ViewAllText}>View All</Text>
               </TouchableOpacity>
 

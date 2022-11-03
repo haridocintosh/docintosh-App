@@ -13,7 +13,7 @@ const navigation = useNavigation();
             </View>
             <View style={styles.McqSelection}>
                 <Text style={styles.mcqsListText}>Your Time Out</Text>
-                <TouchableOpacity style={styles.mcqsList} onPress={() => navigation.navigate('Engage')}>
+                <TouchableOpacity style={styles.mcqsList} onPress={() => navigation.navigate('QuizLevels')}>
                     <Text style={styles.goBack}>Go Back</Text>
                 </TouchableOpacity>
             </View>

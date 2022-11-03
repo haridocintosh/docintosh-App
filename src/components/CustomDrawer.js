@@ -5,17 +5,18 @@ import {
   ImageBackground,
   Image,
   TouchableOpacity,
+  StyleSheet
 } from 'react-native';
 import {
   DrawerContentScrollView,
   DrawerItemList,
   DrawerItem
 } from '@react-navigation/drawer';
-
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import docintoshlogo from '../assets/images/docintosh.png';
+import docintoshlogo from '../assets/dr-icon/docintoshlogo.png';
 import Entypo from 'react-native-vector-icons/Entypo';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
 import { Feather } from '@expo/vector-icons';
@@ -29,6 +30,7 @@ import { useDispatch } from 'react-redux';
 
 
 const CustomDrawer = props => { 
+  const [drowerNotch, setDrowerNotch] = useState(false)
   const navigation = useNavigation();
   const [logoutdata,setlogoutdata]=useState();
   const dispatch = useDispatch();
@@ -70,100 +72,180 @@ const CustomDrawer = props => {
     }catch(e) {
     }
   }
+
+  const handledrowerNotch = () => {
+    setDrowerNotch(!drowerNotch);
+    if(drowerNotch){
+      props.navigation.openDrawer()
+    }else{
+      props.navigation.closeDrawer()
+    }
+  }
   
   return (
-    <View style={{flex: 1,  width:304}}>
-      <DrawerContentScrollView
-        {...props}
-        contentContainerStyle={{backgroundColor: '#071B36',}}>
-        <ImageBackground>
-        <View style={{flexDirection:'row'}}>
-          <Image source={docintoshlogo} style={{marginTop:21 , width:157, height:36, marginLeft:20}}></Image>
-          <TouchableOpacity onPress={() =>props.navigation.closeDrawer()}>
-            <Entypo name="cross" style={{color:'#fff', width:12, height:12, marginLeft:100, marginTop:20}} />
+    <View style={styles.DrowerContainer}>
+        <View style={styles.DocLogo}>
+          <Image source={docintoshlogo} style={styles.logoImg}></Image>
+          <TouchableOpacity onPress={() => props.navigation.closeDrawer()}>
+            <AntDesign name="close" color={'#fff'} size={25} />
           </TouchableOpacity>
         </View>
 
-        <View style={{backgroundColor:'#001127', borderRadius:20 /2,width:264,marginLeft:20,top:20}}>
-          <TouchableOpacity  onPress={() => navigation.navigate('ProfileScreen')}>
-            <MaterialIcons name="arrow-forward-ios" size={16} color="white" style={{alignSelf:'flex-end',padding:10}}/>
-          </TouchableOpacity>
-          
-          <Image
-            source={{uri:userdata.profile}}
-            style={{height: 64, width: 64, borderRadius: 40, marginTop: -10,alignSelf:'center'}}
-          />
-          <Text style={{alignSelf:'center',color:'#fff',fontSize:16,fontWeight:'600',marginTop:5}}>{userdata?((userdata.role<='4')?'Dr.':''):''} {userdata['fullname']}</Text>
-
-          <Text style={{alignSelf:'center', fontSize:12,fontWeight:'400',color:"#CCCCCC"}}> {userdata['speciality']} |</Text>
-          
-          <View style={{flexDirection:"row",marginTop:21,paddingBottom:20, marginBottom:21}}>    
+        <View style={styles.profoleDetailsContainer}>
+          <View style={styles.profoleDetails}>
+            <TouchableOpacity  onPress={() => navigation.navigate('ProfileScreen')}>
+              <MaterialIcons name="arrow-forward-ios" size={16} color="white" style={styles.forwardIcon}/>
+            </TouchableOpacity>
+            <Image source={{uri:userdata.profile}} style={styles.profilePic}/>
+            <Text style={styles.userName}>{userdata?((userdata.role<='4')?'Dr.':''):''} {userdata['fullname']}</Text>
+            <Text style={styles.userProfession}> {userdata['speciality']} |</Text>
           </View>
-      </View>
-          
-         
-        </ImageBackground>
-        <View style={{flex: 1, backgroundColor: '#071B36', paddingTop: 10}}>
-          <DrawerItemList {...props} />
-          
         </View>
-      </DrawerContentScrollView>
-      <View style={{padding: 20, borderTopWidth: 1, borderTopColor: '#ccc'}}>
-        <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15 }}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Feather name="phone" size={20} style={{color:'#fff',paddingRight:10}} />
-         
-            <Text
-              style={{
-                fontSize: 15,
-                //fontFamily: 'Inter_900Black',
-                marginLeft: 5,fontWeight:'400', fontSize:14,color:'#FFFFFF'
-              }}>
-              Contact us
-            </Text>
+        <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor: '#071B36',}}>
+          <View style={styles.drowerChilds}>
+            <DrawerItemList {...props} />
           </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15,}}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Feather name="info" size={20} style={{color:'#fff',paddingRight:10}} />
-            <Text
-              style={{
-                fontSize: 15,
-               // fontFamily: 'Inter_900Black',
-                marginLeft: 5,fontWeight:'400', fontSize:14,color:'#FFFFFF'
-              }}>
-              Support
-            </Text>
-          </View>
-          <View style={{marginTop:52}}>
-          {/* <Button
-             onPress={() =>{  ()=> dispatch(logout()) }}
-              title="Logout"
-              type="outline"
-              buttonStyle={{
-                borderColor: '#2C8892',
-                borderRadius:15/2
-              }}
-              titleStyle={{
-                color:'#2C8892'
-              }}/> */}
+        </DrawerContentScrollView>
 
-          <Button
-             onPress={() =>{ removeData('USER_INFO'); }}
-              title="Logout"
-              type="outline"
-              buttonStyle={{
-                borderColor: '#2C8892',
-                borderRadius:15/2
-              }}
-              titleStyle={{
-                color:'#2C8892'
-              }}/>
-          </View>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.deviderLine}/>
+        <View style={styles.DrowerNotch}>
+          <TouchableOpacity style={styles.notchIcons} onPress={() => handledrowerNotch()}>
+            {drowerNotch ?
+            <Entypo 
+              name='chevron-thin-right' 
+              color={'#fff'} 
+              size={15} 
+              />
+            :
+            <Entypo 
+              name='chevron-thin-left' 
+              color={'#fff'} 
+              size={15} 
+            />
+            }
+          </TouchableOpacity>
+        </View>
+        <View style={{paddingHorizontal: 20,}}>
+          <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15 }}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Feather name="phone" size={20} style={{color:'#fff',paddingRight:10}} />
+              <Text style={styles.drawerText}> Contact us </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15,}}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Feather name="info" size={20} style={{color:'#fff',paddingRight:10}} />
+              <Text
+                style={styles.drawerText}>
+                Support
+              </Text>
+            </View>
+          </TouchableOpacity>
+            <View style={{marginVertical:15}}>
+            <Button
+              onPress={() =>{ removeData('USER_INFO'); }}
+                title="Logout"
+                type="outline"
+                buttonStyle={{
+                  borderColor: '#2C8892',
+                  borderRadius:15/2
+                }}
+                titleStyle={{
+                  color:'#2C8892'
+                }}/>
+            </View>
+        
+        </View>
     </View>
   );
 };
 
 export default CustomDrawer;
+
+const styles = StyleSheet.create({
+  DrowerContainer:{
+    flex: 1,  
+    width:325,
+    position:'relative'
+  },
+  DocLogo:{
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-between',
+    paddingHorizontal:10,
+    marginTop:15
+  },
+  logoImg:{
+    width:40,
+    height:35
+  },
+  profoleDetails:{
+    backgroundColor:'#001127', 
+    borderRadius:20 /2,
+    width:"100%",
+    padding:20
+  },
+  profilePic:{
+    height: 64, 
+    width: 64, 
+    borderRadius: 40,
+    marginTop: -10,
+    alignSelf:'center'
+  },
+  userName:{
+    alignSelf:'center',
+    color:'#fff',
+    fontSize:16,
+    fontWeight:'600',
+    marginTop:5
+  },
+  userProfession:{
+    alignSelf:'center', 
+    fontSize:12,
+    fontWeight:'400',
+    color:"#CCCCCC"
+  },
+  drowerChilds:{
+    flex: 1, 
+    backgroundColor: '#071B36', 
+    paddingTop: 10
+  },
+  profoleDetailsContainer:{
+    margin:10
+  },
+  forwardIcon:{
+    position:'absolute',
+    right:0
+  },
+  drawerText:{
+    fontSize: 15,
+    //fontFamily: 'Inter_900Black',
+    marginLeft: 5,
+    fontWeight:'400', 
+    fontSize:14,
+    color:'#FFFFFF'
+  },
+  deviderLine:{
+    height:1, 
+    marginHorizontal:20,
+    backgroundColor:'rgba(224, 224, 224, 0.2)',
+    borderRadius:10
+  },
+  DrowerNotch:{
+    width:25,
+    height:50,
+    backgroundColor:"#071B36",
+    position:'absolute',
+    top:50,
+    right:-22,
+    borderTopRightRadius:50,
+    borderBottomRightRadius:50,
+    justifyContent:'center',
+    alignItems:'center'
+  },
+  notchIcons:{
+    width:"100%",
+    height:'100%',
+    alignItems:'center',
+    justifyContent:'center'}
+})
