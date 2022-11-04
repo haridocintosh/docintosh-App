@@ -2,11 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { mainApi } from "../../src/apis/constant";
 
 export const userPostData = createAsyncThunk("getAllPost", async (postDetails)=>{
-    //  console.log('postdata1',postDetails);
-    // console.log('postdata1',postDetails.city_id);
-    // console.log('postdata1',postDetails.assoc_id);
-    // console.log('postdata1',postDetails.profileimage);
-    // console.log('postdata1',postDetails.userId);
+    // console.log('postdata1',postDetails.role);
     try{
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/getPost`, {
             method : 'POST',
@@ -25,13 +21,50 @@ export const userPostData = createAsyncThunk("getAllPost", async (postDetails)=>
             })
          });
         const result=  await responce.json();
-    //    console.log('tara12345654',result);
+       // console.log('tara12345654',result);
         return result;
      }
      catch(e){
-        console.log(e);
+        console.log(e);;
      }
 })
+
+
+
+export const postCreate = createAsyncThunk("postupload", async(uploadData)=>{
+    console.log('postdata1',uploadData);
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/createPostReact`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body : JSON.stringify(uploadData)
+        });
+        const result=  await responce.json();
+        console.log('postSlice',result);
+        //result.data.token;
+        return result
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+
+
+export const getMycircle = createAsyncThunk("getCircle", async (data)=>{
+    const response = await fetch(`${mainApi.baseUrl}/ApiController/getCircle`,{
+        method : 'POST',
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        body : JSON.stringify(data)
+    });
+    const result = await response.json();
+    //console.log('mycircle', result);
+    return result;
+})
+
 
 export const postData = createSlice({
     name : "usersfetch",
@@ -56,6 +89,40 @@ export const postData = createSlice({
                 state.loading = false;
                 state.error   = true
             }, 
+
+        [postCreate.pending] : (state)=>
+            {
+                state.loading =  true
+            }, 
+        [postCreate.fulfilled] : (state, action)=>
+            {  // console.log(fulfilled);
+                state.loading       = false,
+                state.isLoggedIn    = true
+                state.registerData  = action.payload;
+            }, 
+        [postCreate.rejected] : (state, action)=>
+            {   
+                state.isLoggedIn = false,
+                state.loading = false;
+                state.error = false
+            },
+
+
+        [getMycircle.pending] : (state)=>
+            {
+                state.loading   =  true;
+            }, 
+        [getMycircle.fulfilled] : (state, action)=>
+            {   
+                state.loading       =  false;
+                state.circleData    = action.payload;
+            }, 
+        [getMycircle.rejected] : (state)=>
+            {
+                state.loading = false;
+                state.error   = true
+            }, 
+
     }
 });
 
