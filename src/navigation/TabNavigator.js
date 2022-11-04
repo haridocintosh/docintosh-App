@@ -1,9 +1,16 @@
-import React from 'react';
+import React,{useRef} from 'react';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  ScrollView,
+  Dimensions,
+  Image,TouchableOpacity,FlatList
+} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { BaseNavigationContainer, getFocusedRouteNameFromRoute, NavigationContainer, useNavigation } from '@react-navigation/native';
 
-import HomeScreen from '../screens/HomeScreen';
 import EngageScreen from '../screens/EngageScreen';
 import CommunityScreen from '../screens/CommunityScreen';
 import GameDetailsScreen from '../screens/GameDetailsScreen';
@@ -24,9 +31,6 @@ import SentimentrixCong from '../screens/SentimentrixCong';
 import Sentimentrix3 from '../screens/Sentimentrix3';
 import Sentimentrix6 from '../screens/Sentimentrix6';
 import CommonSearchScreen from '../screens/CommonSearchScreen';
-import { Dimensions, Image} from "react-native";
-import { useRef } from 'react';
-import 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import QuizLevels from '../screens/QuizLevels/QuizLevels';
 import McqSelection from '../screens/QuizLevels/McqSelection';
@@ -43,6 +47,11 @@ import ThankYouPage from '../screens/Survay/ThankYouPage';
 import Engage from '../assets/dr-icon/Engage.png'
 import Knowledge from '../assets/dr-icon/Knowledge.png'
 import Community from '../assets/dr-icon/Community.png'
+import HomeScreen from '../screens/HomeScreen/HomeScreen';
+import HomeNavbar from '../screens/HomeScreen/HomeNavbar';
+import PostsScreen from '../screens/HomeScreen/PostsScreen';
+
+
 
 
 
@@ -54,9 +63,10 @@ const HomeStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Home1"
+        name="Home"
         component={HomeScreen}
-        options={{headerShown: false}}
+        options={{headerShown: false,
+          headerTintColor: '#fff'}}
       />
       <Stack.Screen
         options={{headerShown: false}}
@@ -95,7 +105,12 @@ const HomeStack = () => {
        <Stack.Screen
         name="QuizGame"
         component={QuizGame}
-        options={{headerShown: false}}
+        options={{headerShown: true,
+          title: 'Quize Game',
+          headerStyle: {
+            backgroundColor: '#071B36',
+          },
+          headerTintColor: '#fff'}}
         // options={({route}) => ({
         //   title: route.params?.title,
         // })}
@@ -122,7 +137,11 @@ const HomeStack = () => {
     <Stack.Screen
       name="Surveys"
       component={Surveys}
-      options={{headerShown: true}}
+      options={{headerShown: true,
+        headerStyle: {
+          backgroundColor: '#071B36',
+        },
+        headerTintColor: '#fff'}}
       // options={({route}) => ({
       //   title: route.params?.title,
       // })}
@@ -131,7 +150,12 @@ const HomeStack = () => {
     <Stack.Screen
       name="SurveyMcq"
       component={SurveyMcq}
-      options={{headerShown: false,  title: 'Surveys',}}     
+      options={{headerShown: true,  
+      title: 'Surveys',
+      headerStyle: {
+        backgroundColor: '#071B36',
+      },
+      headerTintColor: '#fff'}}     
     />
 
     <Stack.Screen
@@ -166,7 +190,11 @@ const HomeStack = () => {
         name="Sentimentixscreen2"
         component={Sentimentixscreen2}
         options={{headerShown: true,  
-          title: 'Sentimetrix'}}
+          title: 'Sentimetrix',
+          headerStyle: {
+            backgroundColor: '#071B36',
+          },
+          headerTintColor: '#fff'}}
         // options={({route}) => ({
         //   title: route.params?.title,
         // })}
@@ -186,7 +214,11 @@ const HomeStack = () => {
         name="Sentimentrix3"
         component={Sentimentrix3}
         options={{headerShown: true,  
-          title: 'Sentimetrix'}}
+          title: 'Sentimetrix',
+          headerStyle: {
+            backgroundColor: '#071B36',
+          },
+          headerTintColor: '#fff'}}
         // options={({route}) => ({
         //   title: route.params?.title,
         // })}
@@ -206,7 +238,11 @@ const HomeStack = () => {
         name="CommonSearchScreen"
         component={CommonSearchScreen}
         options={{headerShown: true,  
-          title: 'Search'}}
+          title: 'Search',
+          headerStyle: {
+            backgroundColor: '#071B36',
+          },
+          headerTintColor: '#fff'}}
         // options={({route}) => ({
         //   title: route.params?.title,
         // })}
@@ -215,8 +251,13 @@ const HomeStack = () => {
       <Stack.Screen
         name="QuizLevels"
         component={QuizLevels}
-        options={{headerShown: false,  
-          title: 'Search'}}
+       
+        options={{headerShown: true,  
+          title: 'Quiz Levels', 
+          headerStyle: {
+            backgroundColor: '#071B36',
+          },
+          headerTintColor: '#fff'}}
         // options={({route}) => ({
         //   title: route.params?.title,
         // })}
@@ -260,8 +301,12 @@ const HomeStack = () => {
       <Stack.Screen
         name="KnowYourHeart"
         component={KnowYourHeart}
-        options={{headerShown: false,  
-          title: 'Search'}}
+        options={{headerShown: true, 
+          title: 'Know Your Heart', 
+          headerStyle: {
+            backgroundColor: '#071B36',
+          },
+          headerTintColor: '#fff'}}
         // options={({route}) => ({
         //   title: route.params?.title,
         // })}
@@ -278,8 +323,26 @@ const HomeStack = () => {
       <Stack.Screen
         name="ThankYouPage"
         component={ThankYouPage}
-        options={{headerShown: false,  
-          title: 'Search'}}
+        options={{headerShown: true,  
+          title: 'Survey',
+          headerStyle: {
+            backgroundColor: '#071B36',
+          },
+          headerTintColor: '#fff'}}
+        // options={({route}) => ({
+        //   title: route.params?.title,
+        // })}
+      />
+
+      <Stack.Screen
+        name="PostsScreen"
+        component={PostsScreen}
+        options={{headerShown: true,  
+          title: "Post's",
+          headerStyle: {
+            backgroundColor: '#071B36',
+          },
+          headerTintColor: '#fff'}}
         // options={({route}) => ({
         //   title: route.params?.title,
         // })}
@@ -329,7 +392,11 @@ const TabNavigator = () => {
       <Tab.Screen
         name="Engage"
         component={EngageScreen}
-        options={{headerShown: true,  
+        options={{headerShown: true, 
+          headerStyle: {
+            backgroundColor: '#071B36',
+          },
+          headerTintColor: '#fff', 
           title: 'Engage',
           tabBarLabel: 'Engage',
           tabBarBadgeStyle: {backgroundColor: 'yellow'},
@@ -352,6 +419,11 @@ const TabNavigator = () => {
         name="Community"
         component={CommunityScreen}
         options={{
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#071B36',
+          },
+          headerTintColor: '#fff',
           tabBarIcon: ({color, size}) => (
             // <Feather name="users" color={color} size={size} />
             <Image source={Community} style={{width:35,height:35}} />
@@ -373,6 +445,10 @@ const TabNavigator = () => {
         component={KnowledgeScreen}
         options={{
           headerShown: true,  
+          headerStyle: {
+            backgroundColor: '#071B36',
+          },
+          headerTintColor: '#fff',
           title: 'Knowledge',
           tabBarBadgeStyle: {backgroundColor: 'yellow'},
           tabBarIcon: ({color, size}) => (

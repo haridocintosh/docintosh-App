@@ -82,7 +82,7 @@ useEffect(() => {
    </View>
    </Card>
    
-   <Card style={{borderRadius:20/2,  marginTop:10, backgroundColor:'#fffbfb'}} onPress={() => navigation.navigate('Polls')} >
+   {/* <Card style={{borderRadius:20/2,  marginTop:10, backgroundColor:'#fffbfb'}} onPress={() => navigation.navigate('Polls')} >
   <View style={styles.infinity}>
       <View style={styles.infinityBefore} />
       <View style={styles.infinityAfter} />
@@ -121,7 +121,7 @@ useEffect(() => {
    <View style={styles.cardfooterstyle}>
     <Image source={cardfootimg1} style={styles.imgcolor} />
    </View>
-   </Card>
+   </Card> */}
 
    {userdata?((userdata.role <='4')?<>
    <Card style={{borderRadius:20/2,  marginTop:10, backgroundColor:'#f9ffff'}} onPress={()=>{ navigation.navigate('Surveys') }} >
@@ -156,7 +156,6 @@ useEffect(() => {
       <Image source={discount1} style={{width:16, height:16}}></Image>
     </View>
     <Text style={styles.paddingLeft}>4</Text>
-    
   </View>
   
    </View>
@@ -165,7 +164,7 @@ useEffect(() => {
    </View>
    </Card>
 
-   <Card style={{borderRadius:20/2,  marginTop:10, backgroundColor:'#f5fcff'}}  onPress={()=>{ navigation.navigate('SentimentixScreen') }}  >
+   {/* <Card style={{borderRadius:20/2,  marginTop:10, backgroundColor:'#f5fcff'}}  onPress={()=>{ navigation.navigate('SentimentixScreen') }}  >
   <View style={styles.infinity}>
       <View style={styles.infinityBefore} />
       <View style={styles.infinityAfter} />
@@ -204,7 +203,9 @@ useEffect(() => {
    <View style={styles.cardfooterstyle}>
     <Image source={cardfootimg3} style={styles.imgcolor}/>
    </View>
-   </Card></>:<Text></Text>):<Text></Text>}
+   </Card> */}
+   </>
+   :<Text></Text>):<Text></Text>}
 
 </View>
    </ScrollView>

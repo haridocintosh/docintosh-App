@@ -8,7 +8,6 @@ import OtpVerification from '../screens/OtpVerification';
 import RegisterTwoScreen from '../screens/RegisterTwoScreen';
 import Congratulation from '../screens/Congratulation';
 import MobileScreen from '../screens/MobileScreen';
-import HomeScreen from '../screens/HomeScreen';
 import ForgetPassword from '../screens/ForgetPassword';
 import CreateNewPass from '../screens/CreateNewPass';
 import RegisterStudentScreen from '../screens/RegisterStudentScreen';
@@ -22,6 +21,9 @@ import ContactPermission from '../screens/ContactPermission';
 import AppStack from './AppStack';
 import { useNavigation } from '@react-navigation/native';
 import QuizLevels from '../screens/QuizLevels/QuizLevels';
+import HomeScreen from '../screens/HomeScreen/HomeScreen';
+
+
 
 
 const Stack = createNativeStackNavigator();
