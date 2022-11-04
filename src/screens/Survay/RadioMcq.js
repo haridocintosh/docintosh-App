@@ -1,115 +1,83 @@
-import React,{useState} from 'react';
-import { View, Text , StyleSheet, Dimensions,SafeAreaView, ScrollView,TouchableOpacity} from 'react-native'
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+import { useFonts } from "expo-font";
+import { styles } from "./SurvayStyle";
 
-const RadioMcq = ({setLiftUpData,currentIndex,allMCQs,nextMcq}) => {
+const RadioMcq = ({ setLiftUpData, currentIndex, allMCQs, nextMcq }) => {
   const [optId, setOptId] = useState(null);
 
-  const validateAnswer = async (ans,basic_id,qid) =>{
-     setLiftUpData(ans.opt_id);
-     //nextMcq(basic_id,qid);
-     console.log("ans.opt_id",ans.opt_id);
-     setOptId(ans.opt_id)
+  const validateAnswer = async (ans, basic_id, qid) => {
+    setLiftUpData(ans.opt_id);
+    //nextMcq(basic_id,qid);
+    console.log("ans.opt_id", ans.opt_id);
+    setOptId(ans.opt_id);
+  };
+  const [fontsLoaded] = useFonts({
+    "Inter-Regular": require("../../assets/fonts/Inter-Regular.ttf"),
+
+    "Inter-SemiBold": require("../../assets/fonts/Inter-SemiBold.ttf"),
+
+    "PlusJakartaSans-Regular": require("../../assets/fonts/PlusJakartaSans-Regular.ttf"),
+
+    "PlusJakartaSans-Bold": require("../../assets/fonts/PlusJakartaSans-Bold.ttf"),
+  });
+
+  if (!fontsLoaded) {
+    return null;
   }
-  
   return (
-    <SafeAreaView style={{backgroundColor:'#ecf2f6',flex:1}}>
-      <View style={{paddingHorizontal:15}}>
-        <View >
-           {allMCQs[currentIndex]?.options.map((data, i) => {
-              return(
-                <TouchableOpacity style={optId == data?.opt_id ? styles.SurvayOptionsSelect : styles.SurvayOptionsUnselect} 
-                 onPress={()=> validateAnswer(data ,allMCQs[currentIndex]?.basic_id, allMCQs[currentIndex]?.qid)} key={i}>
-                  <View style={styles.count}>
-                    <Text style={styles.optionSeriel}>
+    <SafeAreaView style={{ backgroundColor: "#ecf2f6", flex: 1 }}>
+      <View style={{ paddingHorizontal: 15 }}>
+        <View>
+          {allMCQs[currentIndex]?.options.map((data, i) => {
+            return (
+              <TouchableOpacity
+                style={
+                  optId == data?.opt_id
+                    ? styles.SurvayOptionsSelect
+                    : styles.SurvayOptionsUnselect
+                }
+                onPress={() =>
+                  validateAnswer(
+                    data,
+                    allMCQs[currentIndex]?.basic_id,
+                    allMCQs[currentIndex]?.qid
+                  )
+                }
+                key={i}
+              >
+                <View style={styles.count}>
+                  <Text style={styles.optionSeriel}>
                     {/* styles.optionSeriel */}
-                      {i == 0 ?"A":i == 1? "B":i == 2? "C":i == 3? "D": i == 4 ?"E": "F"}
-                    </Text>
-                  </View>
-                  <Text style={styles.optionS}> {data.options}</Text>
-                </TouchableOpacity>
-              )
-            })}
+                    {i == 0
+                      ? "A"
+                      : i == 1
+                      ? "B"
+                      : i == 2
+                      ? "C"
+                      : i == 3
+                      ? "D"
+                      : i == 4
+                      ? "E"
+                      : "F"}
+                  </Text>
+                </View>
+                <Text style={styles.optionS}> {data.options}</Text>
+              </TouchableOpacity>
+            );
+          })}
         </View>
       </View>
-  </SafeAreaView>
-  )
-}
+    </SafeAreaView>
+  );
+};
 
 export default RadioMcq;
-
-const styles = StyleSheet.create({
-    margintop:{
-      marginTop:20
-    },
-    count:{
-       borderRadius:4,
-       backgroundColor:'#F6F6F6',
-       marginRight:10,
-       height:35,
-       width:35,
-       justifyContent:'center',
-       alignItems:'center'
-    },
-    card:{
-      borderRadius:10/2,
-      shadowOffset:0.4,
-      shadowOpacity:0.4,
-      shadowColor:'#D5DEED',
-      elevation:3
-    },
-    OutOff:{
-      fontSize:20,
-      fontWeight:'700'
-    },
-    OutOffTotal:{
-      fontSize:20,
-    },
-    NexrPrevIcons:{
-      flexDirection:'row',
-    },
-    TopScoreContainer:{
-      justifyContent:'space-between',
-      flexDirection:'row',
-      marginVertical:15
-    },
-    Progressbar:{
-      width:"100%",
-      borderRadius:7,
-      height:6
-    },
-    SurvayOptionsSelect:{
-      backgroundColor: 'rgba(66, 185, 61, 0.27)',
-      width:"100%",  
-      borderRadius:4,
-      flexDirection:'row',
-      paddingVertical:10,
-      marginBottom:20,
-      alignItems:'center',
-      paddingHorizontal:15,
-      borderColor:'#D5DEED',
-      borderWidth:1
-    },
-    SurvayOptionsUnselect:{
-      backgroundColor:'#fff',
-      width:"100%",  
-      borderRadius:4,
-      flexDirection:'row',
-      paddingVertical:10,
-      marginBottom:20,
-      alignItems:'center',
-      paddingHorizontal:15,
-      borderColor:'#D5DEED',
-      borderWidth:1
-    },
-    optionSeriel:{
-      alignSelf:'center', 
-      fontSize:20, 
-      fontWeight:'400', 
-      color:'#51668A'
-    },
-    optionS:{
-      // borderWidth:1,
-      width:Dimensions.get("window").width/1.34,
-      color:'#51668A'
-    }
-  })

@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -18,16 +18,14 @@ import { Card } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import ScratchOffer from "./ScratchOffer";
 import { useSelector } from "react-redux";
+import { useFonts } from "expo-font";
+import { styles } from "./SurvayStyle";
 
-
-const ThankYouPage = ({route}) => {
+const ThankYouPage = ({ route }) => {
   const [showOffer, setShowOffer] = useState(true);
   const navigation = useNavigation();
-  const {surveyid} = route.params;
+  const { surveyid } = route.params;
   // console.log("surveyid",surveyid);
-
-
- 
 
   return (
     <SafeAreaView
@@ -35,8 +33,7 @@ const ThankYouPage = ({route}) => {
     >
       {showOffer && <ScratchOffer setShowOffer={setShowOffer} />}
       <Card style={styles.cardbody}>
-          <View>
-
+        <View>
           <View style={styles.badgeConatiner}>
             <Text style={styles.cardheading}>
               386 Coins Left to reach Level 5!!!
@@ -88,20 +85,21 @@ const ThankYouPage = ({route}) => {
             </View>
           </View>
 
-        <Image source={tankyouCelebration} style={styles.tankyouCelebration} />
-          
-          <View style={{paddingHorizontal:15,marginTop:-60 }}>
+          <Image
+            source={tankyouCelebration}
+            style={styles.tankyouCelebration}
+          />
+
+          <View style={{ paddingHorizontal: 15, marginTop: -60 }}>
+            <Text style={styles.thankutxt}>Thank You</Text>
             <Text
               style={{
-                fontSize: 22,
-                fontWeight: "600",
+                fontSize: 14,
                 marginTop: 20,
                 textAlign: "center",
+                fontFamily: "Inter-Regular",
               }}
             >
-              Thank You
-            </Text>
-            <Text style={{ fontSize: 14, marginTop: 20, textAlign: "center" }}>
               for your time and response.
             </Text>
             <Text
@@ -110,6 +108,7 @@ const ThankYouPage = ({route}) => {
                 marginTop: 20,
                 textAlign: "center",
                 color: "#51668A",
+                fontFamily: "Inter-Regular",
               }}
             >
               Yay! you took the ‘Bombay Survey - Allergies Survey for Doctor
@@ -118,8 +117,10 @@ const ThankYouPage = ({route}) => {
             <Button
               title="Back to Categories"
               buttonStyle={styles.buttonStyle}
-              titleStyle={{color: "#fff",}}
-              onPress={() => navigation.navigate("Surveys",{surveyid: surveyid})}
+              titleStyle={{ color: "#fff", fontFamily: "PlusJakartaSans-Bold" }}
+              onPress={() =>
+                navigation.navigate("Surveys", { surveyid: surveyid })
+              }
             />
           </View>
 
@@ -129,7 +130,6 @@ const ThankYouPage = ({route}) => {
               View All
             </Text>
           </View> */}
-         
         </View>
       </Card>
     </SafeAreaView>
@@ -137,100 +137,3 @@ const ThankYouPage = ({route}) => {
 };
 
 export default ThankYouPage;
-const styles = StyleSheet.create({
-  cardbody: {
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    backgroundColor: "#ffff",
-    shadowColor: "#000",
-    shadowOpacity: 0.3,
-    elevation: 2,
-    // zIndex: 99999,
-    position: "absolute",
-    width: "100%",
-    bottom: 0,
-  },
-  cardheading: {
-    alignSelf: "center",
-    fontSize: 14,
-    fontWeight: "500",
-    marginTop: 20,
-  },
-  badgeparent: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 30,
-  },
-  badgeimg: {
-    width: 30,
-    height: 30,
-  },
-  avtatsize: {
-    width: 40,
-    height: 40,
-  },
-  imaguser: {
-    width: 15,
-    height: 15,
-    marginRight: 5,
-  },
-
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  line: {
-    borderWidth: 1,
-    borderColor: "#D5DEED",
-    marginTop: 17,
-  },
-  listitemtst: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: "#071B36",
-  },
-  count: {
-    paddingRight: 10,
-    marginTop: 10,
-  },
-  itemlisttxt2: {
-    color: "#51668A",
-    fontWeight: "400",
-    fontSize: 12,
-  },
-  margintop: {
-    marginTop: 20,
-  },
-  marginleft: {
-    marginLeft: 20,
-  },
-  badgeimg: {
-    width: 35,
-    height: 42,
-  },
-  levelsBadge: {
-    justifyContent: "center",
-    alignItems: "center",
-    // borderWidth:1,
-    width: 90,
-  },
-  badgeConatiner: {
-    padding: 15,
-    backgroundColor: "rgba(213, 222, 237, 0.2)",
-  },
-  tankyouCelebration:{
-   width : Dimensions.get("window").width/1,
-   height:140
-  },
-  buttonStyle:{
-    marginTop: 30,
-    bottom: 10,
-    width: "100%",
-    height: 48,
-    alignSelf: "center",
-    borderColor: "#fff",
-    borderRadius: 15 / 2,
-    backgroundColor: "#2C8892",
-  }
-});
