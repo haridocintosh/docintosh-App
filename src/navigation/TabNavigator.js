@@ -49,6 +49,8 @@ import Knowledge from '../assets/dr-icon/Knowledge.png'
 import Community from '../assets/dr-icon/Community.png'
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import HomeNavbar from '../screens/HomeScreen/HomeNavbar';
+import PostsScreen from '../screens/HomeScreen/PostsScreen';
+
 
 
 
@@ -323,6 +325,20 @@ const HomeStack = () => {
         component={ThankYouPage}
         options={{headerShown: true,  
           title: 'Survey',
+          headerStyle: {
+            backgroundColor: '#071B36',
+          },
+          headerTintColor: '#fff'}}
+        // options={({route}) => ({
+        //   title: route.params?.title,
+        // })}
+      />
+
+      <Stack.Screen
+        name="PostsScreen"
+        component={PostsScreen}
+        options={{headerShown: true,  
+          title: "Post's",
           headerStyle: {
             backgroundColor: '#071B36',
           },
