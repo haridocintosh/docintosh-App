@@ -5,7 +5,10 @@ import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  Image,TouchableOpacity,FlatList,
+  Image,
+  TouchableOpacity,
+  FlatList,
+  Dimensions,
   ImageBackground
 } from 'react-native';
 import { Card } from 'react-native-paper';
@@ -71,7 +74,13 @@ const HomeScreen = ()=> {
     const result = await dispatch(userPostData(postDetails));
     setallPost(result.payload);
   }
-
+  
+  const dimensions = Dimensions.get('window');
+ 
+  const handlePost = (item) => {
+    // console.log("hgghg",val);
+    navigation.navigate('PostsScreen', {item:item})
+  }
 
 
     const renderItem = ({item}) => {
@@ -112,10 +121,13 @@ const HomeScreen = ()=> {
             </Text>
           </View>
 
-          <View>
-            <Image source={item.imgPath?{uri:item.imgPath}:''} style={{width:"100%",height:200,borderRadius:2}}/>
-          </View>
+          <TouchableOpacity style={{justifyContent:'center',alignItems:'center',flex:1}} onPress={() => handlePost(item)} >
+            <Image source={item.imgPath?{uri:item.imgPath}:''} 
+            style={{width:"100%",aspectRatio:1,borderRadius:2}} resizeMode="center"/>
+          </TouchableOpacity>
+
           <PublicReactions item={item}/>
+
           <View style={{flexDirection:'row',marginTop:5,marginLeft:10, marginBottom:10}}>
               <Image source={oval}style={{marginLeft:-10, borderColor:'#000'}}/>
               <Image source={oval}style={{marginLeft:-10, borderColor:'#000'}}/>
@@ -127,17 +139,11 @@ const HomeScreen = ()=> {
     }
 
 
-    const MIN_HEIGHT = Platform.OS === 'ios' ? 90 : 55;
-    const MAX_HEIGHT = 350;
 
   return (
   <SafeAreaView>
     
     <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true}>
-      {/* <HeaderImageScrollView maxHeight={MAX_HEIGHT} minHeight={MIN_HEIGHT}>
-
-      </HeaderImageScrollView> */}
-
       <View style={{backgroundColor:'#071B36',}}>
         <ImageBackground source={bgtophome} style={styles.bgtophome}>
           <View style={styles.imageConatentContainer}>
@@ -437,7 +443,7 @@ marginTop:10
     borderRadius:10,
     shadowRadius:10, 
     padding:15,
-    marginTop:-10
+    marginTop:-10,
   },
   bgtophome:{ 
     width:'100%', 
