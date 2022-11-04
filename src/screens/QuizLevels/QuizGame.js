@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import QuizGameQuetion from './QuizGameQuetion';
 import { GetQuizQuestions } from '../../../redux/reducers/mcqSlice';
 import { useNavigation } from '@react-navigation/native';
-
+import { styles } from './QuizLevelsStyles';
 
 
 
@@ -69,50 +69,4 @@ const QuizGame = ({route}) => {
   )
 }
 
-const styles = StyleSheet.create({
- question:{
-    margin:20,
-    fontSize:16,
-    fontWeight:'600',
-    color:'#071B36',
-    alignSelf:'center',
- },
- Qcard:{
-     backgroundColor:'rgba(8, 1, 1, 0.05);',
-     width:"100%",  
-     marginTop:20,
-     padding:10,
-     borderRadius:10,
- },
- greecrd:{
-      backgroundColor:'#42B93D45',
-      width:"100%",  
-      marginTop:20,
-      borderRadius:10,
-      padding:10,
-      zIndex:3
- },
- ans:{
-    alignSelf:'flex-start',
-    padding:10,
-    fontSize:16
- },
- progressCircle:{
-    position:'relative',
-    justifyContent:'center',
-    alignItems:'center'
- },
- square: {
-  width: "100%",
-  height:Dimensions.get("window").height,
-  backgroundColor: '#D5F2E8',
-  position:'absolute',
-  top:'-140%'
-},
-outOff:{ 
-  fontSize:16, 
-  fontWeight:'600', 
-  position:'absolute'
-}
- });
 export default QuizGame

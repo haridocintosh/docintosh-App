@@ -6,6 +6,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch } from 'react-redux';
 import { COLORS } from '../../components/constant';
 import { saveQuizAnswer } from '../../../redux/reducers/mcqSlice';
+import { styles } from './QuizLevelsStyles';
+
 
 const QuizGameQuetion = ({mcqQue,isTop, singleMcq}) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -94,7 +96,7 @@ useEffect(()=>{
                 >
                   <Text style={{ fontSize:16, fontWeight:'600', position:'absolute'}}>{currentQuestionIndex}/{TotalMcq}</Text>
               </Progress.Circle>
-                <Text style={styles.question}>{mcqQue[currentQuestionIndex]?.question_title}</Text>
+                <Text style={styles.quizGamequestion}>{mcqQue[currentQuestionIndex]?.question_title}</Text>
             </View>
             {mcqQue[currentQuestionIndex]?.options.map((data, i) => {
               return(
@@ -133,72 +135,3 @@ useEffect(()=>{
 }
 
 export default QuizGameQuetion;
-
-const styles = StyleSheet.create({
-  question:{
-     margin:15,
-     fontSize:16,
-     fontWeight:'600',
-     color:'#071B36',
-     alignSelf:'flex-start',
-     paddingRight:10,
-     width:Dimensions.get("window").width/1.3,
-  },
-  Qcard:{
-      backgroundColor:'rgba(8, 1, 1, 0.05);',
-      width:"100%",  
-      marginTop:20,
-      padding:10,
-      borderRadius:10,
-  },
-  greecrd:{
-       backgroundColor:'#42B93D45',
-       width:"100%",  
-       marginTop:20,
-       borderRadius:10,
-       padding:10,
-       zIndex:3
-  },
-  ans:{
-     alignSelf:'flex-start',
-     padding:10,
-     fontSize:16
-  },
-  progressCircle:{
-     position:'relative',
-     justifyContent:'center',
-     alignItems:'center'
-  },
-  square: {
-   width: "100%",
-   height:Dimensions.get("window").height/1,
-   backgroundColor: '#9CF0CF',
-   position:'absolute',
-   top:'-100%'
- },
- //modal CSS
- ModalContainer:{
-    flex: 1,
-    backgroundColor: COLORS.primary,
-    alignItems: 'center',
-    justifyContent: 'center'
- },
- ModalCart:{
-    backgroundColor: COLORS.white,
-    width: '90%',
-    borderRadius: 20,
-    padding: 20,
-    alignItems: 'center'
-},
-  ModalGeet:{
-    fontSize: 30, 
-    fontWeight: 'bold'
-  },
-  ModalScore:{
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    marginVertical: 20
-  }
- 
-  });

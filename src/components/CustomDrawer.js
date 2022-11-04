@@ -15,6 +15,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import docintoshlogo from '../assets/dr-icon/docintoshlogo.png';
+import profilePicture from '../assets/images/profilePicture.png';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -96,7 +97,7 @@ const CustomDrawer = props => {
             <TouchableOpacity  onPress={() => navigation.navigate('ProfileScreen')}>
               <MaterialIcons name="arrow-forward-ios" size={16} color="white" style={styles.forwardIcon}/>
             </TouchableOpacity>
-            <Image source={{uri:userdata.profile}} style={styles.profilePic}/>
+            <Image source={userdata.profile ? {uri:userdata.profile}:profilePicture} style={styles.profilePic}/>
             <Text style={styles.userName}>{userdata?((userdata.role<='4')?'Dr.':''):''} {userdata['fullname']}</Text>
             <Text style={styles.userProfession}> {userdata['speciality']} |</Text>
           </View>

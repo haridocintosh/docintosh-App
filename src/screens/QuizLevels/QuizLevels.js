@@ -1,5 +1,5 @@
 import { View, Text , TouchableOpacity, ScrollView,ActivityIndicator} from 'react-native';
-import { styles } from './QuizLevelaStyles';
+import { styles } from './QuizLevelsStyles';
 import React, { useEffect, useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient'
 import { useNavigation } from '@react-navigation/native';
@@ -49,7 +49,7 @@ const asyncFetchDailyData = async () => {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.QuizLevelcontainer}>
     {toggle && <McqListModal toggle={setToggle} quizData={quizData} topicId={topicId}/>}
       {/* <LinearGradient colors={['transparent', '#08A099']} style={styles.circleView}/> */}
 
