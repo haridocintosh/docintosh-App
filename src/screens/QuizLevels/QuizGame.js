@@ -55,19 +55,7 @@ const QuizGame = ({ route }) => {
     outputRange: [0, Dimensions.get("window").height],
     extrapolate: "clamp",
   });
-  const [fontsLoaded] = useFonts({
-    "Inter-Regular": require("../../assets/fonts/Inter-Regular.ttf"),
 
-    "Inter-SemiBold": require("../../assets/fonts/Inter-SemiBold.ttf"),
-
-    "PlusJakartaSans-Regular": require("../../assets/fonts/PlusJakartaSans-Regular.ttf"),
-
-    "PlusJakartaSans-Bold": require("../../assets/fonts/PlusJakartaSans-Bold.ttf"),
-  });
-
-  if (!fontsLoaded) {
-    return null;
-  }
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       {!isTop && <TimeOutModal toggle={setIsTop} />}
