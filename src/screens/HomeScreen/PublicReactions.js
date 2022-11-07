@@ -15,14 +15,14 @@ const PublicReactions = ({item}) => {
                   <TouchableOpacity>
                       <AntDesign name={liked?"heart":"hearto"} size={22} color="red" onPress={()=>{setLiked(!liked)}}/>
                   </TouchableOpacity>
-                  <Text style={styles.socialCountText}>{item.likecount}k</Text>
+                  <Text style={styles.socialCountText}>{item.likecount}</Text>
                 </View>
 
                 <View style={styles.socialCount}>
                     <TouchableOpacity>
                         <Image source={gift} style={styles.socialImages}/>
                     </TouchableOpacity>
-                  <Text style={styles.socialCountText}>{item.commentcount}K</Text>
+                  <Text style={styles.socialCountText}>{item.commentcount}</Text>
                 </View>
 
                 <View style={styles.socialCount}>

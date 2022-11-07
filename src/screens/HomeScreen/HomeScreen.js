@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   FlatList,
   Dimensions,
-  ImageBackground
+  ImageBackground,ActivityIndicator,
 } from 'react-native';
 import { Card } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
@@ -32,6 +32,7 @@ import  {HeaderImageScrollView, TriggeringView } from 'react-native-image-header
 const HomeScreen = ()=> {
 // like unlike fun =>
   const [sliceData, setSliceData] = useState(10);
+  const [loader, setLoader] = useState(true);
   const [isPlaying, setIsPlaying]   = useState(false);
   const [userdata, setuserdata]     = useState({
     profile:''
@@ -72,7 +73,10 @@ const HomeScreen = ()=> {
   const fetchPostData = async (role,city_id,assoc_id,profileimage,userId)=>{ 
     const postDetails = {role,city_id,assoc_id,profileimage,userId}
     const result = await dispatch(userPostData(postDetails));
-    setallPost(result.payload);
+    const allPostData = result.payload.filter(Post => Post.user_role != 5)
+   // setallPost(result.payload);
+    setallPost(allPostData);
+    setLoader(false)
   }
   
   const dimensions = Dimensions.get('window');
@@ -80,6 +84,13 @@ const HomeScreen = ()=> {
   const handlePost = (item) => {
     // console.log("hgghg",val);
     navigation.navigate('PostsScreen', {item:item})
+  }
+
+  if(loader){
+    return(
+    <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+        <ActivityIndicator size={'large'} color={"#2C8892"}/>
+    </View>)
   }
 
 
@@ -91,7 +102,7 @@ const HomeScreen = ()=> {
               <Image source={profileimg} onPress={() => navigation.navigate('ProfileScreen2')} style={{width:38, height:38,marginRight:5}} ></Image>
                 <View >
                   <Text style={{fontSize:14, fontWeight:'400'}}>
-                    {item.role =='4' ? 'Dr.' : ''} { item.first_name && item.first_name} {item.last_name && item.last_name} 
+                   {item.utitle && item.utitle} { item.first_name && item.first_name} {item.last_name && item.last_name} 
                     <MaterialCommunityIcons name="check-decagram" size={12} color="#0F9C69" />
                   </Text>
                   <View style={{flexDirection:'row',alignItems:'center'}}>

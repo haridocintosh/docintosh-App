@@ -28,7 +28,7 @@ const PostsScreen = ({route}) => {
                       <Image source={{uri:item.profileimage}} onPress={() => navigation.navigate('ProfileScreen2')} style={{width:38, height:38,marginRight:5,borderRadius:50,}} ></Image>
                       <View >
                         <Text style={{fontSize:14, fontWeight:'400'}}>
-                            {item.role =='4' ? 'Dr.' : ''} { item.first_name && item.first_name} {item.last_name && item.last_name + ' '}  
+                        {item.utitle && item.utitle} { item.first_name && item.first_name} {item.last_name && item.last_name + ' '}  
                             <MaterialCommunityIcons name="check-decagram" size={12} color="#0F9C69" style={{marginLeft:15}}/>
                         </Text>
                         <View style={{flexDirection:'row',alignItems:'center'}}>
