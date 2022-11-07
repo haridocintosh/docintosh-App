@@ -10,7 +10,6 @@ import {
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { BaseNavigationContainer, getFocusedRouteNameFromRoute, NavigationContainer, useNavigation } from '@react-navigation/native';
-
 import EngageScreen from '../screens/EngageScreen';
 import CommunityScreen from '../screens/CommunityScreen';
 import GameDetailsScreen from '../screens/GameDetailsScreen';
@@ -50,6 +49,8 @@ import Community from '../assets/dr-icon/Community.png'
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import HomeNavbar from '../screens/HomeScreen/HomeNavbar';
 import PostsScreen from '../screens/HomeScreen/PostsScreen';
+import CommentsScreen from '../screens/HomeScreen/CommentsScreen';
+
 
 
 
@@ -59,7 +60,11 @@ const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const HomeStack = () => {
-  
+  const forFade = ({ current }) => ({
+  cardStyle: {
+    opacity: current.progress,
+  },
+});
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -346,6 +351,17 @@ const HomeStack = () => {
         // options={({route}) => ({
         //   title: route.params?.title,
         // })}
+      />
+
+      <Stack.Screen
+        name="CommentsScreen"
+        component={CommentsScreen}
+        options={{headerShown: true,  
+          title: "Comments",
+          headerStyle: {
+            backgroundColor: '#071B36',
+          },
+          headerTintColor: '#fff'}}
       />
       
     </Stack.Navigator>

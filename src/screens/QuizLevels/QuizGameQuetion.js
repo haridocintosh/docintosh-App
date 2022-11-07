@@ -21,7 +21,6 @@ const QuizGameQuetion = ({ mcqQue, isTop, singleMcq }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isOptionsDisabled, setIsOptionsDisabled] = useState(false);
   const [score, setScore] = useState(0);
-  const [showScoreModal, setShowScoreModal] = useState(false);
   const TotalMcq = parseInt(mcqQue.length);
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -93,19 +92,6 @@ const QuizGameQuetion = ({ mcqQue, isTop, singleMcq }) => {
     }
   }, [isTop]);
 
-  const [fontsLoaded] = useFonts({
-    "Inter-Regular": require("../../assets/fonts/Inter-Regular.ttf"),
-
-    "Inter-SemiBold": require("../../assets/fonts/Inter-SemiBold.ttf"),
-
-    "PlusJakartaSans-Regular": require("../../assets/fonts/PlusJakartaSans-Regular.ttf"),
-
-    "PlusJakartaSans-Bold": require("../../assets/fonts/PlusJakartaSans-Bold.ttf"),
-  });
-
-  if (!fontsLoaded) {
-    return null;
-  }
   return (
     <View style={{ marginTop: 10 }}>
       <View>
@@ -147,7 +133,6 @@ const QuizGameQuetion = ({ mcqQue, isTop, singleMcq }) => {
           );
         })}
       </View>
-
       {/* <Modal animationType="slide" transparent={true} visible={showScoreModal}>
               <View style={styles.ModalContainer}>
                   <View style={styles.ModalCart}>

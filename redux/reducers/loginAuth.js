@@ -96,6 +96,7 @@ export const loginAuth = createSlice({
             state.loading = false;
             state.error = false
         },
+        
 
         [userRegisterOne.pending] : (state)=>
         {
@@ -113,6 +114,8 @@ export const loginAuth = createSlice({
             state.loading = false;
             state.error = false
         },
+
+
         [userRegisterSecond.pending] : (state)=>
         {
             state.loading =  true

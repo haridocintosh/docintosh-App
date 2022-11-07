@@ -14,7 +14,6 @@ import QuizGameQuetion from "./QuizGameQuetion";
 import { GetQuizQuestions } from "../../../redux/reducers/mcqSlice";
 import { useNavigation } from "@react-navigation/native";
 import { styles } from "./QuizLevelsStyles";
-import { useFonts } from "expo-font";
 
 const QuizGame = ({ route }) => {
   const dispatch = useDispatch();
@@ -55,6 +54,7 @@ const QuizGame = ({ route }) => {
     outputRange: [0, Dimensions.get("window").height],
     extrapolate: "clamp",
   });
+
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>

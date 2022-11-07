@@ -16,7 +16,7 @@ const PostsScreen = ({route}) => {
     useEffect(() => {
         setUserData(item?.attach_array)
     }, [])
-    console.log("item",item);
+    // console.log("item",item);
   return (
     <View style={styles.PostContainer}>
 

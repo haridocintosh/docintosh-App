@@ -16,7 +16,7 @@ export const FetchUser = ()=>{
     });
 
     let loading = useSelector((state)=>{
-        return state.myallUsers.loading;
+        return state.mylogin.loading;
     });
 
  

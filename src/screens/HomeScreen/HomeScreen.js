@@ -123,7 +123,7 @@ const HomeScreen = ()=> {
 
           <TouchableOpacity style={{justifyContent:'center',alignItems:'center',flex:1}} onPress={() => handlePost(item)} >
             <Image source={item.imgPath?{uri:item.imgPath}:''} 
-            style={{width:"100%",aspectRatio:1,borderRadius:2}} resizeMode="center"/>
+            style={{width:"100%",height:200,borderRadius:2}} resizeMode="center"/>
           </TouchableOpacity>
 
           <PublicReactions item={item}/>
