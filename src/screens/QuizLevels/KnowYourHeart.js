@@ -26,6 +26,7 @@ import { Card } from "react-native-paper";
 import axios from "axios";
 import { mainApi } from "../../apis/constant";
 import { styles } from "./QuizLevelsStyles";
+import { useFonts } from "expo-font";
 const KnowYourHeart = ({ route }) => {
   const { score } = route?.params;
   const { TotalMcq } = route?.params;
@@ -36,7 +37,6 @@ const KnowYourHeart = ({ route }) => {
   const navigation = useNavigation();
 
   const getLeaderboardData = () => {
-    
     axios
       .get(`${mainApi.baseUrl}/ApiController/global_leaderboard`)
       .then((res) => {
@@ -52,7 +52,8 @@ const KnowYourHeart = ({ route }) => {
 
   const handleAlldata = () => {
     setSliceData();
-  }
+  };
+
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "#2C8892", position: "relative" }}
@@ -63,9 +64,21 @@ const KnowYourHeart = ({ route }) => {
           <Text style={styles.scoreboardText}>
             {score}/{TotalMcq}
           </Text>
-          <Text style={styles.WhiteDevider} />
+          <Text
+            style={[
+              styles.WhiteDevider,
+              { fontFamily: "PlusJakartaSans-Regular" },
+            ]}
+          />
           <Image source={whiteAccesstime} style={styles.Accesstime} />
-          <Text style={styles.scoreboardText}>2:30 min</Text>
+          <Text
+            style={[
+              styles.scoreboardText,
+              { fontFamily: "PlusJakartaSans-Regular" },
+            ]}
+          >
+            2:30 min
+          </Text>
         </View>
         <View>
           <View style={styles.badgeConatiner}>
@@ -90,7 +103,14 @@ const KnowYourHeart = ({ route }) => {
                   <Text style={styles.levelText}>Intermediate</Text>
                   <View style={styles.row}>
                     <Image source={dcoin} style={styles.imaguser} />
-                    <Text style={styles.coinsCount}>400</Text>
+                    <Text
+                      style={[
+                        styles.coinsCount,
+                        { fontFamily: "Inter-Regular" },
+                      ]}
+                    >
+                      400
+                    </Text>
                   </View>
                 </View>
               </View>
@@ -116,17 +136,21 @@ const KnowYourHeart = ({ route }) => {
                   </View>
                 </View>
               </View>
-              
             </View>
           </View>
-
           <View style={{ backgroundColor: "#ffff", padding: 15 }}>
             <View style={{ height: 300 }}>
               <ScrollView
                 showsVerticalScrollIndicator={false}
                 nestedScrollEnable={true}
               >
-                <Text style={{ fontSize: 18, fontWeight: "600" }}>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontWeight: "600",
+                    fontFamily: "Inter-SemiBold",
+                  }}
+                >
                   Winners for this Challenge
                 </Text>
 
@@ -193,7 +217,6 @@ const KnowYourHeart = ({ route }) => {
               </ScrollView>
             </View>
             <View>
-
               <TouchableOpacity onPress={() => handleAlldata()}>
                 <Text style={styles.ViewAllText}>View All</Text>
               </TouchableOpacity>
@@ -201,7 +224,10 @@ const KnowYourHeart = ({ route }) => {
               <Button
                 title="Back to Categories"
                 buttonStyle={styles.buttonStyle}
-                titleStyle={{ color: "#fff" }}
+                titleStyle={{
+                  color: "#fff",
+                  fontFamily: "PlusJakartaSans-Bold",
+                }}
                 onPress={() => navigation.navigate("QuizLevels")}
               />
             </View>
@@ -211,7 +237,4 @@ const KnowYourHeart = ({ route }) => {
     </SafeAreaView>
   );
 };
-
 export default KnowYourHeart;
-
-
