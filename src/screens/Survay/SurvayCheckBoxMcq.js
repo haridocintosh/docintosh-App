@@ -11,6 +11,8 @@ import { useNavigation } from "@react-navigation/native";
 import CheckBox from "react-native-check-box";
 import { useFonts } from "expo-font";
 import { styles } from "./SurvayStyle";
+import { fontsLoaded } from "../../../GlobalStyle";
+
 
 const SurvayCheckBoxMcq = ({ setLiftUpData, currentIndex, allMCQs }) => {
   const [allMcq, setAllMcq] = useState(allMCQs[currentIndex]);
@@ -31,19 +33,7 @@ const SurvayCheckBoxMcq = ({ setLiftUpData, currentIndex, allMCQs }) => {
     // console.log("optId",optId);
   };
 
-  const [fontsLoaded] = useFonts({
-    "Inter-Regular": require("../../assets/fonts/Inter-Regular.ttf"),
-
-    "Inter-SemiBold": require("../../assets/fonts/Inter-SemiBold.ttf"),
-
-    "PlusJakartaSans-Regular": require("../../assets/fonts/PlusJakartaSans-Regular.ttf"),
-
-    "PlusJakartaSans-Bold": require("../../assets/fonts/PlusJakartaSans-Bold.ttf"),
-  });
-
-  if (!fontsLoaded) {
-    return null;
-  }
+  
   return (
     <SafeAreaView style={{ backgroundColor: "#ecf2f6", flex: 1 }}>
       <View style={{ paddingHorizontal: 15 }}>

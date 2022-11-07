@@ -137,7 +137,7 @@ const KnowYourHeart = ({ route }) => {
                   </View>
                 </View>
               </View>
-
+\
               <View style={styles.levelsBadge}>
                 <Image source={legendBadge} style={styles.badgeimg} />
                 <View>
