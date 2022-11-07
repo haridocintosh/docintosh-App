@@ -14,7 +14,7 @@ import Engage1Screen from '../screens/Engage1Screen';
 import PostUpdateScreen from '../screens/PostUpdateScreen'
 import ReportPost from '../screens/ReportPost'
 import CreateCommunity from '../screens/CreateCommunity';
-import LoginScreen from '../screens/LoginScreen';
+
 import SharePost from '../screens/SharePost'
 import Polls from '../screens/Polls';
 import Polls1 from '../screens/Polls1';
@@ -71,16 +71,7 @@ const AuthStack = () => {
         
       />
 
-    {/* <Drawer.Screen
-        name="LoginScreen"
-        component={LoginScreen}
-        options={{headerShown: false,
-          drawerIcon: () => (
-            <Ionicons name="trophy-outline" size={22} style={{color:'#ffff'}} />
-          ),
-     }}
-        
-      /> */}
+ 
       <Drawer.Screen
         name="Invite"
         component={ProfileScreen}

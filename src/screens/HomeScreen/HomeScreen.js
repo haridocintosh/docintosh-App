@@ -160,7 +160,7 @@ const HomeScreen = ()=> {
           <View style={styles.imageConatentContainer}>
          
             <View style={{flexDirection:'row',alignItems:'center'}}> 
-              <TouchableOpacity onPress={() => navigation.openDrawer()}>
+              <TouchableOpacity>
                 <Ionicons name="reorder-three-outline" size={34} color="#fff"  />
               </TouchableOpacity>
               <View style={{backgroundColor:'#FFCC00', width:4, height:24,marginHorizontal:10,borderRadius:5}}/>

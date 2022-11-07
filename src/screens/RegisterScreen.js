@@ -87,18 +87,18 @@ export default function RegisterScreen() {
     fetchSpecialities()
   },[]);
 
-  // const checkmail= (e)=>{
-  //   check_mail(e)
-  //   .then(res => {
-  //     console.log("checkstatus",res['status']);
-  //      if(res['status'] == 'Success'){
-  //         setemail(e);
-  //      }
-  //   })
-  //   .catch(err => {
-  //     console.log(err);
-  //   });
-  // }
+  const checkmail= (e)=>{
+    check_mail(e)
+    .then(res => {
+      console.log("checkstatus",res['status']);
+       if(res['status'] == 'Success'){
+          setemail(e);
+       }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
 
 const firstName= (e) =>{
     const isValidnameRegex = /^[a-zA-Z]+[a-zA-Z]+$/;

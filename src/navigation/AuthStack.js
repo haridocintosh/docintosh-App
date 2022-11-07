@@ -24,8 +24,6 @@ import QuizLevels from '../screens/QuizLevels/QuizLevels';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 
 
-
-
 const Stack = createNativeStackNavigator();
 
 const AuthStack = () => {

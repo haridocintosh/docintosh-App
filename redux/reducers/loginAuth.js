@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { mainApi } from "../../src/apis/constant"
+import { mainApi } from "../../src/apis/constant";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+ 
 
 export const userLogin = createAsyncThunk("user/login", async(loginData)=>{
     try{
@@ -62,13 +64,14 @@ export const loginAuth = createSlice({
     name : "auth",
     initialState : {
         userInfo    : {},
-        userName    : 'testSetvalue',
+        userName    : "test user",
         loading     : false,
         isLoggedIn  : false,
         error       : false,
         usertoken   : null,
         registerData: {},
         registerTwoData : {}
+
     },
     reducers : {
         logout : (currentState)=>{
@@ -76,7 +79,14 @@ export const loginAuth = createSlice({
             currentState.loading    = false;
             currentState.usertoken  = null;
             currentState.loading    = false;
-        }
+        },
+        // getUserInfo :  (currentState)=>{
+        //   //  currentState.userName =  AsyncStorage.getItem('USER_INFO');
+        //     // console.log("reactAuthData",jsonValue);
+        //     // const data=await JSON.parse(jsonValue);
+        //     //  currentState.userName=JSON.parse(data)['data'];
+        // },
+        
     },
     extraReducers :{
        [userLogin.pending] : (state)=>
@@ -84,11 +94,11 @@ export const loginAuth = createSlice({
          state.loading =  true
         }, 
         [userLogin.fulfilled] : (state, action)=>
-        {  // console.log(fulfilled);
+        {
             state.loading       = false;
             state.isLoggedIn    = true;
             state.usertoken     = 'userLogin'
-            state.userInfo      = action.payload;
+            state.userInfo      =  action.payload;
         }, 
         [userLogin.rejected] : (state, action)=>
         {   
@@ -102,7 +112,7 @@ export const loginAuth = createSlice({
             state.loading =  true
         }, 
         [userRegisterOne.fulfilled] : (state, action)=>
-        {  // console.log(fulfilled);
+        {  
             state.loading       = false,
             state.isLoggedIn    = true
             state.registerData  = action.payload;
@@ -133,5 +143,5 @@ export const loginAuth = createSlice({
 });
 
 
-export const { reducer : userresult } = loginAuth;
+export const { reducer : userresult} = loginAuth;
 export const { logout } = loginAuth.actions
