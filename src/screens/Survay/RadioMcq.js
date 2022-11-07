@@ -20,19 +20,6 @@ const RadioMcq = ({ setLiftUpData, currentIndex, allMCQs, nextMcq }) => {
     console.log("ans.opt_id", ans.opt_id);
     setOptId(ans.opt_id);
   };
-  const [fontsLoaded] = useFonts({
-    "Inter-Regular": require("../../assets/fonts/Inter-Regular.ttf"),
-
-    "Inter-SemiBold": require("../../assets/fonts/Inter-SemiBold.ttf"),
-
-    "PlusJakartaSans-Regular": require("../../assets/fonts/PlusJakartaSans-Regular.ttf"),
-
-    "PlusJakartaSans-Bold": require("../../assets/fonts/PlusJakartaSans-Bold.ttf"),
-  });
-
-  if (!fontsLoaded) {
-    return null;
-  }
   return (
     <SafeAreaView style={{ backgroundColor: "#ecf2f6", flex: 1 }}>
       <View style={{ paddingHorizontal: 15 }}>

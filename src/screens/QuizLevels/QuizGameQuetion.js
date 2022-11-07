@@ -92,20 +92,6 @@ const QuizGameQuetion = ({ mcqQue, isTop, singleMcq }) => {
       setIsOptionsDisabled(true);
     }
   }, [isTop]);
-
-  const [fontsLoaded] = useFonts({
-    "Inter-Regular": require("../../assets/fonts/Inter-Regular.ttf"),
-
-    "Inter-SemiBold": require("../../assets/fonts/Inter-SemiBold.ttf"),
-
-    "PlusJakartaSans-Regular": require("../../assets/fonts/PlusJakartaSans-Regular.ttf"),
-
-    "PlusJakartaSans-Bold": require("../../assets/fonts/PlusJakartaSans-Bold.ttf"),
-  });
-
-  if (!fontsLoaded) {
-    return null;
-  }
   return (
     <View style={{ marginTop: 10 }}>
       <View>
