@@ -41,6 +41,7 @@ const PublicReactions = ({item}) => {
               <View style={{ flexDirection: 'row',marginVertical:5  }}>
                 <View style={styles.socialCount}>
                   <TouchableOpacity>
+                    <Text>{item?.post_like_status?.map((element, item)=> console.log(element))}</Text>
                       <AntDesign name={liked?"heart":"hearto"} size={22} color="red" onPress={()=> handleLikes(item.post_id)}/>
                   </TouchableOpacity>
                   <Text style={styles.socialCountText}>{item.likecount}</Text>

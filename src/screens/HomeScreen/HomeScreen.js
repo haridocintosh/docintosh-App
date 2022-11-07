@@ -35,7 +35,8 @@ const HomeScreen = ()=> {
   const [loader, setLoader] = useState(true);
   const [isPlaying, setIsPlaying]   = useState(false);
   const [userdata, setuserdata]     = useState({
-    profile:''
+    profile:'',
+    user_id:''
   });
   const [allPost, setallPost]  = useState([])
 
@@ -65,7 +66,8 @@ const HomeScreen = ()=> {
     const data=await JSON.parse(jsonValue);
     const result=JSON.parse(data)['data'];
     setuserdata({
-      profile:result['profileimage']
+      profile:result['profileimage'],
+      user_id:result['id']
     });
     fetchPostData(result['role'],result['city_id'], result['assoc_id'], result['profileimage'], result['id'])
   }
