@@ -18,10 +18,7 @@ const McqListModal = ({ toggle, quizData, topicId }) => {
   const filterId = quizData.filter((el) => el.topic_id === topicId);
 
   const basicId = filterId[0].basic_id;
-  console.log(
-    "filterId---------------------------------------------",
-    filterId[0].title
-  );
+
   const goToNext = () => {
     navigation.navigate("QuizGame", {
       basicId: basicId,
@@ -30,19 +27,7 @@ const McqListModal = ({ toggle, quizData, topicId }) => {
     //
     toggle(false);
   };
-  const [fontsLoaded] = useFonts({
-    "Inter-Regular": require("../../assets/fonts/Inter-Regular.ttf"),
-
-    "Inter-SemiBold": require("../../assets/fonts/Inter-SemiBold.ttf"),
-
-    "PlusJakartaSans-Regular": require("../../assets/fonts/PlusJakartaSans-Regular.ttf"),
-
-    "PlusJakartaSans-Bold": require("../../assets/fonts/PlusJakartaSans-Bold.ttf"),
-  });
-
-  if (!fontsLoaded) {
-    return null;
-  }
+ 
   return (
     <>
       <TouchableOpacity

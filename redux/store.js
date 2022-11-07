@@ -6,6 +6,7 @@ import { otpSlice } from "./reducers/otpSlice";
 import { result } from "./reducers/forgotPass";
 // import { surveyData } from "./reducers/survaySlice";
 import { surveyDatalist } from "./reducers/survaySlice";
+import { commentResults, LikesResult } from "./reducers/publicReactionSlice";
 
 const store = configureStore({
     reducer : {
@@ -14,7 +15,7 @@ const store = configureStore({
         myspeciality : allSpeciality,
         myotp: otpSlice,
         forgotpass:result,
-        surveyGetList : surveyDatalist
+        surveyGetList : surveyDatalist,
     }
 })
 
