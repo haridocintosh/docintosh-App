@@ -49,11 +49,6 @@ const KnowYourHeart = ({ route }) => {
   useEffect(() => {
     getLeaderboardData();
   }, []);
-
-  const handleAlldata = () => {
-    setSliceData();
-  };
-
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "#2C8892", position: "relative" }}
@@ -125,7 +120,7 @@ const KnowYourHeart = ({ route }) => {
                   </View>
                 </View>
               </View>
-
+\
               <View style={styles.levelsBadge}>
                 <Image source={legendBadge} style={styles.badgeimg} />
                 <View>

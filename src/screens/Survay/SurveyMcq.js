@@ -95,19 +95,6 @@ const SurveyMcq = ({ route }) => {
   }, []);
 
   const outOff = currentQuestionIndex / allMCQs.length;
-  const [fontsLoaded] = useFonts({
-    "Inter-Regular": require("../../assets/fonts/Inter-Regular.ttf"),
-
-    "Inter-SemiBold": require("../../assets/fonts/Inter-SemiBold.ttf"),
-
-    "PlusJakartaSans-Regular": require("../../assets/fonts/PlusJakartaSans-Regular.ttf"),
-
-    "PlusJakartaSans-Bold": require("../../assets/fonts/PlusJakartaSans-Bold.ttf"),
-  });
-
-  if (!fontsLoaded) {
-    return null;
-  }
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#ecf2f6" }}>
       <View style={{ padding: 15 }}>
