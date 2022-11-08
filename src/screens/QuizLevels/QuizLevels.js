@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { quizPostData } from "../../../redux/reducers/mcqSlice";
 import { useFonts } from "expo-font";
 
+
 const QuizLevels = () => {
   const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
@@ -66,8 +67,7 @@ const QuizLevels = () => {
       </View>
     );
   }
-
-
+  
   return (
     <View style={styles.QuizLevelcontainer}>
       {toggle && (
@@ -108,4 +108,4 @@ const QuizLevels = () => {
   );
 };
 
-export default QuizLevels;
+export default QuizLevels

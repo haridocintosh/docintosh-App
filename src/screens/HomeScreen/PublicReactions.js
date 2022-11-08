@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { postLikeData } from '../../../redux/reducers/publicReactionSlice';
 import { useNavigation } from '@react-navigation/native';
+import { styles } from './Homestyle';
 
 
 const PublicReactions = ({item}) => {
@@ -53,7 +54,7 @@ const PublicReactions = ({item}) => {
                     </TouchableOpacity>
                   <Text style={styles.socialCountText}>{item.commentcount}</Text>
                 </View>
-
+                
                 <View style={styles.socialCount}>
                     <TouchableOpacity onPress={() => GotoComments(item.post_id)}>
                         <Image source={socialComment} style={styles.socialImages}/>
@@ -74,23 +75,3 @@ const PublicReactions = ({item}) => {
 }
 
 export default PublicReactions;
-
-const styles = StyleSheet.create({
-    socialImages:{
-        width:30,
-        height:30
-    },
-    socialCount:{
-        paddingLeft:20,
-        flexDirection:'row',
-        alignItems:'center'
-    },
-    publicReactionsContainer:{ 
-        flexDirection: 'row',
-        marginTop:5
-    },
-    socialCountText:{
-        paddingLeft:5,
-        color:'#51668A'
-    }
-})

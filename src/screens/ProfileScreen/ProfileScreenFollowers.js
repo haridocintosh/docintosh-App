@@ -2,10 +2,11 @@ import { View, Text,SafeAreaView, ScrollView, StyleSheet, Image } from 'react-na
 import React from 'react';
 import profileimg from '../../assets/images/p2.png';
 import { Entypo } from '@expo/vector-icons';
+import { styles } from './profilestyle';
 
 const ProfileScreenFollowers = () => {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.Follwerscontainer}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           nestedScrollEnable={true}>
@@ -15,7 +16,7 @@ const ProfileScreenFollowers = () => {
 
             <View style={styles.followerContainer}>
                 <View style={styles.followerLhs}>
-                   <Image source={profileimg} style={styles.profileimg}/>
+                   <Image source={profileimg} style={styles.profileimgfollower}/>
                    <View style={styles.followerName}>
                         <Text style={styles.followerNameText}>Dr. Kiran</Text>
                         <Text style={styles.followerSpecialist}>Urology</Text>
@@ -28,7 +29,7 @@ const ProfileScreenFollowers = () => {
 
             <View style={styles.followerContainer}>
                 <View style={styles.followerLhs}>
-                   <Image source={profileimg} style={styles.profileimg}/>
+                   <Image source={profileimg} style={styles.profileimgfollower}/>
                    <View style={styles.followerName}>
                         <Text style={styles.followerNameText}>Dr. Kiran</Text>
                         <Text style={styles.followerSpecialist}>Urology</Text>
@@ -40,7 +41,7 @@ const ProfileScreenFollowers = () => {
             </View>
             <View style={styles.followerContainer}>
                 <View style={styles.followerLhs}>
-                   <Image source={profileimg} style={styles.profileimg}/>
+                   <Image source={profileimg} style={styles.profileimgfollower}/>
                    <View style={styles.followerName}>
                         <Text style={styles.followerNameText}>Dr. Kiran</Text>
                         <Text style={styles.followerSpecialist}>Urology</Text>
@@ -52,7 +53,7 @@ const ProfileScreenFollowers = () => {
             </View>
             <View style={styles.followerContainer}>
                 <View style={styles.followerLhs}>
-                   <Image source={profileimg} style={styles.profileimg}/>
+                   <Image source={profileimg} style={styles.profileimgfollower}/>
                    <View style={styles.followerName}>
                         <Text style={styles.followerNameText}>Dr. Kiran</Text>
                         <Text style={styles.followerSpecialist}>Urology</Text>
@@ -69,43 +70,3 @@ const ProfileScreenFollowers = () => {
 }
 
 export default ProfileScreenFollowers;
-const styles = StyleSheet.create({
-    container:{
-        backgroundColor:"#F2FAFA",
-        flex:1,
-        paddingHorizontal:15
-    },
-    followerHeader:{
-        fontWeight:'600',
-        fontSize:16,
-        marginVertical:5
-    },
-    followerContainer:{
-        justifyContent:'space-between',
-        flexDirection:'row',
-        alignItems:'center',
-        marginVertical:10
-    },
-    profileimg:{
-        height:60,
-        width:60,
-        marginRight:15
-    },
-    followerLhs:{
-        flexDirection:'row',
-        alignItems:'center'
-    },
-    followerName:{
-
-    },
-    followerNameText:{
-        fontSize:16,
-        fontWeight:'500'
-    },
-    followerSpecialist:{
-        fontSize:12,
-        fontWeight:'400',
-        color:'#51668A',
-        marginTop:5
-    }
-});

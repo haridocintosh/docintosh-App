@@ -27,7 +27,6 @@ const McqListModal = ({ toggle, quizData, topicId }) => {
     //
     toggle(false);
   };
- 
   return (
     <>
       <TouchableOpacity

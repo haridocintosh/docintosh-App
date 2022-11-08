@@ -20,7 +20,6 @@ const RadioMcq = ({ setLiftUpData, currentIndex, allMCQs, nextMcq }) => {
     console.log("ans.opt_id", ans.opt_id);
     setOptId(ans.opt_id);
   };
- 
   return (
     <SafeAreaView style={{ backgroundColor: "#ecf2f6", flex: 1 }}>
       <View style={{ paddingHorizontal: 15 }}>
