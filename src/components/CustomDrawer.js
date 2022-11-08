@@ -94,7 +94,7 @@ const CustomDrawer = props => {
 
         <View style={styles.profoleDetailsContainer}>
           <View style={styles.profoleDetails}>
-            <TouchableOpacity  onPress={() => navigation.navigate('ProfileScreen')}>
+            <TouchableOpacity  onPress={() => navigation.navigate('Invite')}>
               <MaterialIcons name="arrow-forward-ios" size={16} color="white" style={styles.forwardIcon}/>
             </TouchableOpacity>
             <Image source={userdata.profile ? {uri:userdata.profile}:profilePicture} style={styles.profilePic}/>
@@ -155,7 +155,6 @@ const CustomDrawer = props => {
                   color:'#2C8892'
                 }}/>
             </View>
-        
         </View>
     </View>
   );

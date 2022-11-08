@@ -89,14 +89,15 @@ const HomeStack = () => {
           title: route.params?.title,
         })}
       />
-        <Stack.Screen
+      <Stack.Screen
+        options={{headerShown: false}}
         name="ProfileScreen"
         component={ProfileScreen}
         // options={({route}) => ({
-          
         //   title: route.params?.title,
         // })}
       />
+     
 
       <Stack.Screen
         name="SharePost"

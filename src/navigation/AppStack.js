@@ -128,16 +128,7 @@ const AuthStack = () => {
           ),
         }}
       /> */}
-      {/* <Drawer.Screen
-        name="ProfileScreen"
-        component={ProfileScreen}
-        options={{
-          // headerShown:true,
-          drawerIcon: () => (
-            <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
-          ),
-        }}
-      /> */}
+   
        {/* <Drawer.Screen
         name="EditProfileScreen"
         component={EditProfileScreen}
