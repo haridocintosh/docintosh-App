@@ -8,6 +8,7 @@ import d from '../../assets/dr-icon/d.png'
 import coupon1 from '../../assets/dr-icon/coupon1.png';
 import ProfileScreenPost from './ProfileScreenPost';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { styles } from './profilestyle';
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -45,14 +46,14 @@ const ProfileScreen = () => {
     <Card style={{backgroundColor:'#fff',paddingHorizontal:10,paddingVertical:15, borderRadius:10}}>
     <View style={styles.profilePicContainer}>
       <View>
-        <Image source={{uri:userdata.profile}} style={styles.profileimg}/>
+        <Image source={{uri:userdata.profile}} style={styles.profileScreenimg}/>
       </View>
       <View style={styles.profileDetails}>
-        <Text style={styles.profileName}>Dr.{userdata.fullname} <Image source={icon}/></Text>    
-        <Text style={styles.profileDesignation}>{userdata.speciality} | Bangalore</Text>
+        <Text style={styles.profilescreenName}>Dr.{userdata.fullname} <Image source={icon}/></Text>    
+        <Text style={styles.profileDesignationpro}>{userdata.speciality} | Bangalore</Text>
        <TouchableOpacity style={{flexDirection:'row'}}>
-        <Text style={{color:'#2376e5'}}> View / </Text>
-        <Text style={{color:'#2376e5'}} onPress={() => navigation.navigate('EditProfileScreen')}>Edit Profile</Text>
+        <Text style={{color:'#2376e5', fontFamily:"Inter-Regular"}}> View / </Text>
+        <Text style={{color:'#2376e5',fontFamily:"Inter-Regular"}} onPress={() => navigation.navigate('EditProfileScreen')}>Edit Profile</Text>
       </TouchableOpacity>
       </View>
     </View>
@@ -89,72 +90,5 @@ const ProfileScreen = () => {
   </ScrollView>
  </SafeAreaView>
   )
-}
-const styles = StyleSheet.create({
-    coins:{
-      fontWeight:'700',
-      textAlign:'center',
-      fontSize:17,
-      color:'#fff',
-    },
-    ScoreContainer:{
-      flexDirection:'row',
-      justifyContent:'center',
-      alignItems:'center',
-      backgroundColor:'#20324A',
-      borderRadius:50,
-      paddingHorizontal:25,
-      paddingVertical:7,
-      marginRight:25
-    },
-    scoreImg:{
-      width:25,
-      height:25,
-      marginRight:10
-    },
-    profilePicContainer:{
-      flexDirection:'row',
-      alignItems:'center',
-    },
-    profileimg:{
-      borderColor:"#DCE0E8",
-      borderWidth:5,
-      borderRadius:50,
-      width:72,
-      height:72
-    },
-    profileDetails:{
-      marginLeft:15
-    },
-    profileName:{
-      fontSize:20,
-      fontWeight:"600"
-    },
-    profileDesignation:{
-      fontSize:14,
-      fontWeight:"400",
-      color:'#51668a',
-      width:250
-    },
-    UserDataConatiner:{
-      flexDirection:'row',
-      backgroundColor:'#F2FAFA',
-      height:42,
-      justifyContent:'space-between',
-      alignItems:'center',
-      padding:10
-    },
-    UserDataName:{
-      fontSize:14,
-      fontWeight:'600',
-      
-      color:'#000',
-    },
-    UserDataNameCont:{
-      height:40,
-      borderBottomWidth:2,
-      borderBottomColor:'#45B5C0',
-      justifyContent:'center'
-    }
-})
+  }
 export default ProfileScreen

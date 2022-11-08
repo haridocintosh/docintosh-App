@@ -4,15 +4,14 @@ import { useNavigation } from '@react-navigation/native';
 import PublicReactions from './PublicReactions';
 import Svg, {Path} from 'react-native-svg';
 import {Ionicons,MaterialCommunityIcons,FontAwesome5} from '@expo/vector-icons';
+import { styles } from './Homestyle';
 
 const PostsScreen = ({route}) => {
     const [userData, setUserData] =useState([])
     const { item } =route?.params;
     const navigation = useNavigation();
-    navigation.setOptions({ title: `${item?.first_name}'s Post` })
+    navigation.setOptions({ title: `${item?.first_name}'s Post` });
     // const {allPost} =route?.params;
-
-
     useEffect(() => {
         setUserData(item?.attach_array)
     }, [])
@@ -27,7 +26,7 @@ const PostsScreen = ({route}) => {
                     <View style={styles.picContainer}>
                       <Image source={{uri:item.profileimage}} onPress={() => navigation.navigate('ProfileScreen2')} style={{width:38, height:38,marginRight:5,borderRadius:50,}} ></Image>
                       <View >
-                        <Text style={{fontSize:14, fontWeight:'400'}}>
+                        <Text style={{fontSize:14, fontWeight:'400', fontFamily:"Inter-Regular"}}>
                             {item.role =='4' ? 'Dr.' : ''} { item.first_name && item.first_name} {item.last_name && item.last_name + ' '}  
                             <MaterialCommunityIcons name="check-decagram" size={12} color="#0F9C69" style={{marginLeft:15}}/>
                         </Text>
@@ -36,11 +35,11 @@ const PostsScreen = ({route}) => {
                                 <FontAwesome5 name="users" size={17} color="#45B5C0" />  
                             </Text>
                             <View style={styles.dot}/>
-                            <Text style={{fontSize:12, fontWeight:'400',color:'#2376E5'}}>{item.speciality && item.speciality}</Text>
+                            <Text style={{fontSize:12, fontWeight:'400',color:'#2376E5',fontFamily:"Inter-Regular"}}>{item.speciality && item.speciality}</Text>
                             <Text style={{marginHorizontal:5}}>
                                 <Ionicons name="time-outline" size={19} color="#51668A" />  
                             </Text>
-                            <Text style={{fontSize:12, paddingRight:5, fontWeight:'400',color:'#51668A'}}>1hr ago</Text>
+                            <Text style={{fontSize:12, paddingRight:5, fontWeight:'400',color:'#51668A',fontFamily:"Inter-Regular"}}>1hr ago</Text>
                             {/* {item.post_date}  */}
                         </View>
                        </View> 
@@ -65,30 +64,3 @@ const PostsScreen = ({route}) => {
 }
 
 export default PostsScreen;
-const styles = StyleSheet.create({
-    PostContainer:{
-        padding:10,
-        flex:1,
-        backgroundColor:'#ecf2f6',
-        justifyContent:'center'
-    },
-    userDetails:{
-        // borderWidth:1,
-        paddingVertical:5,
-        justifyContent:'space-between',
-        flexDirection:'row',
-        alignItems:'center'
-    },
-    singlePost:{
-        padding:10,
-        backgroundColor:'#fff',
-        borderRadius:6,
-    },
-    picContainer:{
-        flexDirection:'row',
-        alignItems:'center'
-    },
-
- 
- 
-})

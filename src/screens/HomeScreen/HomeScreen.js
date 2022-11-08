@@ -26,6 +26,7 @@ import bgtophome from '../../assets/images/bg-top-home.png';
 import { userPostData } from '../../../redux/reducers/postData';
 import Svg, {Path} from 'react-native-svg';
 import PublicReactions from './PublicReactions';
+import { styles } from './Homestyle';
 import  {HeaderImageScrollView, TriggeringView } from 'react-native-image-header-scroll-view';
 
 
@@ -90,7 +91,7 @@ const HomeScreen = ()=> {
             <View  style={{flexDirection:'row',alignItems:'center'}}>
               <Image source={profileimg} onPress={() => navigation.navigate('ProfileScreen2')} style={{width:38, height:38,marginRight:5}} ></Image>
                 <View >
-                  <Text style={{fontSize:14, fontWeight:'400'}}>
+                  <Text style={{fontSize:14, fontWeight:'400', fontFamily:"Inter-Regular"}}>
                     {item.role =='4' ? 'Dr.' : ''} { item.first_name && item.first_name} {item.last_name && item.last_name} 
                     <MaterialCommunityIcons name="check-decagram" size={12} color="#0F9C69" />
                   </Text>
@@ -99,11 +100,11 @@ const HomeScreen = ()=> {
                         <FontAwesome5 name="users" size={17} color="#45B5C0" />  
                       </Text>
                       <View style={styles.dot}/>
-                      <Text style={{fontSize:12, fontWeight:'400',color:'#2376E5'}}>{item.speciality && item.speciality}</Text>
+                      <Text style={{fontSize:12, fontWeight:'400',color:'#2376E5', fontFamily:"Inter-Regular"}}>{item.speciality && item.speciality}</Text>
                       <Text style={{marginHorizontal:4}}>
                         <Ionicons name="time-outline" size={19} color="#51668A" />  
                       </Text>
-                      <Text style={{fontSize:12, paddingRight:5, fontWeight:'400',color:'#51668A'}}>1hr ago</Text>
+                      <Text style={{fontSize:12, paddingRight:5, fontWeight:'400',color:'#51668A,fontFamily:"Inter-Regular"'}}>1hr ago</Text>
                       {/* {item.post_date}  */}
                   </View>
                 </View> 
@@ -116,7 +117,7 @@ const HomeScreen = ()=> {
           </View>
 
           <View style={{ flexDirection:'row',paddingVertical:10}}>
-            <Text style={{color:'#51668A', }}>
+            <Text style={{color:'#51668A',fontFamily:"Inter-Regular" }}>
             { item.ptitle && item.ptitle }
             </Text>
           </View>
@@ -147,7 +148,7 @@ const HomeScreen = ()=> {
       <View style={{backgroundColor:'#071B36',}}>
         <ImageBackground source={bgtophome} style={styles.bgtophome}>
           <View style={styles.imageConatentContainer}>
-         
+          
             <View style={{flexDirection:'row',alignItems:'center'}}> 
               <TouchableOpacity onPress={() => navigation.openDrawer()}>
                 <Ionicons name="reorder-three-outline" size={34} color="#fff"  />
@@ -176,8 +177,7 @@ const HomeScreen = ()=> {
 
         </ImageBackground>
       </View>
- 
- 
+      
     <View style={{padding:10}}>
       <Card style={{marginTop:-35, zIndex:1, borderRadius:50,shadowRadius:10, shadowOffset:10}} onPress={() => navigation.navigate('SharePost')}>
         <View style={{flexDirection:'row' , margin:10}} >
@@ -239,7 +239,7 @@ const HomeScreen = ()=> {
       {/* Take poll end  */}
       <View>
          <View style={styles.marginten}>
-              <Text style={{fontSize:16, fontWeight:'600'}}>Suggested Post</Text>
+              <Text style={{fontSize:16, fontWeight:'600', fontFamily:"PlusJakartaSans-Bold"}}>Suggested Post</Text>
               {/* <Entypo name="cross"  onPress={closeModal}  size={20} color="#45B5C0" style={{ alignSelf:'flex-end', fontWeight:'200', zIndex:1, marginTop:-20}} /> */}
               <AntDesign name="close" color={'#45B5C0'} size={20}onPress={closeModal}
               style={{ alignSelf:'flex-end', fontWeight:'200', zIndex:1, marginTop:-20}}/>
@@ -267,7 +267,7 @@ const HomeScreen = ()=> {
         {/* <Entypo name="cross" size={16} color="#51668A" onPress={toggleModal} style={{alignSelf:'flex-end'}} /> */}
         <AntDesign name="close" color={'#51668A'} size={25} style={{alignSelf:'flex-end'}} onPress={toggleModal}/>
        
-          <Text style={{fontSize:18, fontWeight:'600',marginTop:20, alignSelf:'center',color:"#51668A", fontSize:18, fontWeight:'500'}}>View your collected DocCoins here</Text>
+          <Text style={styles.viewDoccin}>View your collected DocCoins here</Text>
           <View style={{flexDirection:'row', margin:10, marginTop:20, marginBottom:20}}>
           <Button
             
@@ -282,10 +282,9 @@ const HomeScreen = ()=> {
              marginLeft:10
             }}
             titleStyle={{
-              color:'#2C8892'
+              color:'#2C8892',
             }}/>
             <Button
-        
             title="Next"
             type="outline"
             buttonStyle={{
@@ -294,7 +293,7 @@ const HomeScreen = ()=> {
               borderRadius:15/2,
               height:48,
               width:136,
-              marginLeft:10
+              marginLeft:10,
             }}
             titleStyle={{
               color:'#FFFF'
@@ -314,159 +313,5 @@ const HomeScreen = ()=> {
   </SafeAreaView>
   );
 }
-
-
-const styles = StyleSheet.create({
-   d:{
-    width:17, 
-    height:17, 
-    marginHorizontal:5,
-  },
-  count:{
-    color:'#fff',
-    marginVertical:5,
-    fontSize:16, 
-    fontWeight:'600' 
-  },
-  whtsnewtxt:{
-    alignSelf:'center', 
-    paddingLeft:12,
-     fontSize:14,
-     fontWeight:'400',
-     color:'#51668A'
-  },
-  questions:{
-    fontSize:14,
-    fontWeight:'400',
-    color:"#071B36",
-    padding:10
-
-  },
-  marginten:{
-    backgroundColor:'#fff',
-    padding:15,
-    marginTop:15,
-    borderTopLeftRadius:10,
-    borderTopRightRadius:10,
-  },
-  bordermcq:{
-    borderColor:'#D5DEED',
-     borderRadius:10,
-     padding:12,
-     borderWidth:2
-  },
-  aligncenter:{
-    alignSelf:'center'
-  },
-  careticon:{
-    backgroundColor:'#45B5C0',
-     borderRadius:50/2,
-     width:30,
-     height:30,
-     padding:2,
-     marginTop:-60,
-     marginBottom:30,
-    alignSelf:'center',
-     shadowColor:'#000',
-     zIndex:1
-  },
-  careticontop:{
-    backgroundColor:'#45B5C0',
-     borderRadius:50/2,
-     width:30,
-     height:30,
-     padding:3,
-     marginTop:-100,
-     marginBottom:70,
-    alignSelf:'center',
-     shadowColor:'#000',
-     zIndex:99999
-  },
-  imgblackstrip:{
-    backgroundColor:'#000',
-     width:'95%',
-     padding:20,
-     marginLeft:9,
-    zIndex:1,
-     marginTop:-40,
-     opacity:0.6,
-     height:20
-  },
- 
-  songStyle:{
-    marginLeft:10
-  },
-  Progressbarcontainer:{
-    width:350,
-    height:40,
-    flexDirection:'row',
-    justifyContent:'space-between',
-    marginBottom:20,
-   
-  },
-  ProgressLabeContainer:{
- width:340,
- flexDirection:'row',
- justifyContent:'space-between',
-alignSelf:'center',
-marginTop:10
-  },
-  ProgressLabelTxt:{
- color:'#000',
- marginRight:20
-  },
-  MusicController:{
-    marginTop:-30,
-    alignSelf:'center',
-    flexDirection:'row',
-    width:'60%',
-    justifyContent:'space-between'
-  },
-  userInfo:{
-    justifyContent:'space-between',
-    paddingVertical:10,
-    flexDirection:'row',
-    alignItems:'center'
-    
-  },
-  dot:{
-    borderStyle: 'solid', 
-    borderWidth: 2, 
-    borderColor:'#51668A',
-    height:2,
-    borderRadius: 12,
-    marginTop:6, 
-    marginHorizontal:5
-  },
-  cardOfPosts:{
-    marginBottom:25, 
-    borderRadius:10,
-    shadowRadius:10, 
-    padding:15,
-    marginTop:-10,
-  },
-  bgtophome:{ 
-    width:'100%', 
-    resizeMode:'cover',
-    height:150 
-  },
-  imageConatentContainer:{
-    flexDirection:'row',
-    justifyContent:'space-between',
-    alignItems:'center',
-    padding:15,
-    },
-    collectedCoins:{
-      borderRadius:50, 
-      backgroundColor:'#20324a', 
-      flexDirection:'row',
-      position:'absolute',
-      alignSelf:'center',
-      bottom:35,
-       paddingHorizontal:10,
-       alignItems:'center'
-    }
-  });
-
 export default HomeScreen
   

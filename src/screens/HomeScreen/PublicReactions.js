@@ -4,6 +4,7 @@ import Share from '../../assets/dr-icon/Share.png'
 import socialComment from '../../assets/dr-icon/socialComment.png'
 import gift from '../../assets/dr-icon/gift.png';
 import {AntDesign,} from '@expo/vector-icons';
+import { styles } from './Homestyle';
 
 
 const PublicReactions = ({item}) => {
@@ -24,7 +25,7 @@ const PublicReactions = ({item}) => {
                     </TouchableOpacity>
                   <Text style={styles.socialCountText}>{item.commentcount}K</Text>
                 </View>
-
+                
                 <View style={styles.socialCount}>
                     <TouchableOpacity>
                         <Image source={socialComment} style={styles.socialImages}/>
@@ -45,23 +46,3 @@ const PublicReactions = ({item}) => {
 }
 
 export default PublicReactions;
-
-const styles = StyleSheet.create({
-    socialImages:{
-        width:30,
-        height:30
-    },
-    socialCount:{
-        paddingLeft:20,
-        flexDirection:'row',
-        alignItems:'center'
-    },
-    publicReactionsContainer:{ 
-        flexDirection: 'row',
-        marginTop:5
-    },
-    socialCountText:{
-        paddingLeft:5,
-        color:'#51668A'
-    }
-})
