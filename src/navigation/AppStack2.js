@@ -2,15 +2,15 @@ import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import ProfileScreen from '../screens/ProfileScreen';
+
 import MessagesScreen from '../screens/MessagesScreen';
 import MomentsScreen from '../screens/MomentsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import TabNavigator from './TabNavigator';
 import CustomDrawer from '../components/CustomDrawer';
+import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 //import { useFonts, Inter_900Black } from '@expo-google-fonts/inter';
 //import AppLoading from 'expo-app-loading';
-
 const Drawer = createDrawerNavigator();
 
 const AuthStack = () => {

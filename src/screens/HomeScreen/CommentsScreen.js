@@ -13,9 +13,7 @@ const CommentsScreen = ({route}) => {
 
     const dispatch = useDispatch();
     const  {post_id} =route.params;
-    const commReduxData =useSelector((state) => state.commentsData);
 
-    console.log("commReduxData",commReduxData);
 
     const getData = async() => {
         const jsonValue = await AsyncStorage.getItem('USER_INFO');
@@ -76,7 +74,7 @@ const styles = StyleSheet.create({
         bottom:0,
         borderTopWidth:1,
         paddingHorizontal:10,
-        paddingTop:5,
+        paddingVertical:5,
         width:Dimensions.get('screen').width,
         justifyContent:'space-between',
         alignItems:'center',
