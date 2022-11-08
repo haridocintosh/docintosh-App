@@ -1,4 +1,4 @@
-import React, {useState, useEffect,useCallback} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
   View,
   Text,
@@ -9,7 +9,8 @@ import {
   TouchableOpacity,
   FlatList,
   Dimensions,
-  ImageBackground
+  ImageBackground,
+  Animated
 } from 'react-native';
 import { Card } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
@@ -36,7 +37,9 @@ const HomeScreen = ()=> {
   const [userdata, setuserdata]     = useState({
     profile:''
   });
-  const [allPost, setallPost]  = useState([])
+  const [allPost, setallPost]  = useState([]);
+
+  const scrollPosition = useRef(new Animated.Value(0)).current;
 
   const dispatch = useDispatch();
   const tooglePlay =() =>{
