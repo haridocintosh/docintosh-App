@@ -159,8 +159,7 @@ const HomeScreen = ()=> {
 
   return (
   <SafeAreaView>
-    
-    <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true}>
+    {/* <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true}> */}
       <View style={{backgroundColor:'#071B36',}}>
         <ImageBackground source={bgtophome} style={styles.bgtophome}>
           <View style={styles.imageConatentContainer}>
@@ -194,73 +193,21 @@ const HomeScreen = ()=> {
         </ImageBackground>
       </View>
  
- 
     <View style={{padding:10}}>
       <Card style={{marginTop:-35, zIndex:1, borderRadius:50,shadowRadius:10, shadowOffset:10}} onPress={() => navigation.navigate('SharePost')}>
         <View style={{flexDirection:'row' , margin:10}} >
           <Image source={userdata.profile?{uri:userdata.profile}:''}  style={{width:32, height:32, borderRadius:50}}></Image>
           <Text style={styles.whtsnewtxt}>What’s on your mind?</Text>
           <View style={{ marginLeft:'40%', alignSelf:'center'}}>
-            <AntDesign name="pluscircle" size={26} color="#D5DEED" />
+            <AntDesign name="pluscircle" size={26} color="#D5DEED"/>
           </View>
         </View>
       </Card>
 
-
-      {/* Take poll Start  */}
-        {/* <Card style={{marginTop:20, borderRadius:10,shadowRadius:10,}}>
-          <View style={styles.marginten}>
-            <Text style={{fontSize:16, fontWeight:'600'}}>Take a Poll</Text>
-            <Entypo name="cross"  onPress={closeModal}  size={20} color="#45B5C0" style={{ alignSelf:'flex-end', fontWeight:'200', zIndex:1, marginTop:-20}} />
-            <View style={{width:'100%', height:1, backgroundColor:'#D5DEED', marginTop:18, }}></View>
-          </View>
-        <Text style={styles.questions}>What are the problems associated with high BP?</Text>
-        <View style={{flexDirection:'row', paddingHorizontal:10, paddingVertical:5 ,}}>
-          <Ionicons name="time-outline" size={20} color="red" />
-          <Text style={{color:'red', paddingHorizontal:5}}>Expairing Soon</Text>
-        </View>
-
-        <TouchableOpacity>
-          <View style={styles.marginten}>
-            <View style={styles.bordermcq}>
-              <Text style={styles.aligncenter}>Heart Diseases</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <View style={styles.marginten}>
-            <View style={styles.bordermcq}>
-              <Text style={styles.aligncenter}>Kidney Diseases</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity>
-          <View style={styles.marginten}>
-            <View style={styles.bordermcq}>
-              <Text style={styles.aligncenter}>Stroke Diseases</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity>
-          <View style={styles.marginten}>
-            <View style={styles.bordermcq}>
-              <Text style={styles.aligncenter}>All of the Above</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-
-        <View style={{marginBottom:20}}></View>
-        </Card> */}
-      {/* Take poll end  */}
       <View>
          <View style={styles.marginten}>
               <Text style={{fontSize:16, fontWeight:'600'}}>Suggested Post</Text>
-              {/* <Entypo name="cross"  onPress={closeModal}  size={20} color="#45B5C0" style={{ alignSelf:'flex-end', fontWeight:'200', zIndex:1, marginTop:-20}} /> */}
-              <AntDesign name="close" color={'#45B5C0'} size={20}onPress={closeModal}
-              style={{ alignSelf:'flex-end', fontWeight:'200', zIndex:1, marginTop:-20}}/>
-              <View style={{width:'100%', height:1, backgroundColor:'#D5DEED', marginTop:10, }}></View>
+              <View style={{width:'100%', height:1, backgroundColor:'#D5DEED', marginTop:10}}></View>
           </View>
 
           <FlatList
@@ -270,18 +217,17 @@ const HomeScreen = ()=> {
               // onEndReached={loadMore}
           />
       </View>
-
+      </View>
 
 
 
 {/* //removerd data in raugh */}
 
-  </View>
   
-  <Modal isVisible={isModalVisible} width={320} style={{alignSelf:'center', }}>
+  
+  {/* <Modal isVisible={isModalVisible} width={320} style={{alignSelf:'center', }}>
         <View>
         <Card >
-        {/* <Entypo name="cross" size={16} color="#51668A" onPress={toggleModal} style={{alignSelf:'flex-end'}} /> */}
         <AntDesign name="close" color={'#51668A'} size={25} style={{alignSelf:'flex-end'}} onPress={toggleModal}/>
        
           <Text style={{fontSize:18, fontWeight:'600',marginTop:20, alignSelf:'center',color:"#51668A", fontSize:18, fontWeight:'500'}}>View your collected DocCoins here</Text>
@@ -323,11 +269,11 @@ const HomeScreen = ()=> {
           </Card>
         </View>
       
-      </Modal>
-  <View style={{marginBottom:50}}></View>
+  </Modal> */}
+  
 {/* Modal doccoins view  */}
 
-  </ScrollView>
+  {/* </ScrollView> */}
   </SafeAreaView>
   );
 }
