@@ -12,19 +12,6 @@ import { useFonts } from "expo-font";
 
 const TimeOutModal = ({ toggle }) => {
   const navigation = useNavigation();
-  const [fontsLoaded] = useFonts({
-    "Inter-Regular": require("../../assets/fonts/Inter-Regular.ttf"),
-
-    "Inter-SemiBold": require("../../assets/fonts/Inter-SemiBold.ttf"),
-
-    "PlusJakartaSans-Regular": require("../../assets/fonts/PlusJakartaSans-Regular.ttf"),
-
-    "PlusJakartaSans-Bold": require("../../assets/fonts/PlusJakartaSans-Bold.ttf"),
-  });
-
-  if (!fontsLoaded) {
-    return null;
-  }
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>

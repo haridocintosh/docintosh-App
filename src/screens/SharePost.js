@@ -187,7 +187,6 @@ const publishCheck = (e)=>{
     })
   bottomSheetModalRefSecond.current?.close();
 }
-
   const handleStudentSubmit = async() =>{
   
     if(post.publishto ==''){
@@ -283,11 +282,12 @@ const publishCheck = (e)=>{
 
   return (
     <BottomSheetModalProvider>
+   
       <View style={{marginTop:20}}></View>
       <View style={{margin:40,marginBottom:-10, alignSelf:'flex-end', }}>
         <Text style={{backgroundColor:'#859ef7', paddingBottom:5, paddingEnd:15, paddingStart:15, paddingTop:5, borderRadius:20/2}}  onPress={()=>handleStudentSubmit()} >Post</Text>
       </View>
-      <View style={{padding:20, marginTop:-50}}>
+      <View style={{padding:20, marginTop:-50, backgroundColor:"#F2FAFA"}}>
       <View  style={{flexDirection:'row',}}>
       <Image source={{uri:userdata.profile}} onPress={() => navigation.navigate('ProfileScreen2')} style={{margin:10, width:50, borderRadius:50,height:50,}} ></Image>
       <View style={{margin:0, }}>
@@ -320,7 +320,7 @@ const publishCheck = (e)=>{
       <View style={styles.line} /></View>
       {/* <Text style={{color:"red", textAlign:"center" }} >{err}</Text> */}
       <View style={[styles.container]}> 
-      <View style={{alignSelf:'center', flexDirection:'row', padding:10,}}>
+      <View style={{alignSelf:'center', flexDirection:'row', padding:12, backgroundColor:"#FFFFFF"}}>
      
       <View style={{flexDirection:'row', marginHorizontal:30}}>
 
@@ -473,6 +473,7 @@ const publishCheck = (e)=>{
           </BottomSheetScrollView>
         </BottomSheetModal>
       </View>
+   
       {/* </ScrollView> */}
     </BottomSheetModalProvider>
   );
@@ -484,14 +485,12 @@ const styles = StyleSheet.create({
     alignSelf:'flex-end',
     justifyContent: "flex-end",
     marginBottom:10,
-    marginLeft:10,
+    // marginLeft:10,
     marginRight:10,
-    
-    
+    // backgroundColor:"#E6E6E6" 
   },
   contentContainer: {
     flex: 1,
-   
     paddingHorizontal: 15,
   },
   row: {
@@ -520,10 +519,10 @@ const styles = StyleSheet.create({
   },
   content: {
     padding:10,
-    backgroundColor: '#FFF',
+    // backgroundColor: '#E6E6E6',
   },
   textInput:{
-    backgroundColor: 'white',
+    // backgroundColor: '#E6E6E6',
     height: 100,
     fontSize: 16,
     fontWeight: '600',

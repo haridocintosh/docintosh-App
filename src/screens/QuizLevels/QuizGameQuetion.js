@@ -91,7 +91,6 @@ const QuizGameQuetion = ({ mcqQue, isTop, singleMcq }) => {
       setIsOptionsDisabled(true);
     }
   }, [isTop]);
-
   return (
     <View style={{ marginTop: 10 }}>
       <View>
