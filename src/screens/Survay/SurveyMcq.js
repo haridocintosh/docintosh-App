@@ -52,22 +52,35 @@ const SurveyMcq = ({ route }) => {
     const jsonValue = await AsyncStorage.getItem("USER_INFO");
     const data = await JSON.parse(jsonValue);
     const result = JSON.parse(data)["data"];
-    if (liftUpCheckData) {
+
+    // console.log("liftUpCheckData",liftUpCheckData.length != 0);
+    
+    if (liftUpCheckData && (liftUpCheckData.length != 0)) {
       liftUpCheckData.map((data) =>
         PosData(result.id, basic_id, qid, data, result.profileimage)
       );
       setLiftUpCheckData(null);
+      if (currentQuestionIndex !== MCQsLength - 1) {
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+      } else {
+        navigation.navigate("ThankYouPage", { surveyid: surveyid });
+      }
     }
     if (liftUpData) {
       PosData(result.id, basic_id, qid, liftUpData, result.profileimage);
       setLiftUpData(null);
+      if (currentQuestionIndex !== MCQsLength - 1) {
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+      } else {
+        navigation.navigate("ThankYouPage", { surveyid: surveyid });
+      }
     }
-    if (currentQuestionIndex !== MCQsLength - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    } else {
-      // navigation.navigate('ScratchOffer');
-      navigation.navigate("ThankYouPage", { surveyid: surveyid });
-    }
+    // if (currentQuestionIndex !== MCQsLength - 1) {
+    //   setCurrentQuestionIndex(currentQuestionIndex + 1);
+    // } else {
+    //   // navigation.navigate('ScratchOffer');
+    //   navigation.navigate("ThankYouPage", { surveyid: surveyid });
+    // }
   };
 
   const prevMcq = () => {
@@ -112,7 +125,7 @@ const SurveyMcq = ({ route }) => {
               style={{ marginRight: 15 }}
               onPress={() => prevMcq()}
             >
-              <AntDesign name="leftcircle" size={25} color="#2C8892" />
+              <AntDesign name="leftcircle" size={32} color="#2C8892" />
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.iconStyle}
@@ -123,7 +136,7 @@ const SurveyMcq = ({ route }) => {
                 )
               }
             >
-              <AntDesign name="rightcircle" size={25} color="#2C8892" />
+              <AntDesign name="rightcircle" size={32} color="#2C8892" />
             </TouchableOpacity>
           </View>
         </View>

@@ -34,26 +34,55 @@ import  {HeaderImageScrollView, TriggeringView } from 'react-native-image-header
 
 const HomeScreen = ()=> {
 // like unlike fun =>
-  const [sliceData, setSliceData] = useState(10);
   const [loader, setLoader] = useState(true);
   const [isPlaying, setIsPlaying]   = useState(false);
-  const [userdata, setuserdata]     = useState({
-    profile:'',
-    user_id:''
-  });
+  const [userdata, setuserdata]     = useState({profile:'',user_id:''});
   const [allPost, setallPost]  = useState([]);
-
-  const scrollPosition = useRef(new Animated.Value(0)).current;
-
   const dispatch = useDispatch();
-  const tooglePlay =() =>{
-     isPlaying === false ? setIsPlaying(true) : setIsPlaying(false);
-  };
   const [visible, setVisible] = useState(false);
   const navigation = useNavigation();
- 
   const [isModalVisible, setModalVisible] = useState(false);
-  const [liked, setLiked] = useState(false)
+  const [liked, setLiked] = useState(false);
+
+  //---------------- header Animation------------------
+  const scrollPosition = useRef(new Animated.Value(0)).current;
+  const minHeaderHeight = 100
+  const maxHeaderHeight = 160
+
+  const headerHeight = scrollPosition.interpolate({
+    inputRange: [0, 500],
+    outputRange: [maxHeaderHeight, minHeaderHeight],
+    extrapolate: 'clamp',
+  });
+  const opacity = scrollPosition.interpolate({
+    inputRange: [0, 100, 200],
+    outputRange: [1, 0.5, 0],
+    extrapolate: 'clamp',
+  });
+  const sizeFont = scrollPosition.interpolate({
+    inputRange: [0, 100, 200, 300, 400],
+    outputRange: [10, 9, 8, 7, 6],
+    extrapolate: 'clamp',
+  });
+
+  const imagePosition = scrollPosition.interpolate({
+    inputRange: [0, 500],
+    outputRange: [(21 * Dimensions.get('window').width) / 100, 0],
+    extrapolateLeft: 'identity',
+    extrapolateRight: 'clamp',
+  });
+  const scoresPosition = scrollPosition.interpolate({
+    inputRange: [0, 500],
+    outputRange: [(10 * Dimensions.get('window').height) / 100, 0],
+    extrapolateLeft: 'identity',
+    extrapolateRight: 'clamp',
+  });
+
+
+  const tooglePlay =() =>{
+    isPlaying === false ? setIsPlaying(true) : setIsPlaying(false);
+ };
+
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   }
@@ -86,10 +115,7 @@ const HomeScreen = ()=> {
     setLoader(false)
   }
   
-  const dimensions = Dimensions.get('window');
- 
   const handlePost = (item) => {
-    // console.log("hgghg",val);
     navigation.navigate('PostsScreen', {item:item})
   }
 
@@ -160,39 +186,39 @@ const HomeScreen = ()=> {
 
   return (
   <SafeAreaView>
-    {/* <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true}> */}
-      <View style={{backgroundColor:'#071B36',}}>
-        <ImageBackground source={bgtophome} style={styles.bgtophome}>
+      <Animated.View style={{backgroundColor:'#071B36',height:headerHeight,position:'relative'}}>
+        <Animated.Image source={bgtophome} style={[styles.bgtophome,{height:headerHeight,opacity:opacity}]}/>
+
           <View style={styles.imageConatentContainer}>
-          
             <View style={{flexDirection:'row',alignItems:'center'}}> 
               <TouchableOpacity>
                 <Ionicons name="reorder-three-outline" size={34} color="#fff"  />
               </TouchableOpacity>
-              <View style={{backgroundColor:'#FFCC00', width:4, height:24,marginHorizontal:10,borderRadius:5}}/>
-              <Text style={{fontSize:10, color:'#fff'}}>What’s New</Text>
+              <View style={{backgroundColor:'#FFCC00', width:4, height:24,marginLeft:10,borderRadius:5,zIndex:1}}/>
+              <Animated.View style={{backgroundColor:'#3477E0', width:imagePosition, height:24,justifyContent:'center',position:'relative'}}>
+                <View style={styles.triangle}/>
+                <Text style={{fontSize:10, color:'#fff',marginLeft:10}}>What’s New</Text>
+              </Animated.View>
             </View>
 
-            <View style={{flexDirection:'row'}} >
+            <Animated.View style={{flexDirection:'row'}} >
               <View>
                 <Feather name="search" size={24} color="#ffff" onPress={()=>{ navigation.navigate('CommonSearchScreen') }} />
               </View>
               <View style={{marginLeft:10}}>
                 <MaterialCommunityIcons name="bell-ring-outline" size={24} color="#ffff" />
               </View>
-            </View>
-
+            </Animated.View>
           </View>
 
-         <View style={styles.collectedCoins} >
+          <Animated.View style={[styles.collectedCoins,{transform: [{translateY: scoresPosition}]}]} >
             <Image source={d} style={styles.d} />
             <Text style={styles.count}>7822 |</Text>
             <Image source={discount1} style={{width:16, height:16, marginVertical:5,  marginHorizontal:5}}></Image>
             <Text style={styles.count}>102</Text>
-          </View>
+          </Animated.View>
 
-        </ImageBackground>
-      </View>
+      </Animated.View>
       
     <View style={{padding:10}}>
       <Card style={{marginTop:-35, zIndex:1, borderRadius:50,shadowRadius:10, shadowOffset:10}} onPress={() => navigation.navigate('SharePost')}>
@@ -211,13 +237,20 @@ const HomeScreen = ()=> {
               <View style={{width:'100%', height:1, backgroundColor:'#D5DEED', marginTop:10}}></View>
           </View>
 
-          <FlatList
+          <Animated.FlatList
+              onScroll={Animated.event(
+                [{nativeEvent: {contentOffset: {y: scrollPosition}}}],
+                {useNativeDriver: false},
+              )}
+              contentInsetAdjustmentBehavior="automatic"
               data={allPost}
               renderItem={renderItem}
               keyExtractor={(item,index) => index}
               // onEndReached={loadMore}
+              showsVerticalScrollIndicator={false}
           />
       </View>
+      
       </View>
 
 
@@ -273,7 +306,6 @@ const HomeScreen = ()=> {
   
 {/* Modal doccoins view  */}
 
-  {/* </ScrollView> */}
   </SafeAreaView>
   );
 }

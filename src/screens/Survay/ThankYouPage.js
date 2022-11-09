@@ -34,7 +34,7 @@ const ThankYouPage = ({ route }) => {
       {showOffer && <ScratchOffer setShowOffer={setShowOffer} />}
       <Card style={styles.cardbody}>
         <View>
-          <View style={styles.badgeConatiner}>
+          {/* <View style={styles.badgeConatiner}>
             <Text style={styles.cardheading}>
               386 Coins Left to reach Level 5!!!
             </Text>
@@ -83,7 +83,7 @@ const ThankYouPage = ({ route }) => {
                 </View>
               </View>
             </View>
-          </View>
+          </View> */}
 
           <Image
             source={tankyouCelebration}
@@ -95,27 +95,21 @@ const ThankYouPage = ({ route }) => {
             <Text
               style={{
                 fontSize: 14,
-                marginTop: 20,
                 textAlign: "center",
                 fontFamily: "Inter-Regular",
               }}
             >
               for your time and response.
             </Text>
-            <Text
-              style={{
-                fontSize: 14,
-                marginTop: 20,
-                textAlign: "center",
-                color: "#51668A",
-                fontFamily: "Inter-Regular",
-              }}
-            >
-              Yay! you took the ‘Bombay Survey - Allergies Survey for Doctor
+            <Text style={styles.Congratulation}>
+               Congratulation! 
+            </Text>
+            <Text style={styles.wonCoinMsg}>
+              You have earned <Text style={styles.wonCoins}>300</Text> DocCoins.
             </Text>
 
             <Button
-              title="Back to Categories"
+              title="Back"
               buttonStyle={styles.buttonStyle}
               titleStyle={{ color: "#fff", fontFamily: "PlusJakartaSans-Bold" }}
               onPress={() =>
