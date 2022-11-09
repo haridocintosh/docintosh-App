@@ -3,9 +3,6 @@ import { View, Text,Image,
   SafeAreaView,ScrollView,TouchableOpacity,ImageBackground,TextInput,StyleSheet } from 'react-native'
 import {  Card } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
-import { FontAwesome5 , MaterialCommunityIcons,AntDesign} from '@expo/vector-icons';
-import discount1 from '../assets/dr-icon/discount1.png';
 import cardfootimg from '../assets/images/cardfootimg.png';
 import QuizTimer from '../assets/images/QuizTimer.png';
 import Surveys from '../assets/images/Surveys.png';
@@ -13,8 +10,7 @@ import cardfootimg2 from '../assets/images/cardfootimg2.png';
 import cardfootimg3 from '../assets/images/cardfootimg3.png';
 import checkwrong from '../assets/images/checkwrong.png';
 
-const EngageScreen = () => {
-  const navigation = useNavigation();
+const EngageScreen = ({navigation}) => {
   const [userdata,setuserdata]=useState({
     role:""
   })

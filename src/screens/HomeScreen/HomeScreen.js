@@ -14,7 +14,6 @@ import {
   Animated
 } from 'react-native';
 import { Card } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from "react-redux";
 import d  from '../../assets/dr-icon/d.png'
 import discount1  from '../../assets/dr-icon/discount1.png';
@@ -32,7 +31,8 @@ import { styles } from './Homestyle';
 import  {HeaderImageScrollView, TriggeringView } from 'react-native-image-header-scroll-view';
 
 
-const HomeScreen = ()=> {
+
+const HomeScreen = ({navigation})=> {
 // like unlike fun =>
   const [loader, setLoader] = useState(true);
   const [isPlaying, setIsPlaying]   = useState(false);
@@ -40,7 +40,6 @@ const HomeScreen = ()=> {
   const [allPost, setallPost]  = useState([]);
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
-  const navigation = useNavigation();
   const [isModalVisible, setModalVisible] = useState(false);
   const [liked, setLiked] = useState(false);
 
@@ -126,6 +125,7 @@ const HomeScreen = ()=> {
     </View>)
   }
 
+  
 
     const renderItem = ({item}) => {
       return(
@@ -191,7 +191,7 @@ const HomeScreen = ()=> {
 
           <View style={styles.imageConatentContainer}>
             <View style={{flexDirection:'row',alignItems:'center'}}> 
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.openDrawer()}>
                 <Ionicons name="reorder-three-outline" size={34} color="#fff"  />
               </TouchableOpacity>
               <View style={{backgroundColor:'#FFCC00', width:4, height:24,marginLeft:10,borderRadius:5,zIndex:1}}/>

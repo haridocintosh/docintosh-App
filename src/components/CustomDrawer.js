@@ -22,16 +22,14 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { color } from 'react-native-reanimated';
-import { logout } from '../../redux/reducers/loginAuth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { storeData } from '../apis/Apicall';
 import { useDispatch } from 'react-redux';
+import { useDrawerStatus } from '@react-navigation/drawer';
 
 
 
 const CustomDrawer = props => { 
-  const [drowerNotch, setDrowerNotch] = useState(false)
   const navigation = useNavigation();
   const [logoutdata,setlogoutdata]=useState();
   const dispatch = useDispatch();
@@ -74,14 +72,17 @@ const CustomDrawer = props => {
     }
   }
 
+  const isDrawerOpen = useDrawerStatus() === 'open';
+
   const handledrowerNotch = () => {
-    setDrowerNotch(!drowerNotch);
-    if(drowerNotch){
+    if(!isDrawerOpen){
       props.navigation.openDrawer()
     }else{
       props.navigation.closeDrawer()
     }
   }
+
+  
   
   return (
     <View style={styles.DrowerContainer}>
@@ -109,23 +110,7 @@ const CustomDrawer = props => {
         </DrawerContentScrollView>
 
         <View style={styles.deviderLine}/>
-        <View style={styles.DrowerNotch}>
-          <TouchableOpacity style={styles.notchIcons} onPress={() => handledrowerNotch()}>
-            {drowerNotch ?
-            <Entypo 
-              name='chevron-thin-right' 
-              color={'#fff'} 
-              size={15} 
-              />
-            :
-            <Entypo 
-              name='chevron-thin-left' 
-              color={'#fff'} 
-              size={15} 
-            />
-            }
-          </TouchableOpacity>
-        </View>
+        
         <View style={{paddingHorizontal: 20,}}>
           <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15 }}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>

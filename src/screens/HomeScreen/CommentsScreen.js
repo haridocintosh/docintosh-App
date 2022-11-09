@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Ionicons} from '@expo/vector-icons';
 import { commentData } from '../../../redux/reducers/publicReactionSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { styles } from './Homestyle';
 
 
 const CommentsScreen = ({route}) => {
@@ -34,22 +35,27 @@ const CommentsScreen = ({route}) => {
     },[])
 
     // const handlePost = () => {
-    //   console.log("text",text);
+      console.log("comments_list",comments_list);
     // }
 //console.log("postId",post_id);
   return (
     <View style={styles.commentContainer}>
-        <View style={styles.UserComments}>
-            <View style={styles.inputCont} >
-                {comments_list.map((element, index)=>{
+
+
+               {comments_list.map((element, index)=>{
                   return(
-                    <>
-                    <Text>{element.username}</Text>
-                    <Text>{element.comment} </Text>
-                    </>
+                    <View style={styles.usersCommentContainer}>
+                        <Image source={{uri:element.profileimage}} style={{width:40,height:40, borderRadius:50,marginRight:10}}/>
+                        <View>
+                            <Text style={styles.userUsername}>{element.username}</Text>
+                            <Text style={styles.userCommentTexts}>{element.comment} </Text>
+                        </View>
+                    
+                    </View>
                   )
                 }) }
-           
+        <View style={styles.UserComments}>
+            <View style={styles.inputCont} >
             <Image source={{uri:profile}} style={{width:50,height:50, borderRadius:50}}/>
             <TextInput
                 style={styles.input}
@@ -69,32 +75,4 @@ const CommentsScreen = ({route}) => {
 
 export default CommentsScreen;
 
-const styles = StyleSheet.create({
-    commentContainer:{
-        flex:1,
-        backgroundColor:'#ecf2f6',
-        padding:15
-    },
-    UserComments:{
-        alignItems:'center',
-        flexDirection:'row',
-        position:'absolute',
-        bottom:0,
-        borderTopWidth:1,
-        paddingHorizontal:10,
-        paddingVertical:5,
-        width:Dimensions.get('screen').width,
-        justifyContent:'space-between',
-        alignItems:'center',
-        borderColor:'#ccc'
-    },
-    input:{
-        // borderWidth:1,
-        width:Dimensions.get('screen').width/1.4,
-        height:50,
-        paddingLeft:10
-    },
-    inputCont:{
-        flexDirection:'row'
-    }
-})
+

@@ -49,6 +49,9 @@ const Surveys = ({ route }) => {
     setSurvayData(result.payload);
   };
 
+  // console.log("result.payload",survayData);
+
+
   const handleCardEntry = (value) => {
     // == 'No'
     if (value.isSolved) {
@@ -126,7 +129,7 @@ const Surveys = ({ route }) => {
                           fill="#45B5C0"
                         />
                       </Svg>
-                      <Text style={styles.HowManyQuetions}>05 Questions</Text>
+                      <Text style={styles.HowManyQuetions}>{data.totalques} Questions</Text>
                       <Text style={styles.deviderLine}> | </Text>
                       <Svg
                         width="22"
@@ -143,7 +146,7 @@ const Surveys = ({ route }) => {
                         />
                       </Svg>
                       <Text style={styles.ParticipantsText}>
-                        18260 Participants
+                      {data.totalcount} Participants
                       </Text>
                     </View>
 
