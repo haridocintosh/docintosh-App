@@ -2,17 +2,11 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  StyleSheet,
-  Dimensions,
   SafeAreaView,
-  ScrollView,
+  TouchableOpacity
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import CheckBox from "react-native-check-box";
-import { useFonts } from "expo-font";
 import { styles } from "./SurvayStyle";
-import { fontsLoaded } from "../../../GlobalStyle";
-
 
 const SurvayCheckBoxMcq = ({ setLiftUpData, currentIndex, allMCQs }) => {
   const [allMcq, setAllMcq] = useState(allMCQs[currentIndex]);
@@ -30,7 +24,7 @@ const SurvayCheckBoxMcq = ({ setLiftUpData, currentIndex, allMCQs }) => {
       .filter((val) => val.checked == true)
       .map((temp) => temp.opt_id);
     setLiftUpData(optId);
-    // console.log("optId",optId);
+    console.log("optId",optId);
   };
 
   
@@ -41,14 +35,15 @@ const SurvayCheckBoxMcq = ({ setLiftUpData, currentIndex, allMCQs }) => {
           {allMcq?.options.map((data, i) => {
             // console.log("isChecked",data?.checked);
             return (
-              <View style={styles.SurvayOptions} key={i}>
+              <TouchableOpacity style={styles.SurvayOptions} key={i} onPress={() => handleChange(data.opt_id)}>
                 <CheckBox
                   style={{ padding: 5 }}
                   onClick={() => handleChange(data.opt_id)}
                   isChecked={data.checked}
+                  checkBoxColor="#2C8892"
                 />
-                <Text style={[styles.optionS, {}]}>{data.options}</Text>
-              </View>
+                <Text style={styles.optionS}>{data.options}</Text>
+              </TouchableOpacity>
             );
           })}
         </View>

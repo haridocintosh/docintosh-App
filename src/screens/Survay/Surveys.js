@@ -50,7 +50,7 @@ const Surveys = ({ route }) => {
   };
 
   const handleCardEntry = (value) => {
-    // if(value.isSolved == 'No'){
+    // == 'No'
     if (value.isSolved) {
       navigation.navigate("SurveyMcq", { surveyid: value.surveyid });
     } else {

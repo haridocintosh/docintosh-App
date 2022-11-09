@@ -28,7 +28,7 @@ const ScratchOffer = ({ setShowOffer }) => {
 
   const [isOpen, setIsOpen] = useState(true);
   const bottomSheetRef = useRef(null);
-  const snapPoints = [removeScratch ? "28%" : "49%"];
+  const snapPoints = [removeScratch ? '1%' : "27%"];
 
   const copyToClipboard = (code) => {
     Clipboard.setString(code);
@@ -95,7 +95,7 @@ const ScratchOffer = ({ setShowOffer }) => {
                 source={scratchCard}
                 style={styles.ScratchTopImage}
               >
-                <Text style={styles.tabToWin}>Double tap to WIN</Text>
+                <Text style={styles.tabToWin}>Double tap for your Reward</Text>
               </ImageBackground>
             ) : (
               <Text></Text>
@@ -114,7 +114,7 @@ const ScratchOffer = ({ setShowOffer }) => {
           <ScrollView>
             {removeScratch ? (
               <View style={styles.SheetContentContainer}>
-                <Image source={coupon} style={{ width: 30, height: 30 }} />
+                {/* <Image source={coupon} style={{ width: 30, height: 30 }} />
                 <Text
                   style={[
                     styles.beforeCratchText,
@@ -122,11 +122,11 @@ const ScratchOffer = ({ setShowOffer }) => {
                   ]}
                 >
                   Scratch the card to win exciting gifts{" "}
-                </Text>
+                </Text> */}
               </View>
             ) : (
               <View style={styles.SheetContentContainer}>
-                <Text style={styles.CongratsText}>
+                {/* <Text style={styles.CongratsText}>
                   Congrats! You won an amazon voucher worth ₹ 100{" "}
                 </Text>
                 <Text style={styles.AboutVoucherText}>About this Voucher </Text>
@@ -134,16 +134,16 @@ const ScratchOffer = ({ setShowOffer }) => {
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
                   aliquet cursus pellentesque. Mauris gravida libero nec sapien
                   ultricies blandit.
-                </Text>
+                </Text> */}
                 <View style={styles.TermsAndCondContainer}>
-                  <Text style={styles.TermsAndCondVoucher}>
+                  {/* <Text style={styles.TermsAndCondVoucher}>
                     Use of this voucher is subjected to{" "}
-                  </Text>
+                  </Text> */}
                   <TouchableOpacity>
-                    <Text style={styles.termsCondText}>Terms & Conditions</Text>
+                    <Text style={styles.termsCondText}>Know How to Redeem your Voucher</Text>
                   </TouchableOpacity>
                 </View>
-                <Image
+                {/* <Image
                   source={amazon}
                   style={{
                     marginTop: 20,
@@ -151,7 +151,7 @@ const ScratchOffer = ({ setShowOffer }) => {
                     height: 30,
                     alignSelf: "flex-end",
                   }}
-                />
+                /> */}
               </View>
             )}
           </ScrollView>

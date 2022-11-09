@@ -122,7 +122,7 @@ export const styles = StyleSheet.create({
     height: 6,
   },
   SurvayOptionsSelect: {
-    backgroundColor: "rgba(66, 185, 61, 0.27)",
+    backgroundColor: "rgba(113, 196, 205, 0.6)",
     width: "100%",
     borderRadius: 4,
     flexDirection: "row",
@@ -225,7 +225,7 @@ export const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
     fontWeight: "600",
-    fontSize: 18,
+    fontSize: 16,
     height: 40,
     textAlignVertical: "center",
     fontFamily: "PlusJakartaSans-Bold",
@@ -261,11 +261,13 @@ export const styles = StyleSheet.create({
   },
   termsCondText: {
     color: "#2376E5",
-    fontFamily: "Inter-Regular",
+    fontFamily: "Inter-SemiBold",
+    fontWeight:'600'
   },
   TermsAndCondContainer: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent:'center',
     marginTop: 10,
   },
 
@@ -304,15 +306,7 @@ export const styles = StyleSheet.create({
   margintop: {
     marginTop: 20,
   },
-  //   count:{
-  //      borderRadius:4,
-  //      backgroundColor:'#F6F6F6',
-  //      marginRight:10,
-  //      height:35,
-  //      width:35,
-  //      justifyContent:'center',
-  //      alignItems:'center'
-  //   },
+
   Survaycard: {
     borderRadius: 10 / 2,
     shadowOffset: 0.4,
@@ -429,10 +423,7 @@ export const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#071B36",
   },
-  //   count: {
-  //     paddingRight: 10,
-  //     marginTop: 10,
-  //   },
+
   itemlisttxt2: {
     color: "#51668A",
     fontWeight: "400",
@@ -478,11 +469,27 @@ export const styles = StyleSheet.create({
   coinsCount: {
     fontFamily: "Inter-Regular",
   },
+  wonCoins:{
+    fontFamily: "Inter-SemiBold",
+  },
+  wonCoinMsg:{
+    fontSize: 15,
+    marginTop: 5,
+    textAlign: "center",
+    color: "#51668A",
+    fontFamily: "Inter-Regular",
+  },
+  Congratulation:{
+    fontSize: 21,
+    marginTop: 20,
+    textAlign: "center",
+    color: "#51668A",
+    fontFamily: "Inter-Regular",
+  },
   //---------------------TypoMcq---------------------------------------
 
   count: {
     borderRadius: 4,
-    backgroundColor: "#F6F6F6",
     marginRight: 10,
     height: 35,
     width: 35,
@@ -529,18 +536,6 @@ export const styles = StyleSheet.create({
     borderColor: "#D5DEED",
     borderWidth: 1,
   },
-  //   optionSeriel: {
-  //     alignSelf: "center",
-  //     fontSize: 20,
-  //     fontWeight: "400",
-  //     color: "#51668A",
-  //   },
-  //   optionS: {
-  //     // borderWidth:1,
-  //     width: Dimensions.get("window").width / 1.34,
-  //     color: "#51668A",
-  //     fontFamily: "Inter-SemiBold",
-  //   },
   CheckBox: {
     marginRight: 10,
   },

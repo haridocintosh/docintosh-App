@@ -41,8 +41,8 @@ const RadioMcq = ({ setLiftUpData, currentIndex, allMCQs, nextMcq }) => {
                 }
                 key={i}
               >
-                <View style={styles.count}>
-                  <Text style={styles.optionSeriel}>
+                <View style={[styles.count,{backgroundColor: optId == data?.opt_id ? '#2C8892':"#F6F6F6"}]}>
+                  <Text style={[styles.optionSeriel,{color: optId == data?.opt_id ? '#fff':"#51668A"}]}>
                     {/* styles.optionSeriel */}
                     {i == 0
                       ? "A"

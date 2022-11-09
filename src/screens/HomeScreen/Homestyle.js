@@ -132,13 +132,14 @@ export const styles = StyleSheet.create({
   bgtophome: {
     width: "100%",
     resizeMode: "cover",
-    height: 150,
   },
   imageConatentContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     padding: 15,
+    position:'absolute',
+    width:'100%'
   },
   collectedCoins: {
     borderRadius: 50,
@@ -146,9 +147,9 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     position: "absolute",
     alignSelf: "center",
-    bottom: 35,
     paddingHorizontal: 10,
     alignItems: "center",
+    marginTop:20
   },
 
   viewDoccin: {
@@ -178,5 +179,22 @@ socialCountText:{
     paddingLeft:5,
     color:'#51668A',
     fontFamily:"Inter-Regular",
-}
+},
+triangle: {
+  width: 0,
+  height: 0,
+  backgroundColor: 'transparent',
+  borderStyle: 'solid',
+  borderTopWidth: 0,
+  borderRightWidth: 13,
+  borderBottomWidth: 13,
+  borderLeftWidth: 13,
+  borderTopColor: 'transparent',
+  borderRightColor: 'transparent',
+  borderBottomColor: '#071B36',
+  borderLeftColor: 'transparent',
+  transform: [{ rotate: '-90deg'}],
+  position:'absolute',
+  right:-7
+},
 });
