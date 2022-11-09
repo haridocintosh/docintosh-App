@@ -235,7 +235,7 @@ const setPassword= (e) =>{
   return (
     <SafeAreaView style={{flex: 0, justifyContent: 'center',paddingTop:10}}>
     <ScrollView
-      showsVerticalScrollIndicator={false}
+      showsVerticalScrollIndicator={true}
       nestedScrollEnable={true}>
       <View style={styles.suceesheadBox}>
        <View style={styles.registermainText}>

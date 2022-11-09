@@ -63,16 +63,6 @@ export default function RegisterScreen() {
     role:"",
   });
 
-
-  // const [studentReg , setstudentReg] = useState({
-  //   fname : "",
-  //   lname:"",
-  //   email:"",
-  //   mobile:"",
-  //   speciality_id:"",
-  //   role:checked
-  // });
-
   useEffect(()=>{
     async function fetchSpecialities(){
       const allSpeciality = await dispatch(getAllSpeciality());
@@ -182,7 +172,8 @@ const form_submit = async() =>{
   if(!register.fname || !register.lname || !register.email || !register.mobile || !register.gender ||checked === 4 ?!value:''){
   //  const token = await dispatch(userLogin(register));
       seterr("Please fill the above form");
-  }else{
+
+  } else{
     const result = await dispatch(userRegisterOne(register));
     // console.log('Registertkn',result);
     Toast.show(result.payload.message);
@@ -233,7 +224,7 @@ const form_submit = async() =>{
             </View>
 
   
-            <View
+            {/* <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-around',
@@ -243,13 +234,11 @@ const form_submit = async() =>{
                 onPress={() => {}}
                 >
                 <SvgUri width="56" height="56" uri="https://www.brandcare.net/Docintosh_Svg/google.svg" />
-          
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {}}
                >
-
-            <SvgUri width="56" height="56" uri="https://www.brandcare.net/Docintosh_Svg/facebook%20%282%29.svg" />
+               <SvgUri width="56" height="56" uri="https://www.brandcare.net/Docintosh_Svg/facebook%20%282%29.svg" />
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -257,11 +246,9 @@ const form_submit = async() =>{
                 >
                   <SvgUri width="56" height="56" uri="https://www.brandcare.net/Docintosh_Svg/linkdin.svg" />
               </TouchableOpacity>
-            </View>
+            </View> */}
     
-            <Text  style={styles.headingpara2}>
-              Or
-            </Text>
+            {/* <Text  style={styles.headingpara2}>Or</Text> */}
 
             
        <View style={{ display:"flex" ,flexDirection:"row",alignItems:'center', flexDirection:"column"}}>

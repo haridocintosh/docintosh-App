@@ -12,8 +12,7 @@ const CommentsScreen = ({route}) => {
     const [userId, setUserId] = useState();
 
     const dispatch = useDispatch();
-    const  {post_id} =route.params;
-
+    const  {post_id, comments_list} =route.params;
 
     const getData = async() => {
         const jsonValue = await AsyncStorage.getItem('USER_INFO');
@@ -25,9 +24,9 @@ const CommentsScreen = ({route}) => {
 
     const handleComment = async () => {
         const postDetails = {user_id:userId,post_id:post_id,postcomment:text}
-        console.log("postDetails",postDetails);
+       // console.log("postDetails",postDetails);
         const sentResult = await dispatch(commentData(postDetails));
-        console.log("sentResult",sentResult);
+       // console.log("sentResult",sentResult);
     }
 
     useEffect(()=>{
@@ -37,11 +36,20 @@ const CommentsScreen = ({route}) => {
     // const handlePost = () => {
     //   console.log("text",text);
     // }
-
+//console.log("postId",post_id);
   return (
     <View style={styles.commentContainer}>
         <View style={styles.UserComments}>
             <View style={styles.inputCont} >
+                {comments_list.map((element, index)=>{
+                  return(
+                    <>
+                    <Text>{element.username}</Text>
+                    <Text>{element.comment} </Text>
+                    </>
+                  )
+                }) }
+           
             <Image source={{uri:profile}} style={{width:50,height:50, borderRadius:50}}/>
             <TextInput
                 style={styles.input}
