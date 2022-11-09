@@ -32,8 +32,8 @@ const PublicReactions = ({item}) => {
  }
 
 
- const GotoComments =(post_id) => {
-  navigation.navigate('CommentsScreen', {post_id:post_id})
+ const GotoComments =(post_id,comments_list ) => {
+  navigation.navigate('CommentsScreen', {post_id:post_id,comments_list })
  }
  
   return (
@@ -41,7 +41,12 @@ const PublicReactions = ({item}) => {
               <View style={{ flexDirection: 'row',marginVertical:5  }}>
                 <View style={styles.socialCount}>
                   <TouchableOpacity>
-                    <Text>{item?.post_like_status?.map((element, item)=> console.log(element))}</Text>
+
+                  <Text>  {
+                    item.likecount > 0 && item?.post_like_status
+                  }</Text>
+
+                    <Text>{item?.post_like_status?.map((element, item)=> console.log('likeData',element))}</Text>
                       <AntDesign name={liked?"heart":"hearto"} size={22} color="red" onPress={()=> handleLikes(item.post_id)}/>
                   </TouchableOpacity>
                   <Text style={styles.socialCountText}>{item.likecount}</Text>
@@ -55,10 +60,10 @@ const PublicReactions = ({item}) => {
                 </View>
 
                 <View style={styles.socialCount}>
-                    <TouchableOpacity onPress={() => GotoComments(item.post_id)}>
+                    <TouchableOpacity onPress={() => GotoComments(item.post_id, item.comments_list)}>
                         <Image source={socialComment} style={styles.socialImages}/>
                     </TouchableOpacity>
-                  <Text style={styles.socialCountText}>240</Text>
+                  <Text style={styles.socialCountText}>{item.commentcount}</Text>
                 </View>
 
                 <View style={styles.socialCount}>

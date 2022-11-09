@@ -238,6 +238,8 @@ useEffect(()=>{
         if(result.payload.status == 'Success'){
           console.log("success");
           navigation.navigate('SelectInterest')
+        }else{
+          
         }
       }
     }

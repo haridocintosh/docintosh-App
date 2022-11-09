@@ -216,10 +216,10 @@ const LoginScreen = () => {
             justifyContent: 'center',
             marginBottom: 30,
           }}>
-          <Text style={styles.headingpara2}>or</Text>
+          {/* <Text style={styles.headingpara2}>or</Text> */}
           
         </View>
-       <View
+       {/* <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-around',
@@ -229,7 +229,7 @@ const LoginScreen = () => {
           <SvgUri width="56" height="56" uri="https://www.brandcare.net/Docintosh_Svg/google.svg" />
           <SvgUri width="56" height="56" uri="https://www.brandcare.net/Docintosh_Svg/linkdin.svg" />
           <SvgUri width="56" height="56" uri="https://www.brandcare.net/Docintosh_Svg/facebook%20%282%29.svg" />
-        </View>
+        </View> */}
 
         <View
           style={styles.ragistertext}>
