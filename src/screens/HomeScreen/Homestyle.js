@@ -197,4 +197,74 @@ triangle: {
   position:'absolute',
   right:-7
 },
+darkBlueOnWhatsNew: {
+  width: 2,
+  height: 20,
+  backgroundColor: '#342CE0',
+  position:'absolute',
+
+},
+
+// ---------------------------postsScreen-----------------------------------
+PostContainer:{
+  padding:10,
+  flex:1,
+  backgroundColor:'#ecf2f6',
+  justifyContent:'center'
+},
+userDetails:{
+  // borderWidth:1,
+  paddingVertical:5,
+  justifyContent:'space-between',
+  flexDirection:'row',
+  alignItems:'center'
+},
+singlePost:{
+  padding:10,
+  backgroundColor:'#fff',
+  borderRadius:6,
+},
+picContainer:{
+  flexDirection:'row',
+  alignItems:'center'
+},
+
+// ------------------------------------CommentsScreen--------------------------------------------
+commentContainer:{
+  flex:1,
+  backgroundColor:'#ecf2f6',
+  padding:15
+},
+UserComments:{
+  alignItems:'center',
+  flexDirection:'row',
+  position:'absolute',
+  bottom:0,
+  borderTopWidth:1,
+  paddingHorizontal:10,
+  paddingVertical:5,
+  width:Dimensions.get('screen').width,
+  justifyContent:'space-between',
+  alignItems:'center',
+  borderColor:'#ccc'
+},
+input:{
+  // borderWidth:1,
+  width:Dimensions.get('screen').width/1.4,
+  height:50,
+  paddingLeft:10
+},
+inputCont:{
+  flexDirection:'row'
+},
+usersCommentContainer:{
+  flexDirection:'row',
+  paddingBottom:20,
+},
+userUsername:{
+  fontFamily:'Inter-SemiBold'
+},
+userCommentTexts:{
+  fontFamily:'Inter-Regular'
+}
 });

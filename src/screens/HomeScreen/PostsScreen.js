@@ -54,7 +54,6 @@ const PostsScreen = ({route}) => {
                 <View>
                     <PublicReactions item={item}/>
                 </View>
-                
             </View>
         )
     })}

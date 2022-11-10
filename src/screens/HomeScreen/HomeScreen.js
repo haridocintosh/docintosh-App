@@ -14,7 +14,6 @@ import {
   Animated
 } from 'react-native';
 import { Card } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from "react-redux";
 import d  from '../../assets/dr-icon/d.png'
 import discount1  from '../../assets/dr-icon/discount1.png';
@@ -32,7 +31,8 @@ import { styles } from './Homestyle';
 import  {HeaderImageScrollView, TriggeringView } from 'react-native-image-header-scroll-view';
 
 
-const HomeScreen = ()=> {
+
+const HomeScreen = ({navigation})=> {
 // like unlike fun =>
   const [loader, setLoader] = useState(true);
   const [isPlaying, setIsPlaying]   = useState(false);
@@ -40,7 +40,6 @@ const HomeScreen = ()=> {
   const [allPost, setallPost]  = useState([]);
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
-  const navigation = useNavigation();
   const [isModalVisible, setModalVisible] = useState(false);
   const [liked, setLiked] = useState(false);
 
@@ -60,14 +59,14 @@ const HomeScreen = ()=> {
     extrapolate: 'clamp',
   });
   const sizeFont = scrollPosition.interpolate({
-    inputRange: [0, 100, 200, 300, 400],
-    outputRange: [10, 9, 8, 7, 6],
+    inputRange: [0, 200,  400],
+    outputRange: [10, 6, 5],
     extrapolate: 'clamp',
   });
 
   const imagePosition = scrollPosition.interpolate({
     inputRange: [0, 500],
-    outputRange: [(21 * Dimensions.get('window').width) / 100, 0],
+    outputRange: [(21 * Dimensions.get('window').width) / 100, 30],
     extrapolateLeft: 'identity',
     extrapolateRight: 'clamp',
   });
@@ -110,7 +109,6 @@ const HomeScreen = ()=> {
     const postDetails = {role,city_id,assoc_id,profileimage,userId}
     const result = await dispatch(userPostData(postDetails));
     const allPostData = result.payload.filter(Post => Post.user_role != 5)
-   // setallPost(result.payload);
     setallPost(allPostData);
     setLoader(false)
   }
@@ -126,6 +124,7 @@ const HomeScreen = ()=> {
     </View>)
   }
 
+  
 
     const renderItem = ({item}) => {
       return(
@@ -191,13 +190,16 @@ const HomeScreen = ()=> {
 
           <View style={styles.imageConatentContainer}>
             <View style={{flexDirection:'row',alignItems:'center'}}> 
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.openDrawer()}>
                 <Ionicons name="reorder-three-outline" size={34} color="#fff"  />
               </TouchableOpacity>
-              <View style={{backgroundColor:'#FFCC00', width:4, height:24,marginLeft:10,borderRadius:5,zIndex:1}}/>
+              <View style={{backgroundColor:'#FFCC00', width:4, height:28,marginLeft:10,zIndex:1}}/>
               <Animated.View style={{backgroundColor:'#3477E0', width:imagePosition, height:24,justifyContent:'center',position:'relative'}}>
                 <View style={styles.triangle}/>
-                <Text style={{fontSize:10, color:'#fff',marginLeft:10}}>What’s New</Text>
+                <View style={styles.darkBlueOnWhatsNew}/>
+                <Animated.Text style={{fontSize:sizeFont,color:'#fff',marginLeft:10,opacity:opacity}}>
+                  What’s New
+                </Animated.Text>
               </Animated.View>
             </View>
 
@@ -257,8 +259,6 @@ const HomeScreen = ()=> {
 
 {/* //removerd data in raugh */}
 
-  
-  
   {/* <Modal isVisible={isModalVisible} width={320} style={{alignSelf:'center', }}>
         <View>
         <Card >

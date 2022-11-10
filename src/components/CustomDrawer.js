@@ -2,7 +2,6 @@ import React,{useEffect, useState} from 'react';
 import {
   View,
   Text,
-  ImageBackground,
   Image,
   TouchableOpacity,
   StyleSheet
@@ -10,28 +9,22 @@ import {
 import {
   DrawerContentScrollView,
   DrawerItemList,
-  DrawerItem
 } from '@react-navigation/drawer';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import docintoshlogo from '../assets/dr-icon/docintoshlogo.png';
 import profilePicture from '../assets/images/profilePicture.png';
-import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { color } from 'react-native-reanimated';
-import { logout } from '../../redux/reducers/loginAuth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { storeData } from '../apis/Apicall';
 import { useDispatch } from 'react-redux';
+import { useDrawerStatus } from '@react-navigation/drawer';
 
 
 
 const CustomDrawer = props => { 
-  const [drowerNotch, setDrowerNotch] = useState(false)
   const navigation = useNavigation();
   const [logoutdata,setlogoutdata]=useState();
   const dispatch = useDispatch();
@@ -74,15 +67,8 @@ const CustomDrawer = props => {
     }
   }
 
-  const handledrowerNotch = () => {
-    setDrowerNotch(!drowerNotch);
-    if(drowerNotch){
-      props.navigation.openDrawer()
-    }else{
-      props.navigation.closeDrawer()
-    }
-  }
-  
+  const isDrawerOpen = useDrawerStatus() === 'open';
+
   return (
     <View style={styles.DrowerContainer}>
         <View style={styles.DocLogo}>
@@ -109,23 +95,7 @@ const CustomDrawer = props => {
         </DrawerContentScrollView>
 
         <View style={styles.deviderLine}/>
-        <View style={styles.DrowerNotch}>
-          <TouchableOpacity style={styles.notchIcons} onPress={() => handledrowerNotch()}>
-            {drowerNotch ?
-            <Entypo 
-              name='chevron-thin-right' 
-              color={'#fff'} 
-              size={15} 
-              />
-            :
-            <Entypo 
-              name='chevron-thin-left' 
-              color={'#fff'} 
-              size={15} 
-            />
-            }
-          </TouchableOpacity>
-        </View>
+        
         <View style={{paddingHorizontal: 20,}}>
           <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15 }}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
