@@ -164,10 +164,10 @@ const HomeScreen = ({navigation})=> {
             </Text>
           </View>
 
-          {/* <TouchableOpacity style={{justifyContent:'center',alignItems:'center',flex:1}} onPress={() => handlePost(item)} > */}
+          <TouchableOpacity style={{justifyContent:'center',alignItems:'center',flex:1}} onPress={() => handlePost(item)} >
             <Image source={item.imgPath?{uri:item.imgPath}:''} 
             style={{width:"100%",height:200,borderRadius:2}} resizeMode="center"/>
-          {/* </TouchableOpacity> */}
+          </TouchableOpacity>
 
           <PublicReactions item={item}/>
 
