@@ -197,6 +197,13 @@ triangle: {
   position:'absolute',
   right:-7
 },
+darkBlueOnWhatsNew: {
+  width: 2,
+  height: 20,
+  backgroundColor: '#342CE0',
+  position:'absolute',
+
+},
 
 // ---------------------------postsScreen-----------------------------------
 PostContainer:{

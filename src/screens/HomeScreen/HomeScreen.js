@@ -59,14 +59,14 @@ const HomeScreen = ({navigation})=> {
     extrapolate: 'clamp',
   });
   const sizeFont = scrollPosition.interpolate({
-    inputRange: [0, 100, 200, 300, 400],
-    outputRange: [10, 9, 8, 7, 6],
+    inputRange: [0, 200,  400],
+    outputRange: [10, 6, 5],
     extrapolate: 'clamp',
   });
 
   const imagePosition = scrollPosition.interpolate({
     inputRange: [0, 500],
-    outputRange: [(21 * Dimensions.get('window').width) / 100, 0],
+    outputRange: [(21 * Dimensions.get('window').width) / 100, 30],
     extrapolateLeft: 'identity',
     extrapolateRight: 'clamp',
   });
@@ -109,7 +109,6 @@ const HomeScreen = ({navigation})=> {
     const postDetails = {role,city_id,assoc_id,profileimage,userId}
     const result = await dispatch(userPostData(postDetails));
     const allPostData = result.payload.filter(Post => Post.user_role != 5)
-   // setallPost(result.payload);
     setallPost(allPostData);
     setLoader(false)
   }
@@ -165,10 +164,10 @@ const HomeScreen = ({navigation})=> {
             </Text>
           </View>
 
-          <TouchableOpacity style={{justifyContent:'center',alignItems:'center',flex:1}} onPress={() => handlePost(item)} >
+          {/* <TouchableOpacity style={{justifyContent:'center',alignItems:'center',flex:1}} onPress={() => handlePost(item)} > */}
             <Image source={item.imgPath?{uri:item.imgPath}:''} 
             style={{width:"100%",height:200,borderRadius:2}} resizeMode="center"/>
-          </TouchableOpacity>
+          {/* </TouchableOpacity> */}
 
           <PublicReactions item={item}/>
 
@@ -194,10 +193,13 @@ const HomeScreen = ({navigation})=> {
               <TouchableOpacity onPress={() => navigation.openDrawer()}>
                 <Ionicons name="reorder-three-outline" size={34} color="#fff"  />
               </TouchableOpacity>
-              <View style={{backgroundColor:'#FFCC00', width:4, height:24,marginLeft:10,borderRadius:5,zIndex:1}}/>
+              <View style={{backgroundColor:'#FFCC00', width:4, height:28,marginLeft:10,zIndex:1}}/>
               <Animated.View style={{backgroundColor:'#3477E0', width:imagePosition, height:24,justifyContent:'center',position:'relative'}}>
                 <View style={styles.triangle}/>
-                <Text style={{fontSize:10, color:'#fff',marginLeft:10}}>What’s New</Text>
+                <View style={styles.darkBlueOnWhatsNew}/>
+                <Animated.Text style={{fontSize:sizeFont,color:'#fff',marginLeft:10,opacity:opacity}}>
+                  What’s New
+                </Animated.Text>
               </Animated.View>
             </View>
 
@@ -257,8 +259,6 @@ const HomeScreen = ({navigation})=> {
 
 {/* //removerd data in raugh */}
 
-  
-  
   {/* <Modal isVisible={isModalVisible} width={320} style={{alignSelf:'center', }}>
         <View>
         <Card >

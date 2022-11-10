@@ -2,7 +2,6 @@ import React,{useEffect, useState} from 'react';
 import {
   View,
   Text,
-  ImageBackground,
   Image,
   TouchableOpacity,
   StyleSheet
@@ -10,13 +9,9 @@ import {
 import {
   DrawerContentScrollView,
   DrawerItemList,
-  DrawerItem
 } from '@react-navigation/drawer';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import docintoshlogo from '../assets/dr-icon/docintoshlogo.png';
 import profilePicture from '../assets/images/profilePicture.png';
-import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
@@ -74,16 +69,6 @@ const CustomDrawer = props => {
 
   const isDrawerOpen = useDrawerStatus() === 'open';
 
-  const handledrowerNotch = () => {
-    if(!isDrawerOpen){
-      props.navigation.openDrawer()
-    }else{
-      props.navigation.closeDrawer()
-    }
-  }
-
-  
-  
   return (
     <View style={styles.DrowerContainer}>
         <View style={styles.DocLogo}>

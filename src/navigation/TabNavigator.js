@@ -31,7 +31,6 @@ const TabNavigator = () => {
           fontFamily:'Inter-SemiBold',
           paddingBottom:5
         },
-     
         tabBarInactiveTintColor: '#fff',
         tabBarActiveTintColor: '#95AACE',
       })}
