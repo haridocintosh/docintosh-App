@@ -55,7 +55,7 @@ const PublicReactions = ({item}) => {
                 </View>
                 
                 <View style={styles.socialCount}>
-                    <TouchableOpacity onPress={() => GotoComments(item.post_id, item.comments_list)}>
+                    <TouchableOpacity   onPress={() => GotoComments(item.post_id, item.comments_list)}>
                         <Image source={socialComment} style={styles.socialImages}/>
                     </TouchableOpacity>
                   <Text style={styles.socialCountText}>{item.commentcount}</Text>
