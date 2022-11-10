@@ -11,9 +11,10 @@ const CommentsScreen = ({route}) => {
     const [profile, setProfile] = useState();
     const [text, onChangeText] = useState();
     const [userId, setUserId] = useState();
+    const [reload, setReload] = useState();
 
     const dispatch = useDispatch();
-    const  {post_id, comments_list} =route.params;
+    const  {post_id, comments_list} = route.params;
 
     const getData = async() => {
         const jsonValue = await AsyncStorage.getItem('USER_INFO');
@@ -27,12 +28,13 @@ const CommentsScreen = ({route}) => {
         const postDetails = {user_id:userId,post_id:post_id,postcomment:text}
        // console.log("postDetails",postDetails);
         const sentResult = await dispatch(commentData(postDetails));
-       // console.log("sentResult",sentResult);
+       console.log("sentResult",sentResult.cmnt_ret);
+       setReload(sentResult.cmnt_ret);
     }
 
     useEffect(()=>{
         getData();
-    },[])
+    },[reload])
 
     // const handlePost = () => {
       console.log("comments_list",comments_list);
@@ -40,9 +42,7 @@ const CommentsScreen = ({route}) => {
 //console.log("postId",post_id);
   return (
     <View style={styles.commentContainer}>
-
-
-               {comments_list.map((element, index)=>{
+               {comments_list && comments_list.map((element, index)=>{
                   return(
                     <View style={styles.usersCommentContainer}>
                         <Image source={{uri:element.profileimage}} style={{width:40,height:40, borderRadius:50,marginRight:10}}/>

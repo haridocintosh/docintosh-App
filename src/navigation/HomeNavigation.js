@@ -8,17 +8,8 @@ import {
   Image,TouchableOpacity,FlatList
 } from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import { getFocusedRouteNameFromRoute,  NavigationContainer } from '@react-navigation/native';
-import EngageScreen from '../screens/EngageScreen';
-import CommunityScreen from '../screens/CommunityScreen';
-import GameDetailsScreen from '../screens/GameDetailsScreen';
-import KnowledgeScreen from '../screens/KnowledgeScreen';
 import Knowledge2Screen from '../screens/Knowledge2Screen';
-import logo from '../assets/images/logo.png';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Feather from 'react-native-vector-icons/Feather';
-import SharePost from '../screens/SharePost';
+import SharePost from '../screens/HomeScreen/postScreen/SharePost';
 import Polls from '../screens/Polls';
 import Polls1 from '../screens/Polls1';
 import Surveys from '../screens/Survay/Surveys';
@@ -30,7 +21,6 @@ import SentimentrixCong from '../screens/SentimentrixCong';
 import Sentimentrix3 from '../screens/Sentimentrix3';
 import Sentimentrix6 from '../screens/Sentimentrix6';
 import CommonSearchScreen from '../screens/CommonSearchScreen';
-import Animated from 'react-native-reanimated';
 import QuizLevels from '../screens/QuizLevels/QuizLevels';
 import McqSelection from '../screens/QuizLevels/McqSelection';
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
@@ -40,18 +30,14 @@ import MultipleImagesUpload from '../screens/MiltipleImageUpload/MultipleImagesU
 import TypoMcq from '../screens/Survay/TypoMcq';
 import KnowYourHeart from '../screens/QuizLevels/KnowYourHeart';
 import QuizGame from '../screens/QuizLevels/QuizGame';
-import QuizGameQuetion from '../screens/QuizLevels/QuizGameQuetion';
 import ScratchOffer from '../screens/Survay/ScratchOffer';
 import ThankYouPage from '../screens/Survay/ThankYouPage';
-import Engage from '../assets/dr-icon/Engage.png'
-import Knowledge from '../assets/dr-icon/Knowledge.png'
-import Community from '../assets/dr-icon/Community.png'
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
-import HomeNavbar from '../screens/HomeScreen/HomeNavbar';
 import PostsScreen from '../screens/HomeScreen/PostsScreen';
 import CommentsScreen from '../screens/HomeScreen/CommentsScreen';
 import MessagesScreen from '../screens/MessagesScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+
 
 const HomeNavigation = () => {
 
@@ -74,13 +60,7 @@ const HomeNavigation = () => {
             // })}
             
           />
-          <Stack.Screen
-            name="GameDetails"
-            component={GameDetailsScreen}
-            options={({route}) => ({
-              title: route.params?.title,
-            })}
-          />
+     
           <Stack.Screen
             options={{headerShown: false}}
             name="ProfileScreen"
@@ -89,17 +69,23 @@ const HomeNavigation = () => {
             //   title: route.params?.title,
             // })}
           />
-         
     
           <Stack.Screen
             name="SharePost"
             component={SharePost}
-            options={{headerShown: false}}
+            options={{headerShown: true,
+              title: "Create post",
+              headerStyle: {
+                backgroundColor: '#071B36',
+              },
+              headerTintColor: '#fff'
+            }}
             // options={({route}) => ({
               
             //   title: route.params?.title,
             // })}
           />
+
            <Stack.Screen
             name="QuizGame"
             component={QuizGame}
@@ -376,6 +362,7 @@ const HomeNavigation = () => {
               },
               headerTintColor: '#fff'}}
           />
+     
           
         </Stack.Navigator>
       );
