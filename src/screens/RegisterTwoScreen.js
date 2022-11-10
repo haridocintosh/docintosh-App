@@ -237,7 +237,9 @@ useEffect(()=>{
       Toast.show(result.payload.message);
         if(result.payload.status == 'Success'){
           console.log("success");
-          navigation.navigate('SelectInterest')
+          navigation.navigate('SelectInterest', {
+            user_id : user_id,
+          })
         }else{
           
         }

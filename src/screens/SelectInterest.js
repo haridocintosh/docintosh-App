@@ -12,7 +12,11 @@ import { useNavigation } from '@react-navigation/native';
 const styelcss = require('../assets/css/style');
 import Toast from 'react-native-simple-toast';
 
+
 const SelectInterest = () => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const {user_id} = route.params;
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
@@ -42,9 +46,17 @@ const SelectInterest = () => {
       setselectitem(array);
      // console.log('deletearray',selectitem);
     }
+    fetchPostData(spl)
   };
-  const navigation = useNavigation();
   
+  const fetchPostData = async (speciality_id)=>{
+    const postDetails = {speciality_id:speciality_id,id:user_id}
+    const result = await dispatch(addCircle(postDetails));
+    console.log(result.payload);
+    //const data = await result.payload;
+    //setAllMCQs(data);
+ }
+
   useEffect(() => {
     fetch(`${mainApi.baseUrl}/ApiController/getSpecialities`)
       .then((response) => response.json())
