@@ -4,7 +4,7 @@ import { mainApi } from "../../src/apis/constant";
 
 export const postLikeData = createAsyncThunk("getAllPost", async (data)=>{
     try{
-        const responce = await fetch(`${mainApi.baseUrl}/ApiController/post_like`, {
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/user_post_like`, {
             method : 'POST',
             headers:{
                 'Content-Type': 'application/json'
