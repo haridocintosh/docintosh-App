@@ -184,7 +184,7 @@ const publishCheck = (e)=>{
     setPost({...post,
       publishto:e,
     })
-  // bottomSheetModalRefSecond.current?.close();
+   bottomSheetModalRefSecond.current?.close();
 }
   const handleStudentSubmit = async() =>{
   
@@ -282,18 +282,20 @@ const publishCheck = (e)=>{
 
    const handleChange = (speciality_id) => {
     // console.log("speciality_id",speciality_id);
-    let temp = circlespeciality.map((check) => {
-      if (speciality_id === check.speciality_id) {
-        return { ...check, checked: !check.checked };
+    let temp = circlespeciality.map((data) => {
+      if (speciality_id === data.speciality_id) {
+        return { ...data, checked: !data.checked };
       }
-      return check;
+      return data;
     });
-    console.log("temp",{temp});
-    setSpl({ payload: temp });
+
+    console.log("temp",temp );
+
+    // setSpl({...circlespeciality ,circlespeciality:temp });
+
     // const specialityId = temp
     //   .filter((val) => val.checked == true)
     //   .map((temp) => temp.speciality_id);
-    // setLiftUpData(specialityId);
     // console.log("specialityId",specialityId);
   };
 

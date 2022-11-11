@@ -11,9 +11,14 @@ import { View,
    
    import { useNavigation } from '@react-navigation/native';
    import CustomButton from '../components/CustomButton';
-   import Icon from 'react-native-vector-icons/FontAwesome';
+   import {AntDesign,Ionicons,FontAwesome} from 'react-native-vector-icons';
    import { forgotverifyOtp } from '../apis/Apicall';
    import OTPTextView from 'react-native-otp-textinput';
+   import { forgotPassword_ } from '../../redux/reducers/forgotPass';
+   import { useDispatch } from 'react-redux';
+   import Toast from 'react-native-simple-toast';
+   
+   
    
    const ForgotPasswordOTP = ({route}) => {
    
@@ -23,6 +28,9 @@ import { View,
    const [counter, setCounter] = useState(15);
    const [otpInput, setotpInput ] = useState('');
    const [message , setmessage] = useState();
+   const [editNumber , setEditNumber] = useState(false);
+
+   const dispatch = useDispatch();
     
    const submitOtp = ()=>{
    if(otpInput !== ""){
@@ -56,6 +64,29 @@ import { View,
    return () => clearInterval(timer);
    }, [counter]);
    
+
+   const handleEdit = () => {
+    setEditNumber(!editNumber)
+   }
+
+   const handleSubmit = async ()=>{
+    if(phone){
+      const token =await dispatch(forgotPassword_({
+        email:phone
+      }))
+      Toast.show(token.payload.message);
+      console.log(token.payload.status);
+      if(token.payload.status == 'Success'){
+        navigation.navigate('ForgotPasswordOTP',{
+          mobile_no: phone,
+          email:'',
+          user_id :token.payload.userid
+        })
+      }
+    }else{
+      Toast.show("Please Enter Mobile No. OR Email");
+    }   
+  }
     
    return (
    <SafeAreaView style={{display:"flex",alignItems:"center",paddingTop:120,}}>
@@ -65,21 +96,36 @@ import { View,
    
    >
     <View style={styles.topImgVerify}>
-   <Image source={require('../assets/images/image-verification-otp.png')}/>
+      <Image source={require('../assets/images/image-verification-otp.png')}/>
    </View>
    <Text style={styles.verifyText}>
    Please enter OTP sent to 
    </Text>
    <View style={styles.InputFieldVerify}>
-   <TextInput style={{fontSize:16,color:"#071B36",paddingRight:12}} 
-    autoCapitalize="none"
-    keyboardType="email-address"
-    value={mobile_no}
-    onChangeText={e=>
-   setPhone(e)
-    }
+   
+    <TextInput style={editNumber ? styles.numInputEdit:styles.numInput } 
+        autoCapitalize="none"
+        value={editNumber ? phone: mobile_no}
+        onChangeText={e => setPhone(e)}
+        // keyboardType="tel"
+        clearTextOnFocus={true}
     />
-   <Icon name="pencil" size={20} color="#2c9dd1"/>
+  
+  <View style={styles.InputSendIcons}>
+    <TouchableOpacity onPress={() => handleEdit()}>
+        {editNumber ? 
+          <AntDesign name="closecircleo" size={20} color="#2c9dd1" style={{margin:5}} />
+        :
+          <FontAwesome name="pencil" size={20} color="#2c9dd1" style={{margin:5}} />
+        }
+    </TouchableOpacity>
+    {editNumber &&
+    <TouchableOpacity onPress={() => handleSubmit()}>
+        <Ionicons name="send-outline" size={20} color="#2c9dd1" style={{margin:5,paddingLeft:7}} />
+    </TouchableOpacity>
+    }
+   </View>
+
    </View>
    {/* <Otp/> */}
    
@@ -184,7 +230,24 @@ import { View,
    },
    buttonStyle: {
    marginHorizontal: 20,
-   }
+   },
+   numInput:{
+    fontSize:16,
+    color:"#071B36",
+    width:110,
+    paddingLeft:10
+   },
+   numInputEdit:{
+    fontSize:16,
+    color:"#071B36",
+    borderBottomWidth: 1,
+    borderColor:"#ccc",
+    width:200,
+    paddingLeft:10
+    },
+    InputSendIcons:{
+        flexDirection:'row',
+    }
    
    })
    export default ForgotPasswordOTP

@@ -169,7 +169,7 @@ const HomeScreen = ({navigation})=> {
             style={{width:"100%",height:200,borderRadius:2}} resizeMode="center"/>
           </TouchableOpacity>
 
-          <PublicReactions item={item}/>
+          <PublicReactions item={item} load={asyncFetchDailyData}/>
 
           <View style={{flexDirection:'row',marginTop:5,marginLeft:10, marginBottom:10}}>
               <Image source={oval}style={{marginLeft:-10, borderColor:'#000'}}/>

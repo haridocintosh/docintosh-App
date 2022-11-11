@@ -28,13 +28,14 @@ const CommentsScreen = ({route}) => {
         const postDetails = {user_id:userId,post_id:post_id,postcomment:text}
        // console.log("postDetails",postDetails);
         const sentResult = await dispatch(commentData(postDetails));
-       console.log("sentResult",sentResult.cmnt_ret);
-       setReload(sentResult.cmnt_ret);
+       console.log("sentResult",sentResult.payload.cmnt_ret.comment);
+      //  setReload(sentResult.payload.cmnt_ret.comment);
     }
+    console.log("text",text);
 
     useEffect(()=>{
         getData();
-    },[reload])
+    },[])
 
     // const handlePost = () => {
       console.log("comments_list",comments_list);
@@ -44,7 +45,7 @@ const CommentsScreen = ({route}) => {
     <View style={styles.commentContainer}>
                {comments_list && comments_list.map((element, index)=>{
                   return(
-                    <View style={styles.usersCommentContainer}>
+                    <View style={styles.usersCommentContainer} key={index}>
                         <Image source={{uri:element.profileimage}} style={{width:40,height:40, borderRadius:50,marginRight:10}}/>
                         <View>
                             <Text style={styles.userUsername}>{element.username}</Text>

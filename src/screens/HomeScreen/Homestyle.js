@@ -246,7 +246,8 @@ UserComments:{
   width:Dimensions.get('screen').width,
   justifyContent:'space-between',
   alignItems:'center',
-  borderColor:'#ccc'
+  borderColor:'#ccc',
+  backgroundColor:'#ecf2f6',
 },
 input:{
   // borderWidth:1,

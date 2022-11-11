@@ -102,6 +102,7 @@ const OtpVerification = ({route}) => {
     Please enter OTP sent to 
     </Text>
     <View style={styles.InputFieldVerify}>
+      
     <TextInput style={{fontSize:16,color:"#071B36",paddingRight:12}} 
          autoCapitalize="none"
          keyboardType="email-address"

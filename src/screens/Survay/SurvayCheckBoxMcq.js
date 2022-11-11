@@ -18,8 +18,9 @@ const SurvayCheckBoxMcq = ({ setLiftUpData, currentIndex, allMCQs }) => {
       }
       return mcq;
     });
-    // console.log("temp",temp);
+    console.log("temp",{ ...allMcq, options: temp });
     setAllMcq({ ...allMcq, options: temp });
+    
     const optId = temp
       .filter((val) => val.checked == true)
       .map((temp) => temp.opt_id);

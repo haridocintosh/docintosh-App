@@ -11,8 +11,10 @@ import { useNavigation } from '@react-navigation/native';
 import { styles } from './Homestyle';
 
 
-const PublicReactions = ({item}) => {
+const PublicReactions = ({item,load}) => {
  const [liked,setLiked] = useState(false);
+ const [likeData,setLikeData] = useState([]);
+
  const dispatch = useDispatch();
  const navigation = useNavigation();
 
@@ -23,19 +25,24 @@ const PublicReactions = ({item}) => {
   setLiked(!liked);
 
   const jsonValue = await AsyncStorage.getItem('USER_INFO');
-  const data=await JSON.parse(jsonValue);
+  const data = await JSON.parse(jsonValue);
   const result = JSON.parse(data)['data'];
-  console.log("result",result.id);
+  // console.log("result",result.id);
 
-  const postDetails = {user_id:result.id,post_id:post_id}
+  const postDetails = {userId:result.id}
   const sentResult = await dispatch(postLikeData(postDetails));
-  console.log("sentResult",sentResult);
- }
 
+  // const resultData = sentResult.payload.college.filter(data => data.post_id == post_id);
+  // console.log("resultData",resultData);
+  // setLikeData(sentResult.payload);
+  
+ }
 
  const GotoComments =(post_id,comments_list ) => {
   navigation.navigate('CommentsScreen', {post_id:post_id,comments_list })
  }
+
+//  console.log("likeData",likeData);
  
   return (
      <View style={styles.publicReactionsContainer}>
