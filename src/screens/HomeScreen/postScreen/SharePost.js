@@ -111,11 +111,11 @@ const  Sharepost = () => {
         body :formData
      });
 
-    const result1=  await responce.json();
-    console.log(result1);
-    setPost({...post, 
-      postImage: result1.postImage,
-    });
+    // const result1=  await responce.json();
+    // console.log(result1);
+    // setPost({...post, 
+    //   postImage: result1.postImage,
+    // });
   };
 
   const pickVideo = async () => {
@@ -199,8 +199,6 @@ const publishCheck = (e)=>{
      const result = await dispatch(postCreate(uploadData));
      console.log(result);
          if(result.payload.status == 'Success'){
-        //   console.log(result.payload);
-          //uploadPostImage(result.payload.post_id)
            Toast.show(result.payload.message);
           // setPost('');
           setTimeout(()=>{
