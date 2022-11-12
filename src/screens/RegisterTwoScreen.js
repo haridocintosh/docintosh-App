@@ -268,7 +268,6 @@ return (
               <Text style={styles.headText}>Dr. {fullname}</Text>
               <TouchableOpacity onPress={pickprofile}>
         <View>
-       
         <Text>Edit Profile Photo</Text>
         </View>
         </TouchableOpacity>
