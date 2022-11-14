@@ -6,42 +6,40 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  ActivityIndicator,
   } from 'react-native';
 import { useDispatch, useSelector } from "react-redux";
 const styelcss = require('../assets/css/style');
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
-import { SvgUri } from 'react-native-svg';
 import CustomButton from '../components/CustomButton';
 import Checkbox from 'expo-checkbox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { login, storeData, singlestoreData } from '../apis/Apicall';
 import { userLogin } from '../../redux/reducers/loginAuth';
 import Toast from 'react-native-simple-toast';
-
+import { useFonts } from 'expo-font';
 
 const LoginScreen = () => {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
-  const [data, setdata] = useState();
+  const dispatch   = useDispatch();
+  const [loader, setloader] = useState(true);
   const [showeye, setshoweye] = useState(true);
   const [isChecked, setChecked] = useState(false);
   const [message , setmessage]  = useState();
-  const isValidemailRegex       =  /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
+ // const isValidemailRegex       = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})|(^[0-9]{10})+$/;
+ const isValidemailRegex  = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.[a-z]{1,3})+([a-zA-Z0-9]{1,3})|(^[0-9]{10})+$/;
   const [register ,setregister] = useState({
     email:"",
     password : "",
   });
+const [data, setdata] = useState();
 
-  let userData = useSelector((state)=>{
-   // console.log(state);
-    return state.mylogin.userName;
-});
 
-  const updateEmail = (text)=>{
+  const  updateEmail = (text)=>{
     //console.log(text);
     if(!isValidemailRegex.test(text)){
-        setmessage("Please enter valid email");
+        setmessage("Please Enter valid Email address or Phone number.");
     }else{
         setmessage('');
     }
@@ -49,37 +47,6 @@ const LoginScreen = () => {
       email: text,
     });
   }
-
-  // const userLogin = ()=>{
-  //   console.log(register.email, register.password);
-  //   if(register.email !== "" &&  register.password !== ""){
-  //     login(register.email, register.password)
-  //      .then(res => {
-  //       // setProcessingState('saved');
-  //       // console.log(res['status']);
-  //     //  console.log(register.mobile_no);
-  //        if(res['status'] == 'Success'){
-  //         setTimeout(() => {
-  //           // return <AppStack/>;
-          
-  //          navigation.navigate('Home')
-
-  //         //  props.navigation.navigate('drawer', {
-  //         //   screen: 'TabNavigator',
-  //         // });
-  //          },1000);
-  //        }
-  //     })
-  //     .catch(err => {
-  //       setmessage('Error occured!');
-  //       // setErrorType('server');
-  //       // setProcessingState('');
-  //       console.log(err);
-  //     });
-  //   }else{
-  //       setmessage('Please fill the above form');
-  //     }
-  //   };
 
   const authLogin = async (e)=>{
     // console.log("Form");
@@ -91,9 +58,8 @@ const LoginScreen = () => {
           login:true,
           data:token.payload.session_data
         }))
-        //singlestoreData('usertoken','userloginData');
         singlestoreData('isloggedin','true'); 
-        Toast.show(token.payload.message);
+       // Toast.show(token.payload.message);
           navigation.navigate('Home')
       }else{
         Toast.show(token.payload.message);
@@ -111,11 +77,9 @@ const LoginScreen = () => {
 
 //navigation.navigate('Home')
     }else{
-      setmessage('Please fill the above form');
+      setmessage('Please fill the above details');
     }
   }
-
-
 
   // const removeData = async (key) => {
   //   try {
@@ -129,41 +93,59 @@ const LoginScreen = () => {
   //     removeData('USER_INFO');
   //   },[])
 
-
   const getData = async (key) => {
     try {
       const jsonValue = await AsyncStorage.getItem(key);
-     //  console.log(jsonValue);
       setdata(jsonValue != null ? JSON.parse(JSON.parse(jsonValue)) : null)
+      setloader(false);
     } catch(e) {
      console.log(e)
     }
-}
+  }
 
   useEffect(() => {
     getData('USER_INFO')
   },[])
 
+  const [fontsLoaded] = useFonts({
+    'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),
+    'PlusJakartaSans-Regular': require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
+    
+  });
+  if(!fontsLoaded) {
+    return null;
+  }
+
+  if(loader){
+    return(
+    <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+        <ActivityIndicator size={'large'} color={"#2C8892"}/>
+    </View>)
+  }
   return (
     <SafeAreaView style={{paddingHorizontal:30}}>
       <View style={{marginTop:40}}>
-      
-        <Text  style={styles.headingtext}>
-          Welcome {data?((data.data.role<='4')?'Dr.':''):''}{data?data.data.first_name+' '+data.data.last_name:'' }
+      <Text  style={styles.headingtexts}>
+          Welcome 
         </Text>
-        <Text style={styles.headingpara}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-          {userData}
+        {/* <Text  style={styles.headingtext}>
+          Welcome Dr.Kiran Yadav 
+        </Text> */}
+        <Text  style={styles.headingtext}>
+         {data?((data.data.role<='4')?'Dr. ':''):''}{data?data.data.first_name+' '+data.data.last_name:''}
+        </Text>
+        <Text style={styles.headingpara}>Log in to your own personal space in one of the fastest growing professional network for doctors. 
         </Text>
     
-      <TextInput style={styelcss.customInputVerifyFullMobile} 
+      <TextInput style={[styelcss.customInputVerifyFullMobile,{ fontFamily: 'PlusJakartaSans-Regular',}]} 
           autoCapitalize="none"
           keyboardType="email-address" 
-          placeholder='Email ID'
+          placeholder='Email ID / Mobile Number*'
+          placeholderTextColor='#51668A'
           onChangeText={(text)=>updateEmail(text)}
          />
 
-      <TextInput style={styelcss.customInputVerifyFullMobile} 
+      <TextInput style={[styelcss.customInputVerifyFullMobile,{ fontFamily: 'PlusJakartaSans-Regular',}]} 
           autoCapitalize="none"
           placeholder='Password'
           secureTextEntry={showeye}
@@ -171,12 +153,13 @@ const LoginScreen = () => {
             password: text,
           })}
           inputType="password"
+          placeholderTextColor='#51668A'
           hideShow={showeye}
           fieldButtonFunction={() => {}}
         />
       <Ionicons  style={styles.eyeIcon} name={showeye ? 'eye-off' : 'eye'} size={24} color="#51668A" onPress={() => setshoweye(!showeye)} />
       
-      <View style={{display:'flex', justifyContent: 'space-between',flexDirection:'row',paddingHorizontal: 5,paddingBottom:12,}}>
+      <View style={{display:'flex', justifyContent: 'space-between',flexDirection:'row',paddingHorizontal: 5,paddingBottom:12,alignItems:"center"}}>
 
       <View style={styles.section}>
         <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
@@ -187,18 +170,19 @@ const LoginScreen = () => {
             fontStyle: 'normal',
             lineHeight: 15,
             letterSpacing: 1,
-            color: '#687690',
+            color: '#51668A',
+             fontFamily: 'Inter-Regular',
           }}>
         Remember Me
           </Text>
       </View>
 
           <Text style={{
-         // fontFamily: 'Inter_900Black',
+        
             fontSize: 14,
             fontWeight: '600',
             marginBottom: 20,
-           // fontFamily: 'Inter',
+           fontFamily: 'PlusJakartaSans-Bold',
             fontStyle: 'normal',
             lineHeight: 24,
             letterSpacing: 1,
@@ -208,13 +192,13 @@ const LoginScreen = () => {
           Forgot Password?
           </Text>
         </View>
-        <Text style={{color:'red' , textAlign:'center' }}>{message}</Text>
+        <Text style={{color:'red' , textAlign:'center', marginBottom:10,fontFamily: 'PlusJakartaSans-Regular' }}>{message}</Text>
         <CustomButton label={"Login"} onPress={() => authLogin()}  />
         <View
           style={{
             flexDirection: 'row',
             justifyContent: 'center',
-            marginBottom: 30,
+            // marginBottom: 30,
           }}>
           {/* <Text style={styles.headingpara2}>or</Text> */}
           
@@ -235,7 +219,7 @@ const LoginScreen = () => {
           style={styles.ragistertext}>
           <Text style={styles.ragistertext2}>Already a member? </Text>
           <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-            <Text style={{color: '#2376E5', fontWeight: '600',fontSize:16,}} > Register</Text>
+            <Text style={{color: '#2376E5', fontWeight: '600',fontSize:16,fontFamily:"PlusJakartaSans-Bold"}} > Register</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -260,26 +244,30 @@ checkbox: {
   marginRight:7,
   color:'blue',
 },
+headingtexts:{
+fontSize:16,
+fontFamily:"PlusJakartaSans-Bold",
+
+},
 headingtext:{
-  fontSize: 24,
-  fontWeight: '700',
+  fontSize: 20,
   color: '#071B36',
-   // fontFamily: 'Inter_900Black',
+  fontFamily:"PlusJakartaSans-Bold",
 },
 headingpara:{
-   // fontFamily: 'Inter_900Black',
+   fontFamily: 'Inter-Regular',
    fontSize: 14,
    fontWeight: '400',
    color: '#333',
-   marginBottom: 30,
-   //fontFamily: 'Plus Jakarta Sans',
+  //  marginBottom: 24,
    fontStyle: 'normal',
    lineHeight: 20,
-   letterSpacing: 1,
-   color: '#687690',
+   letterSpacing: 0,
+   color: '#51668A',
+   marginTop:6
 },
 headingpara2:{
-  // fontFamily: 'Inter_900Black',
+  fontFamily: 'Inter-Regular',
   fontSize: 14,
   fontWeight: '400',
   color: '#333',
@@ -292,15 +280,16 @@ headingpara2:{
 ragistertext:{
   flexDirection: 'row',
   justifyContent: 'center',       
-  position:'absolute',
-  bottom:-90,
+  // position:'absolute',
+  // bottom:-90,
   alignSelf:'center'
 
 },
 ragistertext2:{
   fontSize: 16,
   fontWeight: '400',
-  color:'#8C97AB',
+  color:'#51668A',
+  fontFamily:"Inter-Regular"
 },
 section:{display:'flex',flexDirection:'row',justifyContent:'center'},
 });

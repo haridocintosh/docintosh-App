@@ -60,6 +60,61 @@ export const userRegisterSecond = createAsyncThunk("user/regSecond", async(regDa
     }
 })
 
+export const checkEmail = createAsyncThunk("user/email_check", async(regData)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/email_check`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body : JSON.stringify(regData)
+        });
+        const result=  await responce.json();
+       // console.log('emailCheck',result);
+        return result
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+
+
+export const checkMobile = createAsyncThunk("user/check_mobile", async(regData)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/mobile_check`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body : JSON.stringify(regData)
+        });
+        const result = await responce.json();
+        return result
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+
+
+export const resendOTP = createAsyncThunk("user/resendOTP", async(regData)=>{
+    try{
+        console.log(regData);
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/loginwithotp`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body : JSON.stringify(regData)
+        });
+        const result = await responce.json();
+        console.log("checkresend",result);
+        return result
+    }catch(e){
+       console.log(e);
+    }
+})
+
 export const loginAuth = createSlice({
     name : "auth",
     initialState : {

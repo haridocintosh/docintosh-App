@@ -21,6 +21,8 @@ import ContactPermission from '../screens/ContactPermission';
 import AppStack from './AppStack';
 import { useNavigation } from '@react-navigation/native';
 import QuizLevels from '../screens/QuizLevels/QuizLevels';
+import TermsAndCondition from '../screens/commonpage/TermsAndCondition';
+import ContactScreen from '../screens/commonpage/ContactScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 
 
@@ -33,15 +35,12 @@ const AuthStack = () => {
       <Stack.Navigator screenOptions={{headerShown: false}}>
       {/* <Stack.Screen name="RegisterStudentScreen" component={RegisterStudentScreen}  options={{ title: 'Register', headerShown: true}} /> */}
       <Stack.Screen name="Intro" component={IntroStack} />
-      <Stack.Screen name="SelectInterest" component={SelectInterest} options={{ title: 'Select your Interest', headerShown: true,  headerRight: () => (
-          <Text onPress={() => navigation.navigate('LoginScreen')} style={{color:"#2376E5", fontWeight:"700"}} >Skip</Text>)}} />
-        <Stack.Screen name='ContactPermission' component={ContactPermission}  options={{ title: '' , headerShown: true,
+      <Stack.Screen name='ContactPermission' component={ContactPermission}  options={{ title: 'Invite Peers' , headerShown: true,
         headerRight: () => (
           <Text onPress={() => navigation.navigate('LoginScreen')} style={{color:"#2376E5"}} >Skip</Text>)
         }} />
       <Stack.Screen name="InvitePeers" component={InvitePeers} options={{ title: 'Invite Peers', headerShown: true,  headerRight: () => (
           <Text onPress={() => navigation.navigate('LoginScreen')} style={{color:"#2376E5"}} >Skip</Text>)}}  />
-      
       <Stack.Screen name="MobileScreen" component={MobileScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="LoginScreen">
@@ -57,6 +56,10 @@ const AuthStack = () => {
       <Stack.Screen name="CreateNewPass" component={CreateNewPass} options={{ title: 'Create New Password' , headerShown: true}} />
       <Stack.Screen name="PracticeScreen" component={PracticeScreen} />
       <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
+      <Stack.Screen name="ContactScreen"  component={ContactScreen} options={{ title: 'Contact Us', headerShown: true}}  />
+      <Stack.Screen name="SelectInterest" component={SelectInterest} options={{ title: 'Select your Interest', headerShown: true,  headerRight: () => (
+          <Text onPress={() => navigation.navigate('LoginScreen')} style={{color:"#2376E5", fontWeight:"700"}} >Skip</Text>)}} />
+      <Stack.Screen name="TermsAndCondition" component={TermsAndCondition} options={{ title: 'Terms & Condition', headerShown: true}} />
       <Stack.Screen name="ForgotPasswordOTP" component={ForgotPasswordOTP} options={{ title: 'Verification OTP', headerShown: true}} />
       <Stack.Screen name="AppStack" component={AppStack} />
       <Stack.Screen name="QuizLevels" component={QuizLevels} />
