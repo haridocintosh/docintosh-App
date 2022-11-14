@@ -1,74 +1,72 @@
-import { View,
-    Text, 
-    SafeAreaView,
+  import { View, Text, SafeAreaView,
     Image,
     ScrollView,
     StyleSheet,
     TouchableOpacity,
-    TextInput
+    TextInput,
+    Keyboard, ActivityIndicator
    } from 'react-native';
    import React, { useState, useEffect } from 'react';
-   
+   import {useDispatch, useSelector} from 'react-redux';
    import { useNavigation } from '@react-navigation/native';
    import CustomButton from '../components/CustomButton';
    import {AntDesign,Ionicons,FontAwesome} from 'react-native-vector-icons';
+   import Icon from 'react-native-vector-icons/FontAwesome';
    import { forgotverifyOtp } from '../apis/Apicall';
    import OTPTextView from 'react-native-otp-textinput';
-   import { forgotPassword_ } from '../../redux/reducers/forgotPass';
-   import { useDispatch } from 'react-redux';
    import Toast from 'react-native-simple-toast';
-   
-   
-   
+   import { forgotPassword_ } from '../../redux/reducers/forgotPass';
+   import { resendOTP } from '../../redux/reducers/loginAuth';
+
    const ForgotPasswordOTP = ({route}) => {
-   
+    const navigation = useNavigation();
+   const dispatch = useDispatch();
    const {mobile_no, email, user_id} = route.params;
    const [phone ,setPhone] =useState("");
-   const navigation = useNavigation();
-   const [counter, setCounter] = useState(15);
+   const [counter, setCounter] = useState(30);
    const [otpInput, setotpInput ] = useState('');
    const [message , setmessage] = useState();
-   const [editNumber , setEditNumber] = useState(false);
 
-   const dispatch = useDispatch();
+   const [editNumber , setEditNumber] = useState(false);
+   const [loader, setLoader] = useState(false);
     
    const submitOtp = ()=>{
    if(otpInput !== ""){
    forgotverifyOtp(otpInput,user_id)
     .then(res => {
-    
-    console.log(res);
-   //console.log(register.mobile_no);
     if(res['status'] == 'Success'){
-    //setTimeout(() => {
-   navigation.navigate('CreateNewPass',{
-    user_id
-    })
-    // }, 1000);
+      navigation.navigate('CreateNewPass',{user_id})
     }
    })
    .catch(err => {
    setmessage('Error occured!');
-   // setErrorType('server');
-   // setProcessingState('');
    console.log(err);
    });
    }else{
    setmessage('Please Enter Otp');
    }
    };
-   
-   
+
+
+   const resendUserOtp = async() =>{ 
+      setLoader(true);
+      const result = await dispatch(resendOTP({email:email, mobile_no:mobile_no}));
+      console.log('resendOtp',result.payload);
+      Toast.show(result.payload.message);
+      setLoader(false);
+   }
+
+
    useEffect(() => {
    const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
    return () => clearInterval(timer);
    }, [counter]);
-   
 
-   const handleEdit = () => {
+  
+  const handleEdit = () => {
     setEditNumber(!editNumber)
    }
-
+  
    const handleSubmit = async ()=>{
     if(phone){
       const token =await dispatch(forgotPassword_({
@@ -87,22 +85,38 @@ import { View,
       Toast.show("Please Enter Mobile No. OR Email");
     }   
   }
-    
+
+   if(loader){
+    return(
+    <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+        <ActivityIndicator size={'large'} color={"#2C8892"}/>
+    </View>)
+  }
+
    return (
    <SafeAreaView style={{display:"flex",alignItems:"center",paddingTop:120,}}>
-   <ScrollView
-   showsVerticalScrollIndicator={false}
+   <ScrollView showsVerticalScrollIndicator={false}
    nestedScrollEnable={true}
-   
-   >
+   keyboardShouldPersistTaps='handled'
+   style={{width:'100%', padding:20, marginTop:-100}}>
+
     <View style={styles.topImgVerify}>
       <Image source={require('../assets/images/image-verification-otp.png')}/>
    </View>
-   <Text style={styles.verifyText}>
-   Please enter OTP sent to 
-   </Text>
+
+   <Text style={styles.verifyText}>Please enter OTP sent to </Text>
+
    <View style={styles.InputFieldVerify}>
-   
+
+    {/* <TextInput style={{fontSize:16,color:"#071B36",paddingRight:12}} 
+      autoCapitalize="none"
+      keyboardType="email-address"
+      value={mobile_no}
+      onChangeText={e=>
+    setPhone(e)
+      }
+      /> */}
+
     <TextInput style={editNumber ? styles.numInputEdit:styles.numInput } 
         autoCapitalize="none"
         value={editNumber ? phone: mobile_no}
@@ -110,8 +124,11 @@ import { View,
         // keyboardType="tel"
         clearTextOnFocus={true}
     />
-  
-  <View style={styles.InputSendIcons}>
+      
+   {/* <Icon name="pencil" size={20} color="#2c9dd1"/> */}
+
+
+   <View style={styles.InputSendIcons}>
     <TouchableOpacity onPress={() => handleEdit()}>
         {editNumber ? 
           <AntDesign name="closecircleo" size={20} color="#2c9dd1" style={{margin:5}} />
@@ -133,13 +150,15 @@ import { View,
    handleTextChange={(text) => setotpInput(text)}
    containerStyle={styles.textInputContainer}
    textInputStyle={styles.roundedTextInput}
+   autoComplete="sms-otp"
    inputCount={4}
    />
    <View
    style={styles.verifiactionSubText}>
    <Text style={styles.verifiactionInnerText}>Didn’t Receive OTP? </Text>
-   <TouchableOpacity>
-   <Text style={{color: '#2376E5', fontWeight: '600',fontSize:16,}} onPress={() => userRegister()}>Resend in {counter}s</Text>
+   <TouchableOpacity onPress={() => resendUserOtp()}>
+     {/* userRegister() */}
+   <Text style={{color: '#2376E5', fontWeight: '600',fontSize:16,}}>Resend in {counter}s</Text>
    </TouchableOpacity>
    </View>
     <View >
@@ -152,7 +171,7 @@ import { View,
     
    )
    }
-    const styles = StyleSheet.create({
+  const styles = StyleSheet.create({
    topImgVerify:{
    paddingTop:50,
    display:"flex",
@@ -167,17 +186,20 @@ import { View,
    fontWeight:"400",
    marginTop:17,
    },
+
    verifiactionSubText:{
    flexDirection: 'row',
    justifyContent: 'center', 
     paddingBottom:32,
     marginTop:-8,
    },
+
    verifiactionInnerText:{
    fontSize: 16,
    fontWeight: '400',
    color:'#8C97AB',
    },
+   
    InputFieldVerify:{
    display:"flex",
    flexDirection:"row",
@@ -208,8 +230,9 @@ import { View,
    marginBottom: 20,
    },
    roundedTextInput: {
-   borderRadius: 10,
-   borderWidth: 1,
+     borderRadius: 0,
+     borderBottomWidth: 1,
+     borderBottomColor:"#51668A"
    },
    buttonWrapper: {
    flexDirection: 'row',

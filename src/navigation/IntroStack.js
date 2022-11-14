@@ -7,9 +7,11 @@ import {
   TouchableOpacity
 } from 'react-native'
 import Swiper from 'react-native-swiper';
+import { useFonts } from 'expo-font';
 import {
   useNavigation
 } from '@react-navigation/native';
+
 const {
   width,
   height
@@ -17,28 +19,40 @@ const {
 import CustomButton from '../components/CustomButton';
 const styles = {
   wrapper: {
-    // backgroundColor: '#f00'
+    backgroundColor: 'transparent',
     paddingTop: 20,
+   
+    height:"100%"
   },
 
   slide: {
     flex: 1,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    width:"100%",
+
+ 
+  },
+  sliderImgBox:{
+    display:"flex",
+    justifyContent:"center",
+    alignItems:"center",
+
   },
   container: {
-    flex: 1
+    flex: 1,
+    height:"100%"
   },
   imgBackground: {
-    width,
-    height,
-    backgroundColor: 'transparent',
-    position: 'absolute'
+      backgroundColor: 'transparent',
+    position: 'absolute',
   },
 
   image: {
-    width: 360,
-    height: 333,
-    position: "relative"
+    width:360,
+   height:333,
+    position: "relative",
+   
+    resizeMode : "cover"
   },
   imagelogo: {
     width: 57,
@@ -56,10 +70,11 @@ const styles = {
     fontSize: 32,
     paddingTop: 40,
     color: '#071B36',
-    fontWeight: "700",
+    // fontWeight: "700",
     lineHeight: 40,
     paddingLeft: 32,
-    paddingRight:40
+    paddingRight:40,
+    fontFamily:"PlusJakartaSans-Bold"
     // width: 300,
   },
   sliderPara: {
@@ -70,6 +85,7 @@ const styles = {
     lineHeight: 20,
     paddingLeft: 32,
     width: 281,
+    fontFamily:"Inter-Regular" 
   },
   ragisterbutton: {
     paddingLeft: 20,
@@ -97,6 +113,15 @@ import React from 'react'
 
 export const Slider_comp = () => {
   const navigation = useNavigation();
+  const [fontsLoaded] = useFonts({
+    'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),
+    'PlusJakartaSans-Regular': require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
+    'PlusJakartaSans-Bold':require('../assets/fonts/PlusJakartaSans-Bold.ttf')
+  });
+  if(!fontsLoaded) {
+    return null;
+  }
+
   return ( 
   <View style = {
       styles.container
@@ -140,23 +165,30 @@ export const Slider_comp = () => {
     loop = {
       false
     } >
-    <View style = {styles.slide}>
-    <Image style = {styles.image} source = {require('../assets/intro/Image1.png')} resizeMode = "cover" />
-    <Image style = {styles.imagelogo} source = {require('../assets/intro/logo1.png')}resizeMode = "cover" />
+    {/* <View style = {styles.slide}>
+    <View style={styles.sliderImgBox}>
+        <Image style = {styles.image} source = {require('../assets/intro/Image1.png')} resizeMode = "cover" />
+        <Image style = {styles.imagelogo} source = {require('../assets/intro/logo1.png')}resizeMode = "cover" />
+    </View>
     <Text style = {styles.sliderText}>Create & Join Discussion Groups </Text> 
     <Text style = {styles.sliderPara}>Impedit quo minus id quod maxime placeat facere possimus. </Text>
+    </View> */}
 
-    </View>
       <View style ={styles.slide}>
-      <Image style ={styles.image} source = {require('../assets/intro/Image2.png')} resizeMode = "cover" />
-      <Text style = {styles.sliderText }>Securely Share Posts on Social </Text> 
-      <Text style = { styles.sliderPara}>Impedit quo minus id quod maxime placeat facere possimus. </Text> 
+      {/* <Image style ={styles.image} source = {require('../assets/intro/Image2.png')} resizeMode = "cover" /> */}
+      <View style={styles.sliderImgBox}>
+        <Image style = {styles.image} source = {require('../assets/intro/Image2.png')} resizeMode = "cover" />
+      </View>
+      <Text style = {styles.sliderText }>Securely Share Posts on Social</Text> 
+      <Text style = { styles.sliderPara}>Share studies, reports, and personal awards, achievements and professional milestones. Securely.</Text> 
     </View>
 
     <View style = {styles.slide} >
-      <Image style = {styles.image} source = {require('../assets/intro/Image3.png') }/> 
+      <View style={styles.sliderImgBox}>
+        <Image style = {styles.image} source = {require('../assets/intro/Image3.png')} resizeMode = "cover" />
+      </View> 
       <Text style = {styles.sliderText}>Earn by Answering Polls, Surveys </Text>    
-      <Text style = {styles.sliderPara}>Impedit quo minus id quod maxime placeat facere possimus. </Text>
+      <Text style = {styles.sliderPara}>Earn honoraria by sharing opinions in polls and taking part in surveys. </Text>
     </View> 
   </Swiper> 
     <View style = {styles.ragisterbutton} >
@@ -166,7 +198,7 @@ export const Slider_comp = () => {
       <View style = {styles.ragistertext0}>
       <Text style = {styles.ragistertext2}>Already a member ? </Text> 
       <TouchableOpacity onPress = {() => navigation.navigate('Login')} >
-      <Text style = {{ color: '#2376E5', fontWeight: '600',fontSize: 16,}}
+      <Text style = {{ color: '#2376E5', fontWeight: '600',fontSize: 16,fontFamily:"Inter-Regular"}}
         onPress = {() => navigation.navigate('Login')} > Login </Text> 
       </TouchableOpacity> 
       </View>

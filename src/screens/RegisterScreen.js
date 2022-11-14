@@ -7,8 +7,9 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  Image
+  ActivityIndicator
 } from 'react-native';
+import { useFonts } from 'expo-font';
 import CustomButton from '../components/CustomButton';
 // import DeviceInfo from 'react-native-device-info';
 // import { getUniqueId, getManufacturer } from 'react-native-device-info';
@@ -19,40 +20,33 @@ import { useNavigation } from '@react-navigation/native';
 import DropDownPicker from 'react-native-dropdown-picker'
 const styelcss = require('../assets/css/style');
 import { getAllSpeciality } from "../../redux/reducers/getSpeciality";
-import { userRegisterOne } from '../../redux/reducers/loginAuth';
+import { checkMobile, userRegisterOne,checkEmail } from '../../redux/reducers/loginAuth';
 import Toast from 'react-native-simple-toast';
-import {check_mail} from '../apis/Apicall';
+import {MaterialCommunityIcons, Ionicons, FontAwesome5,Fontisto} from 'react-native-vector-icons';
 
 
 export default function RegisterScreen() {
-
   const dispatch = useDispatch();
-
-//   const speciality = useSelector((state)=>{
-//     return state.myspeciality.speciality;
-//   });
-
-//   let loading = useSelector((state)=>{
-//     return state.myspeciality.loading;
-// });
-
   const navigation = useNavigation();
   const [checked, setChecked] = useState(4);
+  const [checkgender, setcheckgender] = useState('');
   const [err,seterr] =useState();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
+  const [loader, setloader] = useState(false)
+  const [fn,fnerr] = useState();
+  const [ln,lnerr] = useState();
+  const [genderErr,errgender] = useState();
+  const [emailIderr, setemail] = useState('');
+  const [mobileId, setmobile] = useState('');
+  const [userrole,setroleErr] = useState();
+  const [docspl, docsplErr] = useState();
   const [spl, setSpl] = useState([
     {label: 'Doctor', value: '1'},
   ]);
-
   const [openGender, setOpenGender] = useState(false);
   const [valueGender, setValueGender] = useState('');
-  const [gender, setGender] = useState([
-    {label: 'Male', value: '1'},
-    {label: 'Female', value: '2'},
-    {label: 'Other', value: '3'},
-  ]);
-
+  
   const [register , setregister] = useState({
     fname : "",
     lname:"",
@@ -77,26 +71,15 @@ export default function RegisterScreen() {
     fetchSpecialities()
   },[]);
 
-  const checkmail= (e)=>{
-    check_mail(e)
-    .then(res => {
-      console.log("checkstatus",res['status']);
-       if(res['status'] == 'Success'){
-          setemail(e);
-       }
-    })
-    .catch(err => {
-      console.log(err);
-    });
-  }
+ 
 
 const firstName= (e) =>{
     const isValidnameRegex = /^[a-zA-Z]+[a-zA-Z]+$/;
     const name = e;
     if(!isValidnameRegex.test(name)){
-      seterr("Please enter valid Name")
+      fnerr("Please enter valid Name")
     }else{
-      seterr('');
+      fnerr('');
   }
   setregister({ ...register, 
     fname: name,
@@ -107,9 +90,9 @@ const lastName= (e) =>{
   const isValidnameRegex = /^[a-zA-Z]+[a-zA-Z]+$/;
   const name = e;
   if(!isValidnameRegex.test(name)){
-     seterr("Please enter valid Name")
+    lnerr("Please enter valid Name")
   }else{
-    seterr('')
+    lnerr('')
   }
   setregister({
     ...register,
@@ -117,28 +100,48 @@ const lastName= (e) =>{
    })
 }
 
-const email=(e)=>{
-  const isValidEmailRegex = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
+const email= async(e)=>{
+  const isValidEmailRegex = /^([a-z0-9._]{2,50})([@]{1})([a-z]{2,50}([.]{1})([a-z.]{2,5}))$/;
   const emailid = e;
   if(!isValidEmailRegex.test(emailid)){
-     seterr("Please enter valid Email")
+    setemail("Please enter valid Email ID")
   }else{
-     seterr("")
+  setemail('')
+   const result =  await dispatch(checkEmail({email: e}))
+    if(result.payload.status_code="Exists"){
+      console.log("frontend",result.payload.message)
+      setemail(result.payload.message)
+    }
+    // else{
+    //    setemail('')
+    // }
+   
   }
+
   setregister({
     ...register,
     email: emailid,
    })
 }
 
-const phonenumber=(e)=>{
+
+
+const phonenumber= async(e)=>{
   const isValidmobileRegex =  /^(\[0-9]?)?\d{10}$/;
   const mobile = e;
   if(!isValidmobileRegex.test(mobile)){
-     seterr("Please enter valid Mobile")
+    setmobile("Please enter valid mobile no.")
   }else{
-    seterr('')
+    const result =  await dispatch(checkMobile({mobile: e}))
+    //console.log("frontendCheck",result.payload)
+    if(result.payload.status_code="Exists"){
+      setmobile(result.payload.message)
+    }
+    // else{
+    //   setmobile('')
+    // }
   }
+  
   setregister({
     ...register,
     mobile: mobile,
@@ -150,6 +153,7 @@ const selectedspl=(e)=>{
     ...register,
     speciality: e,
    })
+   docsplErr('')
 }
 
 const selectedgender=(e)=>{
@@ -164,36 +168,94 @@ const setuserrole= (e)=>{
     ...register,
     role: e,
    })
-   
 }
 
 const form_submit = async() =>{
-  console.log(register);
-  if(!register.fname || !register.lname || !register.email || !register.mobile || !register.gender ||checked === 4 ?!value:''){
-  //  const token = await dispatch(userLogin(register));
-      seterr("Please fill the above form");
+  console.log("Doctor",register.mobile);
+  // if(!register.fname || !register.lname  || !register.mobile || !register.email || !register.gender || !register.role || !register.speciality || checked === 4 ?!value:''){
+  //     seterr("Please fill the above form");
+  // }else if(emailId != ''){
+  //   setemail("This Email ID is registered with us");
+  // }else if(mobileId != ''){
+  //   setmobile("This mobile no. is registred with us");
 
-  } else{
+  if(!register.fname){
+    fnerr("Please enter First Name");
+  }else if(!register.lname){
+    lnerr("Please enter Last Name");
+  }else if(!register.email){
+    setemail("Please enter valid Email ID");
+  }else if(emailIderr != ''){
+    setemail("This Email ID is registered with us");
+  }else if(mobileId !=''){
+    setemail("This mobile no. is registred with us");
+  }else if(!register.mobile){
+    setmobile("Pleaes enter valid mobile no.");
+  }else if(!register.gender){
+    errgender("Please Select gender");
+  }else if(!register.role){
+    setroleErr("Please Select role");
+  }else if(!register.speciality){
+    docsplErr("Please Select Speciality");
+  }
+  else{
+    setloader(true)
     const result = await dispatch(userRegisterOne(register));
-    // console.log('Registertkn',result);
+    setloader(false)
+    console.log('Registertkn',result);
     Toast.show(result.payload.message);
-      navigation.navigate('DoctorOtp',{
-        mobile_no : result.payload.mobilenumber,
-        email     : result.payload.email,
-        user_id   : result.payload.user_id,
-        role      : result.payload.role,
-      })
+    setregister({
+      fname : "",
+      lname:"",
+      email:"",
+      mobile:"",
+      gender:"",
+      role:"",
+   })
+    navigation.navigate('DoctorOtp', {
+      mobile_no : result.payload.mobilenumber,
+      email     : result.payload.email,
+      user_id   : result.payload.user_id,
+      role      : result.payload.role,
+    })
     }
   }
 
-
   const handleStudentSubmit = async() =>{
-    console.log(register);
-    if(!register.fname || !register.lname || !register.email || !register.mobile || !register.gender ||checked === 5 ?!value:''){
-        seterr("Please fill the above form")
+    console.log("student",register);
+    // if(!register.fname || !register.lname || !register.email || !register.mobile || !register.gender ||  !register.role || checked === 5 ?!value:''){
+    //     seterr("Please fill the above form")
+    // }else if(emailId != ''){
+    //     setemail("This Email ID is registered with us");
+    // }else if(mobileId != ''){
+    //     setmobile("This mobile no. is registred with us");
+    if(!register.fname){
+      fnerr("Please enter First Name");
+    }else if(!register.lname){
+      lnerr("Please enter Last Name");
+    }else if(!register.gender){
+      errgender("Please Select gender");
+    }else if(!register.email){
+      setemail("Please enter valid Email ID");
+    }else if(!register.mobile){
+      setmobile("Pleaes enter valid mobile no.");
+    }else if(!register.role){
+      setroleErr("Please Select role");
     }else{
+      seterr("")
+      setemail("");
+      setmobile("");
+      setloader(true)
       const result = await dispatch(userRegisterOne(register));
-     // console.log('Registertkn',result);
+      setloader(false)
+      setregister({
+          fname : "",
+          lname:"",
+          email:"",
+          mobile:"",
+          gender:"",
+          role:"",
+      })
       Toast.show(result.payload.message);
       navigation.navigate('DoctorOtp', {
         mobile_no : result.payload.mobilenumber,
@@ -204,9 +266,27 @@ const form_submit = async() =>{
       }
     }
 
+
+  const [fontsLoaded] = useFonts({
+    'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),
+    'PlusJakartaSans-Regular': require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
+    'PlusJakartaSans-Bold':require('../assets/fonts/PlusJakartaSans-Bold.ttf')
+  });
+  if(!fontsLoaded) {
+    return null;
+  }
+  
+  if(loader){
+    return(
+    <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+        <ActivityIndicator size={'large'} color={"#2C8892"}/>
+    </View>)
+  }
+
   return (
     <SafeAreaView style={{ display:"flex",justifyContent: 'center'}}>
-          <ScrollView
+          <ScrollView 
+          keyboardShouldPersistTaps='handled'
             showsVerticalScrollIndicator={false}
             nestedScrollEnable={true}
             style={{paddingHorizontal: 20}}>
@@ -234,11 +314,13 @@ const form_submit = async() =>{
                 onPress={() => {}}
                 >
                 <SvgUri width="56" height="56" uri="https://www.brandcare.net/Docintosh_Svg/google.svg" />
+          
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {}}
                >
-               <SvgUri width="56" height="56" uri="https://www.brandcare.net/Docintosh_Svg/facebook%20%282%29.svg" />
+
+            <SvgUri width="56" height="56" uri="https://www.brandcare.net/Docintosh_Svg/facebook%20%282%29.svg" />
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -246,58 +328,100 @@ const form_submit = async() =>{
                 >
                   <SvgUri width="56" height="56" uri="https://www.brandcare.net/Docintosh_Svg/linkdin.svg" />
               </TouchableOpacity>
-            </View> */}
+            </View>
     
-            {/* <Text  style={styles.headingpara2}>Or</Text> */}
+            <Text  style={styles.headingpara2}>
+              Or
+            </Text> */}
 
             
        <View style={{ display:"flex" ,flexDirection:"row",alignItems:'center', flexDirection:"column"}}>
 
-        <TextInput style={styelcss.customInputVerifyFullMobile} placeholder='First name'  onChangeText={(e)=>{firstName(e);}}/>
+        <TextInput style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular',}]} placeholderTextColor='#687690' placeholder='First name'  onChangeText={(e)=>{firstName(e);}}/>
+        <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{fn}</Text>
 
-        <TextInput style={styelcss.customInputVerifyFullMobile}  placeholder='Last Name' 
+        <TextInput style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular',}]}  placeholderTextColor='#687690' placeholder='Last Name' 
         onChangeText={(e)=>{lastName(e);}} />
-    
-        <TextInput  style={styelcss.customInputVerifyFullMobile}  keyboardType="email-address" placeholder='Email ID' onChangeText={(e)=>{email(e)}}/>
+        <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{ln}</Text>
 
-        <TextInput style={styelcss.customInputVerifyFullMobile}  placeholder='Mobile Number' keyboardType="numeric" maxLength={10}  onChangeText={(e)=>{phonenumber(e)}}/>
-
-        <View style={{alignSelf:'center'}}>
-          <DropDownPicker style={styles.customInputVerify}
-              open={openGender}
-              value={valueGender}
-              items={gender}
-              setOpen={setOpenGender}
-              setValue={setValueGender}
-              setItems={setGender}
-              placeholder="Gender"
-              listMode="SCROLLVIEW"
-              textColor=""
-              onChangeValue={(value) => {
-                selectedgender(value)
-              }}
-            />
-      </View>
-      </View>
-
-        <View style={{ display:"flex" ,flexDirection:"row",alignItems:'center',}}>
-          <Text>You are :</Text>
+        <View style={{ display:"flex" ,flexDirection:"row",alignItems:'center',marginTop:12, marginLeft:0 ,width:"100%"}}>
+          <Text style={{ fontFamily: 'Inter-Regular',fontSize:16,color:"#51668A"}}>You are :</Text>
           <View>
             <RadioButton 
-            value="4" status={ checked === '4' ? 'checked' : 'unchecked' } 
-            onPress={() => {setChecked('4'); setuserrole(4)}} /> 
-            <Image source={require('../assets/images/doctor.png')} style={{marginTop:-64,zIndex:-1,marginLeft:-4}} />
+            value="male" status={ checkgender === 'male' ? 'checked' : 'unchecked' }
+            onPress={() => {setcheckgender('male'); selectedgender('male')}} />
+            <View  style={{marginTop:-56,zIndex:-1, alignSelf:'center',
+            alignItems:'center', paddingVertical:10,
+            flexDirection:'row',backgroundColor:'#fff', width:110, borderRadius:20/2}}>
+            <View style={{marginRight:20}}></View><Ionicons name="md-male-sharp" size={24} color="#51668A" />
+            <Text style={{color:'#51668A',fontSize:16, fontWeight:'400'}}>Male</Text></View>
+          </View>
+  
+          <View style={{flex:0,   borderRadius:20/2, }}>
+            <RadioButton 
+              value="female"
+              status={ checkgender === 'female' ? 'checked' : 'unchecked' }
+              onPress={() => {setcheckgender('female'); selectedgender('female')}}
+            />
+
+          <View  style={{marginTop:-56,zIndex:-1,alignSelf:'center', alignItems:'center', paddingVertical:10, flexDirection:'row', backgroundColor:'#fff', width:110,height:46, borderRadius:20/2}} ><View style={{marginRight:20}}></View><MaterialCommunityIcons name="gender-female" size={24} color="#51668A" /><Text style={{color:'#51668A',fontSize:16, fontWeight:'400'}}>Female</Text></View>
+        </View>
+        </View>
+        <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{genderErr}</Text>
+        <TextInput  style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular'}]} placeholderTextColor='#687690' autoComplete='off' autoCapitalize="none" keyboardType="email-address" placeholder='Email ID' onChangeText={(e)=>{email(e)}}/>
+        <Text style={{color:'red',fontFamily: 'PlusJakartaSans-Regular'}}>{emailIderr !='' && emailIderr}</Text>
+
+        <TextInput style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular',}]}  placeholderTextColor='#687690' placeholder='Mobile Number' keyboardType="numeric"  onChangeText={(e)=>{phonenumber(e)}}  maxLength={10} />
+        <Text style={{color:'red',fontFamily: 'PlusJakartaSans-Regular'}}>{mobileId !='' && mobileId}</Text></View>
+
+        <View style={{ display:"flex" ,flexDirection:"row",alignItems:'center',marginTop:12, marginLeft:0}}>
+          <Text style={{ fontFamily: 'Inter-Regular',fontSize:16,color:"#51668A"}}>You are :</Text>
+          <View>
+            <RadioButton 
+            value="4" status={ checked === '4' ? 'checked' : 'unchecked' }
+            onPress={() => {setChecked('4'); setuserrole(4)}} />
+            <View  style={{marginTop:-56,zIndex:-1,alignSelf:'center',
+             alignItems:'center',
+             paddingVertical:11,
+             flexDirection:'row',
+             backgroundColor:'#fff', width:110, height:46, borderRadius:20/2}}>
+             <View style={{marginRight:20,}}></View>
+            <Fontisto name="doctor" size={20} color="#51668A" /><Text style={{color:'#51668A',marginHorizontal:5,fontSize:16, fontWeight:'400'}}>Doctor</Text></View>
           </View>
   
           <View style={{flex:0,}}>
-            <RadioButton style={{backgroundColor:"red"}}
-              value="5"
-              status={ checked === '5' ? 'checked' : 'unchecked' }
-              onPress={() => {setChecked('5'); setuserrole(5)}}
-            />
-          <Image source={require('../assets/images/student.png')} style={{marginTop:-64,zIndex:-1,marginLeft:-4}} />
-        </View>
+
+        <RadioButton style={{backgroundColor:"red"}}
+
+          value="5"
+
+          status={ checked === '5' ? 'checked' : 'unchecked' }
+
+          onPress={() => {setChecked('5'); setuserrole(5)}}
+
+        />
+
+        <View  style={{marginTop:-56,zIndex:-1,alignSelf:'center',
+
+        alignItems:'center',
+
+        paddingVertical:10,
+
+
+
+        flexDirection:'row',
+
+        backgroundColor:'#fff', width:110, height:46, borderRadius:20/2}}>
+
+<View style={{marginRight:20}}></View>
+
+<FontAwesome5 name="user-graduate" size={20} color="#51668A" /><Text style={{color:'#51668A', marginHorizontal:5, fontSize:16, fontWeight:'400'}}>Student</Text></View>
+
+</View>
+
      </View>
+
+     <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{userrole}</Text>
     
     <View style={{alignSelf: 'center' }}>
     {checked === '4'? (
@@ -308,21 +432,46 @@ const form_submit = async() =>{
           setOpen={setOpen}
           setValue={setValue}
           setItems={setSpl}
+          showTickIcon={false}
+          searchable={true}
           placeholder="Speciality"
-          listMode="SCROLLVIEW"
-          textColor=""
+          listMode="MODAL"
+          textStyle={{
+            fontSize: 16,
+            color:"#687690",
+            fontFamily: 'PlusJakartaSans-Regular',
+          }}
           onChangeValue={(value) => {
             selectedspl(value)
           }}
+
+          listItemLabelStyle={{
+            color: "#687690",
+            fontWeight:"800",
+            borderBottomWidth:1,
+            borderBottomColor:"#687690",
+            textAlign:"center",
+            paddingBottom:10,
+          }}
+          selectedItemLabelStyle={{
+            fontWeight: "900",
+            color:"#45B5C0",
+            fontSize:18
+          }}
+          searchContainerStyle={{
+            borderBottomColor: "#687690"
+          }}
+  
         />
         ) : null}
     </View>
+    <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{docspl}</Text>
 
       <View style={{ marginBottom: 30}} ></View>
 
       <View style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
 
-      <Text style={{color:'red'}}>{err}</Text>
+      <Text style={{color:'red',fontFamily: 'PlusJakartaSans-Regular'}}>{err}</Text>
 
     
 
@@ -365,37 +514,35 @@ const form_submit = async() =>{
 const styles = StyleSheet.create({
   headingtext:{
     fontSize: 24,
-    fontWeight: '700',
+    // fontWeight: '700',
     color: '#071B36',
-     // fontFamily: 'Inter_900Black',
+     fontFamily: 'PlusJakartaSans-Bold',
   },
   headingpara:{
-     // fontFamily: 'Inter_900Black',
      fontSize: 14,
-     fontWeight: '400',
+    //  fontWeight: '400',
      color: '#333',
      marginBottom: 30,
-     //fontFamily: 'Plus Jakarta Sans',
+     fontFamily: 'Inter-Regular',
      fontStyle: 'normal',
      lineHeight: 20,
-     letterSpacing: 1,
+    //  letterSpacing: 1,
      color: '#687690',
   },
   headingpara2:{
-    // fontFamily: 'Inter_900Black',
     fontSize: 14,
     fontWeight: '400',
     color: '#333',
     marginBottom: 10,
-    //fontFamily: 'Plus Jakarta Sans',
+    fontFamily: 'Inter-Regular',
     fontStyle: 'normal',
     letterSpacing: 1,
     color: '#8C97AB',
     textAlign: 'center',
   },
   customInputVerify:
-    {backgroundColor:"transparent",
-    fontSize:16,color:"#071B36",
+    {
+    backgroundColor:"transparent",
     // width:320,
     width: "100%",
     height:48,
@@ -407,9 +554,8 @@ const styles = StyleSheet.create({
     borderTopWidth:0,
     borderColor:"#6C81A6",
     paddingLeft:8,
-    textColor:'red',
-    tintColor:'#ffffff',
-    color:"red!important"
+   
+   
   },
     
 });

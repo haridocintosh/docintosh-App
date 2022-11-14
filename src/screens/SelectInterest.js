@@ -1,5 +1,5 @@
 import {  View,
-  Text, 
+  Text, ActivityIndicator,
   StyleSheet,
   FlatList,
   TextInput } from 'react-native'
@@ -9,20 +9,28 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import CustomButton from '../components/CustomButton';
 import { mainApi } from '../apis/constant';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from "react-redux";
+import { addCircle } from '../../redux/reducers/circleSlice';
 const styelcss = require('../assets/css/style');
 import Toast from 'react-native-simple-toast';
+import { useFonts } from 'expo-font';
 
 
-const SelectInterest = () => {
+const SelectInterest = ({route}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const {user_id} = route.params;
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
   const [selectitem,setselectitem]=useState('');
+  const [loader, setLoader] = useState(true);
+
+  //const user_id ='229533'
+   const {user_id} = route.params;
  
   const getItem = (item) => {
+   // alert(item.speciality);
+    // Function for click on an item
     let spl=item.speciality_id;
     let copy=[...selectitem];
     copy =[...copy,spl]
@@ -48,7 +56,7 @@ const SelectInterest = () => {
     }
     fetchPostData(spl)
   };
-  
+
   const fetchPostData = async (speciality_id)=>{
     const postDetails = {speciality_id:speciality_id,id:user_id}
     const result = await dispatch(addCircle(postDetails));
@@ -56,14 +64,14 @@ const SelectInterest = () => {
     //const data = await result.payload;
     //setAllMCQs(data);
  }
-
+  
   useEffect(() => {
     fetch(`${mainApi.baseUrl}/ApiController/getSpecialities`)
       .then((response) => response.json())
       .then((responseJson) => {
-      // console.log(responseJson);
         setFilteredDataSource(responseJson);
         setMasterDataSource(responseJson);
+        setLoader(false)
       })
       .catch((error) => {
         console.error(error);
@@ -97,9 +105,10 @@ const SelectInterest = () => {
     return (
       // Flat List Item
     <View style={styles.item}>
-      <Text style={[styles.itemStyle]} onPress={() => getItem(item)}>
-        {'#'}{item.speciality.toUpperCase()}{item.isSelected? ' ': <Ionicons style={styles.searchIcon} name="close-circle" size={20} color="#000"/> }
+      <Text style={[styles.itemStyle, item.isSelected ? { borderColor:"#E6E6E6", backgroundColor:"transparent",color:"#51668A"} : { borderColor:"#45B5C0", backgroundColor:"#F6FBFC", color:"#071B36"} ]} onPress={() => getItem(item)}> 
+        {'#'}{item.speciality }{ item.isSelected?"":"    "}
       </Text>
+      <Text style={{position:"absolute",top:11,right:4}}>{ item.isSelected ?'':<Ionicons style={{width:40, right:100,marginBottom:0}} name="close-circle" size={20} color="#45B5C0"/> } </Text>
     </View>
     );
   };
@@ -121,24 +130,39 @@ const SelectInterest = () => {
     if(selectitem == ''){
       Toast.show('Please Select Your Interest');
     }else{
-      navigation.navigate('ContactPermission');
+      navigation.navigate('ContactPermission'); 
     }
   }
+  const [fontsLoaded] = useFonts({
+      'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),
+      'PlusJakartaSans-Regular': require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
+      
+    });
+    if(!fontsLoaded) {
+      return null;
+    }
 
+    if(loader){
+      return(
+      <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+          <ActivityIndicator size={'large'} color={"#2C8892"}/>
+      </View>)
+    }
   return (
-    <View style={{paddingTop:0,}}>
+    <View style={{paddingTop:0,height:"100%",backgroundColor:"#fff"}}>
   
       <View style={styles.container}>
-        <Ionicons style={styles.searchIcon} name="ios-search" size={20} color="#000"/>
+        <Ionicons style={styles.searchIcon} name="ios-search" size={20} color="#51668A"/>
           <TextInput
-            style={styles.textInputStyle}
+            style={[styles.textInputStyle,{ fontFamily:"Inter-Regular"}]}
             onChangeText={(text) => searchFilterFunction(text)}
             value={search}
             underlineColorAndroid="transparent"
             placeholder="Search Here"
+            placeholderTextColor='#51668A'
           />
       </View>
-      <View style={{marginTop:10, paddingHorizontal:20, }}>
+      <View style={{marginTop:0, paddingHorizontal:15,paddingVertical:20 }}>
      
         <FlatList
           columnWrapperStyle={styles.tagView}
@@ -153,7 +177,7 @@ const SelectInterest = () => {
         />
       </View>
 
-      <View style={{marginTop:0,zIndex:1,width:"100%",backgroundColor:"#f1f1f1",position:"absolute",bottom:35,paddingHorizontal:20}}>
+      <View style={{marginTop:0,zIndex:1,width:"100%",backgroundColor:"#fff",position:"absolute",bottom:0,paddingHorizontal:20}}>
           <CustomButton label={'Continue'} onPress={() => handleSubmit()}   />
       </View>
       </View>
@@ -170,25 +194,37 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
     borderRadius:8,
+    borderLeftWidth:1,
+    borderTopWidth:1,
+    borderBottomWidth:1,
+    borderColor:"#D5DEED"
+
     
   },
   itemStyle: {
     display:"flex",
-    paddingHorizontal:10,
-    paddingVertical:10,
-    marginVertical:5,
+    paddingHorizontal:16,
+    paddingVertical:8,
+    marginVertical:4,
    // marginLeft:10,
-    color: "#51668A",
+    //color: "#51668A",
     width:"100%",
     height:"auto",
-    backgroundColor:"#fff",
-    borderRadius:8,
+  //   backgroundColor:"transparent",
+    borderRadius:52,
     borderWidth:1,
-    borderColor:"#45B5C0",
-    justifyContent:"space-between"
+   // borderColor:"#45B5C0",
+  //  position:"relative",
+    justifyContent:"space-between",
+    fontSize:14,
+    fontFamily:"Inter-Regular",
+   alignItems:"center"
   },
   item:{
-    marginLeft:10
+    marginLeft:10,
+    flexWrap:"wrap",
+    position:"relative"
+
   },
 
   tagView: {
@@ -202,12 +238,19 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingLeft: 0,
     backgroundColor: '#fff',
-    color: '#424242',
+    color: '#51668A',
     borderRadius:8,
+    borderRightWidth:1,
+    borderColor:"#D5DEED",
+    fontSize:16
   },
   searchIcon: {
     padding: 10,
 },
+searchIconCross:{
+  backgroundColor:"red",
+
+}
 
 
 });

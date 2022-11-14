@@ -43,7 +43,8 @@ module.exports = StyleSheet.create({
   forgetmainPara: {
     width: 320,
     textAlign: "center",
-    marginTop: 60,
+    marginTop: 0,
+  
 
   },
   maindDivBanner: {
@@ -51,7 +52,17 @@ module.exports = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 25,
-
+  
+  },
+  maindDivBannerCnp: {
+    paddingHorizontal: 20,
+    marginTop: 25,
+  
+  },
+  maindDivBannerForget: {
+    paddingHorizontal: 20,
+    marginTop: 25,
+  
   },
   maindDivBannerforget: {
 
@@ -68,10 +79,10 @@ module.exports = StyleSheet.create({
 
   },
   customInputVerifyFull: {
-    fontSize: 14,
-    color: "#071B36",
+    fontSize: 16,
+    color: "#687690",
     height: 48,
-    width: 320,
+    width: "100%",
     borderBottomWidth: 1,
     paddingRight: 19,
     borderColor: "#51668A",
@@ -81,14 +92,14 @@ module.exports = StyleSheet.create({
 
   },
   customInputVerifyFullMobile: {
-    fontSize: 14,
-    color: "#071B36",
+    fontSize: 16,
+    color: "#687690",
     height: 48,
-    width: 320,
-    borderWidth: 1,
+    width: "100%",
+    borderBottomWidth: 1,
     paddingRight: 19,
     borderColor: "#51668A",
-     borderRadius:8,
+    //  borderRadius:8,
     marginVertical: 12,
     paddingLeft: 8,
 
@@ -260,5 +271,197 @@ backgroundColor:"#606060",
     fontWeight:"400",
     textAlign:"center"
   },
+  rasgisterSpecility:
+        { display:"flex" ,
+        flexDirection:"row",
+        alignItems:'center',
+        marginTop:12,
+      },
+      selectInterestbg:{
+      borderColor:"#45B5C0",
+      borderWidth:1,
+      borderRadius:30,
+      padding:10,
+      margin:4,
+      backgroundColor:"#F6FBFC"
+    },
+    selectInterestbgtxt:{
+      paddingRight:12,
+      shadowColor: '#171717',
+      color:"#071B36",
+      fontSize:14,
+      shadowOffset: {width: -2, height: 4},
+      shadowOpacity: 0.2,
+      shadowRadius: 3,
+    },
+    
+      selectInterestNbg:{
+        borderColor:"#D5DEED",
+        borderWidth:1,
+        borderRadius:30,
+        padding:10,
+        margin:4
+      },
+      selectInterestNonbgtxt:{
+        paddingRight:12,
+        shadowColor: '#171717',
+        color:"#51668A",
+        fontSize:14,
+        shadowOffset: {width: -2, height: 4},
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+      },
+      invitePeersHeadTxt:{
+        color:"#071B36",
+        fontWeight:"600",
+        fontSize:16,
+      },
+      PeersHeadlistTxt:{
+        color:"#071B36",
+        fontWeight:"600",
+        fontSize:18,
+      },
+      PeersmaniList:{
+      marginTop:16,
+      },
+      peersmaniListArea:{
+        display:"flex",
+        justifyContent:"space-between",
+        flexDirection:"row",
+        borderColor:"#D5DEED",
+        borderBottomWidth:1,
+        paddingVertical:12
+      },
+      peersSubiListArea:{
+        display:"flex",
+        flexDirection:"row",             
+      },
+      peerListcontent:{
+        paddingLeft:12
+      },
+      peersubtext:{
+        color:"#071B36",
+        fontWeight:"600",
+        fontSize:16, 
+      },
+      peersubtextpara:{
+        color:"#51668A",
+        fontWeight:"400",
+        fontSize:14, 
+        lineHeight:18
+      },
+      selectAllList:{
+        display:"flex",
+        flexDirection:"row",
+        justifyContent:"space-between",
+        alignItems:"center",
+        marginTop:16,
+      },
+    
+      imageBannerc:{
+        position:"relative",
+        height:150,
+       
+      },
+      imgroundedCommunity:{
+        position:"absolute",
+        bottom:0,
+        left:20,
+      },
+      boxWithShadowCommunity: {
+        shadowOpacity: 0.5,
+        shadowRadius: 28.84,
+        elevation: 10,
+        width:"100%",
+        shadowColor:"#51668A",
+        backgroundColor:'#fff',
+        borderRadius:8,
+        paddingHorizontal:12,
+        paddingVertical:12,
+        marginVertical:12,
+        zIndex:1
+        
+    },
+    boxSubWithShadowCommunity:{
+      display:"flex",
+      flexDirection:"row",
+      justifyContent:"space-between",
+      zIndex:1
+    },
+    peersubtextwcIcon:{
+      color:"#2376E5",
+      paddingLeft:6
+    },
+    profilComDtls:{
+    width:48,
+    height:48,
+    },
+    verifyComDtls:{
+      width:14,
+      height:14,
+      marginLeft:6
+    },
+    profilComDtlsecond:{
+      width:56,
+      height:56,
+      },
+      usertextCommunity:{
+      display:"flex",
+      flexDirection:"row",
+      marginTop:7
+    },
+    progress:{
+     display:"flex",
+     justifyContent:"space-between",
+     flexDirection:"row",
+     alignItems:"center",
+     marginTop:-8,
+     width:"100%"
+    },
+    progressBar: {
+      backgroundColor: 'purple',
+      height: 30,
+      borderRadius: 15,
+    },
+    mainBannerdCommunityd:{
+      paddingHorizontal:20,
+      marginTop:16
+    },
+    communutyaboutPara:{
+      fontSize:14,
+      fontWeight:"400",
+      color:"#212121"
+    },
+    communutyaboutParat:{
+      fontSize:14,
+      fontWeight:"400",
+      color:"#212121",
+      marginTop:20
+    },
+    videotp:{
+      marginTop:23
+    },
+    video:{
+      alignSelf: 'center',
+      width: "100%",
+      height: 200,
+    },
+    Videomain:{
+     display:"flex",
+     flexDirection:"row",
+     justifyContent:"space-between",
+     paddingTop:10,
+    },
+
+    videof:{
+      width: 98,
+      height: 98,
+      backgroundColor:"grey"
+    },
+
+    tinyLogo:{
+      width:30,
+      height:30
+    }
 
 });

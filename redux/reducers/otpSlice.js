@@ -21,6 +21,25 @@ export const doctorOtp = createAsyncThunk("doctor/otp", async(doctorOtp)=>{
 })
 
 
+export const userIdupdate = createAsyncThunk("user/otp", async(userUpdate)=>{
+    try{
+       const responce = await fetch(`${mainApi.baseUrl}/ApiController/user_email_mobile_update`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body : JSON.stringify(userUpdate)
+        });
+        const result =  await responce.json();
+        console.log('resultuserUpdate',result);
+        return result
+    }
+    catch(e){
+       console.log(e);
+    }
+})
+
+
 export const otpSlice = createSlice({
     name : "AllOTP",
     initialState :{

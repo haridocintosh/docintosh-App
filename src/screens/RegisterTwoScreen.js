@@ -1,32 +1,60 @@
 import {  
   View,
-  Text, 
+  Text,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-  ImageBackground, 
   Image,
-  TextInput} from 'react-native'
-import React, {useEffect, useState, useCallback} from 'react'
+  ActivityIndicator,
+  TextInput,Pressable} from 'react-native'
+import React, {useEffect, useState, useRef, useCallback} from 'react'
 import { useDispatch } from 'react-redux';
 import { Camera, CameraType } from 'expo-camera';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import {Ionicons,Entypo, FontAwesome} from 'react-native-vector-icons';
+import Modal from "react-native-modal";
 import CustomButton from '../components/CustomButton';
 import DropDownPicker from 'react-native-dropdown-picker';
 import * as ImagePicker from 'expo-image-picker';  // not react-image-picker
 import { useNavigation } from '@react-navigation/native';
 import { getAllState } from '../../redux/reducers/getSpeciality';
 import { userRegisterSecond } from '../../redux/reducers/loginAuth';
+import { coinTransfer } from '../../redux/reducers/coinSlice';
 import Toast from 'react-native-simple-toast';
-//import DocumentPicker from "react-native-document-picker/index";
+import successic from '../assets/dr-icon/Ic_Success.png';
+import { useFonts } from 'expo-font';
+import { BottomSheetModal,BottomSheetModalProvider} from "@gorhom/bottom-sheet";
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-const RegisterTwoScreen = ( {route} ) => {
+const RegisterTwoScreen = ({route}) => {
 const navigation  = useNavigation();
+
 const dispatch    = useDispatch();
   //console.log(route.params);
-  const {user_id,fullname,role} = route.params;
+ const {user_id,fullname,role} = route.params;
+ //const fullname="gagan";
+  const [isOpen, setIsOpen]     = useState(false);
+  const bottomSheetModalRef       = useRef(null);
+  const bottomSheetModalRefSecond = useRef(null);
+  const snapPoints = ["10%", "20%", "30%"];
+
+  function handlePresentModal() {
+    bottomSheetModalRef.current?.present();
+    setTimeout(() => {
+      setIsOpen(true);
+    }, 100);
+  }
+
+  function handlePresentModalSecond() {
+    bottomSheetModalRefSecond.current?.present();
+    setTimeout(() => {
+      setIsOpen(true);
+    }, 100);
+  }
+  const [modalVisible, setModalVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);  
+  const [isModalShow, setisModalShow] = useState(false);  
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [openState, setOpenState] = useState(false);
@@ -34,8 +62,13 @@ const dispatch    = useDispatch();
   const [err,seterr] = useState();
   const [resourcePath,setResourcePath] = useState({});
   const [showeye, setshoweye] = useState(true);
-  // const [type, setType] = useState(CameraType.back);
-  // const [permission, requestPermission] = Camera.useCameraPermissions();
+  const [pincodeerr,setPincode] = useState();
+  const [mrnId,setmrnId] = useState();
+  const [mrnYearerr,setmrnYear] = useState();
+  const [stateerr,setStateErr] = useState();
+  const [profilErr,setprofilErr] = useState();
+  const [mrnproofErr,setmrnproofErr] = useState();
+  const [passworderr,setPasswordErr] = useState();
   function toggleCameraType() {
     setType((current) => (
       current === CameraType.back ? CameraType.front : CameraType.back
@@ -61,7 +94,7 @@ const dispatch    = useDispatch();
     setOpen(false);
   }, []);
 
-  const [register , setregister] = useState({
+  const [register, setregister] = useState({
     pincode : "",
     mrn:"",
     mry:"",
@@ -79,55 +112,68 @@ const dispatch    = useDispatch();
     const isValidnameRegex = /^(\[0-9]?)?\d{6}$/;;
     const pincode = e;
     if(!isValidnameRegex.test(pincode)){
-      seterr("Please enter valid Pincode")
+      setPincode("Please enter valid Pincode")
     }else{
-      seterr('');
+      setPincode('');
   }
-  setregister({ ...register, 
+  setregister({ ...register,
     pincode: pincode,
   });
 }
 
 const mrnID= (e) =>{
-  setregister({ ...register, 
+  setregister({ ...register,
     mrn: e,
   });
+  setmrnId('');
 }
 
 const mrnYear= (e) =>{
-  setregister({ ...register, 
+  setregister({ ...register,
     mry: e,
   });
+  setmrnYear('');
 }
 
 const stateCouncil= (e) =>{
-  setregister({ ...register, 
+  setregister({ ...register,
     medicalcouncil_id: e,
   });
+  setStateErr('');
 }
 
 const setPassword= (e) =>{
-  setregister({ ...register, 
+  setregister({ ...register,
     password: e,
   });
+  setPasswordErr('');
 }
 
-const pickImage = async () => {
-  // No permissions request is necessary for launching the image library
-  let result = await ImagePicker.launchCameraAsync({
-    mediaTypes: ImagePicker.MediaTypeOptions.All,
-    allowsEditing: true,
-    aspect: [4, 3],
-    quality: 1,
-  });
-  
+const pickImage = async (arg) => {
+  if(arg==1){
+    var result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: false,
+      aspect: [4, 3],
+      quality: 1,
+    });
+  }else{
+    var result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: false,
+      aspect: [4, 3],
+      quality: 1,
+    });
+  }
+
   let localUri = result.uri;
+  bottomSheetModalRefSecond.current?.close();
   setimgurl(localUri)
       let filename = localUri.split('/').pop();
       // Infer the type of the image
       let match = /\.(\w+)$/.exec(filename);
       let type = match ? `image/${match[1]}` : `image`;
-      
+     
       let uriParts = localUri.split('.');
       let fileType = uriParts[uriParts.length - 1];
       let formData = new FormData();
@@ -136,7 +182,7 @@ const pickImage = async () => {
         name: filename,
         type: `image/${fileType}`,
       }
-    
+   
       formData.append('mrnproof', imageData);
       const responce = await fetch(`https://docintosh.com/ApiController/image_upload`, {
         method : 'POST',
@@ -148,32 +194,42 @@ const pickImage = async () => {
 
     const result1=  await responce.json();
 
-    setregister({ ...register, 
+    setregister({ ...register,
       mrnproof: result1,
     });
-
-
+    setmrnproofErr('');
 };
 
 
-const pickprofile = async () => {
+const pickprofile = async (arg) => {
   // No permissions request is necessary for launching the image library
-  let result = await ImagePicker.launchCameraAsync({
-    mediaTypes: ImagePicker.MediaTypeOptions.All,
-    allowsEditing: true,
-    aspect: [4, 3],
-    quality: 1,
-  });
-  
-  let localUri = result.uri;
-  setprofileurl(localUri)
-      let filename = localUri.split('/').pop();
+
+  if(arg==1){
+    var result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: false,
+      aspect: [2, 2],
+      quality: 1,
+    });
+   
+  }else{
+    var result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: false,
+      aspect: [2, 2],
+      quality: 1,
+    });
     
+  }
+ 
+  let localUri = result.uri;
+  bottomSheetModalRef.current?.close();
+  setprofileurl(localUri)
+ 
+      let filename = localUri.split('/').pop();
       // Infer the type of the image
       let match = /\.(\w+)$/.exec(filename);
       let type = match ? `image/${match[1]}` : `image`;
-      
-
       let uriParts = localUri.split('.');
       let fileType = uriParts[uriParts.length - 1];
       let formData = new FormData();
@@ -182,7 +238,6 @@ const pickprofile = async () => {
         name: filename,
         type: `image/${fileType}`,
       }
-    
       formData.append('profile_pic', imageData);
       const responce = await fetch(`https://docintosh.com/ApiController/image_upload`, {
         method : 'POST',
@@ -193,12 +248,10 @@ const pickprofile = async () => {
      });
 
     const result1=  await responce.json();
-   
-    setregister({ ...register, 
+    setregister({ ...register,
       profile_pic: result1,
     });
-
-
+    setprofilErr('')
 };
  
  
@@ -226,70 +279,96 @@ useEffect(()=>{
 
 //||checked === 4 ?!value:''
   const form_submit = async() =>{
-    if(!register.pincode || !register.mrn || !register.mry || !register.medicalcouncil_id || !register.password || !register.profile_pic || !register.mrnproof ){
-    //  const token = await dispatch(userLogin(register));
-        seterr("Please fill the above form");
+    if(!register.pincode){
+      setPincode("Please enter a valid pincode");
+    }else if(!register.mrn){
+      setmrnId("Please enter MRN");
+    }else if(!register.mry){
+      setmrnYear("Please enter MRN Year");
+    }else if(!register.medicalcouncil_id){
+      setStateErr("Please enter State Council");
+    }else if(!register.password){
+      setPasswordErr("Please enter your password");
+    }else if(!register.profile_pic){
+      setprofilErr("Please Upload your Profile Photo");
+    }else if(!register.mrnproof){
+      setmrnproofErr("Please Upload MRN Document");
     }else{
-      //console.log("gg");
       setsubmitbtn(true);
       const result = await dispatch(userRegisterSecond(register));
       console.log('Registertkn',result);
       Toast.show(result.payload.message);
         if(result.payload.status == 'Success'){
-          console.log("success");
-          navigation.navigate('SelectInterest', {
-            user_id : user_id,
-          })
-        }else{
-          
+          console.log(result.payload);
+          const coinDetails = {task : 1, receiverId:result.payload.user_id } 
+          const coinResult = await dispatch(coinTransfer(coinDetails));
+        //  console.log(coinResult.payload)
+          if(result.payload.status == 'Success'){
+            setIsModalVisible(!isModalVisible);
+            setTimeout(() => {
+            navigation.navigate('SelectInterest',{
+              user_id : user_id,
+            })
+            setIsModalVisible(!isModalVisible);
+            },3000);
+          }
         }
       }
     }
+
+  const [fontsLoaded] = useFonts({
+    'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),
+    'Inter-SemiBold':require('../assets/fonts/Inter-SemiBold.ttf'),
+    'PlusJakartaSans-Regular': require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
+    'PlusJakartaSans-Bold':require('../assets/fonts/PlusJakartaSans-Bold.ttf')
+  });
+  if(!fontsLoaded) {
+    return null;
+  }
  
 
 return (
-  <SafeAreaView style={{flex: 0, justifyContent: 'center',paddingTop:10}}>
-  <ScrollView
-    showsVerticalScrollIndicator={true}
-    nestedScrollEnable={true}
+  <GestureHandlerRootView>
+   <BottomSheetModalProvider>
     
-    >
-    <View style={styles.suceesheadBox}>
+ <SafeAreaView style={{flex: 0, justifyContent: 'center',paddingTop:0}}>
+  <ScrollView
+    keyboardShouldPersistTaps='handled'
+    showsVerticalScrollIndicator={true}
+    nestedScrollEnable={true}>
+    <View style={styles.suceesheadBox} >
+    <Pressable onPress={() => handlePresentModal()}>
      <View style={styles.registermainText}>
-          {/* <Icon style={{backgroundColor:"#128244",borderRadius:50,padding:8}}
-          name="check"
-          
-          size={20}
-          color="#fff"
-          /> */}
           <Image style={{width:56,height:56,borderRadius:50}} source={profileurl?{ uri: profileurl }:require('../assets/images/p2.png')}/>
-         
           <View style={styles.headtopInner}>
-              <Text style={styles.headText}>Dr. {fullname}</Text>
-              <TouchableOpacity onPress={pickprofile}>
-        <View>
-        <Text>Edit Profile Photo</Text>
-        </View>
-        </TouchableOpacity>
-          </View>
+            <Text style={[styles.headText,{fontFamily:"Inter-SemiBold"}]}>Dr. {fullname}</Text>
+            <View>
+                <Text>Edit Profile Photo</Text>
+                <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{profilErr}</Text>
+            </View>
           </View>
       </View>
+      </Pressable>
+      </View>
       <View style={styles.verificationForm}>
-      <TextInput style={styles.customInputVerifyFull } 
+      <TextInput style={[styles.customInputVerifyFull,{fontFamily:"PlusJakartaSans-Regular"}] }
        autoCapitalize="none"
        keyboardType="number-pad"
        placeholder='PIN Code*'
        onChangeText={(e)=>{Pincode(e);}}
+       placeholderTextColor='#51668A'
      />
-     <Text style={{fontSize:12,marginBottom:10,marginTop:-4,color:"#51668A"}}>Bangalore,Karnataka</Text>
+     <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{pincodeerr}</Text>
+     {/* <Text style={{fontSize:12,marginBottom:10,marginTop:-4,color:"#51668A"}}>{Bangalore,Karnataka}</Text> */}
       <View style={styles.multiInput}>
-      <TextInput style={styles.customInputVerify} 
+      <TextInput style={[styles.customInputVerify,{fontFamily:"PlusJakartaSans-Regular"}]}
        autoCapitalize="none"
        keyboardType="default"
        placeholder='MRN ID*'
        onChangeText={(e)=>{mrnID(e)}}
+       placeholderTextColor='#51668A'
      />
-     
+   
       <DropDownPicker style={styles.customInputVerifyselect}
         open={open}
         onOpen={onMrnOpen}
@@ -297,6 +376,7 @@ return (
         items={items}
         setOpen={setOpen}
         setValue={setValue}
+        showTickIcon={false}
         setItems={setItems}
         placeholder="MRN Year*"
         autoScroll={true}
@@ -308,11 +388,38 @@ return (
         onChangeValue={(value) => {
           mrnYear(value)
         }}
+       
+        textStyle={{
+          fontSize: 16,
+          color:"#687690",
+          fontFamily: 'PlusJakartaSans-Regular',
+        }}
+        listItemLabelStyle={{
+          color: "#687690",
+          fontWeight:"800",
+          borderBottomWidth:1,
+          borderBottomColor:"#687690",
+          textAlign:"center",
+          paddingBottom:10,
+        }}
+        selectedItemLabelStyle={{
+          fontWeight: "900",
+          color:"#45B5C0",
+          fontSize:18
+        }}
+        searchContainerStyle={{
+          borderBottomColor: "#687690"
+        }}
+
+      
+       
       />
      
       </View>
+      <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{mrnId}</Text>
       <View style={{paddingTop:12}}>
-      {/* <TextInput style={styles.customInputVerifyFull} 
+      <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{mrnYearerr}</Text>
+      {/* <TextInput style={styles.customInputVerifyFull}
        autoCapitalize="none"
        placeholder='State Council*'
      /> */}
@@ -327,6 +434,7 @@ return (
           setItems={setState}
           placeholder="State Council*"
           searchable={true}
+          showTickIcon={false}
           listMode="MODAL"
           containerStyle={{
           zIndex: 1
@@ -334,42 +442,77 @@ return (
           onChangeValue={(value) => {
             stateCouncil(value)
           }}
-        />
+         
+        textStyle={{
+          fontSize: 16,
+          color:"#687690",
+          fontFamily: 'PlusJakartaSans-Regular',
+        }}
 
-      <TextInput style={styles.customInputVerifyFull } 
+        searchContainerStyle={{
+          borderBottomColor: "#687690"
+        }}
+        searchPlaceholderTextColor="#687690"
+          searchTextInputStyle={{
+            color: "#687690",
+            borderColor:"#687690"
+          }}
+
+        listItemLabelStyle={{
+          color: "#687690",
+          fontWeight:"800",
+          borderBottomWidth:1,
+          borderBottomColor:"#687690",
+         // textAlign:"center",
+          paddingBottom:10,
+        }}
+
+        selectedItemLabelStyle={{
+          fontWeight: "900",
+          color:"#45B5C0",
+          fontSize:18
+        }}
+
+      
+        />
+        <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{stateerr}</Text>
+
+      <TextInput style={[styles.customInputVerifyFull,{fontFamily:"PlusJakartaSans-Regular"}] }
         autoCapitalize="none"
         placeholder='Set Password*'
-        onChangeText={(text)=>setregister({...register, 
-          password: text,
-        })}
         hideShow={showeye}
         secureTextEntry={showeye}
-      //  onChangeText={(e)=>{setPassword(e)}}
+      onChangeText={(text)=>{setPassword(text)}}
+      placeholderTextColor='#51668A'
      />
     <Ionicons  style={styles.eyeIcon} name={showeye ? 'eye-off' : 'eye'} size={24} color="#51668A" onPress={() => setshoweye(!showeye)} />
-   <Text style={styles.headTexts}>Upload a JPG for MRN Document</Text>
-  
-  {/* <Image_Picker onPress={toggleCameraType}/> */}
-
+    <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{passworderr}</Text>
+   
+    <Text style={[styles.headTexts,{fontFamily:"Inter-SemiBold"}]}>Upload a JPG for MRN Document</Text>
   <View>
-    <TouchableOpacity onPress={pickImage}>
+    <TouchableOpacity  onPress={() => handlePresentModalSecond()}>
       <View style={{borderColor:"#D5DEED",borderRadius:4,borderStyle: 'dashed',borderWidth:1.4,width:"100%",height:102,justifyContent:"center",alignItems:"center"}}>
-      <Image source={require('../assets/icons/upload-img.png')} style={{alignSelf:"center"}}  /> 
-      <Text style={{textAlign:"center",fontSize:14,color:"#2376E5",fontWeight:"600",paddingVertical:6}}>Upload your file</Text>
-      <Text style={{textAlign:"center",fontSize:12,color:"#51668A",fontWeight:"400"}}>Upload JPG max 2MB</Text>
+      <Image source={require('../assets/icons/upload-img.png')} style={{alignSelf:"center"}}  />
+     
+      <Text style={{textAlign:"center",fontSize:14,color:"#2376E5",fontWeight:"600",paddingVertical:6,fontFamily:"Inter-SemiBold"}}>Upload your file</Text>
+      <Text style={{textAlign:"center",fontSize:12,color:"#51668A",fontWeight:"400",fontFamily:"Inter-Regular"}}>Upload JPG max 2MB</Text>
       </View>
       </TouchableOpacity>
-       <View style={{paddingBottom:14}}></View>
-        {imgurl && <Image source={{ uri: imgurl }} style={{ width: 320, height: 320 ,}} />}
+     
+       <View style={{paddingBottom:14,}}></View>
+       <View style={{ display:"flex", justifyContent:"center", alignItems:"center"}}>
+       <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{mrnproofErr}</Text>
+        {imgurl && <Image source={{ uri: imgurl }} style={{ width: "100%", height: 150,}} />}
+        </View>
         </View>
 
 
    <View style={styles.verifyNextFooterpara}>
-      <Text style={styles.headTextpara}> </Text>
+      {/* <Text style={styles.headTextpara}> </Text> */}
  
       <View style={{ flexDirection:"row" }}>
-            <Text onPress={() => navigation.navigate('Verification')}>By continuing, you agree to the </Text>
-            <TouchableOpacity >
+            <Text onPress={() => navigation.navigate('Verification')} style={{fontFamily:"Inter-Regular"}}>By continuing, you agree to the </Text>
+            <TouchableOpacity  onPress={() => navigation.navigate('TermsAndCondition')} >
               <Text style={{color: '#2376E5', fontWeight: '700',fontSize:14}}>Terms & Conditions </Text>
             </TouchableOpacity>
           </View>
@@ -379,27 +522,90 @@ return (
     <View style={{display:"flex",alignItems:"center"}}>
    {submitbtn?<CustomButton label={'Submitting...'} />:<CustomButton label={'Continue'} onPress={() => form_submit()} />}
    </View>
-   
-   
-    </View>
+
+
+   <Modal isVisible={isModalVisible} width={320} height={200} style={{alignSelf:'center', borderWidth:0,  borderRadius:30/2, width:320,maxHeight:320, backgroundColor:'#ffff', bottom:'-50%',}}>
+        <View>
+        <Image source={successic} style={{alignSelf:'center', marginBottom:25}}></Image>
+          <Text style={{fontSize:18, fontWeight:'600',alignSelf:'center'}}>Congratulations!</Text>
+          <Text style={{fontSize:14, padding:10, fontWeight:'400',alignContent:'center',textAlign:'center',marginTop:16, color:'#51668A'}}>You are now part of the Docintosh family. While profile verification can take up to 48 hours, you can be part of the community just by logging in. </Text>
+        </View>
+  </Modal>
+
+    <BottomSheetModal
+          ref={bottomSheetModalRef}
+          index={1}
+          snapPoints={snapPoints}
+          backgroundStyle={{ borderRadius: 30 }}
+          onDismiss={() => setIsOpen(false)}>
+        <View>
+          <View style={{margin:10, alignSelf:'flex-start'}}>
+            <TouchableOpacity  onPress={() => { pickprofile(1); 
+              setModalVisible(false);}}>
+              <View style={{flexDirection:'row'}}>
+                <Entypo name="camera" size={24} color="#45B5C0" />
+                <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}} >Camera</Text>
+              </View>
+            </TouchableOpacity>
+         
+            <View style={{marginTop:20}}></View>
+              <TouchableOpacity   onPress={() => {pickprofile(2); setModalVisible(false);}}>
+                <View style={{flexDirection:'row',}} >
+                <FontAwesome name="photo" size={24} color="#45B5C0" />
+                <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}}>Choose Your Gallary</Text>
+                </View>
+              </TouchableOpacity>
+            </View>        
+        </View>
+    </BottomSheetModal>
+
+
+        <BottomSheetModal
+          ref={bottomSheetModalRefSecond}
+          index={1}
+          snapPoints={snapPoints}
+          backgroundStyle={{ borderRadius: 30 }}
+          onDismiss={() => setIsOpen(false)}>
+         <View>
+          <View style={{margin:10, alignSelf:'flex-start'}}>
+            <TouchableOpacity  onPress={() => {pickImage(1);setIsOpen(false);}}>
+              <View style={{flexDirection:'row',}}>
+                <Entypo name="camera" size={24} color="#45B5C0" />
+                <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}} >Camera</Text>
+              </View>
+            </TouchableOpacity>
+         
+            <View style={{marginTop:20}}></View>
+              <TouchableOpacity  onPress={() => {pickImage(2);setIsOpen(false);}}>
+                <View style={{flexDirection:'row',}} >
+                <FontAwesome name="photo" size={24} color="#45B5C0" />
+                <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}}>Choose Your Gallary</Text>
+                </View>
+              </TouchableOpacity>
+            </View>        
+        </View>
+        </BottomSheetModal>
+
+        </View>
       </ScrollView>
     </SafeAreaView>
-)
-}
+  </BottomSheetModalProvider>
+</GestureHandlerRootView>
+)}
 
 
 const styles = StyleSheet.create({
 
   eyeIcon:{
-    zIndex:0, 
-    alignSelf:'flex-end', 
+    zIndex:0,
+    alignSelf:'flex-end',
     marginTop:-50,
     marginRight:30,
     marginBottom:30
-    
+   
 },
 customInputVerify:
-    {fontSize:14,
+    {fontSize:16,
     color:"#071B36",
     width:"48%",
     height:48,
@@ -410,7 +616,7 @@ customInputVerify:
     paddingLeft:8,
   },
 customInputVerifyselect:{
-  fontSize:14,
+  fontSize:16,
   color:"#071B36",
   marginTop:10,
   width:"100%",
@@ -424,8 +630,8 @@ customInputVerifyselect:{
   paddingLeft:8,
   backgroundColor:"transparent"
 },
-  
-  
+ 
+ 
   registermainText:{
   display:"flex",
   alignItems:"center",
@@ -450,12 +656,14 @@ customInputVerifyselect:{
       color:"#071B36",
       fontSize:16,
       fontWeight:"600",
+      fontFamily:"Inter-Regular"
   },
   headTexts:{
     color:"#071B36",
     fontSize:16,
     fontWeight:"600",
     marginTop:16,
+    marginBottom:16
 },
   headPara:{
       color:"#2376E5",
@@ -465,13 +673,13 @@ customInputVerifyselect:{
   },
   multiInput:{
       display:"flex",
-      flexDirection:"row", 
+      flexDirection:"row",
     alignItems:"center",
     width:"100%"
   },
 
   customInputVerify:
-  {fontSize:14,
+  {fontSize:16,
     color:"#071B36",
   width:"48%",
   height:48,
@@ -482,7 +690,7 @@ customInputVerifyselect:{
   paddingLeft:8,
 },
   customInputVerifyselect:{
-      fontSize:14,
+      fontSize:16,
       color:"#071B36",
       marginTop:10,
       width:"100%",
@@ -499,7 +707,7 @@ customInputVerifyselect:{
 
 
   customInputVerifyselectFull:{
-    fontSize:14,
+    fontSize:16,
     color:"#071B36",
     marginTop:10,
     width:"100%",
@@ -515,9 +723,9 @@ customInputVerifyselect:{
 },
 
   customInputVerifyFull:{
-      fontSize:14,
+      fontSize:16,
       color:"#071B36",
-      height:48, 
+      height:48,
       width:"100%",
       borderBottomWidth:1,
       paddingRight:19,
@@ -525,7 +733,7 @@ customInputVerifyselect:{
       // borderRadius:8,
       marginVertical:12,
       paddingLeft:8,
-      
+     
 
   },
   headTextpara:
@@ -559,9 +767,74 @@ customInputVerifyselect:{
     textAlign: 'center',
     fontSize: 15,
     color: '#fff'
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  // ..............modal css.................
+  centeredView: {
+    flex: 1,
+    marginTop:60
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  button: {
+    borderRadius: 20,
+    paddingHorizontal:20,
+    paddingVertical:10,
+    elevation: 2
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#2C8892",
+    marginTop:35,
+    width:"100%"
+  },
+  textStyleb: {
+    color: "white",
+    textAlign: "center",
+   fontSize:16,
+   fontFamily:"PlusJakartaSans-Bold",
+   textTransform:"capitalize",
+   
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
+  },
+  chooseTxt:{
+    fontSize:16,
+    color:"#51668A",
+    fontFamily:"PlusJakartaSans-Regular",
+    lineHeight:35
   }
-
-
 
 })
 
