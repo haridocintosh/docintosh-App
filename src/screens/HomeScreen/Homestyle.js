@@ -233,7 +233,8 @@ picContainer:{
 commentContainer:{
   flex:1,
   backgroundColor:'#ecf2f6',
-  padding:15
+  padding:15,
+  paddingBottom:50
 },
 UserComments:{
   alignItems:'center',
