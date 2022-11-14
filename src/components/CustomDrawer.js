@@ -49,7 +49,6 @@ const CustomDrawer = props => {
         profile: `${result['profileimage']}`,
         role:`${result['role']}`
       });
-
     }
     asyncFetchDailyData();
   }, [])
@@ -67,7 +66,6 @@ const CustomDrawer = props => {
     }
   }
 
-  const isDrawerOpen = useDrawerStatus() === 'open';
 
   return (
     <View style={styles.DrowerContainer}>

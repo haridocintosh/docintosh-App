@@ -11,19 +11,16 @@ import { useNavigation } from '@react-navigation/native';
 import { styles } from './Homestyle';
 
 
-const PublicReactions = ({item,load}) => {
+const PublicReactions = ({item}) => {
  const [liked,setLiked] = useState(false);
- const [likeData,setLikeData] = useState([]);
+ const [postId,setPostId] = useState();
 
  const dispatch = useDispatch();
  const navigation = useNavigation();
 
-//  console.log("item",item);
-
  const handleLikes = async (post_id) => {
   console.log("post_id",post_id);
   setLiked(!liked);
-
   const jsonValue = await AsyncStorage.getItem('USER_INFO');
   const data = await JSON.parse(jsonValue);
   const result = JSON.parse(data)['data'];
@@ -32,24 +29,23 @@ const PublicReactions = ({item,load}) => {
   const postDetails = {userId:result.id}
   const sentResult = await dispatch(postLikeData(postDetails));
 
-  // const resultData = sentResult.payload.college.filter(data => data.post_id == post_id);
+  const resultData = sentResult.payload.college;
   // console.log("resultData",resultData);
-  // setLikeData(sentResult.payload);
-  
+  // setLikeData(resultData);
  }
 
  const GotoComments =(post_id,comments_list ) => {
-  navigation.navigate('CommentsScreen', {post_id:post_id,comments_list })
+  navigation.navigate('CommentsScreen', {post_id:post_id,comments_list });
+
  }
 
-//  console.log("likeData",likeData);
  
   return (
      <View style={styles.publicReactionsContainer}>
-              <View style={{ flexDirection: 'row',marginVertical:5  }}>
+              <View style={{ flexDirection: 'row',marginVertical:5}}>
                 <View style={styles.socialCount}>
-                  <TouchableOpacity>
-                      <AntDesign name={liked?"heart":"hearto"} size={22} color="red" onPress={()=> handleLikes(item.post_id)}/>
+                  <TouchableOpacity onPress={()=> handleLikes(item.post_id)}>
+                      <AntDesign name={liked?"heart":"hearto"} size={22} color="red" />
                   </TouchableOpacity>
                   <Text style={styles.socialCountText}>{item.likecount}</Text>
                 </View>
