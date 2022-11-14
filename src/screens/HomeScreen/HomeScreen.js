@@ -29,6 +29,7 @@ import Svg, {Path} from 'react-native-svg';
 import PublicReactions from './PublicReactions';
 import { styles } from './Homestyle';
 import  {HeaderImageScrollView, TriggeringView } from 'react-native-image-header-scroll-view';
+import moment from "moment";
 
 
 
@@ -146,8 +147,10 @@ const HomeScreen = ({navigation})=> {
                       <Text style={{marginHorizontal:4}}>
                         <Ionicons name="time-outline" size={19} color="#51668A" />  
                       </Text>
-                      <Text style={{fontSize:12, paddingRight:5, fontWeight:'400',color:'#51668A,fontFamily:"Inter-Regular"'}}>1hr ago</Text>
-                      {/* {item.post_date}  */}
+                      <Text style={{fontSize:12, paddingRight:5, fontWeight:'400',color:'#51668A',fontFamily:"Inter-Regular"}}>
+                        {moment(item?.post_date, ["DD-MM-YYYY","MM-DD-YYYY"]).fromNow()}
+                        </Text>
+                      
                   </View>
                 </View> 
             </View>
@@ -169,7 +172,7 @@ const HomeScreen = ({navigation})=> {
             style={{width:"100%",height:200,borderRadius:2}} resizeMode="center"/>
           </TouchableOpacity>
 
-          <PublicReactions item={item} load={asyncFetchDailyData}/>
+          <PublicReactions item={item}/>
 
           <View style={{flexDirection:'row',marginTop:5,marginLeft:10, marginBottom:10}}>
               <Image source={oval}style={{marginLeft:-10, borderColor:'#000'}}/>
@@ -180,7 +183,6 @@ const HomeScreen = ({navigation})=> {
         </Card>
       )
     }
-
 
 
   return (

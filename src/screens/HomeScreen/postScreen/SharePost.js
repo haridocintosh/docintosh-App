@@ -278,10 +278,9 @@ const publishCheck = (e)=>{
     setSpl(result.payload);
     // setTodos(value ? JSON.parse(value) : [])
    }
-  
 
    const handleChange = (speciality_id) => {
-    // console.log("speciality_id",speciality_id);
+   
     let temp = circlespeciality.map((data) => {
       if (speciality_id === data.speciality_id) {
         return { ...data, checked: !data.checked };
@@ -289,13 +288,11 @@ const publishCheck = (e)=>{
       return data;
     });
 
-    console.log("temp",temp );
-
-    // setSpl({...circlespeciality ,circlespeciality:temp });
-
-    // const specialityId = temp
-    //   .filter((val) => val.checked == true)
-    //   .map((temp) => temp.speciality_id);
+    // console.log("temp",temp );
+    setSpl(temp);
+    const specialityId = temp
+      .filter((val) => val.checked == true)
+      .map((temp) => temp.speciality_id);
     // console.log("specialityId",specialityId);
   };
 
