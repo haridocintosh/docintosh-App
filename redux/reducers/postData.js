@@ -21,7 +21,7 @@ export const userPostData = createAsyncThunk("getAllPost", async (postDetails)=>
             })
          });
         const result=  await responce.json();
-       console.log('tara12345654',result);
+    //    console.log('tara12345654',result);
         return result;
      }
      catch(e){
