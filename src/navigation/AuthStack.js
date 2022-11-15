@@ -35,10 +35,7 @@ const AuthStack = () => {
       <Stack.Navigator screenOptions={{headerShown: false}}>
       {/* <Stack.Screen name="RegisterStudentScreen" component={RegisterStudentScreen}  options={{ title: 'Register', headerShown: true}} /> */}
       <Stack.Screen name="Intro" component={IntroStack} />
-      <Stack.Screen name='ContactPermission' component={ContactPermission}  options={{ title: 'Invite Peers' , headerShown: true,
-        headerRight: () => (
-          <Text onPress={() => navigation.navigate('LoginScreen')} style={{color:"#2376E5"}} >Skip</Text>)
-        }} />
+    
       <Stack.Screen name="InvitePeers" component={InvitePeers} options={{ title: 'Invite Peers', headerShown: true,  headerRight: () => (
           <Text onPress={() => navigation.navigate('LoginScreen')} style={{color:"#2376E5"}} >Skip</Text>)}}  />
       <Stack.Screen name="MobileScreen" component={MobileScreen} />
@@ -57,6 +54,10 @@ const AuthStack = () => {
       <Stack.Screen name="PracticeScreen" component={PracticeScreen} />
       <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
       <Stack.Screen name="ContactScreen"  component={ContactScreen} options={{ title: 'Contact Us', headerShown: true}}  />
+      <Stack.Screen name='ContactPermission' component={ContactPermission}  options={{ title: 'Invite Peers' , headerShown: true,
+        headerRight: () => (
+          <Text onPress={() => navigation.navigate('LoginScreen')} style={{color:"#2376E5"}} >Skip</Text>)
+        }} />
       <Stack.Screen name="SelectInterest" component={SelectInterest} options={{ title: 'Select your Interest', headerShown: true,  headerRight: () => (
           <Text onPress={() => navigation.navigate('LoginScreen')} style={{color:"#2376E5", fontWeight:"700"}} >Skip</Text>)}} />
       <Stack.Screen name="TermsAndCondition" component={TermsAndCondition} options={{ title: 'Terms & Condition', headerShown: true}} />
