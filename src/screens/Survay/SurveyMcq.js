@@ -3,7 +3,7 @@ import {
   SafeAreaView,
   View,
   Text,
-  StyleSheet,
+  ActivityIndicator,
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -103,6 +103,8 @@ const SurveyMcq = ({ route }) => {
     // console.log('result===',result);
   };
 
+
+
   useEffect(() => {
     asyncFetchDailyData();
   }, []);
@@ -152,12 +154,13 @@ const SurveyMcq = ({ route }) => {
         </Text>
       </View>
 
-      {allMCQs[currentQuestionIndex]?.question_type == 3 && (
-        <TypoMcq
+      {allMCQs[currentQuestionIndex]?.question_type == 1 && (
+        <RadioMcq
           setLiftUpData={setLiftUpData}
+          liftUpData={liftUpData}
           currentIndex={currentQuestionIndex}
           allMCQs={allMCQs}
-          length={liftUpData}
+          nextMcq={nextMcq}
         />
       )}
 
@@ -169,15 +172,15 @@ const SurveyMcq = ({ route }) => {
         />
       )}
 
-      {allMCQs[currentQuestionIndex]?.question_type == 1 && (
-        <RadioMcq
+      {allMCQs[currentQuestionIndex]?.question_type == 3 && (
+        <TypoMcq
           setLiftUpData={setLiftUpData}
-          liftUpData={liftUpData}
           currentIndex={currentQuestionIndex}
           allMCQs={allMCQs}
-          nextMcq={nextMcq}
+          length={liftUpData}
         />
       )}
+      
     </SafeAreaView>
   );
 };

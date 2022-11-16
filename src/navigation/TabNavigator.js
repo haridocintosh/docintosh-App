@@ -34,7 +34,6 @@ const TabNavigator = () => {
         tabBarInactiveTintColor: '#fff',
         tabBarActiveTintColor: '#95AACE',
       })}
-      
      >
 
       <Tab.Screen
@@ -42,7 +41,6 @@ const TabNavigator = () => {
         component={HomeNavigation}
         options={() => ({
             tabBarLabel:'Home',
-           
             tabBarIcon: () => (<Image source={logo} style={{width: 25, height: 35}} />),
         })} 
       />

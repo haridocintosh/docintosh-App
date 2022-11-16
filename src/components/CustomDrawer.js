@@ -4,6 +4,7 @@ import {
   Text,
   Image,
   TouchableOpacity,
+  ActivityIndicator,
   StyleSheet
 } from 'react-native';
 import {
@@ -28,6 +29,7 @@ const CustomDrawer = props => {
   const navigation = useNavigation();
   const [logoutdata,setlogoutdata]=useState();
   const dispatch = useDispatch();
+  const [loader, setLoader] = useState(false);
   const profile_url="https://docintosh-assets.s3.us-west-2.amazonaws.com/IMAUP/profile/2021_03_17_04_46_55maledefault.png?response-content-disposition=attachment%3B%20filename%3D%222021_03_17_04_46_55maledefault.png%22&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIATI7R7JS76FDN7AZB%2F20220908%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220908T080043Z&X-Amz-SignedHeaders=host&X-Amz-Expires=518400&X-Amz-Signature=8d3da3b8bec2f627811e1c90332193b36525941c260202c7fbbde63af8adf7ab";
   const [userdata,setuserdata]=useState({
     fullname : "",
@@ -54,6 +56,7 @@ const CustomDrawer = props => {
   }, [])
   
   const removeData = async () => {
+    setLoader(true)
     try {
       storeData('USER_INFO',JSON.stringify({
         login:false,
@@ -62,10 +65,11 @@ const CustomDrawer = props => {
       setTimeout(()=>{
         navigation.navigate('LoginScreen')
       },1000)
+      
     }catch(e) {
     }
+    setLoader(false)
   }
-
 
   return (
     <View style={styles.DrowerContainer}>
@@ -112,8 +116,8 @@ const CustomDrawer = props => {
           </TouchableOpacity>
             <View style={{marginVertical:15}}>
             <Button
-              onPress={() =>{ removeData('USER_INFO'); }}
-                title="Logout"
+              onPress={() => removeData()}
+                title={loader ? <ActivityIndicator color={"#fff"}/>: "Logout"}
                 type="outline"
                 buttonStyle={{
                   borderColor: '#2C8892',
