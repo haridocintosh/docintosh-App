@@ -310,10 +310,10 @@ useEffect(()=>{
           if(result.payload.status == 'Success'){
             setIsModalVisible(!isModalVisible);
             setTimeout(() => {
+            setIsModalVisible(!isModalVisible);
             navigation.navigate('SelectInterest',{
               user_id : user_id,
             })
-            setIsModalVisible(!isModalVisible);
             },3000);
           }
         }

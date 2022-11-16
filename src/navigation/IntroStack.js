@@ -8,9 +8,8 @@ import {
 } from 'react-native'
 import Swiper from 'react-native-swiper';
 import { useFonts } from 'expo-font';
-import {
-  useNavigation
-} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import Lottie from 'lottie-react-native';
 
 const {
   width,

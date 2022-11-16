@@ -278,10 +278,13 @@ const form_submit = async() =>{
         // console.log("success");
         // navigation.navigate('Login')
         //console.log("success");
-        setIsModalVisible(!isModalVisible);
+          setIsModalVisible(!isModalVisible);
         setTimeout(() => {
-         navigation.navigate('ContactPermission')
+          setIsModalVisible(!isModalVisible);
+          navigation.navigate('ContactPermission')
          },3000);
+      
+         
       }
     }
   }
