@@ -19,6 +19,23 @@ export const postLikeData = createAsyncThunk("getAllPost", async (data)=>{
      }
 })
 
+export const getallcomment = createAsyncThunk("getAllPost", async (data)=>{
+    try{
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/getallcomment`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body :JSON.stringify(data)
+         });
+        const commentResults =  await responce.json();
+        return commentResults;
+     }
+     catch(e){
+        console.log(e);;
+     }
+})
+
 export const commentData = createAsyncThunk("getAllPost", async (data)=>{
     try{
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/post_comment`, {
@@ -76,6 +93,23 @@ export const likesData = createSlice({
                 state.commentsData = action.payload;
             }, 
         [commentData.rejected] : (state)=>
+            {
+                state.loading = false;
+                state.error   = true
+            }, 
+  
+    },
+    extraReducers :{
+        [getallcomment.pending] : (state)=>
+            {
+                state.loading =  true;
+            }, 
+        [getallcomment.fulfilled] : (state, action)=>
+            {   
+                state.loading  =  false;
+                state.commentsData = action.payload;
+            }, 
+        [getallcomment.rejected] : (state)=>
             {
                 state.loading = false;
                 state.error   = true

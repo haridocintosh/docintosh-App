@@ -37,6 +37,8 @@ import PostsScreen from '../screens/HomeScreen/PostsScreen';
 import CommentsScreen from '../screens/HomeScreen/CommentsScreen';
 import MessagesScreen from '../screens/MessagesScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import LoginScreen from '../screens/LoginScreen';
+
 
 
 const HomeNavigation = () => {
@@ -355,6 +357,16 @@ const HomeNavigation = () => {
           <Stack.Screen
             name="SettingsScreen"
             component={SettingsScreen}
+            options={{headerShown: true,  
+              title: "Comments",
+              headerStyle: {
+                backgroundColor: '#071B36',
+              },
+              headerTintColor: '#fff'}}
+          />
+          <Stack.Screen
+            name="LoginScreen"
+            component={LoginScreen}
             options={{headerShown: true,  
               title: "Comments",
               headerStyle: {

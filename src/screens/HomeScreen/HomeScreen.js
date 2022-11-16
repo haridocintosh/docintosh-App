@@ -1,15 +1,11 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, createContext, useContext} from 'react';
 import {
   View,
   Text,
   SafeAreaView,
-  ScrollView,
-  StyleSheet,
   Image,
   TouchableOpacity,
-  FlatList,
   Dimensions,
-  ImageBackground,
   ActivityIndicator,
   Animated
 } from 'react-native';
@@ -17,19 +13,17 @@ import { Card } from 'react-native-paper';
 import { useDispatch } from "react-redux";
 import d  from '../../assets/dr-icon/d.png'
 import discount1  from '../../assets/dr-icon/discount1.png';
-import Modal from "react-native-modal";
-import { Button , } from "react-native-elements";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Ionicons,MaterialCommunityIcons,AntDesign,FontAwesome5,Feather} from '@expo/vector-icons';
-import profileimg from '../../assets/images/p2.png';
 import oval from '../../assets/dr-icon/Oval.png';
 import bgtophome from '../../assets/images/bg-top-home.png';
 import { userPostData } from '../../../redux/reducers/postData';
 import Svg, {Path} from 'react-native-svg';
 import PublicReactions from './PublicReactions';
 import { styles } from './Homestyle';
-import  {HeaderImageScrollView, TriggeringView } from 'react-native-image-header-scroll-view';
 import moment from "moment";
+import { useIsFocused } from '@react-navigation/native';
+
 
 
 
@@ -43,7 +37,8 @@ const HomeScreen = ({navigation})=> {
   const [visible, setVisible] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [liked, setLiked] = useState(false);
-
+  const isFocused = useIsFocused();
+  const FunContext = createContext(null);
   //---------------- header Animation------------------
   const scrollPosition = useRef(new Animated.Value(0)).current;
   const minHeaderHeight = 100
@@ -92,8 +87,11 @@ const HomeScreen = ({navigation})=> {
   };
 
   useEffect(()=>{
-    asyncFetchDailyData();
-  },[]);
+    if(isFocused){
+      asyncFetchDailyData();
+    }
+  },[isFocused]);
+
 
   const asyncFetchDailyData = async () => {
     const jsonValue = await AsyncStorage.getItem('USER_INFO');
@@ -120,7 +118,7 @@ const HomeScreen = ({navigation})=> {
 
   if(loader){
     return(
-    <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+    <View style={{flex:1, justifyContent:'center', alignItems:'center' }}>
         <ActivityIndicator size={'large'} color={"#2C8892"}/>
     </View>)
   }
@@ -132,7 +130,7 @@ const HomeScreen = ({navigation})=> {
         <Card style={styles.cardOfPosts} >
           <View style={styles.userInfo}>
             <View  style={{flexDirection:'row',alignItems:'center'}}>
-              <Image source={profileimg} onPress={() => navigation.navigate('ProfileScreen2')} style={{width:38, height:38,marginRight:5}} ></Image>
+              <Image source={{uri:item.profileimage}} onPress={() => navigation.navigate('ProfileScreen2')} style={{width:38, height:38,marginRight:5,borderRadius:50}} />
                 <View >
                   <Text style={{fontSize:14, fontWeight:'400', fontFamily:"Inter-Regular"}}>
                     {item.role =='4' ? 'Dr.' : ''} { item.first_name && item.first_name} {item.last_name && item.last_name} 
@@ -149,8 +147,7 @@ const HomeScreen = ({navigation})=> {
                       </Text>
                       <Text style={{fontSize:12, paddingRight:5, fontWeight:'400',color:'#51668A',fontFamily:"Inter-Regular"}}>
                         {moment(item?.post_date, ["DD-MM-YYYY","MM-DD-YYYY"]).fromNow()}
-                        </Text>
-                      
+                      </Text>
                   </View>
                 </View> 
             </View>
@@ -171,15 +168,7 @@ const HomeScreen = ({navigation})=> {
             <Image source={item.imgPath?{uri:item.imgPath}:''} 
             style={{width:"100%",height:200,borderRadius:2}} resizeMode="center"/>
           </TouchableOpacity>
-
-          <PublicReactions item={item}/>
-
-          <View style={{flexDirection:'row',marginTop:5,marginLeft:10, marginBottom:10}}>
-              <Image source={oval}style={{marginLeft:-10, borderColor:'#000'}}/>
-              <Image source={oval}style={{marginLeft:-10, borderColor:'#000'}}/>
-              <Image source={oval}style={{marginLeft:-10, borderColor:'#000'}}/>
-              <Text style={{fontSize:12, fontWeight:'400',color:'#51668A',padding:5}}>Liked by Kunal Patel and 44,686 others</Text>
-          </View>
+            <PublicReactions item={item}/>
         </Card>
       )
     }

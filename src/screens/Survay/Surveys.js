@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   ScrollView,
   ToastAndroid,
+  ActivityIndicator,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -24,6 +25,7 @@ import { useFonts } from "expo-font";
 const Surveys = ({ route }) => {
   const [survayData, setSurvayData] = useState([]);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
+  const [loader, setLoader] = useState(true);
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -47,6 +49,7 @@ const Surveys = ({ route }) => {
     };
     const result = await dispatch(survayList(postDetails));
     setSurvayData(result.payload);
+    setLoader(false)
   };
 
   // console.log("result.payload",survayData);
@@ -67,6 +70,13 @@ const Surveys = ({ route }) => {
   useEffect(() => {
     asyncFetchDailyData();
   }, [recall]);
+
+  if(loader){
+    return(
+    <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+        <ActivityIndicator size={'large'} color={"#2C8892"}/>
+    </View>)
+  }
   
   return (
     <SafeAreaView style={{ backgroundColor: "#E6E6E6", flex: 1 }}>

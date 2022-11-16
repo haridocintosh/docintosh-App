@@ -1,8 +1,8 @@
-import { View, Text, StyleSheet,Image,TextInput, ScrollView ,TouchableOpacity} from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { View, Text, ActivityIndicator,Image,TextInput, ScrollView ,TouchableOpacity} from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Ionicons} from '@expo/vector-icons';
-import { commentData } from '../../../redux/reducers/publicReactionSlice';
+import { commentData ,getallcomment} from '../../../redux/reducers/publicReactionSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { styles } from './Homestyle';
 
@@ -12,8 +12,10 @@ const CommentsScreen = ({route}) => {
     const [profile, setProfile] = useState();
     const [text, onChangeText] = useState();
     const [userId, setUserId] = useState();
-    const [instData, setInstData] = useState(comments_list);
+    const [instData, setInstData] = useState([]);
     const [Comments, SetComments] = useState([]);
+    const [loader, setLoader] = useState(true);
+    
 
     const dispatch = useDispatch();
     
@@ -23,32 +25,36 @@ const CommentsScreen = ({route}) => {
         const data=await JSON.parse(jsonValue);
         const result = JSON.parse(data)['data'];
         setProfile(result.profileimage);
-        console.log("result",result);
         setUserId(result);
+
+        const postDetails = {post_id:post_id}
+        const sentResult = await dispatch(getallcomment(postDetails));
+        // console.log("sentResult-------------", sentResult.payload.getallcomment);
+        setInstData(sentResult.payload.getallcomment);
+        setLoader(false)
     }
 
     const handleComment = async () => {
-        const postDetails = {user_id:userId.id,post_id:post_id,postcomment:text}
-       // console.log("postDetails",postDetails);
-       let temp = {
-        comment: text,
-        profileimage:profile,
-        username: "Dr. " + userId.first_name +" "+ userId.last_name,
-        user_id:userId.id,
-        post_id:post_id
-      };
-        const sentResult = await dispatch(commentData(postDetails));
-       console.log("sentResult",sentResult.payload.cmnt_ret.comment);
-      //  setReload(sentResult.payload.cmnt_ret.comment);
-      setInstData([...instData,temp])
+      const postDetails = {user_id:userId.id,post_id:post_id,postcomment:text}
+      const sentResult = await dispatch(commentData(postDetails));
+      console.log("sentResult", sentResult.payload);
+      getData();
+      onChangeText()
     }
 
     useEffect(()=>{
         getData();
     },[])
 
+    if(loader){
+      return(
+      <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+          <ActivityIndicator size={'large'} color={"#2C8892"}/>
+      </View>)
+    }
+
     // const handlePost = () => {
-      console.log("instData",instData);
+      // console.log("instData",instData);
     // }
 //console.log("postId",post_id);
   return (
@@ -57,9 +63,9 @@ const CommentsScreen = ({route}) => {
                {instData && instData.map((element, index)=>{
                   return(
                     <View style={styles.usersCommentContainer} key={index}>
-                        <Image source={{uri:element.profileimage}} style={{width:40,height:40, borderRadius:50,marginRight:10}}/>
+                        <Image source={{uri:profile}} style={{width:40,height:40, borderRadius:50,marginRight:10}}/>
                         <View>
-                            <Text style={styles.userUsername}>{element.username}</Text>
+                            <Text style={styles.userUsername}>{"Dr. " + userId.first_name +" "+ userId.last_name}</Text>
                             <Text style={styles.userCommentTexts}>{element.comment} </Text>
                         </View>
                     </View>

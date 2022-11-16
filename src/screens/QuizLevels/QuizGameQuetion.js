@@ -66,15 +66,9 @@ const QuizGameQuetion = ({ mcqQue, isTop, singleMcq }) => {
       basic_id: basic_id,
     };
     const result = await dispatch(saveQuizAnswer(postDetails));
-    //  console.log('postDetails===',result);
   };
 
-  const restartQuiz = () => {
-    // setShowScoreModal(false);
-    // setCurrentQuestionIndex(0);
-    // setScore(0);
-    // navigation.navigate("QuizLevels");
-  };
+  
 
   const styling = {
     backgroundColor: "rgba(8, 1, 1, 0.05)",
@@ -132,27 +126,7 @@ const QuizGameQuetion = ({ mcqQue, isTop, singleMcq }) => {
           );
         })}
       </View>
-      {/* <Modal animationType="slide" transparent={true} visible={showScoreModal}>
-              <View style={styles.ModalContainer}>
-                  <View style={styles.ModalCart}>
-                      <Text style={styles.ModalGeet}>
-                        { score > (TotalMcq/2) ? 'Congratulations!' : 'Oops!' }
-                      </Text>
-                      <View style={styles.ModalScore}>
-                          <Text style={{fontSize: 30,color: score> (TotalMcq/2) ? COLORS.success : COLORS.error}}>
-                              {score} 
-                          </Text>
-                          <Text style={{fontSize: 20, color: COLORS.black}}>
-                            / { TotalMcq }
-                          </Text>
-                      </View>
-                      <TouchableOpacity onPress={restartQuiz} style={{ backgroundColor: COLORS.accent, padding: 20, width: '100%', borderRadius: 20 }}>
-                          <Text style={{textAlign: 'center', color: COLORS.white, fontSize: 20}}>Jump On Score Board</Text>
-                      </TouchableOpacity>
-                  </View>
-              </View>
-          </Modal> */}
-    </View>
+     </View>
   );
 };
 

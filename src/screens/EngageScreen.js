@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text,Image,
-  SafeAreaView,ScrollView,TouchableOpacity,ImageBackground,TextInput,StyleSheet } from 'react-native'
+  SafeAreaView,ScrollView,ActivityIndicator,ImageBackground,TextInput,StyleSheet } from 'react-native'
 import {  Card } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import cardfootimg from '../assets/images/cardfootimg.png';
@@ -11,6 +11,7 @@ import cardfootimg3 from '../assets/images/cardfootimg3.png';
 import checkwrong from '../assets/images/checkwrong.png';
 
 const EngageScreen = ({navigation}) => {
+  const [loader, setLoader] = useState(true);
   const [userdata,setuserdata]=useState({
     role:""
   })
@@ -25,8 +26,15 @@ useEffect(() => {
       });
     }
     userData();
+    setLoader(false)
   }, [])
 
+  if(loader){
+    return(
+    <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+        <ActivityIndicator size={'large'} color={"#2C8892"}/>
+    </View>)
+  }
   //   QuizLevels
   return (
     <SafeAreaView style={{flex: 1,}}>
