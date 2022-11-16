@@ -50,10 +50,12 @@ const [data, setdata] = useState();
 
   const authLogin = async (e)=>{
     // console.log("Form");
+    setloader(true)
     if(register.email !== "" &&  register.password !== ""){
       const token = await dispatch(userLogin(register));
     console.log('lgitokm',token);
       if(token.payload.status == 'Success'){
+        setloader(false)
         storeData('USER_INFO',JSON.stringify({
           login:true,
           data:token.payload.session_data

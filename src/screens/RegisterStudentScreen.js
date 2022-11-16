@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
   TextInput, Pressable,
+  ActivityIndicator
 } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -30,6 +31,7 @@ const dispatch = useDispatch();
 const [modalVisible, setModalVisible]     = useState(false);
 const [isModalVisible, setIsModalVisible] = useState(false);  
 const [isModalShow, setisModalShow]       = useState(false);
+const [loader, setloader] = useState(false)
 const [pincodeerr,setPincode] = useState();
 const [universityerr,setuniversityerr] = useState();
 const [clgerr,setclgerr] = useState();
@@ -239,13 +241,19 @@ const pickprofile = async (arg) => {
     setprofilErr('')
 };
 
+if(loader){
+  return(
+  <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+      <ActivityIndicator size={'large'} color={"#2C8892"}/>
+  </View>)
+}
 
 const form_submit = async() =>{
   // if(!register.pincode || !register.university || !register.college || !register.password  || !register.mrnproof){
   // //  const token = await dispatch(userLogin(register));
   // // console.log(register)
   //     seterr("Please fill the above form");
-
+  
   if(!register.pincode){
     setPincode("Please enter a valid pincode");
   }else if(!register.university){
@@ -261,10 +269,12 @@ const form_submit = async() =>{
   }else{
     // console.log("gg");
     setsubmitbtn(true);
+    setloader(true);
     const result = await dispatch(userRegisterSecond(register));
     // console.log('Registertkn',result);
     Toast.show(result.payload.message);
       if(result.payload.status == 'Success'){
+        setloader(false);
         // console.log("success");
         // navigation.navigate('Login')
         //console.log("success");

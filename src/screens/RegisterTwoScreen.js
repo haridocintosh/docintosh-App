@@ -37,6 +37,7 @@ const dispatch    = useDispatch();
   const [isOpen, setIsOpen]     = useState(false);
   const bottomSheetModalRef       = useRef(null);
   const bottomSheetModalRefSecond = useRef(null);
+  const [loader, setloader] = useState(false)
   const snapPoints = ["10%", "20%", "30%"];
 
   function handlePresentModal() {
@@ -279,6 +280,7 @@ useEffect(()=>{
 
 //||checked === 4 ?!value:''
   const form_submit = async() =>{
+   
     if(!register.pincode){
       setPincode("Please enter a valid pincode");
     }else if(!register.mrn){
@@ -295,10 +297,12 @@ useEffect(()=>{
       setmrnproofErr("Please Upload MRN Document");
     }else{
       setsubmitbtn(true);
+      setloader(true);
       const result = await dispatch(userRegisterSecond(register));
       console.log('Registertkn',result);
       Toast.show(result.payload.message);
         if(result.payload.status == 'Success'){
+          setloader(false);
           console.log(result.payload);
           const coinDetails = {task : 1, receiverId:result.payload.user_id } 
           const coinResult = await dispatch(coinTransfer(coinDetails));
@@ -325,7 +329,13 @@ useEffect(()=>{
   if(!fontsLoaded) {
     return null;
   }
- 
+
+if(loader){
+  return(
+  <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+      <ActivityIndicator size={'large'} color={"#2C8892"}/>
+  </View>)
+}
 
 return (
   <GestureHandlerRootView>
