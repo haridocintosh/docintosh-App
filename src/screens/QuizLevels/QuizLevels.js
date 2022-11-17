@@ -18,16 +18,24 @@ import { useFonts } from "expo-font";
 
 const QuizLevels = () => {
   const dispatch = useDispatch();
-  const [toggle, setToggle] = useState(false);
+  // const [toggle, setToggle] = useState(false);
   const [quizData, setQuizData] = useState([]);
-  const [topicId, setTopicId] = useState(null);
+  // const [topicId, setTopicId] = useState(null);
   const [loader, setLoader] = useState(true);
   const navigation = useNavigation();
 
-  const McqDataHandle = (topicId) => {
-    setToggle(true);
-    setTopicId(topicId);
+  const McqDataHandle = (basic_id,title) => {
+    navigation.navigate("QuizGame", {basicId: basic_id,title: title});
   };
+
+  // const goToNext = () => {
+  //   navigation.navigate("QuizGame", {
+  //     basicId: basicId,
+  //     title: filterId[0].title,
+  //   });
+  //   //
+  //   toggle(false);
+  // };
 
   const asyncFetchDailyData = async () => {
     const jsonValue = await AsyncStorage.getItem("USER_INFO");
@@ -67,17 +75,20 @@ const QuizLevels = () => {
       </View>
     );
   }
+ 
   
   return (
     <View style={styles.QuizLevelcontainer}>
-      {toggle && (
+      {/* {toggle && (
         <McqListModal
           toggle={setToggle}
           quizData={quizData}
           topicId={topicId}
         />
-      )}
+      )} */}
       {/* <LinearGradient colors={['transparent', '#08A099']} style={styles.circleView}/> */}
+
+      
 
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -87,9 +98,10 @@ const QuizLevels = () => {
 
         {quizData &&
           quizData?.map((user, index) => {
+            // console.log("user",user);
             return (
               <TouchableOpacity
-                onPress={() => McqDataHandle(user?.topic_id, user?.title)}
+                onPress={() => McqDataHandle(user?.basic_id, user?.title)}
                 key={index}
               >
                 <LinearGradient

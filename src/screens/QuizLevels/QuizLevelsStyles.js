@@ -278,7 +278,7 @@ export const styles = StyleSheet.create({
     height: Dimensions.get("window").height,
     backgroundColor: "#D5F2E8",
     position: "absolute",
-    top: "-140%",
+    top: "-160%",
   },
   outOff: {
     fontSize: 16,

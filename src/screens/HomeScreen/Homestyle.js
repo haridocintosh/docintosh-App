@@ -162,24 +162,8 @@ export const styles = StyleSheet.create({
     fontWeight: "500",
     fontFamily:"Inter-Regular"
   },
-  socialImages:{
-    width:30,
-    height:30
-},
-socialCount:{
-    paddingLeft:20,
-    flexDirection:'row',
-    alignItems:'center'
-},
-publicReactionsContainer:{ 
-    flexDirection: 'row',
-    marginTop:5
-},
-socialCountText:{
-    paddingLeft:5,
-    color:'#51668A',
-    fontFamily:"Inter-Regular",
-},
+ 
+
 triangle: {
   width: 0,
   height: 0,
@@ -268,5 +252,81 @@ userUsername:{
 },
 userCommentTexts:{
   fontFamily:'Inter-Regular'
-}
+},
+
+//-------------------------------public Reaction-------------------------------------
+
+socialImages:{
+  width:30,
+  height:30
+},
+likedImage :{
+  marginLeft:-10, 
+  borderColor:'#000'
+},
+socialCount:{
+  paddingRight:20,
+  flexDirection:'row',
+  alignItems:'center',
+  justifyContent:'flex-start'
+},
+publicReactionsContainer:{ 
+  flexDirection: 'row',
+  marginTop:5
+},
+socialCountText:{
+  paddingLeft:5,
+  color:'#51668A',
+  fontFamily:"Inter-Regular",
+},
+
+//----------------------------------option Modal---------------------
+optionModal:{
+  width:150,
+  backgroundColor:'#fff',
+  position:'absolute',
+  right:10,
+  top:-3,
+  borderRadius:5,
+  justifyContent:"center",
+  // alignItems:'center',
+  padding:15,
+  zIndex:1,
+
+  shadowColor: 'black',
+  shadowOpacity: 0.26,
+  shadowOffset: { width: 0, height: 2},
+  shadowRadius: 10,
+  elevation: 3,
+  backgroundColor: 'white'
+},
+optionList:{
+  paddingVertical:7,
+  flexDirection:'row'
+},
+optionListText:{
+  color:'#071B36',
+  fontFamily:"Inter-Regular",
+
+},
+optionListImage:{
+  width:15.5,
+  height:20.7,
+  marginRight:7
+},
+optionList2:{
+  width:18,
+  height:16,
+  marginRight:7
+},
+optionList3:{
+  width:18,
+  height:13,
+  marginRight:7
+},
+optionList4:{
+  width:18,
+  height:18,
+  marginRight:7
+},
 });
