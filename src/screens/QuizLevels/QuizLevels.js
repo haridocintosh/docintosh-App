@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
+  Image
 } from "react-native";
 import { styles } from "./QuizLevelsStyles";
 import React, { useEffect, useState } from "react";
@@ -14,6 +15,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { quizPostData } from "../../../redux/reducers/mcqSlice";
 import { useFonts } from "expo-font";
+import {AntDesign} from 'react-native-vector-icons';
+import dcoin from "../../assets/dr-icon/dcoin.png";
 
 
 const QuizLevels = () => {
@@ -88,8 +91,6 @@ const QuizLevels = () => {
       )} */}
       {/* <LinearGradient colors={['transparent', '#08A099']} style={styles.circleView}/> */}
 
-      
-
       <ScrollView
         showsVerticalScrollIndicator={false}
         nestedScrollEnable={true}
@@ -105,12 +106,24 @@ const QuizLevels = () => {
                 key={index}
               >
                 <LinearGradient
-                  colors={["#43c5bf", "#15b3ac"]}
+                  colors={["#fff", "#fff"]}
                   start={{ x: 0.0, y: 1.0 }}
                   end={{ x: 1.0, y: 1.0 }}
                   style={styles.cartGradiant}
                 >
                   <Text style={styles.cartText}>{user.title}</Text>
+                  <View style={styles.ListsMcqPlay}>
+                    <View style={styles.doccoin}>
+                        <View style={styles.d}>
+                          <Image
+                            source={dcoin}
+                            style={{ width: 20, height: 20, marginRight: 5 }}
+                          />
+                          <Text>25</Text>
+                        </View>
+                      </View>
+                    <AntDesign name="play" size={26}/>
+                  </View>
                 </LinearGradient>
               </TouchableOpacity>
             );

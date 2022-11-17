@@ -28,7 +28,7 @@ const PublicReactions = ({item}) => {
     const result = JSON.parse(data)['data'];
     setResult(result);
  }
- console.log("item?.post_like_status---------------------------------------------------------------",item);
+//  console.log("item?.post_like_status---------------------------------------------------------------",item);
 
  const handleLikes = async (post_id) => {
   setLiked(!liked);

@@ -9,8 +9,6 @@ import { GetQuizQuestions } from '../../../redux/reducers/mcqSlice';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from './QuizLevelsStyles';
 
-
-
 const QuizGame = ({route}) => {
   const dispatch =  useDispatch();
   const { basicId } = route?.params;
@@ -21,14 +19,14 @@ const QuizGame = ({route}) => {
     const [isTop, setIsTop] = useState(true);
     const [mcqQue, setMcqQue] = useState([]);
     const [loader, setLoader] = useState(true);
-    const [seconds, setSeconds] = React.useState(30)
+    const [seconds, setSeconds] = React.useState(60)
 
     navigation.setOptions({ title: title })
 
     const startAnimation = toValue => {
         Animated.timing(animatedValue, {
             toValue,
-            duration: 30000,
+            duration: 60000,
             easing: Easing.linear,
             useNativeDriver: true
         }).start(() => {

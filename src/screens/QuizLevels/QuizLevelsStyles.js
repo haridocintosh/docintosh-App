@@ -351,7 +351,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     borderColor: "#51668A",
-    backgroundColor: "#9cdcd6",
+    backgroundColor: "#f2f2f2",
   },
   circleView: {
     width: 80.4,
@@ -368,12 +368,31 @@ export const styles = StyleSheet.create({
     height: 125,
     borderRadius: 10,
     marginTop: 10,
-    justifyContent: "center",
-    paddingHorizontal: 50,
+    justifyContent: 'space-between',
+    // paddingHorizontal: 50,
+    padding:15,
+    alignContent:'flex-start'
   },
   cartText: {
     fontSize: 20,
-    textAlign: "center",
     fontFamily: "Inter-SemiBold",
+  },
+  ListsMcqPlay:{
+    justifyContent:'space-between',
+    flexDirection:'row'
+  },
+  doccoin: {
+    backgroundColor: "#45B5C00D",
+    width: 77,
+    height: 34,
+    borderRadius: 40 / 2,
+    borderColor: "#45B5C0",
+    borderWidth: 1,
+    marginRight: 16,
+  },
+  d: {
+    alignSelf: "center",
+    flexDirection: "row",
+    marginVertical: 5,
   },
 });

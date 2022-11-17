@@ -32,8 +32,6 @@ import moment from "moment";
 import { useIsFocused } from '@react-navigation/native';
 
 
-
-
 const HomeScreen = ({navigation})=> {
 // like unlike fun =>
   const [loader, setLoader] = useState(true);
