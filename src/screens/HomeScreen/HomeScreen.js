@@ -7,12 +7,19 @@ import {
   TouchableOpacity,
   Dimensions,
   ActivityIndicator,
-  Animated
+  Animated,
+  FlatList,
+  Modal,
+  Button
 } from 'react-native';
 import { Card } from 'react-native-paper';
 import { useDispatch } from "react-redux";
 import d  from '../../assets/dr-icon/d.png'
 import discount1  from '../../assets/dr-icon/discount1.png';
+import savePost  from '../../assets/dr-icon/savePost.png';
+import reportPost  from '../../assets/dr-icon/reportPost.png';
+import unfollow  from '../../assets/dr-icon/unfollow.png';
+import blockUser  from '../../assets/dr-icon/blockUser.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Ionicons,MaterialCommunityIcons,AntDesign,FontAwesome5,Feather} from '@expo/vector-icons';
 import oval from '../../assets/dr-icon/Oval.png';
@@ -30,15 +37,15 @@ import { useIsFocused } from '@react-navigation/native';
 const HomeScreen = ({navigation})=> {
 // like unlike fun =>
   const [loader, setLoader] = useState(true);
-  const [isPlaying, setIsPlaying]   = useState(false);
+  const [optionModal, setOptionModal]   = useState(false);
   const [userdata, setuserdata]     = useState({profile:'',user_id:''});
   const [allPost, setallPost]  = useState([]);
   const dispatch = useDispatch();
-  const [visible, setVisible] = useState(false);
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [liked, setLiked] = useState(false);
+  const [postId, setPostId] = useState();
+  // const [isModalVisible, setModalVisible] = useState(false);
+  // const [liked, setLiked] = useState(false);
   const isFocused = useIsFocused();
-  const FunContext = createContext(null);
+  // const FunContext = createContext(null);
   //---------------- header Animation------------------
   const scrollPosition = useRef(new Animated.Value(0)).current;
   const minHeaderHeight = 100
@@ -74,17 +81,18 @@ const HomeScreen = ({navigation})=> {
   });
 
 
-  const tooglePlay =() =>{
-    isPlaying === false ? setIsPlaying(true) : setIsPlaying(false);
- };
+//   const tooglePlay =() =>{
+//     isPlaying === false ? setIsPlaying(true) : setIsPlaying(false);
+//  };
 
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
+  const handleOption = (post_id) => {
+    setOptionModal(!optionModal);
+    setPostId(post_id);
   }
 
-  const closeModal = () => {
-    setVisible(false);
-  };
+  // const closeModal = () => {
+  //   setVisible(false);
+  // };
 
   useEffect(()=>{
     if(isFocused){
@@ -123,7 +131,32 @@ const HomeScreen = ({navigation})=> {
     </View>)
   }
 
-  
+
+  const OptionComp = () => {
+    return(
+      <>
+      {optionModal &&
+        <View style={styles.optionModal}>
+        <TouchableOpacity style={styles.optionList}>
+          <Image source={savePost} style={styles.optionListImage}/>
+          <Text style={styles.optionListText}>Save Post</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.optionList}>
+          <Image source={reportPost} style={styles.optionList2}/>
+          <Text style={styles.optionListText}>Report Post</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.optionList}>
+          <Image source={unfollow} style={styles.optionList3}/>
+          <Text style={styles.optionListText}>Unfollow</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.optionList}>
+          <Image source={blockUser} style={styles.optionList4}/>
+          <Text style={styles.optionListText}>Block User</Text>
+        </TouchableOpacity>
+      </View>}
+      </>
+    )
+  }
 
     const renderItem = ({item}) => {
       return(
@@ -152,9 +185,12 @@ const HomeScreen = ({navigation})=> {
                 </View> 
             </View>
             <View>
+            <TouchableOpacity onPress={() => handleOption(item?.post_id)} style={{}}>
               <Svg width="7" height="20" viewBox="0 0 4 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <Path d="M3.5 1.55552C3.5 0.696472 2.82839 0 2 0C1.17161 0 0.5 0.696472 0.5 1.55552C0.5 2.41458 1.17161 3.11105 2 3.11105C2.82839 3.11105 3.5 2.41458 3.5 1.55552ZM3.5 8C3.5 7.14095 2.82839 6.44448 2 6.44448C1.17161 6.44448 0.5 7.14095 0.5 8C0.5 8.85905 1.17161 9.55552 2 9.55552C2.82839 9.55552 3.5 8.85905 3.5 8ZM3.5 14.4445C3.5 13.5854 2.82839 12.889 2 12.889C1.17161 12.889 0.5 13.5854 0.5 14.4445C0.5 15.3035 1.17161 16 2 16C2.82839 16 3.5 15.3035 3.5 14.4445Z" fill="#51668A"/>
               </Svg>
+            </TouchableOpacity>
+              {item?.post_id == postId && <OptionComp/>}
             </View>
           </View>
 
@@ -172,6 +208,8 @@ const HomeScreen = ({navigation})=> {
         </Card>
       )
     }
+
+ 
 
 
   return (
@@ -210,7 +248,6 @@ const HomeScreen = ({navigation})=> {
             <Image source={discount1} style={{width:16, height:16, marginVertical:5,  marginHorizontal:5}}></Image>
             <Text style={styles.count}>102</Text>
           </Animated.View>
-
       </Animated.View>
       
     <View style={{padding:10}}>
@@ -230,6 +267,7 @@ const HomeScreen = ({navigation})=> {
               <View style={{width:'100%', height:1, backgroundColor:'#D5DEED', marginTop:10}}></View>
           </View>
 
+          <View style={{paddingBottom:550}}>
           <Animated.FlatList
               onScroll={Animated.event(
                 [{nativeEvent: {contentOffset: {y: scrollPosition}}}],
@@ -242,6 +280,7 @@ const HomeScreen = ({navigation})=> {
               // onEndReached={loadMore}
               showsVerticalScrollIndicator={false}
           />
+          </View>
       </View>
       
       </View>
@@ -250,10 +289,13 @@ const HomeScreen = ({navigation})=> {
 
 {/* //removerd data in raugh */}
 
+
+  
+
   {/* <Modal isVisible={isModalVisible} width={320} style={{alignSelf:'center', }}>
         <View>
         <Card >
-        <AntDesign name="close" color={'#51668A'} size={25} style={{alignSelf:'flex-end'}} onPress={toggleModal}/>
+        <AntDesign name="close" color={'#51668A'} size={25} style={{alignSelf:'flex-end'}} onPress={() => handleOption()}/>
        
           <Text style={styles.viewDoccin}>View your collected DocCoins here</Text>
           <View style={{flexDirection:'row', margin:10, marginTop:20, marginBottom:20}}>
@@ -287,8 +329,6 @@ const HomeScreen = ({navigation})=> {
               color:'#FFFF'
             }}/>
           </View> 
-        
-          
           
           </Card>
         </View>

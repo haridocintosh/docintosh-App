@@ -28,8 +28,7 @@ import { mainApi } from "../../apis/constant";
 import { styles } from "./QuizLevelsStyles";
 import { useFonts } from "expo-font";
 const KnowYourHeart = ({ route }) => {
-  const { score } = route?.params;
-  const { TotalMcq } = route?.params;
+  const { score, seconds ,TotalMcq} = route?.params;
 
   const [userData, setUserData] = useState([]);
   const [loader, setLoader] = useState(true);
@@ -72,7 +71,7 @@ const KnowYourHeart = ({ route }) => {
               { fontFamily: "PlusJakartaSans-Regular" },
             ]}
           >
-            2:30 min
+            {60-seconds} sec
           </Text>
         </View>
         <View>

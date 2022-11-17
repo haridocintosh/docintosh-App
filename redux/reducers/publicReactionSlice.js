@@ -19,6 +19,22 @@ export const postLikeData = createAsyncThunk("getAllPost", async (data)=>{
      }
 })
 
+export const getallLikes = createAsyncThunk("getAllPost", async (data)=>{
+    try{
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/getallLike`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body :JSON.stringify(data)
+         });
+        const commentResults =  await responce.json();
+        return commentResults;
+     }
+     catch(e){
+        console.log(e);;
+     }
+})
 export const getallcomment = createAsyncThunk("getAllPost", async (data)=>{
     try{
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/getallcomment`, {
@@ -60,7 +76,8 @@ export const likesData = createSlice({
         likesData : [],
         loading : false,
         error :false,
-        commentsData:[]
+        commentsData:[],
+        gelAllLikes:[]
     },
     reducers : {},
     extraReducers :{
@@ -110,6 +127,24 @@ export const likesData = createSlice({
                 state.commentsData = action.payload;
             }, 
         [getallcomment.rejected] : (state)=>
+            {
+                state.loading = false;
+                state.error   = true
+            }, 
+  
+    },
+
+    extraReducers :{
+        [getallLikes.pending] : (state)=>
+            {
+                state.loading =  true;
+            }, 
+        [getallLikes.fulfilled] : (state, action)=>
+            {   
+                state.loading  =  false;
+                state.gelAllLikes = action.payload;
+            }, 
+        [getallLikes.rejected] : (state)=>
             {
                 state.loading = false;
                 state.error   = true

@@ -17,7 +17,7 @@ import { saveQuizAnswer } from "../../../redux/reducers/mcqSlice";
 import { styles } from "./QuizLevelsStyles";
 import { useFonts } from "expo-font";
 
-const QuizGameQuetion = ({ mcqQue, isTop, singleMcq }) => {
+const QuizGameQuetion = ({ mcqQue, isTop, singleMcq ,seconds}) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isOptionsDisabled, setIsOptionsDisabled] = useState(false);
   const [score, setScore] = useState(0);
@@ -45,6 +45,7 @@ const QuizGameQuetion = ({ mcqQue, isTop, singleMcq }) => {
       navigation.navigate("KnowYourHeart", {
         score: score,
         TotalMcq: TotalMcq,
+        seconds:seconds
       });
     }
 

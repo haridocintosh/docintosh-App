@@ -311,8 +311,8 @@ const publishCheck = (e)=>{
           </View> 
         </View>
         <TouchableOpacity onPress={()=>handleStudentSubmit()}>
-          <Text style={{fontFamily:'Inter-SemiBold',color:'#51668A'}}   >
-            Post
+          <Text style={styles.submitPost}   >
+            Submit
           </Text>
         </TouchableOpacity>
       </View>
@@ -542,7 +542,14 @@ const styles = StyleSheet.create({
     backgroundColor:"#FFFFFF",
     width:'100%',
     justifyContent:'space-between'
-
+  },
+  submitPost:{
+    fontFamily:'Inter-SemiBold',
+    color:'#fff',
+    backgroundColor:'#2C8892',
+    paddingHorizontal:10,
+    paddingVertical:3,
+    borderRadius:5
   }
 });
 
