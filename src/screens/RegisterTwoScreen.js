@@ -292,9 +292,9 @@ useEffect(()=>{
     }else if(!register.password){
       setPasswordErr("Please enter your password");
     }else if(!register.profile_pic){
-      setprofilErr("Please Upload your Profile Photo");
+      setprofilErr("Please upload your profile photo");
     }else if(!register.mrnproof){
-      setmrnproofErr("Please Upload MRN Document");
+      setmrnproofErr("Please upload MRN document");
     }else{
       setsubmitbtn(true);
       setloader(true);

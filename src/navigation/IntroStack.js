@@ -10,32 +10,24 @@ import Swiper from 'react-native-swiper';
 import { useFonts } from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
 import Lottie from 'lottie-react-native';
-
-const {
-  width,
-  height
-} = Dimensions.get('window')
+import React, { useEffect, useRef } from 'react';
 import CustomButton from '../components/CustomButton';
 const styles = {
   wrapper: {
     backgroundColor: 'transparent',
     paddingTop: 20,
-   
     height:"100%"
   },
 
   slide: {
-    flex: 1,
+
     backgroundColor: 'transparent',
     width:"100%",
-
+height:"100%"
  
   },
   sliderImgBox:{
-    display:"flex",
-    justifyContent:"center",
-    alignItems:"center",
-
+    flex:1,
   },
   container: {
     flex: 1,
@@ -107,19 +99,24 @@ const styles = {
   },
 
 }
-
-import React from 'react'
-
 export const Slider_comp = () => {
   const navigation = useNavigation();
-  const [fontsLoaded] = useFonts({
-    'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),
-    'PlusJakartaSans-Regular': require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
-    'PlusJakartaSans-Bold':require('../assets/fonts/PlusJakartaSans-Bold.ttf')
-  });
-  if(!fontsLoaded) {
-    return null;
-  }
+  const animationRef = useRef(null)
+  // const [fontsLoaded] = useFonts({
+  //   'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),
+  //   'PlusJakartaSans-Regular': require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
+  //   'PlusJakartaSans-Bold':require('../assets/fonts/PlusJakartaSans-Bold.ttf')
+  // });
+  // if(!fontsLoaded) {
+  //   return null;
+  // }
+
+  useEffect(() => {
+    animationRef.current?.play()
+    // Or set a specific startFrame and endFrame with:
+    animationRef.current?.play(30, 120);
+
+  }, [])
 
   return ( 
   <View style = {
@@ -174,9 +171,15 @@ export const Slider_comp = () => {
     </View> */}
 
       <View style ={styles.slide}>
+
+    
       {/* <Image style ={styles.image} source = {require('../assets/intro/Image2.png')} resizeMode = "cover" /> */}
       <View style={styles.sliderImgBox}>
-        <Image style = {styles.image} source = {require('../assets/intro/Image2.png')} resizeMode = "cover" />
+        {/* <Image style = {styles.image} source = {require('../assets/intro/Image2.png')} resizeMode = "cover" /> */}
+        <Lottie
+      ref={animationRef}
+      source={require('../assets/intro/lone.json')}/>
+   
       </View>
       <Text style = {styles.sliderText }>Securely Share Posts on Social</Text> 
       <Text style = { styles.sliderPara}>Share studies, reports, and personal awards, achievements and professional milestones. Securely.</Text> 

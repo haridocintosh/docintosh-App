@@ -35,6 +35,10 @@ const AuthStack = () => {
   return (
       <Stack.Navigator screenOptions={{headerShown: false}}>
       {/* <Stack.Screen name="RegisterStudentScreen" component={RegisterStudentScreen}  options={{ title: 'Register', headerShown: true}} /> */}
+
+      
+      {/* <Stack.Screen name="PracticeScreen" component={PracticeScreen} /> */}
+
       <Stack.Screen name="Intro" component={IntroStack} />
     
       <Stack.Screen name="InvitePeers" component={InvitePeers} options={{ title: 'Invite Peers', headerShown: true,  headerRight: () => (
@@ -52,7 +56,6 @@ const AuthStack = () => {
       <Stack.Screen name="Congratulation" component={Congratulation} />
       <Stack.Screen name="ForgetPassword" component={ForgetPassword} options={{ title: 'Forgot Password' , headerShown: true}} />
       <Stack.Screen name="CreateNewPass" component={CreateNewPass} options={{ title: 'Create New Password' , headerShown: true}} />
-      <Stack.Screen name="PracticeScreen" component={PracticeScreen} />
       <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
       <Stack.Screen name="ContactScreen"  component={ContactScreen} options={{ title: 'Contact Us', headerShown: true}}  />
       <Stack.Screen name='ContactPermission' component={ContactPermission}  options={{ title: 'Invite Peers' , headerShown: true,
