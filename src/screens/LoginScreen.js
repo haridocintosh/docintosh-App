@@ -50,10 +50,13 @@ const [data, setdata] = useState();
 
   const authLogin = async (e)=>{
     // console.log("Form");
+   
     if(register.email !== "" &&  register.password !== ""){
+      setloader(true)
       const token = await dispatch(userLogin(register));
-    console.log('lgitokm',token);
+      console.log('lgitokm',token);
       if(token.payload.status == 'Success'){
+        setloader(false)
         storeData('USER_INFO',JSON.stringify({
           login:true,
           data:token.payload.session_data
@@ -62,6 +65,7 @@ const [data, setdata] = useState();
        // Toast.show(token.payload.message);
           navigation.navigate('Home')
       }else{
+        setloader(false)
         Toast.show(token.payload.message);
       }
     

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
 import { Camera, CameraType } from 'expo-camera';
-import {StyleSheet, Text, TouchableOpacity, View, Image} from "react-native";
+import {StyleSheet, Text, TouchableOpacity, View, Image, ActivityIndicator} from "react-native";
 import {BottomSheetModal, BottomSheetModalProvider,BottomSheetScrollView} from "@gorhom/bottom-sheet";
 import * as ImagePicker from 'expo-image-picker';
 import {Entypo, Ionicons, MaterialIcons, Fontisto,MaterialCommunityIcons, AntDesign, FontAwesome5,FontAwesome, Feather} from "@expo/vector-icons";
@@ -21,6 +21,7 @@ import { mainApi } from "../../../apis/constant";
 const  Sharepost = () => {
   const dispatch    = useDispatch();
   const navigation  = useNavigation();
+  const [loader, setloader] = useState(false);
   const [expanded, setExpanded] = useState(true);
   const [images, setImages]   = useState(null);
   const [video, setVideo]   = useState(null);
@@ -31,12 +32,13 @@ const  Sharepost = () => {
 
   const [post ,setPost] = useState({
       publishto:"",
-      description : "",
+      description :"",
       status:"1",
       broadcast_to:"",
       postType:"",
       postImage:"",
-      type:"i"
+      type:"i",
+      custspeciality:""
   });
 
   const handlePress = () => setExpanded(!expanded);
@@ -85,15 +87,13 @@ const  Sharepost = () => {
 
     let localUri = result.uri;
    // setImages(localUri)
-   console.log(localUri);
+  //  console.log(localUri);
       let filename = localUri.split('/').pop();
       // Infer the type of the image
       let match = /\.(\w+)$/.exec(filename);
       let type = match ? `image/${match[1]}` : `image`;
-      
       let uriParts = localUri.split('.');
       let fileType = uriParts[uriParts.length - 1];
-      console.log(fileType);
       let formData = new FormData();
       const imageData = {
         uri : localUri,
@@ -103,6 +103,7 @@ const  Sharepost = () => {
     
       formData.append('postImage', imageData);
       formData.append('post_id', '3032');
+      setloader(true);
       const responce = await fetch(`https://docintosh.com/ApiController/postuploadDocsReact`, {
         method : 'POST',
         headers:{
@@ -110,12 +111,12 @@ const  Sharepost = () => {
         },
         body :formData
      });
-
-    // const result1=  await responce.json();
-    // console.log(result1);
-    // setPost({...post, 
-    //   postImage: result1.postImage,
-    // });
+    const result1=  await responce.json();
+    setloader(false);
+   console.log("postcheck",result1);
+    setPost({...post, 
+      postImage: result1.postImage,
+    });
   };
 
   const pickVideo = async () => {
@@ -180,14 +181,27 @@ const postDesc= (e)=>{
 }
 
 const publishCheck = (e)=>{
-  console.log(e);
+  // console.log(e);
     setPost({...post,
       publishto:e,
     })
    bottomSheetModalRefSecond.current?.close();
 }
+
+
+const publishCheck1 = (e)=>{
+  // console.log(e);
+    setPost({...post,
+      publishto:e,
+    })
+  //  bottomSheetModalRefSecond.current?.close();
+}
+
+
+
+
   const handleStudentSubmit = async() =>{
-  
+  console.log(post);
     if(post.publishto ==''){
       Toast.show('Please select Publishto');
     }else if(!post.description){
@@ -196,15 +210,19 @@ const publishCheck = (e)=>{
       Toast.show("Please select PostType");
     }else{
       const uploadData = {userdata,post}
+    
+      setloader(true);
      const result = await dispatch(postCreate(uploadData));
      console.log(result);
          if(result.payload.status == 'Success'){
+          setloader(false);
            Toast.show(result.payload.message);
           // setPost('');
           setTimeout(()=>{
             navigation.navigate('Home')
           },3000);
         }
+        setloader(false);
       }
     }
 
@@ -247,9 +265,10 @@ const publishCheck = (e)=>{
 
   useEffect(() => {
     const asyncFetchDailyData = async () => {
+   // setloader(true);
     const jsonValue = await AsyncStorage.getItem('USER_INFO');
       const data=await JSON.parse(jsonValue);
-      console.log(JSON.parse(data)['data'])
+      //setloader(false);
       const result=JSON.parse(data)['data'];
       setuserdata({...userdata, 
         fullname: `${result['first_name']} ${result['last_name']}`,
@@ -286,13 +305,26 @@ const publishCheck = (e)=>{
       return data;
     });
 
-    // console.log("temp",temp );
+    //console.log("temp",temp );
     setSpl(temp);
     const specialityId = temp
       .filter((val) => val.checked == true)
       .map((temp) => temp.speciality_id);
-    // console.log("specialityId",specialityId);
+//console.log("specialityId",specialityId);
+    setPost({ ...post, 
+      publishto:3,
+      custspeciality:specialityId
+    });
+      
+     
   };
+
+  if(loader){
+    return(
+    <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+        <ActivityIndicator size={'large'} color={"#2C8892"}/>
+    </View>)
+  }
 
   return (
     <BottomSheetModalProvider>
@@ -437,13 +469,14 @@ const publishCheck = (e)=>{
                 }}
                 titleStyle={{marginHorizontal:5, fontSize:16, fontFamily:'Inter-Regular'}}
                 title="My Circle"
+                onPress={() => { publishCheck1(3)}} 
                 left={props => <FontAwesome5 name="users" size={20} color="#45B5C0" />}>
                      <View style={{width:"100%",margin:10, height:1, backgroundColor:'#cecece', }}></View>
                   {circlespeciality && circlespeciality?.map((element, index)=> {
                     return (
                       <TouchableOpacity style={{flexDirection:'row'}} key={index} >
                         <CheckBox
-                          style={{ padding: 5,fontFamily:'Inter-Regular' }}
+                          style={{ padding: 5 }}
                           onClick={() => handleChange(element.speciality_id)}
                           isChecked={element.checked}
                           checkBoxColor="#2C8892"
