@@ -17,9 +17,9 @@ import { Button } from "react-native-elements";
 import { Card } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import ScratchOffer from "./ScratchOffer";
-import { useSelector } from "react-redux";
-import { useFonts } from "expo-font";
+import Lottie from 'lottie-react-native';
 import { styles } from "./SurvayStyle";
+import ThankYouFireBlast from '../../assets/intro/ThankYou_FireBlast.json'
 
 const ThankYouPage = ({ route }) => {
   const [showOffer, setShowOffer] = useState(true);
@@ -85,10 +85,17 @@ const ThankYouPage = ({ route }) => {
             </View>
           </View> */}
 
-          <Image
+          {/* <Image
             source={tankyouCelebration}
             style={styles.tankyouCelebration}
+          /> */}
+          <View style={styles.tankyouCelebration}>
+          <Lottie
+            source={require('../../assets/intro/ThankYou_FireBlast.json')}
+            autoPlay
+            loop
           />
+          </View>
 
           <View style={{ paddingHorizontal: 15, marginTop: -60 }}>
             <Text style={styles.thankutxt}>Thank You</Text>

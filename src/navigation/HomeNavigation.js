@@ -22,63 +22,62 @@ import SettingsScreen from '../screens/SettingsScreen';
 import LoginScreen from '../screens/LoginScreen';
 
 
-
 const HomeNavigation = () => {
 
     const Stack = createNativeStackNavigator();
     
     return (
-        <Stack.Navigator initialRouteName="Home">
-          <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false, headerTintColor: '#fff'}} />
+        <Stack.Navigator initialRouteName="HomeScreen">
+          <Stack.Screen name="HomeScreen" component={HomeScreen} options={{headerShown: false, headerTintColor: '#fff'}} />
           <Stack.Screen name="Knowledge2Screen" component={Knowledge2Screen} options={{headerShown: false}}/>
           <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={{headerShown: false}} />
-          <Stack.Screen  name="SharePost" component={SharePost} options={{headerShown: true,
-              title: "Create post",
-              headerStyle: {backgroundColor: '#071B36'},
-              headerTintColor: '#fff' }} />
           <Stack.Screen name="Polls" component={Polls} options={{headerShown: false}} />
           <Stack.Screen name="Polls1" component={Polls1}  options={{headerShown: false}} />
           <Stack.Screen name="SentimentixScreen" component={SentimentixScreen} options={{headerShown: true,  
               title: 'Sentimetrix'}}/>
-            <Stack.Screen name="Sentimentixscreen2" component={Sentimentixscreen2} options={{headerShown: true,  
-                title: 'Sentimetrix',
-                headerStyle: { backgroundColor: '#071B36'},
-                headerTintColor: '#fff'}}/>
-            <Stack.Screen name="SentimentrixCong" component={SentimentrixCong} options={{headerShown: true,  
-                title: 'Sentimetrix'}}/>
-            <Stack.Screen name="Sentimentrix3" component={Sentimentrix3} options={{headerShown: true,  
-                title: 'Sentimetrix',
-                headerStyle: { backgroundColor: '#071B36'},
-                headerTintColor: '#fff'}}/>
-            <Stack.Screen name="Sentimentrix6" component={Sentimentrix6} options={{headerShown: true,  
-                title: 'Sentimetrix'}}/>
-            <Stack.Screen name="CommonSearchScreen" component={CommonSearchScreen} options={{headerShown: true,  
-                title: 'Search',
-                headerStyle: {backgroundColor: '#071B36'},
-                headerTintColor: '#fff'}}/>
-            <Stack.Screen name="ProfileScreenFollowers" component={ProfileScreenFollowers} options={{headerShown: false,  
-                title: 'Search'}}/>
-            <Stack.Screen name="ProfileScreenFollowing" component={ProfileScreenFollowing} options={{headerShown: false,  
-                title: 'Search'}}/>
-            <Stack.Screen name="MultipleImagesUpload" component={MultipleImagesUpload} options={{headerShown: false,  
-                title: 'Search'}}/>
-            <Stack.Screen name="PostsScreen" component={PostsScreen} options={{headerShown: true,  
-                title: "Post's",
-                headerStyle: {backgroundColor: '#071B36'},
-                headerTintColor: '#fff'}}/>
-            <Stack.Screen name="CommentsScreen" component={CommentsScreen} options={{headerShown: true,  
-                title: "Comments",
-                headerStyle: {backgroundColor: '#071B36'},
-                headerTintColor: '#fff'}} />
-            <Stack.Screen name="MessagesScreen" component={MessagesScreen} options={{headerShown: true,  
-                title: "Comments",
-                headerStyle: {backgroundColor: '#071B36'},
-                headerTintColor: '#fff'}} />
-            <Stack.Screen name="SettingsScreen" component={SettingsScreen} options={{headerShown: true,  
-                title: "Comments",
-                headerStyle: {backgroundColor: '#071B36'},
-                headerTintColor: '#fff'}}/>
-            <Stack.Screen name="LoginScreen"component={LoginScreen} options={{headerShown: false }}/>
+          <Stack.Screen name="ProfileScreenFollowers" component={ProfileScreenFollowers} options={{headerShown: false,  
+              title: 'Search'}}/>
+          <Stack.Screen name="ProfileScreenFollowing" component={ProfileScreenFollowing} options={{headerShown: false,  
+              title: 'Search'}}/>
+          <Stack.Screen name="MultipleImagesUpload" component={MultipleImagesUpload} options={{headerShown: false,  
+              title: 'Search'}}/>
+          <Stack.Screen name="SentimentrixCong" component={SentimentrixCong} options={{headerShown: true,  
+              title: 'Sentimetrix'}}/>
+          <Stack.Screen name="Sentimentrix6" component={Sentimentrix6} options={{headerShown: true,  
+              title: 'Sentimetrix'}}/>
+          <Stack.Screen name="Sentimentixscreen2" component={Sentimentixscreen2} options={{headerShown: true,  
+              title: 'Sentimetrix',
+              headerStyle: { backgroundColor: '#071B36'},
+              headerTintColor: '#fff'}}/>
+          <Stack.Screen  name="SharePost" component={SharePost} options={{headerShown: true,
+              title: "Create post",
+              headerStyle: {backgroundColor: '#071B36'},
+              headerTintColor: '#fff' }} />
+          <Stack.Screen name="Sentimentrix3" component={Sentimentrix3} options={{headerShown: true,  
+              title: 'Sentimetrix',
+              headerStyle: { backgroundColor: '#071B36'},
+              headerTintColor: '#fff'}}/>
+          <Stack.Screen name="CommonSearchScreen" component={CommonSearchScreen} options={{headerShown: true,  
+              title: 'Search',
+              headerStyle: {backgroundColor: '#071B36'},
+              headerTintColor: '#fff'}}/>
+          <Stack.Screen name="PostsScreen" component={PostsScreen} options={{headerShown: true,  
+              title: "Post's",
+              headerStyle: {backgroundColor: '#071B36'},
+              headerTintColor: '#fff'}}/>
+          <Stack.Screen name="CommentsScreen" component={CommentsScreen} options={{headerShown: true,  
+              title: "Comments",
+              headerStyle: {backgroundColor: '#071B36'},
+              headerTintColor: '#fff'}} />
+          <Stack.Screen name="MessagesScreen" component={MessagesScreen} options={{headerShown: true,  
+              title: "Comments",
+              headerStyle: {backgroundColor: '#071B36'},
+              headerTintColor: '#fff'}} />
+          <Stack.Screen name="SettingsScreen" component={SettingsScreen} options={{headerShown: true,  
+              title: "Comments",
+              headerStyle: {backgroundColor: '#071B36'},
+              headerTintColor: '#fff'}}/>
+          <Stack.Screen name="LoginScreen"component={LoginScreen} options={{headerShown: false }}/>
         </Stack.Navigator>
       );
 }

@@ -534,7 +534,7 @@ return (
    </View>
 
 
-   <Modal isVisible={isModalVisible} width={320} height={200} style={{alignSelf:'center', borderWidth:0,  borderRadius:30/2, width:320,maxHeight:320, backgroundColor:'#ffff', bottom:'-50%',}}>
+   <Modal isVisible={isModalVisible} width={340} height={200} style={{alignSelf:'center', borderWidth:0,  borderRadius:30/2, width:320,maxHeight:320, backgroundColor:'#ffff', bottom:'-50%',}}>
         <View>
         <Image source={successic} style={{alignSelf:'center', marginBottom:25}}></Image>
           <Text style={{fontSize:18, fontWeight:'600',alignSelf:'center'}}>Congratulations!</Text>

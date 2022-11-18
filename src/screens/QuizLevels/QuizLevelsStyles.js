@@ -278,12 +278,24 @@ export const styles = StyleSheet.create({
     height: Dimensions.get("window").height,
     backgroundColor: "#D5F2E8",
     position: "absolute",
-    top: "-160%",
+    top: "-140%",
   },
   outOff: {
     fontSize: 16,
     fontWeight: "600",
     position: "absolute",
+  },
+  mcqSecTiming: {
+    borderWidth: 1,
+    borderRadius: 20,
+    backgroundColor: "#0D2A82",
+    flexDirection: "row",
+    alignSelf: "center",
+    paddingVertical: 7,
+    paddingHorizontal: 10,
+    borderColor: "#96AEF8",
+    alignItems: "center",
+    color:'#fff'
   },
   //--------------------------------------Quiz Game Quetion--------------------------
   quizGamequestion: {
@@ -346,7 +358,6 @@ export const styles = StyleSheet.create({
     marginVertical: 20,
   },
   //------------------
-
   QuizLevelcontainer: {
     flex: 1,
     padding: 10,
@@ -362,7 +373,6 @@ export const styles = StyleSheet.create({
     left: -40.2,
     transform: [{ rotate: "90deg" }],
   },
-
   cartGradiant: {
     width: Dimensions.get("window").width / 1.05,
     height: 125,

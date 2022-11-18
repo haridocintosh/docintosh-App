@@ -93,8 +93,7 @@ const QuizLevels = () => {
 
       <ScrollView
         showsVerticalScrollIndicator={false}
-        nestedScrollEnable={true}
-      >
+        nestedScrollEnable={true}>
         {/* <ActivityIndicator color={"#2C8892"}/> */}
 
         {quizData &&

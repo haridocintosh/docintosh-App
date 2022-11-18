@@ -17,14 +17,15 @@ import { saveQuizAnswer } from "../../../redux/reducers/mcqSlice";
 import { styles } from "./QuizLevelsStyles";
 import { useFonts } from "expo-font";
 
-const QuizGameQuetion = ({ mcqQue, isTop, singleMcq ,seconds}) => {
+const QuizGameQuetion = ({ mcqQue,singleMcq ,seconds,disabled,setDisabled}) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [isOptionsDisabled, setIsOptionsDisabled] = useState(false);
+  
   const [score, setScore] = useState(0);
   const TotalMcq = parseInt(mcqQue.length);
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
+  
+  // console.log("disabled",disabled);
   // const [progress, setProgress] = useState(new Animated.Value(0));
   //   const progressAnim = progress.interpolate({
   //       inputRange: [0, TotalMcq],
@@ -42,6 +43,7 @@ const QuizGameQuetion = ({ mcqQue, isTop, singleMcq ,seconds}) => {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
       // setShowScoreModal(true);
+      setDisabled(true);
       navigation.navigate("KnowYourHeart", {
         score: score,
         TotalMcq: TotalMcq,
@@ -69,8 +71,6 @@ const QuizGameQuetion = ({ mcqQue, isTop, singleMcq ,seconds}) => {
     const result = await dispatch(saveQuizAnswer(postDetails));
   };
 
-  
-
   const styling = {
     backgroundColor: "rgba(8, 1, 1, 0.05)",
     width: "100%",
@@ -81,11 +81,12 @@ const QuizGameQuetion = ({ mcqQue, isTop, singleMcq ,seconds}) => {
 
   const outOff = currentQuestionIndex / TotalMcq;
 
-  useEffect(() => {
-    if (isTop == false) {
-      setIsOptionsDisabled(true);
-    }
-  }, [isTop]);
+
+  // useEffect(() => {
+  // if (isTop == false) {
+  //   setIsOptionsDisabled(true);
+  // }
+  // }, [isTop]);
   return (
     <View style={{ marginTop: 10 }}>
       <View>
@@ -118,7 +119,7 @@ const QuizGameQuetion = ({ mcqQue, isTop, singleMcq ,seconds}) => {
           return (
             <TouchableOpacity
               key={i}
-              disabled={isOptionsDisabled}
+              disabled={disabled}
               onPress={() => validateAnswer(data)}
               style={styling}
             >
