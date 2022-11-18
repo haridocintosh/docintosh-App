@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Image,
   TextInput, Pressable,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -22,6 +22,7 @@ import { getcollegelist } from '../../redux/reducers/getSpeciality';
 import * as ImagePicker from 'expo-image-picker';
 import { userRegisterSecond } from '../../redux/reducers/loginAuth';
 import Toast from 'react-native-simple-toast';
+import Lottie from 'lottie-react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
@@ -56,8 +57,6 @@ const [open, setOpen] = useState(false);
 const [value, setValue] = useState(null);
 const [open1, setOpen1] = useState(false);
 const [value1, setValue1] = useState(null);
-const [openState, setOpenState] = useState(false);
-const [valueState, setValueState] = useState(null);
 const [err,seterr] = useState();
 const [imgurl,setimgurl]=useState()
 const [profileurl,setprofileurl]=useState()
@@ -182,14 +181,6 @@ const pickImage = async (arg) => {
 
 
 const pickprofile = async (arg) => {
-  // No permissions request is necessary for launching the image library
-  // let result = await ImagePicker.launchCameraAsync({
-  //   mediaTypes: ImagePicker.MediaTypeOptions.All,
-  //   allowsEditing: false,
-  //   aspect: [3,3],
-  //   quality: 1,
-  // });
-
   if(arg==1){
     var result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -241,19 +232,8 @@ const pickprofile = async (arg) => {
     setprofilErr('')
 };
 
-if(loader){
-  return(
-  <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
-      <ActivityIndicator size={'large'} color={"#2C8892"}/>
-  </View>)
-}
 
-const form_submit = async() =>{
-  // if(!register.pincode || !register.university || !register.college || !register.password  || !register.mrnproof){
-  // //  const token = await dispatch(userLogin(register));
-  // // console.log(register)
-  //     seterr("Please fill the above form");
-  
+const form_submit = async() =>{ 
   if(!register.pincode){
     setPincode("Please enter a valid pincode");
   }else if(!register.university){
@@ -267,27 +247,28 @@ const form_submit = async() =>{
   }else if(!register.mrnproof){
     setmrnproofErr("Please Upload CollegeId/Library Card");
   }else{
-    // console.log("gg");
     setsubmitbtn(true);
     setloader(true);
     const result = await dispatch(userRegisterSecond(register));
-    // console.log('Registertkn',result);
+    console.log("refisterone", result);
+    setloader(false);
+    console.log("RegisterSTudent", result.payload);
     Toast.show(result.payload.message);
       if(result.payload.status == 'Success'){
-        setloader(false);
-        // console.log("success");
-        // navigation.navigate('Login')
-        //console.log("success");
-          setIsModalVisible(!isModalVisible);
+        setIsModalVisible(!isModalVisible);
         setTimeout(() => {
           setIsModalVisible(!isModalVisible);
           navigation.navigate('ContactPermission')
-         },3000);
-      
-         
+         },3000) 
       }
+      setloader(false);
     }
   }
+
+  // const showcong = ()=>{
+  //   setIsModalVisible(!isModalVisible);
+  // }
+
   const [fontsLoaded] = useFonts({
     'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),
     'Inter-SemiBold':require('../assets/fonts/Inter-SemiBold.ttf'),
@@ -299,6 +280,12 @@ const form_submit = async() =>{
     return null;
   }
 
+  if(loader){
+    return(
+    <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+        <ActivityIndicator size={'large'} color={"#2C8892"}/>
+    </View>)
+  }
 
 return (
   <SafeAreaView style={{flex: 0, justifyContent: 'center',paddingTop:0}}>
@@ -306,6 +293,7 @@ return (
     keyboardShouldPersistTaps='handled'
     showsVerticalScrollIndicator={false}
     nestedScrollEnable={true}>
+{/* onPress={() => setModalVisible(true)} */}
     <Pressable onPress={() => setModalVisible(true)}>
       <View style={styles.suceesheadBox}>
         <View style={styles.registermainText}>
@@ -469,11 +457,12 @@ return (
     <Text style={{color:'red'}}>{err}</Text>
     {submitbtn?<CustomButton label={'Submitting...'}  />:<CustomButton label={'Continue'} onPress={() => form_submit()} />}
 
-    <Modal isVisible={isModalVisible} width={320} height={200} style={{alignSelf:'center', borderWidth:0, borderRadius:30/2, width:320,maxHeight:320, backgroundColor:'#ffff', bottom:'-50%',}}>
-      <View>
-      {/* <Image source={successic} style={{alignSelf:'center', marginBottom:25}}></Image> */}
-        <Text style={{fontSize:18, fontWeight:'600',alignSelf:'center'}}>Congratulations!!!</Text>
-        <Text style={{fontSize:14, padding:10, fontWeight:'400',alignContent:'center',textAlign:'center',marginTop:16, color:'#51668A'}}>You are now part of the Docintosh family. While profile verification can take up to 48 hours, you can be part of the community just by logging in.</Text>
+    <Modal isVisible={isModalVisible} width={320} height={"100%"} style={{display:"flex",alignItems:'center', justifyContent:"center", borderWidth:0, borderRadius:30/2, width:320,maxHeight:230, backgroundColor:'#fff', bottom:'-60%',}}>
+      <View style={{display:"flex",alignItems:'center', justifyContent:"center",}}>
+        <Lottie style={{position:"absolute",top:-26,height:"100%",width:80,alignSelf:'center',}}
+        source={require('../assets/dr-icon/congratulation.json')} autoPlay={true} loop={false}/>
+        <Text style={{fontSize:18, fontWeight:'600',alignSelf:'center',marginTop:65,marginBottom:-5}}>Congratulations!!!</Text>
+        <Text style={{fontSize:14, padding:10, fontWeight:'400',alignContent:'center',textAlign:'center', color:'#51668A',}}>You are now part of the Docintosh family. While profile verification can take up to 48 hours, you can be part of the community just by logging in.</Text>
       </View>
    
     </Modal>

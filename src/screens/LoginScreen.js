@@ -221,7 +221,7 @@ const [data, setdata] = useState();
 
         <View
           style={styles.ragistertext}>
-          <Text style={styles.ragistertext2}>Already a member? </Text>
+          <Text style={styles.ragistertext2}>Don't have an account? </Text>
           <TouchableOpacity onPress={() => navigation.navigate('Register')}>
             <Text style={{color: '#2376E5', fontWeight: '600',fontSize:16,fontFamily:"PlusJakartaSans-Bold"}} > Register</Text>
           </TouchableOpacity>

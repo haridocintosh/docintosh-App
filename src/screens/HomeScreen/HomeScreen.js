@@ -36,7 +36,7 @@ import { useIsFocused } from '@react-navigation/native';
 
 const HomeScreen = ({navigation})=> {
 // like unlike fun =>
-  const [loader, setLoader] = useState(true);
+  const [loader, setLoader] = useState(false);
   const [optionModal, setOptionModal]   = useState(false);
   const [userdata, setuserdata]     = useState({profile:'',user_id:''});
   const [allPost, setallPost]  = useState([]);
@@ -114,10 +114,13 @@ const HomeScreen = ({navigation})=> {
 
   const fetchPostData = async (role,city_id,assoc_id,profileimage,userId)=>{ 
     const postDetails = {role,city_id,assoc_id,profileimage,userId}
+    setLoader(true)   
+    console.log(postDetails); 
     const result = await dispatch(userPostData(postDetails));
-    const allPostData = result.payload.filter(Post => Post.user_role != 5)
-    setallPost(allPostData);
     setLoader(false)
+    const allPostData = result && result.payload.filter(Post => Post.user_role != 5)
+    setallPost(allPostData);
+   
   }
   
   const handlePost = (item) => {

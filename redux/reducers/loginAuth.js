@@ -52,7 +52,6 @@ export const userRegisterSecond = createAsyncThunk("user/regSecond", async(regDa
         });
         const result=  await responce.json();
         console.log('registerSecondSlice',result);
-        //result.data.token;
         return result
     }
     catch(e){
