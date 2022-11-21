@@ -23,6 +23,7 @@ import { userRegisterSecond } from '../../redux/reducers/loginAuth';
 import { coinTransfer } from '../../redux/reducers/coinSlice';
 import Toast from 'react-native-simple-toast';
 import successic from '../assets/dr-icon/Ic_Success.png';
+import Lottie from 'lottie-react-native';
 import { useFonts } from 'expo-font';
 import { BottomSheetModal,BottomSheetModalProvider} from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -32,8 +33,8 @@ const navigation  = useNavigation();
 
 const dispatch    = useDispatch();
   //console.log(route.params);
- const {user_id,fullname,role} = route.params;
- //const fullname="gagan";
+  const {user_id,fullname,role} = route.params;
+  //const fullname="gagan";
   const [isOpen, setIsOpen]     = useState(false);
   const bottomSheetModalRef       = useRef(null);
   const bottomSheetModalRefSecond = useRef(null);
@@ -148,6 +149,10 @@ const setPassword= (e) =>{
     password: e,
   });
   setPasswordErr('');
+}
+
+const showcong = ()=>{
+  setIsModalVisible(!isModalVisible);
 }
 
 const pickImage = async (arg) => {
@@ -346,8 +351,8 @@ return (
     keyboardShouldPersistTaps='handled'
     showsVerticalScrollIndicator={true}
     nestedScrollEnable={true}>
-    <View style={styles.suceesheadBox} >
-    <Pressable onPress={() => handlePresentModal()}>
+    <View style={styles.suceesheadBox}>
+    <Pressable onPress={() =>handlePresentModal()}>
      <View style={styles.registermainText}>
           <Image style={{width:56,height:56,borderRadius:50}} source={profileurl?{ uri: profileurl }:require('../assets/images/p2.png')}/>
           <View style={styles.headtopInner}>
@@ -533,14 +538,28 @@ return (
    {submitbtn?<CustomButton label={'Submitting...'} />:<CustomButton label={'Continue'} onPress={() => form_submit()} />}
    </View>
 
-
-   <Modal isVisible={isModalVisible} width={340} height={200} style={{alignSelf:'center', borderWidth:0,  borderRadius:30/2, width:320,maxHeight:320, backgroundColor:'#ffff', bottom:'-50%',}}>
+{/* 
+   <Modal isVisible={isModalVisible} width={320} height={200} style={{alignSelf:'center', borderWidth:0,  borderRadius:30/2, width:320,maxHeight:320, backgroundColor:'#ffff', bottom:'-50%',}}>
         <View>
-        <Image source={successic} style={{alignSelf:'center', marginBottom:25}}></Image>
+        <Lottie style={{position:"absolute",top:-65,height:180,width:180,alignSelf:'center',}}
+        source={require('../assets/dr-icon/congratulation.json')} autoPlay={true} loop={true}/>
+     
           <Text style={{fontSize:18, fontWeight:'600',alignSelf:'center'}}>Congratulations!</Text>
           <Text style={{fontSize:14, padding:10, fontWeight:'400',alignContent:'center',textAlign:'center',marginTop:16, color:'#51668A'}}>You are now part of the Docintosh family. While profile verification can take up to 48 hours, you can be part of the community just by logging in. </Text>
         </View>
-  </Modal>
+  </Modal> */}
+
+  
+      <Modal isVisible={isModalVisible} width={320} height={"100%"} style={{display:"flex",alignItems:'center', justifyContent:"center", borderWidth:0, borderRadius:30/2, width:320,maxHeight:230, backgroundColor:'#fff', bottom:'-60%',}}>
+      <View style={{display:"flex",alignItems:'center', justifyContent:"center",}}>
+        <Lottie style={{position:"absolute",top:-26,height:"100%",width:80,alignSelf:'center',}}
+        source={require('../assets/dr-icon/congratulation.json')} autoPlay={true} loop={false}/>
+        <Text style={{fontSize:18, fontWeight:'600',alignSelf:'center',marginTop:65,marginBottom:-5}}>Congratulations!!!</Text>
+        <Text style={{fontSize:14, padding:10, fontWeight:'400',alignContent:'center',textAlign:'center', color:'#51668A',}}>You are now part of the Docintosh family. While profile verification can take up to 48 hours, you can be part of the community just by logging in.</Text>
+      </View>
+    </Modal>
+
+  
 
     <BottomSheetModal
           ref={bottomSheetModalRef}
