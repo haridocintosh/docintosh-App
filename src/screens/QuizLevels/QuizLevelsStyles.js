@@ -22,6 +22,7 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "500",
     fontFamily: "PlusJakartaSans-Bold",
+    marginBottom:10
   },
   score: {
     alignSelf: "center",
@@ -30,7 +31,7 @@ export const styles = StyleSheet.create({
   },
   badgeparent: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     PaddingTop: 20,
   },
   badgeConatiner: {
@@ -98,6 +99,7 @@ export const styles = StyleSheet.create({
   levelText: {
     color: "#51668A",
     fontFamily: "Inter-Regular",
+    fontSize:13
   },
   coinsCount: {
     color: "#51668A",
@@ -286,16 +288,23 @@ export const styles = StyleSheet.create({
     position: "absolute",
   },
   mcqSecTiming: {
-    borderWidth: 1,
-    borderRadius: 20,
+    borderWidth: 2,
+    borderRadius: 50,
+    width:60,
+    height:60,
     backgroundColor: "#0D2A82",
-    flexDirection: "row",
-    alignSelf: "center",
-    paddingVertical: 7,
-    paddingHorizontal: 10,
+    alignSelf: 'flex-end',
     borderColor: "#96AEF8",
     alignItems: "center",
-    color:'#fff'
+    justifyContent:'center',
+  },
+  mcqSecTimingText: {
+    textAlign:'center',
+    alignContent:'center',
+    color:'#fff',
+    fontFamily: "Inter-SemiBold",
+    padding:0,
+    margin:0,
   },
   //--------------------------------------Quiz Game Quetion--------------------------
   quizGamequestion: {

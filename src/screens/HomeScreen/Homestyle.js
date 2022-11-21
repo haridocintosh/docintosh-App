@@ -262,7 +262,10 @@ socialImages:{
 },
 likedImage :{
   marginLeft:-10, 
-  borderColor:'#000'
+  borderColor:'#000',
+  width:25,
+  height:25,
+  borderRadius:50
 },
 socialCount:{
   paddingRight:20,

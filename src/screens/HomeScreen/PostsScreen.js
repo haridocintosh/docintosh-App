@@ -5,17 +5,57 @@ import PublicReactions from './PublicReactions';
 import Svg, {Path} from 'react-native-svg';
 import {Ionicons,MaterialCommunityIcons,FontAwesome5} from '@expo/vector-icons';
 import { styles } from './Homestyle';
+import savePost  from '../../assets/dr-icon/savePost.png';
+import reportPost  from '../../assets/dr-icon/reportPost.png';
+import unfollow  from '../../assets/dr-icon/unfollow.png';
+import blockUser  from '../../assets/dr-icon/blockUser.png';
 
 const PostsScreen = ({route}) => {
-    const [userData, setUserData] =useState([])
+    const [userData, setUserData] =useState([]);
+    const [postId, setPostId] =useState();
+    const [optionModal, setOptionModal]   = useState(false);
     const { item } =route?.params;
     const navigation = useNavigation();
     navigation.setOptions({ title: `${item?.first_name}'s Post` });
     // const {allPost} =route?.params;
+
+
+    const handleOption = (post_id) =>{
+        setOptionModal(!optionModal);
+        setPostId(post_id)
+    }
     useEffect(() => {
         setUserData(item?.attach_array)
     }, [])
     // console.log("item",item);
+
+
+    const OptionComp = () => {
+        return(
+          <>
+          {optionModal &&
+            <View style={styles.optionModal}>
+            <TouchableOpacity style={styles.optionList}>
+              <Image source={savePost} style={styles.optionListImage}/>
+              <Text style={styles.optionListText}>Save Post</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.optionList}>
+              <Image source={reportPost} style={styles.optionList2}/>
+              <Text style={styles.optionListText}>Report Post</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.optionList}>
+              <Image source={unfollow} style={styles.optionList3}/>
+              <Text style={styles.optionListText}>Unfollow</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.optionList}>
+              <Image source={blockUser} style={styles.optionList4}/>
+              <Text style={styles.optionListText}>Block User</Text>
+            </TouchableOpacity>
+          </View>}
+          </>
+        )
+      }
+
   return (
     <View style={styles.PostContainer}>
 

@@ -65,7 +65,7 @@ const AuthStack = () => {
       <Stack.Screen name="AppStack" component={AppStack} />
       <Stack.Screen name="QuizLevels" component={QuizLevels} />
       <Stack.Screen 
-        name="Home"
+        name="HomeScreen"
         component={AppStack}
         options={{headerShown: false}}
       />

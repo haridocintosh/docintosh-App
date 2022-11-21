@@ -219,7 +219,7 @@ const publishCheck1 = (e)=>{
            Toast.show(result.payload.message);
           // setPost('');
           setTimeout(()=>{
-            navigation.navigate('Home')
+            navigation.navigate('HomeScreen')
           },3000);
         }
         setloader(false);

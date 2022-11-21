@@ -19,9 +19,25 @@ export const postLikeData = createAsyncThunk("getAllPost", async (data)=>{
      }
 })
 
+// export const getallLikes = createAsyncThunk("getAllPost", async (data)=>{
+//     try{
+//         const responce = await fetch(`${mainApi.baseUrl}/ApiController/getallLike`, {
+//             method : 'POST',
+//             headers:{
+//                 'Content-Type': 'application/json'
+//             },
+//             body :JSON.stringify(data)
+//          });
+//         const commentResults =  await responce.json();
+//         return commentResults;
+//      }
+//      catch(e){
+//         console.log(e);;
+//      }
+// })
 export const getallLikes = createAsyncThunk("getAllPost", async (data)=>{
     try{
-        const responce = await fetch(`${mainApi.baseUrl}/ApiController/getallLike`, {
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/allpostlike`, {
             method : 'POST',
             headers:{
                 'Content-Type': 'application/json'

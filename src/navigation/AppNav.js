@@ -47,13 +47,11 @@ useEffect(() => {
   const islogin =data?data.login:null;
   return (
     <NavigationContainer>
-      {islogin?<AppStack/>:<AuthStack />}
+      {islogin ? <AppStack/>:<AuthStack />}
       {/* {usertoken !==null ? <AppStack />:<AuthStack />  } */}
     </NavigationContainer>
-    
   );
 }
-
 
 
 const styles = StyleSheet.create({

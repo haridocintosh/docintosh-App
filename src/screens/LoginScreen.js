@@ -63,7 +63,7 @@ const [data, setdata] = useState();
         }))
         singlestoreData('isloggedin','true'); 
        // Toast.show(token.payload.message);
-          navigation.navigate('Home')
+          navigation.navigate('HomeScreen')
       }else{
         setloader(false)
         Toast.show(token.payload.message);
@@ -132,9 +132,6 @@ const [data, setdata] = useState();
       <Text  style={styles.headingtexts}>
           Welcome 
         </Text>
-        {/* <Text  style={styles.headingtext}>
-          Welcome Dr.Kiran Yadav 
-        </Text> */}
         <Text  style={styles.headingtext}>
          {data?((data.data.role<='4')?'Dr. ':''):''}{data?data.data.first_name+' '+data.data.last_name:''}
         </Text>
@@ -163,7 +160,7 @@ const [data, setdata] = useState();
         />
       <Ionicons  style={styles.eyeIcon} name={showeye ? 'eye-off' : 'eye'} size={24} color="#51668A" onPress={() => setshoweye(!showeye)} />
       
-      <View style={{display:'flex', justifyContent: 'space-between',flexDirection:'row',paddingHorizontal: 5,paddingBottom:12,alignItems:"center"}}>
+      <View style={{justifyContent: 'space-between',flexDirection:'row',paddingHorizontal: 5,paddingBottom:12,alignItems:"center"}}>
 
       <View style={styles.section}>
         <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
@@ -172,21 +169,19 @@ const [data, setdata] = useState();
             fontWeight: '400',
             marginBottom: 20,
             fontStyle: 'normal',
-            lineHeight: 15,
             letterSpacing: 1,
             color: '#51668A',
-             fontFamily: 'Inter-Regular',
+            fontFamily: 'Inter-Regular',
           }}>
-        Remember Me
-          </Text>
+          Remember Me
+        </Text>
       </View>
 
           <Text style={{
-        
             fontSize: 14,
             fontWeight: '600',
             marginBottom: 20,
-           fontFamily: 'PlusJakartaSans-Bold',
+            fontFamily: 'PlusJakartaSans-Bold',
             fontStyle: 'normal',
             lineHeight: 24,
             letterSpacing: 1,
@@ -198,34 +193,7 @@ const [data, setdata] = useState();
         </View>
         <Text style={{color:'red' , textAlign:'center', marginBottom:10,fontFamily: 'PlusJakartaSans-Regular' }}>{message}</Text>
         <CustomButton label={"Login"} onPress={() => authLogin()}  />
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            // marginBottom: 30,
-          }}>
-          {/* <Text style={styles.headingpara2}>or</Text> */}
-          
-        </View>
-       {/* <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-around',
-            marginBottom: 30,
-          }}>
-        
-          <SvgUri width="56" height="56" uri="https://www.brandcare.net/Docintosh_Svg/google.svg" />
-          <SvgUri width="56" height="56" uri="https://www.brandcare.net/Docintosh_Svg/linkdin.svg" />
-          <SvgUri width="56" height="56" uri="https://www.brandcare.net/Docintosh_Svg/facebook%20%282%29.svg" />
-        </View> */}
-
-        <View
-          style={styles.ragistertext}>
-          <Text style={styles.ragistertext2}>Already a member? </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-            <Text style={{color: '#2376E5', fontWeight: '600',fontSize:16,fontFamily:"PlusJakartaSans-Bold"}} > Register</Text>
-          </TouchableOpacity>
-        </View>
+        <CustomButton label={"Register"} onPress={() => navigation.navigate('Register')}  />
       </View>
     </SafeAreaView>
   );
@@ -295,7 +263,7 @@ ragistertext2:{
   color:'#51668A',
   fontFamily:"Inter-Regular"
 },
-section:{display:'flex',flexDirection:'row',justifyContent:'center'},
+section:{flexDirection:'row',justifyContent:'center',},
 });
 
 export default LoginScreen;

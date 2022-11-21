@@ -49,6 +49,10 @@ const KnowYourHeart = ({ route }) => {
   useEffect(() => {
     getLeaderboardData();
   }, []);
+  
+  const handleAlldata = () => {
+    setSliceData();
+  };
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "#2C8892", position: "relative" }}

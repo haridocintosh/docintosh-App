@@ -12,7 +12,7 @@ import CustomDrawer from '../components/CustomDrawer';
 
 const Drawer = createDrawerNavigator();
 
-const AuthStack = () => {
+const AppStack = () => {
 
   return (
     <Drawer.Navigator
@@ -43,7 +43,6 @@ const AuthStack = () => {
             <Ionicons name="trophy-outline" size={22} style={{color:'#ffff'}} />
           ),
         }}
-        
       />
 
  
@@ -51,6 +50,9 @@ const AuthStack = () => {
         name="Invite"
         component={ProfileScreen}
         options={{
+          headerShown: true,
+          headerStyle: {backgroundColor: '#071B36'},
+          headerTintColor: '#fff',
           drawerIcon: () => (
             <Ionicons name="person-add-outline" size={22} style={{color:'#ffff'}} />
           ),
@@ -60,7 +62,9 @@ const AuthStack = () => {
         name="Gift DocCoins"
         component={MessagesScreen}
         options={{
-          headerShown: false,
+          headerShown: true,
+          headerStyle: {backgroundColor: '#071B36'},
+          headerTintColor: '#fff',
           drawerIcon: () => (
             <Ionicons name="gift-outline" size={22} style={{color:'#ffff'}} />
           ),
@@ -70,6 +74,9 @@ const AuthStack = () => {
         name="Take a Tour"
         component={MomentsScreen}
         options={{
+          headerShown: true,
+          headerStyle: {backgroundColor: '#071B36'},
+          headerTintColor: '#fff',
           drawerIcon: () => (
             <Ionicons name="timer-outline" size={22} style={{color:'#ffff'}} />
           ),
@@ -79,6 +86,9 @@ const AuthStack = () => {
         name="What’s New"
         component={MomentsScreen}
         options={{
+          headerShown: true,
+          headerStyle: {backgroundColor: '#071B36'},
+          headerTintColor: '#fff',
           drawerIcon: () => (
             <Ionicons name="timer-outline" size={22} style={{color:'#ffff'}} />
           ),
@@ -89,6 +99,9 @@ const AuthStack = () => {
         name="Business Page"
         component={MomentsScreen}
         options={{
+          headerShown: true,
+          headerStyle: {backgroundColor: '#071B36'},
+          headerTintColor: '#fff',
           drawerIcon: () => (
             <Ionicons name="md-document-text-outline" size={22} style={{color:'#ffff'}} />
           ),
@@ -108,6 +121,9 @@ const AuthStack = () => {
         name="Settings"
         component={SettingsScreen}
         options={{
+          headerShown: true,
+          headerStyle: {backgroundColor: '#071B36'},
+          headerTintColor: '#fff',
           drawerIcon: () => (
             <Ionicons name="settings-outline" size={22} style={{color:'#ffff'}} />
           ),
@@ -119,4 +135,4 @@ const AuthStack = () => {
   );
 };
 
-export default AuthStack;
+export default AppStack;

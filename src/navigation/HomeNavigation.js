@@ -22,6 +22,7 @@ import SettingsScreen from '../screens/SettingsScreen';
 import LoginScreen from '../screens/LoginScreen';
 
 
+
 const HomeNavigation = () => {
 
     const Stack = createNativeStackNavigator();
@@ -35,10 +36,14 @@ const HomeNavigation = () => {
           <Stack.Screen name="Polls1" component={Polls1}  options={{headerShown: false}} />
           <Stack.Screen name="SentimentixScreen" component={SentimentixScreen} options={{headerShown: true,  
               title: 'Sentimetrix'}}/>
-          <Stack.Screen name="ProfileScreenFollowers" component={ProfileScreenFollowers} options={{headerShown: false,  
-              title: 'Search'}}/>
-          <Stack.Screen name="ProfileScreenFollowing" component={ProfileScreenFollowing} options={{headerShown: false,  
-              title: 'Search'}}/>
+          <Stack.Screen name="ProfileScreenFollowers" component={ProfileScreenFollowers} options={{headerShown: true, 
+              headerStyle: { backgroundColor: '#071B36'},
+              headerTintColor: '#fff', 
+              title: 'Followers'}}/>
+          <Stack.Screen name="ProfileScreenFollowing" component={ProfileScreenFollowing} options={{headerShown: true,  
+              headerStyle: { backgroundColor: '#071B36'},
+              headerTintColor: '#fff',
+              title: 'Following'}}/>
           <Stack.Screen name="MultipleImagesUpload" component={MultipleImagesUpload} options={{headerShown: false,  
               title: 'Search'}}/>
           <Stack.Screen name="SentimentrixCong" component={SentimentrixCong} options={{headerShown: true,  
