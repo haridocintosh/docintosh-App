@@ -15,7 +15,7 @@ const storeData = async (key,value) => {
 const singlestoreData = async (key,value) => {
   try {
    // const jsonValue = JSON.stringify(value)
-   console.log(key,value);
+  //  console.log(key,value);
     await AsyncStorage.setItem(key, value)
   }catch (e) {
     // saving error

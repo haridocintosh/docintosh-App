@@ -113,7 +113,7 @@ const HomeScreen = ({navigation})=> {
   const fetchPostData = async (role,city_id,assoc_id,profileimage,userId)=>{ 
     const postDetails = {role,city_id,assoc_id,profileimage,userId}
     setLoader(true)   
-    console.log(postDetails); 
+    // console.log(postDetails); 
     const result = await dispatch(userPostData(postDetails));
     setLoader(false)
     const allPostData = result && result.payload.filter(Post => Post.user_role != 5)

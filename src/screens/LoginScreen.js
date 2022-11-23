@@ -4,18 +4,17 @@ import {
   View,
   Text,
   TextInput,
-  TouchableOpacity,
   StyleSheet,
   ActivityIndicator,
   } from 'react-native';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 const styelcss = require('../assets/css/style');
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import CustomButton from '../components/CustomButton';
 import Checkbox from 'expo-checkbox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { login, storeData, singlestoreData } from '../apis/Apicall';
+import { storeData, singlestoreData } from '../apis/Apicall';
 import { userLogin } from '../../redux/reducers/loginAuth';
 import Toast from 'react-native-simple-toast';
 import { useFonts } from 'expo-font';
@@ -25,19 +24,18 @@ const LoginScreen = () => {
   const dispatch   = useDispatch();
   const [loader, setloader] = useState(true);
   const [showeye, setshoweye] = useState(true);
-  const [isChecked, setChecked] = useState(false);
+  const [isChecked, setChecked] = useState();
   const [message , setmessage]  = useState();
- // const isValidemailRegex       = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})|(^[0-9]{10})+$/;
- const isValidemailRegex  = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.[a-z]{1,3})+([a-zA-Z0-9]{1,3})|(^[0-9]{10})+$/;
-  const [register ,setregister] = useState({
-    email:"",
-    password : "",
-  });
-const [data, setdata] = useState();
+  const isValidemailRegex  = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.[a-z]{1,3})+([a-zA-Z0-9]{1,3})|(^[0-9]{10})+$/;
+  const [register ,setregister] = useState({email:"",password : "",});
+  const [data, setdata] = useState();
+  const [datarm, setdatarm] = useState();
 
+  const toggleRememberMe = (value) => {
+    setChecked(value);
+  }
 
   const  updateEmail = (text)=>{
-    //console.log(text);
     if(!isValidemailRegex.test(text)){
         setmessage("Please Enter valid Email address or Phone number.");
     }else{
@@ -49,53 +47,37 @@ const [data, setdata] = useState();
   }
 
   const authLogin = async (e)=>{
-    // console.log("Form");
-   
+    register.email = datarm?.data.email || register.email;
+    register.password = datarm?.data.password || register.password;
+
     if(register.email !== "" &&  register.password !== ""){
       setloader(true)
       const token = await dispatch(userLogin(register));
-      console.log('lgitokm',token);
       if(token.payload.status == 'Success'){
         setloader(false)
         storeData('USER_INFO',JSON.stringify({
           login:true,
           data:token.payload.session_data
-        }))
+        }));
+
+        if(isChecked){
+          storeData('rememberme',JSON.stringify({
+            data:{...token.meta.arg, isChecked:isChecked }
+          }))
+        }else{
+          AsyncStorage.removeItem("rememberme")
+        }
         singlestoreData('isloggedin','true'); 
-       // Toast.show(token.payload.message);
+        // Toast.show(token.payload.message);
           navigation.navigate('HomeScreen')
       }else{
         setloader(false)
         Toast.show(token.payload.message);
       }
-    
-      // localStorage.setItem('auth', token.payload);
-      // storeData('USER_INFO',JSON.stringify({
-      //   login:true,
-      //   data:res.data["session_data"]
-      // })) 
-      // singlestoreData('isloggedin','true'); 
-      // navigate('/', {
-      //     replace: true
-      // })
-
-//navigation.navigate('Home')
     }else{
       setmessage('Please fill the above details');
     }
   }
-
-  // const removeData = async (key) => {
-  //   try {
-  //     await AsyncStorage.removeItem(key);
-  //   console.log("remove");
-  //   } catch(e) {
-    
-  //   }
-  // }
-  // useEffect(() => {
-  //     removeData('USER_INFO');
-  //   },[])
 
   const getData = async (key) => {
     try {
@@ -107,15 +89,27 @@ const [data, setdata] = useState();
     }
   }
 
+  const getDatarm = async (key) => {
+    try {
+      const jsonValue = await AsyncStorage.getItem(key);
+      await setdatarm(jsonValue != null ? JSON.parse(JSON.parse(jsonValue)) : null);
+      const result = jsonValue != null ? JSON.parse(JSON.parse(jsonValue)) : null;
+      setChecked(result?.data.isChecked);
+    } catch(e) {
+     console.log(e)
+    }
+  }
+
   useEffect(() => {
-    getData('USER_INFO')
+    getData('USER_INFO');
+    getDatarm('rememberme');
   },[])
 
   const [fontsLoaded] = useFonts({
     'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),
     'PlusJakartaSans-Regular': require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
-    
   });
+
   if(!fontsLoaded) {
     return null;
   }
@@ -126,10 +120,11 @@ const [data, setdata] = useState();
         <ActivityIndicator size={'large'} color={"#2C8892"}/>
     </View>)
   }
+
   return (
     <SafeAreaView style={{paddingHorizontal:30}}>
       <View style={{marginTop:40}}>
-      <Text  style={styles.headingtexts}>
+        <Text  style={styles.headingtexts}>
           Welcome 
         </Text>
         <Text  style={styles.headingtext}>
@@ -144,6 +139,9 @@ const [data, setdata] = useState();
           placeholder='Email ID / Mobile Number*'
           placeholderTextColor='#51668A'
           onChangeText={(text)=>updateEmail(text)}
+          // value={datarm?.data.email}
+          defaultValue={datarm?.data.email}
+          blurOnSubmit={true}
          />
 
       <TextInput style={[styelcss.customInputVerifyFullMobile,{ fontFamily: 'PlusJakartaSans-Regular',}]} 
@@ -157,13 +155,19 @@ const [data, setdata] = useState();
           placeholderTextColor='#51668A'
           hideShow={showeye}
           fieldButtonFunction={() => {}}
+          // value={datarm?.data.password}
+          defaultValue={datarm?.data.password}
+          blurOnSubmit={true}
         />
       <Ionicons  style={styles.eyeIcon} name={showeye ? 'eye-off' : 'eye'} size={24} color="#51668A" onPress={() => setshoweye(!showeye)} />
       
       <View style={{justifyContent: 'space-between',flexDirection:'row',paddingHorizontal: 5,paddingBottom:12,alignItems:"center"}}>
 
       <View style={styles.section}>
-        <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
+        <Checkbox style={styles.checkbox} 
+          value={isChecked} 
+          onValueChange={(value) => toggleRememberMe(value)} 
+        />
         <Text style={{
             fontSize: 12,
             fontWeight: '400',

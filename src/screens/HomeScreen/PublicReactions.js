@@ -35,7 +35,7 @@ const PublicReactions = ({item}) => {
 //  console.log("item?.post_like_status---------------------------------------------------------------",item.post_id);
 
  const handleLikes = async (post_id) => {
-  console.log("post_id",post_id);
+  // console.log("post_id",post_id);
   setLiked(!liked);
   const postDetails = {user_id:result.id, post_id:post_id}
   const sentResult = await dispatch(postLikeData(postDetails));
@@ -44,7 +44,7 @@ const PublicReactions = ({item}) => {
   setAllLikeData(getallLikesData.payload)
   setLikeCount(getallLikesData.payload.count);
   // console.log("getallLikesData?.payload?.getallLike",getallLikesData?.payload?.getallLike);
-  console.log("getallLikesData",getallLikesData.payload.data);
+  // console.log("getallLikesData",getallLikesData.payload.data);
   
   if(sentResult?.payload?.count){
     setLiked(true);

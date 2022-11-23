@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { StyleSheet, Text, LogBox } from 'react-native';
 import AppNav from './src/navigation/AppNav';
 // import { Provider } from 'react-redux';

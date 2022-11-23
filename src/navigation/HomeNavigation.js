@@ -31,7 +31,10 @@ const HomeNavigation = () => {
         <Stack.Navigator initialRouteName="HomeScreen">
           <Stack.Screen name="HomeScreen" component={HomeScreen} options={{headerShown: false, headerTintColor: '#fff'}} />
           <Stack.Screen name="Knowledge2Screen" component={Knowledge2Screen} options={{headerShown: false}}/>
-          <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={{headerShown: false}} />
+          <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={{headerShown: true,
+              headerStyle: { backgroundColor: '#071B36'},
+              headerTintColor: '#fff',
+              title: 'Profile'}} />
           <Stack.Screen name="Polls" component={Polls} options={{headerShown: false}} />
           <Stack.Screen name="Polls1" component={Polls1}  options={{headerShown: false}} />
           <Stack.Screen name="SentimentixScreen" component={SentimentixScreen} options={{headerShown: true,  
