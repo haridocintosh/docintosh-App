@@ -110,7 +110,7 @@ const InvitePeers = ({route}) => {
                   
         </ScrollView>
         <View style={{marginTop:10,zIndex:1,width:"100%",bottom:0,backgroundColor:"#f1f1f1",paddingTop:6}}>
-                <CustomButton label={'Continue'} onPress={() => navigation.navigate('LoginScreen')} />
+                <CustomButton label={'Continue'} onPress={() => navigation.navigate('Login')} />
                 <Text style={{textAlign:"center",fontSize:14,fontWeight:"700",color:"#2376E5",marginBottom:10,marginTop:-15}}>Select Manually</Text>
         </View>
     </View>

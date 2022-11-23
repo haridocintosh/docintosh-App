@@ -255,19 +255,15 @@ const form_submit = async() =>{
     console.log("RegisterSTudent", result.payload);
     Toast.show(result.payload.message);
       if(result.payload.status == 'Success'){
-        setIsModalVisible(!isModalVisible);
+        setIsModalVisible(true);
         setTimeout(() => {
-          setIsModalVisible(!isModalVisible);
+          setIsModalVisible(false);
           navigation.navigate('ContactPermission')
          },3000) 
       }
       setloader(false);
     }
   }
-
-  // const showcong = ()=>{
-  //   setIsModalVisible(!isModalVisible);
-  // }
 
   const [fontsLoaded] = useFonts({
     'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),
@@ -443,7 +439,6 @@ return (
 
    <View style={styles.verifyNextFooterpara}>
       {/* <Text style={styles.headTextpara}> </Text> */}
- 
       <View style={{
               flexDirection:"row"
             }}>
@@ -457,7 +452,7 @@ return (
     <Text style={{color:'red'}}>{err}</Text>
     {submitbtn?<CustomButton label={'Submitting...'}  />:<CustomButton label={'Continue'} onPress={() => form_submit()} />}
 
-    <Modal isVisible={isModalVisible} width={320} height={"100%"} style={{display:"flex",alignItems:'center', justifyContent:"center", borderWidth:0, borderRadius:30/2, width:320,maxHeight:230, backgroundColor:'#fff', bottom:'-60%',}}>
+    <Modal isVisible={isModalVisible} width={'100%'} height={"100%"} style={{alignItems:'center', justifyContent:"center", borderWidth:0, borderRadius:30/2,maxHeight:230, backgroundColor:'#fff', bottom:'-60%',}}>
       <View style={{display:"flex",alignItems:'center', justifyContent:"center",}}>
         <Lottie style={{position:"absolute",top:-26,height:"100%",width:80,alignSelf:'center',}}
         source={require('../assets/dr-icon/congratulation.json')} autoPlay={true} loop={false}/>

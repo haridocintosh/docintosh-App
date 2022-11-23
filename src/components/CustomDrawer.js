@@ -38,7 +38,6 @@ const CustomDrawer = props => {
     fullname : "",
     profile:"",
     speciality:"",
-    
   });
   const Drawer = createDrawerNavigator();
   useEffect(() => {
@@ -67,9 +66,8 @@ const CustomDrawer = props => {
         data:logoutdata
       }))
       setTimeout(()=>{
-        navigation.navigate('LoginScreen')
+        navigation.navigate('Login')
       },1000)
-      
     }catch(e) {
     }
     setLoader(false)
@@ -145,7 +143,7 @@ const CustomDrawer = props => {
             <View style={{marginVertical:15}}>
             <Button
               onPress={() => removeData()}
-                title={loader ? <ActivityIndicator color={"#fff"}/>: "Logout"}
+                title={"Logout"}
                 type="outline"
                 buttonStyle={{
                   borderColor: '#2C8892',

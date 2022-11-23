@@ -26,6 +26,7 @@ import ContactScreen from '../screens/commonpage/ContactScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 
 
+
 const Stack = createNativeStackNavigator();
 
 const AuthStack = () => {
@@ -38,12 +39,13 @@ const AuthStack = () => {
       {/**/}
       <Stack.Screen name="Intro" component={IntroStack} />
       <Stack.Screen name="InvitePeers" component={InvitePeers} options={{ title: 'Invite Peers', headerShown: true,  headerRight: () => (
-          <Text onPress={() => navigation.navigate('LoginScreen')} style={{color:"#2376E5"}} >Skip</Text>)}}  />
+          <Text onPress={() => navigation.navigate('Login')} style={{color:"#2376E5"}} >Skip</Text>)}}  />
       <Stack.Screen name="MobileScreen" component={MobileScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="LoginScreen">
-        {() => <LoginScreen extraData={user}  />}
-      </Stack.Screen>
+{/* 
+      <Stack.Screen name="Login"> 
+        {(props) => <HomeScreen {...props} extraData={user}  />}
+      </Stack.Screen> */}
       <Stack.Screen name="Register" component={RegisterScreen}  />
       <Stack.Screen name="OtpVerification" component={OtpVerification} options={{ title: 'Verification OTP', headerShown: true}} />
       <Stack.Screen name="DoctorOtp" component={DoctorOtp} options={{ title: 'Verification OTP', headerShown: true}} />  
@@ -52,7 +54,7 @@ const AuthStack = () => {
       <Stack.Screen name="Congratulation" component={Congratulation} />
       <Stack.Screen name='ContactPermission' component={ContactPermission}  options={{ title: 'Invite Peers' , headerShown: true,
         headerRight: () => (
-          <Text onPress={() => navigation.navigate('LoginScreen')} style={{color:"#2376E5"}} >Skip</Text>)
+          <Text onPress={() => navigation.navigate('Login')} style={{color:"#2376E5"}} >Skip</Text>)
         }} /> 
       <Stack.Screen name="ForgetPassword" component={ForgetPassword} options={{ title: 'Forgot Password' , headerShown: true}} />
       <Stack.Screen name="CreateNewPass" component={CreateNewPass} options={{ title: 'Create New Password' , headerShown: true}} />
@@ -60,7 +62,7 @@ const AuthStack = () => {
       <Stack.Screen name="ContactScreen"  component={ContactScreen} options={{ title: 'Contact Us', headerShown: true}}  />
     
       <Stack.Screen name="SelectInterest" component={SelectInterest} options={{ title: 'Select your Interest', headerShown: true,  headerRight: () => (
-          <Text onPress={() => navigation.navigate('LoginScreen')} style={{color:"#2376E5", fontWeight:"700"}} >Skip</Text>)}} />
+          <Text onPress={() => navigation.navigate('Login')} style={{color:"#2376E5", fontWeight:"700"}} >Skip</Text>)}} />
       <Stack.Screen name="TermsAndCondition" component={TermsAndCondition} options={{ title: 'Terms & Condition', headerShown: true}} />
       <Stack.Screen name="ForgotPasswordOTP" component={ForgotPasswordOTP} options={{ title: 'Verification OTP', headerShown: true}} />
       <Stack.Screen name="AppStack" component={AppStack} />

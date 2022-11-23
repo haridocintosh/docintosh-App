@@ -1,4 +1,4 @@
-import React,{ Dimensions, useState , useEffect} from 'react';
+import React,{ useState , useEffect} from 'react';
 import {
   SafeAreaView,
   View,
@@ -6,11 +6,12 @@ import {
   TextInput,
   StyleSheet,
   ActivityIndicator,
+  Platform, Settings
   } from 'react-native';
 import { useDispatch } from "react-redux";
 const styelcss = require('../assets/css/style');
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import CustomButton from '../components/CustomButton';
 import Checkbox from 'expo-checkbox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -19,17 +20,19 @@ import { userLogin } from '../../redux/reducers/loginAuth';
 import Toast from 'react-native-simple-toast';
 import { useFonts } from 'expo-font';
 
+
 const LoginScreen = () => {
   const navigation = useNavigation();
   const dispatch   = useDispatch();
   const [loader, setloader] = useState(true);
   const [showeye, setshoweye] = useState(true);
-  const [isChecked, setChecked] = useState();
+  const [isChecked, setChecked] = useState(false);
   const [message , setmessage]  = useState();
   const isValidemailRegex  = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.[a-z]{1,3})+([a-zA-Z0-9]{1,3})|(^[0-9]{10})+$/;
-  const [register ,setregister] = useState({email:"",password : "",});
+  const [register ,setregister] = useState({email:"",password:""});
   const [data, setdata] = useState();
   const [datarm, setdatarm] = useState();
+  const isFocused = useIsFocused();
 
   const toggleRememberMe = (value) => {
     setChecked(value);
@@ -46,7 +49,23 @@ const LoginScreen = () => {
     });
   }
 
+  // let isStoreNeedCleaning = false;
+  // console.log("Platform.OS",Platform.OS);
+
+  //   if (Platform.OS === 'ios' || Platform.OS === 'android') {
+  //       if (!Settings.get('hasRunBefore')) {
+  //           Settings.set({ hasRunBefore: true });
+  //           isStoreNeedCleaning = true;
+  //       }
+  //   }
+
+  //   if (isStoreNeedCleaning) {
+  //     AsyncStorage.removeItem("rememberme")
+  //   }
+  
+
   const authLogin = async (e)=>{
+
     register.email = datarm?.data.email || register.email;
     register.password = datarm?.data.password || register.password;
 
@@ -59,6 +78,7 @@ const LoginScreen = () => {
           login:true,
           data:token.payload.session_data
         }));
+          console.log("isChecked=====in",isChecked);
 
         if(isChecked){
           storeData('rememberme',JSON.stringify({
@@ -92,9 +112,14 @@ const LoginScreen = () => {
   const getDatarm = async (key) => {
     try {
       const jsonValue = await AsyncStorage.getItem(key);
-      await setdatarm(jsonValue != null ? JSON.parse(JSON.parse(jsonValue)) : null);
+      // await setdatarm(jsonValue != null ? JSON.parse(JSON.parse(jsonValue)) : null);
       const result = jsonValue != null ? JSON.parse(JSON.parse(jsonValue)) : null;
+      console.log("result",result);
+      setdatarm(result)
       setChecked(result?.data.isChecked);
+      if(result == null){
+        setregister({email: "",password :""});
+      }
     } catch(e) {
      console.log(e)
     }
@@ -102,8 +127,10 @@ const LoginScreen = () => {
 
   useEffect(() => {
     getData('USER_INFO');
-    getDatarm('rememberme');
-  },[])
+    if(isFocused){
+      getDatarm('rememberme');
+    }
+  },[isFocused])
 
   const [fontsLoaded] = useFonts({
     'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),

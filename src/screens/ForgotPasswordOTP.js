@@ -162,7 +162,6 @@
      {/* userRegister() */}
     <Text style={{color: '#2376E5', fontWeight: '600',fontSize:16,}}>
       {counter == 0? "Resend OTP" : `Resend in ${counter}s`}
-      
     </Text>
    </TouchableOpacity>
    </View>

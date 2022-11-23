@@ -44,6 +44,7 @@ const HomeScreen = ({navigation})=> {
   // const [liked, setLiked] = useState(false);
   const isFocused = useIsFocused();
   // const FunContext = createContext(null);
+
   //---------------- header Animation------------------
   const scrollPosition = useRef(new Animated.Value(0)).current;
   const minHeaderHeight = 100
@@ -95,6 +96,7 @@ const HomeScreen = ({navigation})=> {
   useEffect(()=>{
     if(isFocused){
       asyncFetchDailyData();
+      navigation.closeDrawer();
     }
   },[isFocused]);
 
@@ -103,21 +105,29 @@ const HomeScreen = ({navigation})=> {
     const jsonValue = await AsyncStorage.getItem('USER_INFO');
     const data=await JSON.parse(jsonValue);
     const result=JSON.parse(data)['data'];
+    // console.log("result",result);
     setuserdata({
       profile:result['profileimage'],
       user_id:result['id']
     });
-    fetchPostData(result['role'],result['city_id'], result['assoc_id'], result['profileimage'], result['id'])
+    fetchPostData(result['role'],result['city_id'], result['assoc_id'], result['profileimage'], result['id'],result['circle_type'],)
   }
 
-  const fetchPostData = async (role,city_id,assoc_id,profileimage,userId)=>{ 
-    const postDetails = {role,city_id,assoc_id,profileimage,userId}
+  const fetchPostData = async (role,city_id,assoc_id,profileimage,userId,circle_type)=>{ 
+    if(role == 5){
+      var circle_type = 3;
+    } 
+    else{
+      circle_type = 1
+    }
+    const postDetails = {role,city_id,assoc_id,profileimage,userId,circle_type}
     setLoader(true)   
-    // console.log(postDetails); 
+    // console.log("postDetails",postDetails); 
     const result = await dispatch(userPostData(postDetails));
     setLoader(false)
-    const allPostData = result && result.payload.filter(Post => Post.user_role != 5)
-    setallPost(allPostData);
+    // const allPostData = result && result.payload.filter(Post => Post.user_role != 5)
+    setallPost(result.payload);
+    // console.log("result.payload",result);
    
   }
   

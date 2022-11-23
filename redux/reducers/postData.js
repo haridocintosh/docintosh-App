@@ -12,7 +12,7 @@ export const userPostData = createAsyncThunk("getAllPost", async (postDetails)=>
             body :JSON.stringify({
                 postType:0,
                 role:postDetails.role,
-                circle_type:1,
+                circle_type:postDetails.circle_type,
                 city_id:postDetails.city_id,
                 assoc_id:postDetails.assoc_id,
                 pageCounter:600,

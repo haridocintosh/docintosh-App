@@ -20,6 +20,8 @@ import CommentsScreen from '../screens/HomeScreen/CommentsScreen';
 import MessagesScreen from '../screens/MessagesScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import LoginScreen from '../screens/LoginScreen';
+import AuthStack from './AuthStack';
+
 
 
 
@@ -85,7 +87,13 @@ const HomeNavigation = () => {
               title: "Comments",
               headerStyle: {backgroundColor: '#071B36'},
               headerTintColor: '#fff'}}/>
-          <Stack.Screen name="LoginScreen"component={LoginScreen} options={{headerShown: false }}/>
+          {/* <Stack.Screen name="LoginScreen" component={LoginScreen} options={{
+            }}/> */}
+          <Stack.Screen 
+              name="Login"
+              component={LoginScreen}
+              options={{headerShown: false}}
+          />
         </Stack.Navigator>
       );
 }

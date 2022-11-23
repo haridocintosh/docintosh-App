@@ -22,14 +22,14 @@ const OtpVerification = ({route}) => {
   const {mobile_no, email, user_id} = route.params;
   const [phone ,setPhone] =useState("");
   const navigation = useNavigation();
-  const [counter, setCounter] = useState(15);
+  const [counter, setCounter] = useState(30);
   const [otpInput, setotpInput ] = useState('');
   const [message , setmessage] = useState();
 
   const userRegister = ()=>{
+      setCounter(30)
       quicklogin(email,mobile_no)
        .then(res => {
-        // setProcessingState('saved');
         console.log(res['status']);
          if(res['status'] == 'Success'){
           setTimeout(() => {
@@ -124,8 +124,10 @@ const OtpVerification = ({route}) => {
         <View
           style={styles.verifiactionSubText}>
           <Text style={styles.verifiactionInnerText}>Didn’t Receive OTP? </Text>
-          <TouchableOpacity>
-            <Text style={{color: '#2376E5', fontWeight: '600',fontSize:16,}} onPress={() => userRegister()}  >Resend in {counter}s</Text>
+          <TouchableOpacity onPress={() => userRegister()}>
+          <Text style={{color: '#2376E5', fontWeight: '600',fontSize:16,}}>
+            {counter == 0? "Resend OTP" : `Resend in ${counter}s`}
+          </Text>
           </TouchableOpacity>
         </View>
    <View >
