@@ -76,7 +76,7 @@ const CustomDrawer = props => {
   return (
     <View style={styles.DrowerContainer}>
         <View style={styles.DocLogo}>
-          <Image source={docintoshlogo} style={styles.logoImg}></Image>
+          <Image source={require('../assets/dr-icon/docintoshlogo.png')} style={styles.logoImg}></Image>
           <TouchableOpacity onPress={() => props.navigation.closeDrawer()}>
             <AntDesign name="close" color={'#fff'} size={25} />
           </TouchableOpacity>

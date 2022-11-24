@@ -149,19 +149,19 @@ const HomeScreen = ({navigation})=> {
       {optionModal &&
         <View style={styles.optionModal}>
         <TouchableOpacity style={styles.optionList}>
-          <Image source={savePost} style={styles.optionListImage}/>
+          <Image source={require('../../assets/dr-icon/savePost.png')} style={styles.optionListImage}/>
           <Text style={styles.optionListText}>Save Post</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.optionList}>
-          <Image source={reportPost} style={styles.optionList2}/>
+          <Image source={require('../../assets/dr-icon/reportPost.png')} style={styles.optionList2}/>
           <Text style={styles.optionListText}>Report Post</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.optionList}>
-          <Image source={unfollow} style={styles.optionList3}/>
+        <Image source={require('../../assets/dr-icon/unfollow.png')} style={styles.optionList2}/>
           <Text style={styles.optionListText}>Unfollow</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.optionList}>
-          <Image source={blockUser} style={styles.optionList4}/>
+         <Image source={require('../../assets/dr-icon/unfollow.png')} style={styles.optionList2}/>
           <Text style={styles.optionListText}>Block User</Text>
         </TouchableOpacity>
       </View>}

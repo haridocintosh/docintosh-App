@@ -8,6 +8,7 @@ import {
   Image,
   TextInput, Pressable,
   ActivityIndicator,
+  Dimensions
 } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -247,7 +248,7 @@ const form_submit = async() =>{
   }else if(!register.mrnproof){
     setmrnproofErr("Please Upload CollegeId/Library Card");
   }else{
-    setsubmitbtn(true);
+    // setsubmitbtn(true);
     setloader(true);
     const result = await dispatch(userRegisterSecond(register));
     console.log("refisterone", result);
@@ -452,7 +453,7 @@ return (
     <Text style={{color:'red'}}>{err}</Text>
     {submitbtn?<CustomButton label={'Submitting...'}  />:<CustomButton label={'Continue'} onPress={() => form_submit()} />}
 
-    <Modal isVisible={isModalVisible} width={'100%'} height={"100%"} style={{alignItems:'center', justifyContent:"center", borderWidth:0, borderRadius:30/2,maxHeight:230, backgroundColor:'#fff', bottom:'-60%',}}>
+    <Modal isVisible={isModalVisible} height={"100%"} style={{alignItems:'center', justifyContent:"center", borderWidth:0, borderRadius:30/2,maxHeight:230, backgroundColor:'#fff', bottom:'-65%',}}>
       <View style={{display:"flex",alignItems:'center', justifyContent:"center",}}>
         <Lottie style={{position:"absolute",top:-26,height:"100%",width:80,alignSelf:'center',}}
         source={require('../assets/dr-icon/congratulation.json')} autoPlay={true} loop={false}/>
