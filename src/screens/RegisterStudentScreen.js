@@ -248,7 +248,7 @@ const form_submit = async() =>{
   }else if(!register.mrnproof){
     setmrnproofErr("Please Upload CollegeId/Library Card");
   }else{
-    // setsubmitbtn(true);
+    setsubmitbtn(true);
     setloader(true);
     const result = await dispatch(userRegisterSecond(register));
     console.log("refisterone", result);

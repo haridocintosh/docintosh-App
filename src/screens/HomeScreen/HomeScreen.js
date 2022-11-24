@@ -96,7 +96,6 @@ const HomeScreen = ({navigation})=> {
   useEffect(()=>{
     if(isFocused){
       asyncFetchDailyData();
-      navigation.closeDrawer();
     }
   },[isFocused]);
 

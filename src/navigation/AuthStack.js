@@ -33,7 +33,7 @@ const AuthStack = () => {
   const [user, setUser] = useState(null);
   const navigation = useNavigation();
   return (
-      <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Navigator screenOptions={{headerShown: true}}>
       {/* <Stack.Screen name="RegisterStudentScreen" component={RegisterStudentScreen}  options={{ title: 'Register', headerShown: true}} /> */}
       {/* <Stack.Screen name="PracticeScreen" component={PracticeScreen} /> */}
       {/**/}
@@ -69,7 +69,7 @@ const AuthStack = () => {
       <Stack.Screen name="QuizLevels" component={QuizLevels} />
       <Stack.Screen 
         name="HomeScreen"
-        component={AppStack}
+        component={HomeScreen}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

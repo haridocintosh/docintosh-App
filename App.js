@@ -7,17 +7,15 @@ import { Provider} from 'react-redux';
 import { useFonts } from 'expo-font';
 
 export default function App() {
+  LogBox.ignoreLogs(['Warning: ...']); //Hide warnings
+  LogBox.ignoreAllLogs();
+
 const [fontsLoaded] = useFonts({
   "Inter-Regular": require("./src/assets/fonts/Inter-Regular.ttf"),
   "Inter-SemiBold": require("./src/assets/fonts/Inter-SemiBold.ttf"),
   "PlusJakartaSans-Regular": require("./src/assets/fonts/PlusJakartaSans-Regular.ttf"),
   "PlusJakartaSans-Bold": require("./src/assets/fonts/PlusJakartaSans-Bold.ttf"),
 });
-
-// LogBox.ignoreLogs([
-//   "ViewPropTypes will be removed",
-//   "ColorPropType will be removed",
-// ])
 
 if (!fontsLoaded) {
   return null;

@@ -20,10 +20,6 @@ import CommentsScreen from '../screens/HomeScreen/CommentsScreen';
 import MessagesScreen from '../screens/MessagesScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import LoginScreen from '../screens/LoginScreen';
-import AuthStack from './AuthStack';
-
-
-
 
 const HomeNavigation = () => {
 
@@ -89,11 +85,11 @@ const HomeNavigation = () => {
               headerTintColor: '#fff'}}/>
           {/* <Stack.Screen name="LoginScreen" component={LoginScreen} options={{
             }}/> */}
-          <Stack.Screen 
+          {/* <Stack.Screen 
               name="Login"
               component={LoginScreen}
               options={{headerShown: false}}
-          />
+          /> */}
         </Stack.Navigator>
       );
 }

@@ -10,7 +10,9 @@ import TabNavigator from './TabNavigator';
 import CustomDrawer from '../components/CustomDrawer';
 
 
+
 const Drawer = createDrawerNavigator();
+
 
 const AppStack = () => {
 
@@ -37,6 +39,8 @@ const AppStack = () => {
         }}
       />
     </Drawer.Navigator>
+
+    
   );
 };
 
