@@ -7,8 +7,8 @@ import { Provider} from 'react-redux';
 import { useFonts } from 'expo-font';
 
 export default function App() {
-  LogBox.ignoreLogs(['Warning: ...']); //Hide warnings
-  LogBox.ignoreAllLogs();
+  // LogBox.ignoreLogs(['Warning: ...']); //Hide warnings
+  // LogBox.ignoreAllLogs();
 
 const [fontsLoaded] = useFonts({
   "Inter-Regular": require("./src/assets/fonts/Inter-Regular.ttf"),

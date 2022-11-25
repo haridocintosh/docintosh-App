@@ -7,13 +7,11 @@ import { useNavigation } from '@react-navigation/native';
 
 
 const InvitePeers = ({route}) => {
-    //console.log(route.params);
     const navigation = useNavigation();
     const {alluserContact} = route.params;
     const [isChecked, setChecked] = useState(false);
     const [contactData, setcontactData] = useState('');
     const [contactData1, setcontactData1] = useState(alluserContact);
-    const [checkboxdata,setcheckboxdata]=useState();
 
     const onChecked = (usernumber)=>{
         let copy=[...contactData];
@@ -49,7 +47,6 @@ const InvitePeers = ({route}) => {
     const onAllChecked=()=>{
        
         const newItem = contactData1.map((val)=>{
-            //console.log(item.speciality_id);
             let copy=[...contactData];
             copy =[...copy,val.phoneNumbers[0].number]
             setcontactData(copy)

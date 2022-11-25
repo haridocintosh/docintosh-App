@@ -550,7 +550,7 @@ return (
   </Modal> */}
 
   
-      <Modal isVisible={isModalVisible}  height={"100%"} style={{alignItems:'center', justifyContent:"center", borderWidth:0, borderRadius:30/2, width:320,maxHeight:230, backgroundColor:'#fff', bottom:'-65%',}}>
+      <Modal isVisible={isModalVisible} width={"100%"} height={"100%"} style={{alignItems:'center', justifyContent:"center", borderWidth:0, borderRadius:30/2, width:320,maxHeight:230, backgroundColor:'#fff', bottom:'-60%',}}>
       <View style={{display:"flex",alignItems:'center', justifyContent:"center",}}>
         <Lottie style={{position:"absolute",top:-26,height:"100%",width:80,alignSelf:'center',}}
         source={require('../assets/dr-icon/congratulation.json')} autoPlay={true} loop={false}/>

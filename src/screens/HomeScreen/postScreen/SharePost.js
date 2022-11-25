@@ -360,7 +360,13 @@ const publishCheck1 = (e)=>{
           autoCapitalize="none"
           onChangeText={(e)=>{postDesc(e)}}
         />
-        {images && <Image source={{ uri: images }} style={{ width: 100, height: 100 ,}} />}
+        {images &&<View style={{position:'relative',width: 100, height: 100}}>
+           <Image source={{ uri: images }} style={{ width: 100, height: 100 ,borderRadius:5}} />
+          <TouchableOpacity style={styles.removeImg} onPress={() =>setImages()}>
+          <AntDesign name="close" size={15}/>
+          </TouchableOpacity>
+        </View>}
+        
         <View style={styles.line}/>
       </View>
 
@@ -576,7 +582,17 @@ const styles = StyleSheet.create({
     width:'100%',
     justifyContent:'space-between'
 
+  },
+  removeImg:{
+    width:15,
+    height:15,
+    backgroundColor:'#fff',
+    position:'absolute',
+    right:0,
+    borderRadius:50,
+    margin:5
   }
+
 });
 
 export default  Sharepost

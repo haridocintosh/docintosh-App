@@ -112,10 +112,6 @@ const email= async(e)=>{
       console.log("frontend",result.payload.message)
       setemail(result.payload.message)
     }
-    // else{
-    //    setemail('')
-    // }
-   
   }
 
   setregister({
@@ -171,7 +167,7 @@ const setuserrole= (e)=>{
 }
 
 const form_submit = async() =>{
-  console.log("Doctor",register.mobile);
+  // console.log("Doctor",register.mobile);
   // if(!register.fname || !register.lname  || !register.mobile || !register.email || !register.gender || !register.role || !register.speciality || checked === 4 ?!value:''){
   //     seterr("Please fill the above form");
   // }else if(emailId != ''){
@@ -185,11 +181,13 @@ const form_submit = async() =>{
     lnerr("Please enter Last Name");
   }else if(!register.email){
     setemail("Please enter valid Email ID");
-  }else if(emailIderr != ''){
+  }
+  else if(emailIderr != ''){
     setemail("This Email ID is registered with us");
   }else if(mobileId !=''){
     setemail("This mobile no. is registred with us");
-  }else if(!register.mobile){
+  }
+  else if(!register.mobile){
     setmobile("Pleaes enter valid mobile no.");
   }else if(!register.gender){
     errgender("Please Select gender");
@@ -235,7 +233,13 @@ const form_submit = async() =>{
       lnerr("Please enter Last Name");
     }else if(!register.gender){
       errgender("Please Select gender");
-    }else if(!register.email){
+    }
+    else if(emailIderr != ''){
+      setemail("This Email ID is registered with us");
+    }else if(mobileId !=''){
+      setemail("This mobile no. is registred with us");
+    }
+    else if(!register.email){
       setemail("Please enter valid Email ID");
     }else if(!register.mobile){
       setmobile("Pleaes enter valid mobile no.");
@@ -267,14 +271,6 @@ const form_submit = async() =>{
     }
 
 
-  const [fontsLoaded] = useFonts({
-    'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),
-    'PlusJakartaSans-Regular': require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
-    'PlusJakartaSans-Bold':require('../assets/fonts/PlusJakartaSans-Bold.ttf')
-  });
-  if(!fontsLoaded) {
-    return null;
-  }
   
   if(loader){
     return(
@@ -367,6 +363,7 @@ const form_submit = async() =>{
           <View  style={{marginTop:-56,zIndex:-1,alignSelf:'center', alignItems:'center', paddingVertical:10, flexDirection:'row', backgroundColor:'#fff', width:110,height:46, borderRadius:20/2}} ><View style={{marginRight:20}}></View><MaterialCommunityIcons name="gender-female" size={24} color="#51668A" /><Text style={{color:'#51668A',fontSize:16, fontWeight:'400'}}>Female</Text></View>
         </View>
         </View>
+
         <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{genderErr}</Text>
         <TextInput  style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular'}]} placeholderTextColor='#687690' autoComplete='off' autoCapitalize="none" keyboardType="email-address" placeholder='Email ID' onChangeText={(e)=>{email(e)}}/>
         <Text style={{color:'red',fontFamily: 'PlusJakartaSans-Regular'}}>{emailIderr !='' && emailIderr}</Text>
@@ -378,46 +375,39 @@ const form_submit = async() =>{
           <Text style={{ fontFamily: 'Inter-Regular',fontSize:16,color:"#51668A"}}>You are :</Text>
           <View>
             <RadioButton 
-            value="4" status={ checked === '4' ? 'checked' : 'unchecked' }
+            value="4" 
+            status={ checked === '4' ? 'checked' : 'unchecked' }
             onPress={() => {setChecked('4'); setuserrole(4)}} />
             <View  style={{marginTop:-56,zIndex:-1,alignSelf:'center',
+             justifyContent:'center',
              alignItems:'center',
-             paddingVertical:11,
+             paddingVertical:10,
              flexDirection:'row',
              backgroundColor:'#fff', width:110, height:46, borderRadius:20/2}}>
-             <View style={{marginRight:20,}}></View>
-            <Fontisto name="doctor" size={20} color="#51668A" /><Text style={{color:'#51668A',marginHorizontal:5,fontSize:16, fontWeight:'400'}}>Doctor</Text></View>
+            <Fontisto name="doctor" size={20} color="#51668A" />
+             <Text style={{color:'#51668A',marginLeft:5,fontSize:16, fontWeight:'400'}}>
+              Doctor
+              </Text>
+            </View>
           </View>
-  
-          <View style={{flex:0,}}>
-
-        <RadioButton style={{backgroundColor:"red"}}
-
-          value="5"
-
-          status={ checked === '5' ? 'checked' : 'unchecked' }
-
-          onPress={() => {setChecked('5'); setuserrole(5)}}
-
-        />
-
-        <View  style={{marginTop:-56,zIndex:-1,alignSelf:'center',
-
-        alignItems:'center',
-
-        paddingVertical:10,
-
-
-
-        flexDirection:'row',
-
-        backgroundColor:'#fff', width:110, height:46, borderRadius:20/2}}>
-
-<View style={{marginRight:20}}></View>
-
-<FontAwesome5 name="user-graduate" size={20} color="#51668A" /><Text style={{color:'#51668A', marginHorizontal:5, fontSize:16, fontWeight:'400'}}>Student</Text></View>
-
-</View>
+          <View>
+          <RadioButton 
+            value="5"
+            status={ checked === '5' ? 'checked' : 'unchecked' }
+            onPress={() => {setChecked('5'); setuserrole(5)}}
+          />
+            <View  style={{marginTop:-56,zIndex:-1,alignSelf:'center',
+              justifyContent:'center',
+              alignItems:'center',
+              paddingVertical:10,
+              flexDirection:'row',
+              backgroundColor:'#fff', width:110, height:46, borderRadius:20/2}}>
+              <FontAwesome5 name="user-graduate" size={20} color="#51668A" />
+              <Text style={{color:'#51668A', marginLeft:5, fontSize:16, fontWeight:'400'}}>
+                Student
+              </Text>
+            </View>
+        </View>
 
      </View>
 
@@ -467,23 +457,11 @@ const form_submit = async() =>{
     </View>
     <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{docspl}</Text>
 
-      <View style={{ marginBottom: 30}} ></View>
-
-      <View style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-
+    <View style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
       <Text style={{color:'red',fontFamily: 'PlusJakartaSans-Regular'}}>{err}</Text>
+    </View>
 
-    
-
-      {/* <CustomButton label={'Continue'} onPress={() => navigation.navigate('OtpVerification', {
-        mobile_no : '9029634011',
-        email : 'tara@gmail.com',
-        user_id :'228737',
-      }
-      )} /> */}
-      </View>
-
-      <View>
+    <View>
       {checked === '4'? ( 
         <CustomButton label={'Continue'}  onPress={() =>{form_submit()}} />
         ) : 

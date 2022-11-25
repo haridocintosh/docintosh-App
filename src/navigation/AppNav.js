@@ -7,11 +7,13 @@ import AuthStack from './AuthStack';
 import AppStack from './AppStack';
 //import store from './redux/store';
 import { useSelector} from 'react-redux';
+import LoginScreen from '../screens/LoginScreen';
+
 
 export default function AppNav() {
 const [data, setdata] = useState();
 const [loader, setLoader] = useState(false);
- 
+const Stack = createNativeStackNavigator();
 
 // let loading = useSelector((state)=>{
 //   //console.log(state);
@@ -47,7 +49,7 @@ useEffect(() => {
   const islogin =data?data.login:null;
   return (
     <NavigationContainer>
-        {islogin ? <AppStack/>:<AuthStack />}
+        {islogin ? <AppStack/>:<AuthStack/>}
     </NavigationContainer>
   );
 }
