@@ -23,7 +23,7 @@ import Modal from "react-native-modal";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const ProfileScreen = () => {
+const EditProfileScreen = () => {
     // form validation start here
     const [userInfo, setUserInfo] = useState({
       email:'',
@@ -178,7 +178,6 @@ const ProfileScreen = () => {
       <View style={{paddingHorizontal:10}}>
         <Card style={{paddingBottom:20, marginVertical:10,borderRadius:10 }}>
         {/* <View style={{backgroundColor:'#F5F5F5', borderRadius:50, width:80, height:80,alignSelf:'center',marginTop:20}}>
-        
         </View> */}
         <Image source={{uri:userdata.profileimage}} style={styles.profileimg}/>
           <View>
@@ -884,4 +883,4 @@ const styles = StyleSheet.create({
       marginVertical:10
     },
   });
-export default ProfileScreen;
+export default EditProfileScreen;

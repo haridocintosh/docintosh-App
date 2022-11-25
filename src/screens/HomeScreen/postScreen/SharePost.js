@@ -78,16 +78,14 @@ const  Sharepost = () => {
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      aspect: [4, 3],
+      allowsEditing:true,
+      aspect: [1, 1],
       quality: 1,
     });
     if (!result.cancelled) {
       setImages(result.uri ? result.uri : result.selected);
     }
-
     let localUri = result.uri;
-   // setImages(localUri)
-  //  console.log(localUri);
       let filename = localUri.split('/').pop();
       // Infer the type of the image
       let match = /\.(\w+)$/.exec(filename);
@@ -103,7 +101,6 @@ const  Sharepost = () => {
     
       formData.append('postImage', imageData);
       formData.append('post_id', '3032');
-      setloader(true);
       const responce = await fetch(`https://docintosh.com/ApiController/postuploadDocsReact`, {
         method : 'POST',
         headers:{
@@ -112,11 +109,10 @@ const  Sharepost = () => {
         body :formData
      });
     const result1=  await responce.json();
-    setloader(false);
-   console.log("postcheck",result1);
-    setPost({...post, 
-      postImage: result1.postImage,
-    });
+    console.log("postcheck",result1);
+      setPost({...post, 
+        postImage: result1.postImage,
+      });
   };
 
   const pickVideo = async () => {
@@ -153,10 +149,10 @@ const  Sharepost = () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
+      allowsEditing: true,
       allowsMultipleSelection: true,
-      aspect: [4, 3],
-      quality: 1,
+      aspect: [1, 1],
+      quality: 0.1,
     });
    // console.log(result);
     if (!result.cancelled) {
@@ -209,7 +205,8 @@ const publishCheck1 = (e)=>{
     }else if(!post.postType){
       Toast.show("Please select PostType");
     }else{
-      const uploadData = {userdata,post}
+      const uploadData = {userdata,post};
+      console.log("uploadData",uploadData);
     
       setloader(true);
      const result = await dispatch(postCreate(uploadData));
@@ -217,10 +214,8 @@ const publishCheck1 = (e)=>{
          if(result.payload.status == 'Success'){
           setloader(false);
            Toast.show(result.payload.message);
+           navigation.navigate('HomeScreen')
           // setPost('');
-          setTimeout(()=>{
-            navigation.navigate('HomeScreen')
-          },3000);
         }
         setloader(false);
       }

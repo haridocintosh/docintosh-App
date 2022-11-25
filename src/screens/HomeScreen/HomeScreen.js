@@ -204,15 +204,22 @@ const HomeScreen = ({navigation})=> {
             </View>
           </View>
 
-          <View style={{ flexDirection:'row',paddingVertical:10}}>
+          <View style={item?.ptitle &&{ flexDirection:'row',paddingVertical:10}}>
             <Text style={{color:'#51668A',fontFamily:"Inter-Regular" }}>
-            { item.ptitle && item.ptitle }
+            {item?.ptitle }
             </Text>
           </View>
 
           <TouchableOpacity style={{justifyContent:'center',alignItems:'center',flex:1}} onPress={() => handlePost(item)} >
             <Image source={item.imgPath?{uri:item.imgPath}:''} 
-            style={{width:"100%",height:200,borderRadius:2}} resizeMode="center"/>
+            style={{width: "100%",
+              aspectRatio: 1,
+              resizeMode: "cover",
+              borderRadius: 4,
+              overflow: 'hidden',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}/>
           </TouchableOpacity>
             <PublicReactions item={item}/>
         </Card>
@@ -262,12 +269,14 @@ const HomeScreen = ({navigation})=> {
       
     <View style={{padding:10}}>
       <Card style={{marginTop:-35, zIndex:1, borderRadius:50,shadowRadius:10, shadowOffset:10}} onPress={() => navigation.navigate('SharePost')}>
-        <View style={{flexDirection:'row' , margin:10}} >
+        <View style={{flexDirection:'row', margin:10,justifyContent:'space-between',alignItems:'center'}} >
+          <View style={{flexDirection:'row'}}>
           <Image source={userdata.profile?{uri:userdata.profile}:''}  style={{width:32, height:32, borderRadius:50}}></Image>
           <Text style={styles.whtsnewtxt}>What’s on your mind?</Text>
-          <View style={{ marginLeft:'40%', alignSelf:'center'}}>
-            <AntDesign name="pluscircle" size={26} color="#D5DEED"/>
           </View>
+            
+          
+          <AntDesign name="pluscircle" size={26} color="#D5DEED"/>
         </View>
       </Card>
 

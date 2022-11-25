@@ -17,13 +17,14 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { MaterialIcons,MaterialCommunityIcons,Ionicons,Entypo } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
 import { Feather } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation,DrawerActions } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { storeData } from '../apis/Apicall';
 import { useDispatch } from 'react-redux';
 import { useDrawerStatus } from '@react-navigation/drawer';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import {createDrawerNavigator,DrawerItem} from '@react-navigation/drawer';
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
+import { navigationRef } from '../navigation/RootNavigation';
 
 
 
@@ -66,6 +67,8 @@ const CustomDrawer = props => {
         data:logoutdata
       }))
       setTimeout(()=>{
+        console.log('logout');
+        navigation.dispatch(DrawerActions.closeDrawer());
         navigation.navigate('Login')
       },1000)
     }catch(e) {
@@ -84,7 +87,7 @@ const CustomDrawer = props => {
 
         <View style={styles.profoleDetailsContainer}>
           <View style={styles.profoleDetails}>
-            <TouchableOpacity  onPress={() => navigation.navigate('Invite')}>
+            <TouchableOpacity  onPress={() => navigation.navigate('EditProfileScreen')}>
               <MaterialIcons name="arrow-forward-ios" size={16} color="white" style={styles.forwardIcon}/>
             </TouchableOpacity>
             <Image source={userdata.profile ? {uri:userdata.profile}:profilePicture} style={styles.profilePic}/>
@@ -141,6 +144,18 @@ const CustomDrawer = props => {
             </View>
           </TouchableOpacity>
             <View style={{marginVertical:15}}>
+
+            {/* <DrawerItem 
+              label="Log out"
+              color={'#fff'}
+              onPress={()=>{
+                AsyncStorage.clear();
+                navigation.navigate("Login");
+              }}
+              style={{borderWidth:1,borderColor:'#fff',borderRadius:15/2}}
+            />
+            <DrawerItem label="Logout" onPress={() => props.navigation.navigate("LoginScreen")}  */}
+            {/* style={{borderWidth:1,borderColor:'#fff',borderRadius:15/2}}/> */}
             <Button
               onPress={() => removeData()}
                 title={"Logout"}

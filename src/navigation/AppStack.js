@@ -8,6 +8,7 @@ import {Entypo} from 'react-native-vector-icons';
 // import SettingsScreen from '../screens/SettingsScreen';
 import TabNavigator from './TabNavigator';
 import CustomDrawer from '../components/CustomDrawer';
+import LoginScreen from '../screens/LoginScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -35,6 +36,10 @@ const AppStack = () => {
           ),
         }}
       />
+
+      {/* <Drawer.Screen name="LoginScreen"  
+        onPress={() => ()}
+      /> */}
     </Drawer.Navigator>
 
     

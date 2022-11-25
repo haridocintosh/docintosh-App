@@ -8,6 +8,7 @@ import AppStack from './AppStack';
 //import store from './redux/store';
 import { useSelector} from 'react-redux';
 import LoginScreen from '../screens/LoginScreen';
+import { navigationRef } from './RootNavigation';
 
 
 export default function AppNav() {
@@ -41,14 +42,15 @@ if(loader){
      //console.log(e)
     }
 }
-useEffect(() => {
+  useEffect(() => {
     setLoader(true);
     getData('USER_INFO');
     setLoader(false);
-  }, [])
+  }, []);
+
   const islogin =data?data.login:null;
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
         {islogin ? <AppStack/>:<AuthStack/>}
     </NavigationContainer>
   );

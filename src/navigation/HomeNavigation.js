@@ -20,6 +20,8 @@ import CommentsScreen from '../screens/HomeScreen/CommentsScreen';
 import MessagesScreen from '../screens/MessagesScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import LoginScreen from '../screens/LoginScreen';
+import EditProfileScreen from '../screens/EditProfileScreen';
+
 
 const HomeNavigation = () => {
 
@@ -81,6 +83,10 @@ const HomeNavigation = () => {
               headerTintColor: '#fff'}} />
           <Stack.Screen name="SettingsScreen" component={SettingsScreen} options={{headerShown: true,  
               title: "Comments",
+              headerStyle: {backgroundColor: '#071B36'},
+              headerTintColor: '#fff'}}/>
+          <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} options={{headerShown: true,  
+              title: "Edit Profile",
               headerStyle: {backgroundColor: '#071B36'},
               headerTintColor: '#fff'}}/>
           {/* <Stack.Screen name="LoginScreen" component={LoginScreen} options={{
