@@ -32,7 +32,7 @@ export const userPostData = createAsyncThunk("getAllPost", async (postDetails)=>
 
 
 export const postCreate = createAsyncThunk("postupload", async(uploadData)=>{
-    console.log('postdata1',uploadData);
+    // console.log('postdata1',uploadData);
     try{
        const responce = await fetch(`${mainApi.baseUrl}/ApiController/createPostReact`, {
             method : 'POST',
@@ -42,7 +42,7 @@ export const postCreate = createAsyncThunk("postupload", async(uploadData)=>{
             body : JSON.stringify(uploadData)
         });
         const result=  await responce.json();
-        console.log('postSlice',result);
+        // console.log('postSlice',result);
         //result.data.token;
         return result
     }

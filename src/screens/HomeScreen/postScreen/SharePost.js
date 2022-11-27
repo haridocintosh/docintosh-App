@@ -197,7 +197,7 @@ const publishCheck1 = (e)=>{
 
 
   const handleStudentSubmit = async() =>{
-  console.log(post);
+  // console.log("post",post);
     if(post.publishto ==''){
       Toast.show('Please select Publishto');
     }else if(!post.description){
@@ -206,11 +206,12 @@ const publishCheck1 = (e)=>{
       Toast.show("Please select PostType");
     }else{
       const uploadData = {userdata,post};
+    
       console.log("uploadData",uploadData);
     
       setloader(true);
      const result = await dispatch(postCreate(uploadData));
-     console.log(result);
+     console.log("result",result);
          if(result.payload.status == 'Success'){
           setloader(false);
            Toast.show(result.payload.message);
@@ -274,7 +275,7 @@ const publishCheck1 = (e)=>{
         city_id:result['city_id'],
         assoc_id:result['assoc_id'],
         id:result['id'],
-        circle_type:"1"
+        circle_type:result['role'] == 5 ? 3 : 1
       });
       fetchSpecialities(result['id']);
     }
@@ -355,7 +356,7 @@ const publishCheck1 = (e)=>{
           autoCapitalize="none"
           onChangeText={(e)=>{postDesc(e)}}
         />
-        {images &&<View style={{position:'relative',width: 100, height: 100}}>
+        {images && <View style={{position:'relative',width: 100, height: 100}}>
            <Image source={{ uri: images }} style={{ width: 100, height: 100 ,borderRadius:5}} />
           <TouchableOpacity style={styles.removeImg} onPress={() =>setImages()}>
           <AntDesign name="close" size={15}/>

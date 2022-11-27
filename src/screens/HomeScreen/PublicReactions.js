@@ -44,7 +44,7 @@ const PublicReactions = ({item}) => {
   setAllLikeData(getallLikesData.payload)
   setLikeCount(getallLikesData.payload.count);
   // console.log("getallLikesData?.payload?.getallLike",getallLikesData?.payload?.getallLike);
-  // console.log("getallLikesData",getallLikesData.payload.data);
+  console.log("item",item);
   
   if(sentResult?.payload?.count){
     setLiked(true);

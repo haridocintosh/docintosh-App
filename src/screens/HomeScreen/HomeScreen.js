@@ -14,12 +14,6 @@ import {
 } from 'react-native';
 import { Card } from 'react-native-paper';
 import { useDispatch } from "react-redux";
-import d  from '../../assets/dr-icon/d.png'
-import discount1  from '../../assets/dr-icon/discount1.png';
-import savePost  from '../../assets/dr-icon/savePost.png';
-import reportPost  from '../../assets/dr-icon/reportPost.png';
-import unfollow  from '../../assets/dr-icon/unfollow.png';
-import blockUser  from '../../assets/dr-icon/blockUser.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Ionicons,MaterialCommunityIcons,AntDesign,FontAwesome5,Feather} from '@expo/vector-icons';
 import oval from '../../assets/dr-icon/Oval.png';
@@ -43,6 +37,7 @@ const HomeScreen = ({navigation})=> {
   // const [isModalVisible, setModalVisible] = useState(false);
   // const [liked, setLiked] = useState(false);
   const isFocused = useIsFocused();
+  const moment = require('moment-timezone');
   // const FunContext = createContext(null);
 
   //---------------- header Animation------------------
@@ -168,6 +163,8 @@ const HomeScreen = ({navigation})=> {
     )
   }
 
+  var utc = 1502212611;
+
     const renderItem = ({item}) => {
       return(
         <Card style={styles.cardOfPosts} >
@@ -189,7 +186,8 @@ const HomeScreen = ({navigation})=> {
                         <Ionicons name="time-outline" size={19} color="#51668A" />  
                       </Text>
                       <Text style={{fontSize:12, paddingRight:5, fontWeight:'400',color:'#51668A',fontFamily:"Inter-Regular"}}>
-                        {moment(item?.post_date, ["DD-MM-YYYY","MM-DD-YYYY"]).fromNow()}
+                         {/* {item?.created_at.toLocaleString( {timeZone: "Asia/Kolkata"})} */}
+                         {moment(item?.created_at).tz("Asia/Kolkata").fromNow()}
                       </Text>
                   </View>
                 </View> 
@@ -232,7 +230,7 @@ const HomeScreen = ({navigation})=> {
   return (
   <SafeAreaView>
       <Animated.View style={{backgroundColor:'#071B36',height:headerHeight,position:'relative'}}>
-        <Animated.Image source={bgtophome} style={[styles.bgtophome,{height:headerHeight,opacity:opacity}]}/>
+        <Animated.Image source={require('../../assets/images/bg-top-home.png')} style={[styles.bgtophome,{height:headerHeight,opacity:opacity}]}/>
 
           <View style={styles.imageConatentContainer}>
             <View style={{flexDirection:'row',alignItems:'center'}}> 
@@ -260,9 +258,9 @@ const HomeScreen = ({navigation})=> {
           </View>
 
           <Animated.View style={[styles.collectedCoins,{transform: [{translateY: scoresPosition}]}]} >
-            <Image source={d} style={styles.d} />
+            <Image source={require('../../assets/dr-icon/d.png')} style={styles.d} />
             <Text style={styles.count}>7822 |</Text>
-            <Image source={discount1} style={{width:16, height:16, marginVertical:5,  marginHorizontal:5}}></Image>
+            <Image source={require('../../assets/dr-icon/discount1.png')} style={{width:16, height:16, marginVertical:5,  marginHorizontal:5}}></Image>
             <Text style={styles.count}>102</Text>
           </Animated.View>
       </Animated.View>

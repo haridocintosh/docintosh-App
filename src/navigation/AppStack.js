@@ -36,10 +36,6 @@ const AppStack = () => {
           ),
         }}
       />
-
-      {/* <Drawer.Screen name="LoginScreen"  
-        onPress={() => ()}
-      /> */}
     </Drawer.Navigator>
 
     

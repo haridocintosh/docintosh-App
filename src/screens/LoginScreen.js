@@ -66,8 +66,8 @@ const LoginScreen = () => {
 
   const authLogin = async (e)=>{
 
-    register.email = datarm?.data.email || register.email;
-    register.password = datarm?.data.password || register.password;
+    register.email = register.email? register.email : datarm?.data.email;
+    register.password = register.password ? register.password :datarm?.data.password ;
 
     if(register.email !== "" &&  register.password !== ""){
       setloader(true)
