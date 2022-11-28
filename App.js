@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, LogBox } from 'react-native';
+import { StyleSheet, LogBox } from 'react-native';
 import AppNav from './src/navigation/AppNav';
 // import { Provider } from 'react-redux';
 import store from './redux/store';
@@ -11,8 +11,8 @@ import { navigationRef } from './src/navigation/RootNavigation';
 
 
 export default function App() {
-  // LogBox.ignoreLogs(['Warning: ...']); //Hide warnings
-  // LogBox.ignoreAllLogs();
+  LogBox.ignoreLogs(['Warning: ...','Require cycle:']); //Hide warnings
+  LogBox.ignoreAllLogs();
 
 const [fontsLoaded] = useFonts({
   "Inter-Regular": require("./src/assets/fonts/Inter-Regular.ttf"),

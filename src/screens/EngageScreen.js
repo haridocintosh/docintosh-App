@@ -44,7 +44,6 @@ useEffect(() => {
   
   <Card style={{borderRadius:20/2,  marginTop:10,backgroundColor:'#f7f8ff'}} onPress={() => navigation.navigate('QuizLevels')}>
 
-
   <View style={{ padding:10,flexDirection:'row',justifyContent:'space-between' }}>
    <View>
     <Text style={{fontSize:18, fontWeight:'800', color:"#404DB7", }}>Quiz</Text>

@@ -86,8 +86,7 @@ const Surveys = ({ route }) => {
         nestedScrollEnable={true}
       >
         <View style={{ padding: 10 }}>
-          {survayData?.surveylist &&
-            survayData?.surveylist.map((data, i) => {
+          {survayData?.surveylist.map((data, i) => {
               return (
                 <View style={{ marginBottom: 10 }} key={i}>
                   <Card
