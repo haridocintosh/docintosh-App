@@ -211,7 +211,7 @@ const publishCheck1 = (e)=>{
     
       setloader(true);
      const result = await dispatch(postCreate(uploadData));
-     console.log("result",result);
+    //  console.log("result",result);
          if(result.payload.status == 'Success'){
           setloader(false);
            Toast.show(result.payload.message);

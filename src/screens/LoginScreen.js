@@ -49,21 +49,6 @@ const LoginScreen = () => {
     });
   }
 
-  // let isStoreNeedCleaning = false;
-  // console.log("Platform.OS",Platform.OS);
-
-  //   if (Platform.OS === 'ios' || Platform.OS === 'android') {
-  //       if (!Settings.get('hasRunBefore')) {
-  //           Settings.set({ hasRunBefore: true });
-  //           isStoreNeedCleaning = true;
-  //       }
-  //   }
-
-  //   if (isStoreNeedCleaning) {
-  //     AsyncStorage.removeItem("rememberme")
-  //   }
-  
-
   const authLogin = async (e)=>{
 
     register.email = register.email? register.email : datarm?.data.email;
@@ -72,14 +57,16 @@ const LoginScreen = () => {
     if(register.email !== "" &&  register.password !== ""){
       setloader(true)
       const token = await dispatch(userLogin(register));
+      
       if(token.payload.status == 'Success'){
         setloader(false)
-        storeData('USER_INFO',JSON.stringify({
+       
+        console.log("token.payload.session_data-------",token.payload.session_data);
+         await storeData('USER_INFO',JSON.stringify({
           login:true,
           data:token.payload.session_data
         }));
-          console.log("isChecked=====in",isChecked);
-
+        // console.log("token-------",token);
         if(isChecked){
           storeData('rememberme',JSON.stringify({
             data:{...token.meta.arg, isChecked:isChecked }
@@ -102,7 +89,7 @@ const LoginScreen = () => {
   const getData = async (key) => {
     try {
       const jsonValue = await AsyncStorage.getItem(key);
-      setdata(jsonValue != null ? JSON.parse(JSON.parse(jsonValue)) : null)
+      setdata(jsonValue != null ? JSON.parse(JSON.parse(jsonValue)) : null);
       setloader(false);
     } catch(e) {
      console.log(e)

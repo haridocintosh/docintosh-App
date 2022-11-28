@@ -89,11 +89,6 @@ const HomeNavigation = () => {
               title: "Edit Profile",
               headerStyle: {backgroundColor: '#071B36'},
               headerTintColor: '#fff'}}/>
-          <Stack.Screen 
-              name="Login"
-              component={LoginScreen}
-              options={{headerShown: false}}
-          />
         </Stack.Navigator>
       );
 }

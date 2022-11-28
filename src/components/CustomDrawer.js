@@ -17,7 +17,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { MaterialIcons,MaterialCommunityIcons,Ionicons,Entypo } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
 import { Feather } from '@expo/vector-icons';
-import { useNavigation,DrawerActions } from '@react-navigation/native';
+import { useNavigation,DrawerActions, useIsFocused } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { storeData } from '../apis/Apicall';
 import { useDispatch } from 'react-redux';
@@ -28,7 +28,8 @@ import { navigationRef } from '../navigation/RootNavigation';
 
 
 
-const CustomDrawer = props => { 
+
+const CustomDrawer = (props) => { 
   const navigation = useNavigation();
   const [logoutdata,setlogoutdata]=useState();
   const dispatch = useDispatch();
@@ -40,12 +41,13 @@ const CustomDrawer = props => {
     profile:"",
     speciality:"",
   });
+  const isFocused = useIsFocused();
   const Drawer = createDrawerNavigator();
-  useEffect(() => {
-    const asyncFetchDailyData = async () => {
+
+  const asyncFetchDailyData = async () => {
     const jsonValue = await AsyncStorage.getItem('USER_INFO');
       const data=await JSON.parse(jsonValue);
-      console.log(JSON.parse(data)['data'])
+      // console.log(JSON.parse(data)['data'])
       setlogoutdata(JSON.parse(data)['data'])
       const result=JSON.parse(data)['data'];
       // setuserdata(JSON.parse(data)['data']['first_name']+" "+JSON.parse(data)['data']['last_name'])
@@ -56,8 +58,11 @@ const CustomDrawer = props => {
         role:`${result['role']}`
       });
     }
-    asyncFetchDailyData();
-  }, [])
+  useEffect(() => {
+    if(isFocused){
+      asyncFetchDailyData();
+    }
+  }, [isFocused])
   
   const removeData = async () => {
     setLoader(true)
@@ -66,11 +71,10 @@ const CustomDrawer = props => {
         login:false,
         data:logoutdata
       }))
-      setTimeout(()=>{
-        console.log('logout');
+      // setTimeout(()=>{
         navigation.dispatch(DrawerActions.closeDrawer());
         navigation.navigate('Login')
-      },1000)
+      // },1000)
     }catch(e) {
     }
     setLoader(false)
@@ -98,6 +102,10 @@ const CustomDrawer = props => {
         <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor: '#071B36',}}>
           <View style={styles.drowerChilds}>
             <DrawerItemList {...props} />
+            {/* <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
+              <Entypo name="trophy" size={25} color="white" />
+              <Text style={styles.sideDrawerName}>Leaderboard</Text>
+            </TouchableOpacity > */}
             <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
               <MaterialIcons name="person-add-alt-1" size={25} color="white" />
               <Text style={styles.sideDrawerName}>Invite</Text>
