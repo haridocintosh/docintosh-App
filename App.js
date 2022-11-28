@@ -5,6 +5,10 @@ import AppNav from './src/navigation/AppNav';
 import store from './redux/store';
 import { Provider} from 'react-redux';
 import { useFonts } from 'expo-font';
+import { NavigationContainer } from '@react-navigation/native';
+import { navigationRef } from './src/navigation/RootNavigation';
+
+
 
 export default function App() {
   // LogBox.ignoreLogs(['Warning: ...']); //Hide warnings
@@ -23,7 +27,9 @@ if (!fontsLoaded) {
 
   return (
     <Provider store={store}>
-      <AppNav/>
+      <NavigationContainer ref={navigationRef}>
+        <AppNav/>
+      </NavigationContainer>
     </Provider>
   );
 }

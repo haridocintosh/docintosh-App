@@ -32,12 +32,14 @@ import TabNavigator from './TabNavigator';
 
 
 
+
 export default function AppNav() {
 const [data, setdata] = useState();
 const [loader, setLoader] = useState(false);
 const [defaultRoute, setDefaultRoute] = useState();
 const [statusKeyLoaded, setStatusKeyLoaded] = useState(false)
 const Stack = createNativeStackNavigator();
+const navigation  = useNavigation();
 
 if(loader){
   return(
@@ -68,14 +70,14 @@ if(loader){
 
   return (<>
     {statusKeyLoaded && 
-    <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={defaultRoute}>
             {/* <Stack.Screen name="RegisterStudentScreen" component={RegisterStudentScreen}  options={{ title: 'Register', headerShown: true}} /> */}
             {/* <Stack.Screen name="PracticeScreen" component={PracticeScreen} /> */}
             <Stack.Screen name="HomeScreen" component={AppStack} options={{headerShown: false}} />
             <Stack.Screen name="Intro" component={IntroStack} />
-            <Stack.Screen name="InvitePeers" component={InvitePeers} options={{ title: 'Invite Peers', headerShown: true,  headerRight: () => (
-                <Text style={{color:"#2376E5"}} >Skip</Text>)}}  />
+            <Stack.Screen name="InvitePeers" component={InvitePeers} options={{ title: 'Invite Peers', headerShown: true,  
+            headerRight: () => (
+                <Text onPress={() => navigation.navigate('Login')} style={{color:"#2376E5"}}>Skip</Text>)}}  />
             <Stack.Screen name="MobileScreen" component={MobileScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Register" component={RegisterScreen}  />
@@ -86,7 +88,7 @@ if(loader){
             <Stack.Screen name="Congratulation" component={Congratulation} />
             <Stack.Screen name='ContactPermission' component={ContactPermission}  options={{ title: 'Invite Peers' , headerShown: true,
               headerRight: () => (
-                <Text  style={{color:"#2376E5"}}>Skip</Text>)
+                <Text onPress={() => navigation.navigate('Login')} style={{color:"#2376E5"}}>Skip</Text>)
               }} /> 
             <Stack.Screen name="ForgetPassword" component={ForgetPassword} options={{ title: 'Forgot Password' , headerShown: true}} />
             <Stack.Screen name="CreateNewPass" component={CreateNewPass} options={{ title: 'Create New Password' , headerShown: true}} />
@@ -94,15 +96,13 @@ if(loader){
             <Stack.Screen name="ContactScreen"  component={ContactScreen} options={{ title: 'Contact Us', headerShown: true}}  />
             <Stack.Screen name="SelectInterest" component={SelectInterest} options={{ title: 'Select your Interest', headerShown: true,  
                headerRight: () => (
-                <Text  style={{color:"#2376E5", fontWeight:"700"}} >Skip</Text>)
+                <Text onPress={() => navigation.navigate('Login')} style={{color:"#2376E5", fontWeight:"700"}} >Skip</Text>)
               }} />
             <Stack.Screen name="TermsAndCondition" component={TermsAndCondition} options={{ title: 'Terms & Condition', headerShown: true}} />
             <Stack.Screen name="ForgotPasswordOTP" component={ForgotPasswordOTP} options={{ title: 'Verification OTP', headerShown: true}} />
             {/* <Stack.Screen name="AppStack" component={AppStack} /> */}
             <Stack.Screen name="QuizLevels" component={QuizLevels} />
       </Stack.Navigator>
-    </NavigationContainer>
-    
   }
   </>
   );
