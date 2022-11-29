@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text ,Image,SafeAreaView, ScrollView, TouchableOpacity, Animated ,StyleSheet} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import profileimg from '../../assets/images/p2.png';
 import icon from '../../assets/images/Vector.png';
 import { Card } from 'react-native-paper';
-import d from '../../assets/dr-icon/d.png'
-import coupon1 from '../../assets/dr-icon/coupon1.png';
 import ProfileScreenPost from './ProfileScreenPost';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { styles } from './profilestyle';
@@ -60,11 +57,11 @@ const ProfileScreen = () => {
 
       <View style={{flexDirection:'row', marginTop:20}}>
           <View style={styles.ScoreContainer}>
-            <Image source={d} style={styles.scoreImg}/>
+            <Image source={require('../../assets/dr-icon/d.png')} style={styles.scoreImg}/>
             <Text style={styles.coins}>3600</Text>
           </View>
           <View style={styles.ScoreContainer}>
-            <Image source={coupon1} style={styles.scoreImg}/>
+            <Image source={require('../../assets/dr-icon/coupon1.png')} style={styles.scoreImg}/>
             <Text style={styles.coins}>102</Text>
           </View>
       </View>

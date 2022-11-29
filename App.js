@@ -9,9 +9,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { navigationRef } from './src/navigation/RootNavigation';
 
 
-
 export default function App() {
-  LogBox.ignoreLogs(['Warning: ...','Require cycle:']); //Hide warnings
+  LogBox.ignoreLogs(['Warning: ...','Require cycle:']); 
   LogBox.ignoreAllLogs();
 
 const [fontsLoaded] = useFonts({

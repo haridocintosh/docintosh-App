@@ -5,7 +5,6 @@ import {
   Image,
   SafeAreaView,
   ScrollView,
-  ToastAndroid,
   ActivityIndicator,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -17,10 +16,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch, useSelector } from "react-redux";
 import { survayList } from "../../../redux/reducers/survaySlice";
 import moment from "moment";
-import dcoin from "../../assets/dr-icon/dcoin.png";
 import SweetAlert from "../SweetAlert/SweetAlert";
 import { styles } from "./SurvayStyle";
-import { useFonts } from "expo-font";
 
 const Surveys = ({ route }) => {
   const [survayData, setSurvayData] = useState([]);
@@ -163,7 +160,7 @@ const Surveys = ({ route }) => {
                       <View style={styles.doccoin}>
                         <View style={styles.d}>
                           <Image
-                            source={dcoin}
+                            source={require("../../assets/dr-icon/dcoin.png")}
                             style={{ width: 20, height: 20, marginRight: 5 }}
                           />
                           <Text>25</Text>
@@ -172,7 +169,7 @@ const Surveys = ({ route }) => {
                       <View style={styles.doccoin}>
                         <View style={styles.d}>
                           <Image
-                            source={coupon}
+                            source={require("../../assets/dr-icon/coupon1.png")}
                             style={{ width: 22, height: 22, marginRight: 5 }}
                           />
                           <Text>1</Text>

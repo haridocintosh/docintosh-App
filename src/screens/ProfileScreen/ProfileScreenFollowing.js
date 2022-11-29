@@ -17,7 +17,31 @@ const ProfileScreenFollowing = () => {
 
             <View style={styles.followerContainer}>
                 <View style={styles.followerLhs}>
-                   <Image source={profileimg} style={styles.profileimg}/>
+                   <Image source={require('../../assets/images/p3.png')} style={styles.profileimg}/>
+                   <View style={styles.followerName}>
+                        <Text style={styles.followerNameText}>Dr. Sudeep Bhatra</Text>
+                        <Text style={styles.followerSpecialist}>Pediatric Surgeon</Text>
+                   </View>
+                </View>
+                <View style={styles.followerLhs}>
+                   <Entypo name="dots-three-vertical" size={20} color="#51668A"  style={{display:"flex",justifyContent:"center",alignContent:"flex-end"}}/>
+                </View>
+            </View>
+            <View style={styles.followerContainer}>
+                <View style={styles.followerLhs}>
+                   <Image source={require('../../assets/images/p3.png')} style={styles.profileimg}/>
+                   <View style={styles.followerName}>
+                        <Text style={styles.followerNameText}>Dr. Sudeep Bhatra</Text>
+                        <Text style={styles.followerSpecialist}>Pediatric Surgeon</Text>
+                   </View>
+                </View>
+                <View style={styles.followerLhs}>
+                   <Entypo name="dots-three-vertical" size={20} color="#51668A"  style={{display:"flex",justifyContent:"center",alignContent:"flex-end"}}/>
+                </View>
+            </View>
+            <View style={styles.followerContainer}>
+                <View style={styles.followerLhs}>
+                   <Image source={require('../../assets/images/p3.png')} style={styles.profileimg}/>
                    <View style={styles.followerName}>
                         <Text style={styles.followerNameText}>Dr. Sudeep Bhatra</Text>
                         <Text style={styles.followerSpecialist}>Pediatric Surgeon</Text>
@@ -28,42 +52,7 @@ const ProfileScreenFollowing = () => {
                 </View>
             </View>
 
-            <View style={styles.followerContainer}>
-                <View style={styles.followerLhs}>
-                   <Image source={profileimg} style={styles.profileimg}/>
-                   <View style={styles.followerName}>
-                        <Text style={styles.followerNameText}>Dr. Sudeep Bhatra</Text>
-                        <Text style={styles.followerSpecialist}>Pediatric Surgeon</Text>
-                   </View>
-                </View>
-                <View style={styles.followerLhs}>
-                   <Entypo name="dots-three-vertical" size={20} color="#51668A"  style={{display:"flex",justifyContent:"center",alignContent:"flex-end"}}/>
-                </View>
-            </View>
-            <View style={styles.followerContainer}>
-                <View style={styles.followerLhs}>
-                   <Image source={profileimg} style={styles.profileimg}/>
-                   <View style={styles.followerName}>
-                        <Text style={styles.followerNameText}>Dr. Sudeep Bhatra</Text>
-                        <Text style={styles.followerSpecialist}>Pediatric Surgeon</Text>
-                   </View>
-                </View>
-                <View style={styles.followerLhs}>
-                   <Entypo name="dots-three-vertical" size={20} color="#51668A"  style={{display:"flex",justifyContent:"center",alignContent:"flex-end"}}/>
-                </View>
-            </View>
-            <View style={styles.followerContainer}>
-                <View style={styles.followerLhs}>
-                   <Image source={profileimg} style={styles.profileimg}/>
-                   <View style={styles.followerName}>
-                        <Text style={styles.followerNameText}>Dr. Sudeep Bhatra</Text>
-                        <Text style={styles.followerSpecialist}>Pediatric Surgeon</Text>
-                   </View>
-                </View>
-                <View style={styles.followerLhs}>
-                   <Entypo name="dots-three-vertical" size={20} color="#51668A"  style={{display:"flex",justifyContent:"center",alignContent:"flex-end"}}/>
-                </View>
-            </View>
+          
             
         </ScrollView>
     </SafeAreaView>

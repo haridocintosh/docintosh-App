@@ -3,8 +3,6 @@ import { View, Text , StyleSheet, Image,SafeAreaView, ScrollView} from 'react-na
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { FontAwesome5,FontAwesome,MaterialCommunityIcons,Feather,MaterialIcons,Ionicons,AntDesign ,Entypo,Fontisto} from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import d from '../assets/dr-icon/d.png';
-import payimg from '../assets/dr-icon/payimg.png';
 import { Card, TextInput } from 'react-native-paper';
 import { Button } from 'react-native-elements';
 
@@ -26,7 +24,7 @@ import { Button } from 'react-native-elements';
   <View style={{marginTop:40}}>
     <Card style={styles.buycard}>
       <View style={styles.docbody}>
-        <Image style={styles.doccoin} source={d}/>
+        <Image style={styles.doccoin} source={require('../assets/dr-icon/d.png')}/>
     
     <View style={{marginLeft:12}}>
     <Text style={{fontSize:28, marginTop:4}}>782</Text>
@@ -51,7 +49,7 @@ import { Button } from 'react-native-elements';
     <Card style={styles.doccoinscard}>
 
         <View style={{flexDirection:'row', margin:10}}>
-        <Image style={{}} source={d}/>
+        <Image style={{}} source={require('../assets/dr-icon/d.png')}/>
 
             <Text style={styles.doccoinstxt}>
             DocCoins
@@ -64,7 +62,7 @@ import { Button } from 'react-native-elements';
         <Text style={styles.pay}>
             Pay : 
             </Text>
-        <Image style={styles.d} source={d}/>
+        <Image style={styles.d} source={require('../assets/dr-icon/d.png')}/>
 
             <Text style={{fontSize:14, fontWeight:'400', lineHeight:20, marginVertical:5}}>
            100
@@ -79,7 +77,7 @@ import { Button } from 'react-native-elements';
 <View style={{marginBottom:10}}>
     <Card style={styles.doccoinscard}>
         <View style={{flexDirection:'row', margin:20}}>
-        <Image style={{}} source={payimg}/>
+        <Image style={{}} source={require('../assets/dr-icon/payimg.png')}/>
 
             <Text style={styles.doccoinstxt}>
             Rasorpay

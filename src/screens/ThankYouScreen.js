@@ -8,33 +8,18 @@ import {
   StyleSheet,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import thankyou from '../assets/images/thankyou.png';
-import Path1 from '../assets/dr-icon/Path1.png';
-import Path2 from '../assets/dr-icon/Path2.png';
-import Path3 from '../assets/dr-icon/Path3.png';
-import Path4 from '../assets/dr-icon/Path4.png';
-import knowheart from '../assets/images/knowhert.png';
-import d from '../assets/dr-icon/d.png';
-import winner from '../assets/dr-icon/winner.png';
-import king from '../assets/dr-icon/king.png';
-import badge from '../assets/dr-icon/badge.png';
-import badge1 from '../assets/dr-icon/badge1.png';
 import { Button } from 'react-native-elements';
 import { Card } from 'react-native-paper';
 
 export default function ThankYouScreen() {
-  const [gamesTab, setGamesTab] = useState(1);
   const navigation = useNavigation();
 
-  const onSelectSwitch = value => {
-    setGamesTab(value);
-  };
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <ScrollView style={{paddingHorizontal:0}}>
       <View>
-          <Image source={knowheart} style={{width:'100%', height:230, marginTop:0}}></Image>
+          <Image source={require('../assets/images/knowhert.png')} style={{width:'100%', height:230, marginTop:0}}/>
       </View>
       <Card style={{borderTopLeftRadius:20, borderTopRightRadius:20, margin:0, backgroundColor:'#ffff', shadowColor:"#000", shadowOpacity:0.3,
       elevation:2, marginTop:-20, zIndex:1}}>
@@ -46,55 +31,55 @@ export default function ThankYouScreen() {
               </View>
             <View style={{flexDirection:'row', padding:20, marginTop:10,}}>
             <View style={{paddingLeft:21, }}>
-              <Image source={Path1}/>
-              <Image source={badge} style={{marginLeft:0,  width:30, height:30, marginTop:-35, }}></Image>
+              <Image source={require('../assets/dr-icon/Path1.png')}/>
+              <Image source={require('../assets/dr-icon/badge.png')} style={{marginLeft:0,  width:30, height:30, marginTop:-35, }}/>
 
               <View style={{}}>
                   <Text>
                   Beginner
                   </Text>
-                  <View style={{flexDirection:'row'}}><Image source={d}  style={{width:14, fontSize:14, height:14}}/><Text style={{fontSize:12}}>200</Text></View>
+                  <View style={{flexDirection:'row'}}><Image source={require('../assets/dr-icon/d.png')}  style={{width:14, fontSize:14, height:14}}/><Text style={{fontSize:12}}>200</Text></View>
               </View>
             </View>
             <View style={{paddingLeft:40}}>
-              <Image source={Path2}/>
-              <Image source={winner} style={{marginLeft:4,  width:30, height:30, marginTop:-35, }}></Image>
+              <Image source={require('../assets/dr-icon/Path2.png')}/>
+              <Image source={require('../assets/dr-icon/winner.png')} style={{marginLeft:4,  width:30, height:30, marginTop:-35, }}/>
 
               <View>
                   <Text style={{alignSelf:'center'}}>
                   Intermediate
                   </Text>
-                  <View style={{flexDirection:'row'}}><Image source={d}  style={{width:14, fontSize:14, height:14}}/><Text style={{fontSize:12}}>200</Text></View>
+                  <View style={{flexDirection:'row'}}><Image source={require('../assets/dr-icon/d.png')}  style={{width:14, fontSize:14, height:14}}/><Text style={{fontSize:12}}>200</Text></View>
 
               </View>
             </View>
             <View style={{paddingLeft:30}}>
-              <Image source={Path3}/>
-              <Image source={badge1} style={{marginLeft:4,  width:30, height:30, marginTop:-35, }}></Image>
+              <Image source={require('../assets/dr-icon/Path3.png')}/>
+              <Image source={require('../assets/dr-icon/badge1.png')} style={{marginLeft:4,  width:30, height:30, marginTop:-35, }}/>
 
               <View>
                   <Text>
                   Expert
                   </Text>
-                  <View style={{flexDirection:'row'}}><Image source={d}  style={{width:14, fontSize:14, height:14}}/><Text style={{fontSize:12}}>200</Text></View>
+                  <View style={{flexDirection:'row'}}><Image source={require('../assets/dr-icon/d.png')}  style={{width:14, fontSize:14, height:14}}/><Text style={{fontSize:12}}>200</Text></View>
 
               </View>
             </View>
             <View style={{paddingLeft:40}}>
-              <Image source={Path4}/>
-              <Image source={king} style={{marginLeft:4,  width:30, height:30, marginTop:-35, }}></Image>
+              <Image source={require('../assets/dr-icon/Path4.png')}/>
+              <Image source={require('../assets/dr-icon/king.png')} style={{marginLeft:4,  width:30, height:30, marginTop:-35, }}/>
               <View >
                   <Text style={{marginBottom:1}}>
                   Legend
                   </Text>
-                  <View style={{flexDirection:'row'}}><Image source={d}  style={{width:14, fontSize:14, height:14}}/><Text style={{fontSize:12}}>200</Text></View>
+                  <View style={{flexDirection:'row'}}><Image source={require('../assets/dr-icon/d.png')}  style={{width:14, fontSize:14, height:14}}/><Text style={{fontSize:12}}>200</Text></View>
 
               </View>
             </View>
               </View>
 
               <View style={{ backgroundColor:'#ffff', marginTop:10}}>
-              <Image source={thankyou} style={{alignSelf:'center'}}/>
+              <Image source={require('../assets/images/thankyou.png')} style={{alignSelf:'center'}}/>
                   <Text style={{fontSize:24, fontWeight:'600', lineHeight:34, alignSelf:'center', marginTop:-50}}>
                   Thank You
                   </Text>

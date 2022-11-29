@@ -63,7 +63,6 @@ const InvitePeers = ({route}) => {
          
     }
     useEffect(() => {
-
        const setdata= async ()=>{
         const newdata =await alluserContact.map(element=> {return{...element,isSelected:false}}); 
        setcontactData1(newdata);

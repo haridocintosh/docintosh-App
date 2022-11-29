@@ -162,8 +162,6 @@ export const styles = StyleSheet.create({
     fontWeight: "500",
     fontFamily:"Inter-Regular"
   },
- 
-
 triangle: {
   width: 0,
   height: 0,
@@ -186,7 +184,6 @@ darkBlueOnWhatsNew: {
   height: 20,
   backgroundColor: '#342CE0',
   position:'absolute',
-
 },
 
 // ---------------------------postsScreen-----------------------------------
@@ -246,6 +243,14 @@ inputCont:{
 usersCommentContainer:{
   flexDirection:'row',
   paddingBottom:20,
+  justifyContent:'space-between',
+  alignItems:'center'
+},
+usersCommentPictureContainer:{
+  flexDirection:'row',
+},
+usersCommentsThreeDots:{
+  fontSize:20
 },
 userUsername:{
   fontFamily:'Inter-SemiBold'
@@ -310,7 +315,6 @@ optionList:{
 optionListText:{
   color:'#071B36',
   fontFamily:"Inter-Regular",
-
 },
 optionListImage:{
   width:15.5,
@@ -318,7 +322,7 @@ optionListImage:{
   marginRight:7
 },
 optionList2:{
-  width:18,
+  width:21,
   height:16,
   marginRight:7
 },

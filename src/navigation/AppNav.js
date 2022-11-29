@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
-import {NavigationContainer, useIsFocused, useNavigation} from '@react-navigation/native';
+import { Text, View, ActivityIndicator } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import AuthStack from './AuthStack';
 import AppStack from './AppStack';
-import { navigationRef } from './RootNavigation';
-
-
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import IntroStack from './IntroStack';
@@ -20,7 +16,6 @@ import CreateNewPass from '../screens/CreateNewPass';
 import RegisterStudentScreen from '../screens/RegisterStudentScreen';
 import ForgotPasswordOTP from '../screens/ForgotPasswordOTP';
 import DoctorOtp from '../screens/DoctorOtp';
-import PracticeScreen from '../screens/PracticeScreen';
 import OnboardingScreen from '../screens/OnboardingScreen';
 import InvitePeers from '../screens/InvitePeers';
 import SelectInterest from '../screens/SelectInterest';
@@ -28,13 +23,8 @@ import ContactPermission from '../screens/ContactPermission';
 import QuizLevels from '../screens/QuizLevels/QuizLevels';
 import TermsAndCondition from '../screens/commonpage/TermsAndCondition';
 import ContactScreen from '../screens/commonpage/ContactScreen';
-import TabNavigator from './TabNavigator';
-
-
-
 
 export default function AppNav() {
-const [data, setdata] = useState();
 const [loader, setLoader] = useState(false);
 const [defaultRoute, setDefaultRoute] = useState();
 const [statusKeyLoaded, setStatusKeyLoaded] = useState(false)
@@ -52,7 +42,6 @@ if(loader){
     try {
       const jsonValue = await AsyncStorage.getItem(key);
       const logData = jsonValue != null ? JSON.parse(JSON.parse(jsonValue)) : null;
-      console.log("logData",logData);
       if(logData?.login){
         setDefaultRoute("HomeScreen");
       }else{
@@ -107,10 +96,3 @@ if(loader){
   </>
   );
 }
-
-
-{/* {data?.login ? 
-        <AppStack/>
-         :
-        <AuthStack/>} */}
-

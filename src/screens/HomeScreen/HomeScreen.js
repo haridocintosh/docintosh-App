@@ -8,9 +8,6 @@ import {
   Dimensions,
   ActivityIndicator,
   Animated,
-  FlatList,
-  Modal,
-  Button
 } from 'react-native';
 import { Card } from 'react-native-paper';
 import { useDispatch } from "react-redux";
@@ -122,7 +119,6 @@ const HomeScreen = ({navigation})=> {
     // const allPostData = result && result.payload.filter(Post => Post.user_role != 5)
     setallPost(result.payload);
     // console.log("result.payload",result);
-   
   }
   
   const handlePost = (item) => {
@@ -151,19 +147,17 @@ const HomeScreen = ({navigation})=> {
           <Text style={styles.optionListText}>Report Post</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.optionList}>
-        <Image source={require('../../assets/dr-icon/unfollow.png')} style={styles.optionList2}/>
+        <Image source={require('../../assets/dr-icon/unfollow.png')} style={styles.optionList3}/>
           <Text style={styles.optionListText}>Unfollow</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.optionList}>
-         <Image source={require('../../assets/dr-icon/unfollow.png')} style={styles.optionList2}/>
+         <Image source={require('../../assets/dr-icon/blockUser.png')} style={styles.optionList4}/>
           <Text style={styles.optionListText}>Block User</Text>
         </TouchableOpacity>
       </View>}
       </>
     )
   }
-
-  var utc = 1502212611;
 
     const renderItem = ({item}) => {
       return(
@@ -223,9 +217,6 @@ const HomeScreen = ({navigation})=> {
         </Card>
       )
     }
-
- 
-
 
   return (
   <SafeAreaView>
@@ -301,58 +292,6 @@ const HomeScreen = ({navigation})=> {
       </View>
       
       </View>
-
-
-
-{/* //removerd data in raugh */}
-
-
-  
-
-  {/* <Modal isVisible={isModalVisible} width={320} style={{alignSelf:'center', }}>
-        <View>
-        <Card >
-        <AntDesign name="close" color={'#51668A'} size={25} style={{alignSelf:'flex-end'}} onPress={() => handleOption()}/>
-       
-          <Text style={styles.viewDoccin}>View your collected DocCoins here</Text>
-          <View style={{flexDirection:'row', margin:10, marginTop:20, marginBottom:20}}>
-          <Button
-            
-            title="Skip"
-            type="outline"
-            buttonStyle={{
-              borderColor: '#2C8892',
-              
-              borderRadius:15/2,
-              height:48,
-              width:136,
-             marginLeft:10
-            }}
-            titleStyle={{
-              color:'#2C8892',
-            }}/>
-            <Button
-            title="Next"
-            type="outline"
-            buttonStyle={{
-              borderColor: '#2C8892',
-              backgroundColor:'#2C8892',
-              borderRadius:15/2,
-              height:48,
-              width:136,
-              marginLeft:10,
-            }}
-            titleStyle={{
-              color:'#FFFF'
-            }}/>
-          </View> 
-          
-          </Card>
-        </View>
-      
-  </Modal> */}
-  
-{/* Modal doccoins view  */}
 
   </SafeAreaView>
   );

@@ -18,6 +18,8 @@ import { useNavigation } from "@react-navigation/native";
 import { getMycircle } from "../../../../redux/reducers/postData";
 import { mainApi } from "../../../apis/constant";
 
+
+
 const  Sharepost = () => {
   const dispatch    = useDispatch();
   const navigation  = useNavigation();
@@ -74,7 +76,6 @@ const  Sharepost = () => {
     }, 100);
   }
 
-
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -87,7 +88,6 @@ const  Sharepost = () => {
     }
     let localUri = result.uri;
       let filename = localUri.split('/').pop();
-      // Infer the type of the image
       let match = /\.(\w+)$/.exec(filename);
       let type = match ? `image/${match[1]}` : `image`;
       let uriParts = localUri.split('.');
@@ -101,7 +101,7 @@ const  Sharepost = () => {
     
       formData.append('postImage', imageData);
       formData.append('post_id', '3032');
-      const responce = await fetch(`https://docintosh.com/ApiController/postuploadDocsReact`, {
+      const responce = await fetch(`${mainApi.baseUrl}/ApiController/postuploadDocsReact`, {
         method : 'POST',
         headers:{
             'Content-Type': 'multipart/form-data'

@@ -14,7 +14,7 @@ const Polls = () => {
     style={{}}>
     <View style={{padding:10}}>
     <View style={{ alignSelf:'center', marginTop:80, marginBottom:'10%'}}>
-        <Image source={Layer_2}/>
+        <Image source={require('../assets/images/Layer_2.png')}/>
     </View>
     <View>
         <Text style={{alignSelf:'center', fontSize:20, fontWeight:'600'}}>You have attemped all Polls.</Text>

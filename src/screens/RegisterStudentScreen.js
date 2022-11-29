@@ -305,8 +305,7 @@ return (
     <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{profilErr}</Text>
   </View>
 </Pressable>
-
-      <View style={styles.verificationForm}>
+    <View style={styles.verificationForm}>
       <TextInput style={[styles.customInputVerifyFull,{fontFamily:"PlusJakartaSans-Regular"}] } 
        autoCapitalize="none"
        keyboardType="number-pad"
