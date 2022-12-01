@@ -9,6 +9,7 @@ import savePost  from '../../assets/dr-icon/savePost.png';
 import reportPost  from '../../assets/dr-icon/reportPost.png';
 import unfollow  from '../../assets/dr-icon/unfollow.png';
 import blockUser  from '../../assets/dr-icon/blockUser.png';
+import OptionModal from './optionModal';
 
 const PostsScreen = ({route}) => {
     const [userData, setUserData] =useState([]);
@@ -30,31 +31,31 @@ const PostsScreen = ({route}) => {
     // console.log("item",item);
 
 
-    const OptionComp = () => {
-        return(
-          <>
-          {optionModal &&
-            <View style={styles.optionModal}>
-            <TouchableOpacity style={styles.optionList}>
-              <Image source={require('../../assets/dr-icon/savePost.png')} style={styles.optionListImage}/>
-              <Text style={styles.optionListText}>Save Post</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.optionList}>
-              <Image source={require('../../assets/dr-icon/reportPost.png')} style={styles.optionList2}/>
-              <Text style={styles.optionListText}>Report Post</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.optionList}>
-              <Image source={require('../../assets/dr-icon/unfollow.png')} style={styles.optionList3}/>
-              <Text style={styles.optionListText}>Unfollow</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.optionList}>
-              <Image source={require('../../assets/dr-icon/blockUser.png')} style={styles.optionList4}/>
-              <Text style={styles.optionListText}>Block User</Text>
-            </TouchableOpacity>
-          </View>}
-          </>
-        )
-      }
+    // const OptionComp = () => {
+    //     return(
+    //       <>
+    //       {optionModal &&
+    //         <View style={styles.optionModal}>
+    //         <TouchableOpacity style={styles.optionList}>
+    //           <Image source={require('../../assets/dr-icon/savePost.png')} style={styles.optionListImage}/>
+    //           <Text style={styles.optionListText}>Save Post</Text>
+    //         </TouchableOpacity>
+    //         <TouchableOpacity style={styles.optionList}>
+    //           <Image source={require('../../assets/dr-icon/reportPost.png')} style={styles.optionList2}/>
+    //           <Text style={styles.optionListText}>Report Post</Text>
+    //         </TouchableOpacity>
+    //         <TouchableOpacity style={styles.optionList}>
+    //           <Image source={require('../../assets/dr-icon/unfollow.png')} style={styles.optionList3}/>
+    //           <Text style={styles.optionListText}>Unfollow</Text>
+    //         </TouchableOpacity>
+    //         <TouchableOpacity style={styles.optionList}>
+    //           <Image source={require('../../assets/dr-icon/blockUser.png')} style={styles.optionList4}/>
+    //           <Text style={styles.optionListText}>Block User</Text>
+    //         </TouchableOpacity>
+    //       </View>}
+    //       </>
+    //     )
+    //   }
 
   return (
     <View style={styles.PostContainer}>
@@ -85,12 +86,12 @@ const PostsScreen = ({route}) => {
                        </View> 
                     </View>
                     <View>
-                        <TouchableOpacity onPress={() => handleOption(item?.post_id)} style={{}}>
+                        <TouchableOpacity onPress={() => handleOption(item?.post_id)} style={{padding:10,right:-10,top:-10}}>
                         <Svg width="7" height="20" viewBox="0 0 4 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <Path d="M3.5 1.55552C3.5 0.696472 2.82839 0 2 0C1.17161 0 0.5 0.696472 0.5 1.55552C0.5 2.41458 1.17161 3.11105 2 3.11105C2.82839 3.11105 3.5 2.41458 3.5 1.55552ZM3.5 8C3.5 7.14095 2.82839 6.44448 2 6.44448C1.17161 6.44448 0.5 7.14095 0.5 8C0.5 8.85905 1.17161 9.55552 2 9.55552C2.82839 9.55552 3.5 8.85905 3.5 8ZM3.5 14.4445C3.5 13.5854 2.82839 12.889 2 12.889C1.17161 12.889 0.5 13.5854 0.5 14.4445C0.5 15.3035 1.17161 16 2 16C2.82839 16 3.5 15.3035 3.5 14.4445Z" fill="#51668A"/>
                         </Svg>
                         </TouchableOpacity>
-                        {item?.post_id == postId && <OptionComp/>}
+                        {item?.post_id == postId && <OptionModal modalVisible={optionModal}/>}
                     </View>
                 </View>
                 <Image source={{uri:data.filename}} style={{width:"100%",height:300,borderRadius:3,marginVertical:10}}/>

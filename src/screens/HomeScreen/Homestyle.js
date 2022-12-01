@@ -151,7 +151,6 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     marginTop:20
   },
-
   viewDoccin: {
     fontSize: 18,
     fontWeight: "600",
@@ -248,9 +247,6 @@ usersCommentContainer:{
 },
 usersCommentPictureContainer:{
   flexDirection:'row',
-},
-usersCommentsThreeDots:{
-  fontSize:20
 },
 userUsername:{
   fontFamily:'Inter-SemiBold'

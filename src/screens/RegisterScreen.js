@@ -299,37 +299,6 @@ const form_submit = async() =>{
             </Text>
             </View>
 
-  
-            {/* <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-                marginBottom: 30,
-              }}>
-              <TouchableOpacity
-                onPress={() => {}}
-                >
-                <SvgUri width="56" height="56" uri="https://www.brandcare.net/Docintosh_Svg/google.svg" />
-          
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {}}
-               >
-
-            <SvgUri width="56" height="56" uri="https://www.brandcare.net/Docintosh_Svg/facebook%20%282%29.svg" />
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                onPress={() => {}}
-                >
-                  <SvgUri width="56" height="56" uri="https://www.brandcare.net/Docintosh_Svg/linkdin.svg" />
-              </TouchableOpacity>
-            </View>
-    
-            <Text  style={styles.headingpara2}>
-              Or
-            </Text> */}
-
             
        <View style={{ display:"flex" ,flexDirection:"row",alignItems:'center', flexDirection:"column"}}>
 

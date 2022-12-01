@@ -133,14 +133,6 @@ const SelectInterest = ({route}) => {
       navigation.navigate('ContactPermission'); 
     }
   }
-  const [fontsLoaded] = useFonts({
-      'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),
-      'PlusJakartaSans-Regular': require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
-      
-    });
-    if(!fontsLoaded) {
-      return null;
-    }
 
     if(loader){
       return(

@@ -5,7 +5,6 @@ import {Ionicons,MaterialCommunityIcons} from '@expo/vector-icons';
 import { commentData ,getallcomment} from '../../../redux/reducers/publicReactionSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { styles } from './Homestyle';
-import Svg, {Path} from 'react-native-svg';
 
 const CommentsScreen = ({route}) => {
   const  {post_id, comments_list} = route.params;
@@ -13,13 +12,9 @@ const CommentsScreen = ({route}) => {
     const [text, onChangeText] = useState();
     const [userId, setUserId] = useState();
     const [instData, setInstData] = useState([]);
-    const [Comments, SetComments] = useState([]);
     const [loader, setLoader] = useState(true);
     const [postId, setPostId] = useState();
-    
-
     const dispatch = useDispatch();
-    
 
     const getData = async() => {
         const jsonValue = await AsyncStorage.getItem('USER_INFO');
@@ -30,7 +25,7 @@ const CommentsScreen = ({route}) => {
 
         const postDetails = {post_id:post_id}
         const sentResult = await dispatch(getallcomment(postDetails));
-        // console.log("sentResult-------------", sentResult.payload.getallcomment);
+        console.log("sentResult-------------", sentResult.payload.getallcomment);
         setInstData(sentResult.payload.getallcomment);
         setLoader(false)
     }
@@ -58,11 +53,11 @@ const CommentsScreen = ({route}) => {
       console.log("dot",val);
       setPostId(val)
     }
-//console.log("postId",post_id);
+    console.log("instData",instData.length);
   return (
     <View style={styles.commentContainer}>
       <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true} >
-               {instData && instData.map((element, index)=>{
+               { instData.length > 0 ? instData?.map((element, index)=>{
                   return(
                     <View style={styles.usersCommentContainer} key={index}>
                       <View style={styles.usersCommentPictureContainer}>
@@ -74,13 +69,12 @@ const CommentsScreen = ({route}) => {
                       </View>
                       <TouchableOpacity onPress={() => handleOption(element?.comment_id)} style={{}}>
                         <MaterialCommunityIcons name='delete-outline' size={30} color={'#A30000'}/>
-                        {/* <Svg width="7" height="20" viewBox="0 0 4 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <Path d="M3.5 1.55552C3.5 0.696472 2.82839 0 2 0C1.17161 0 0.5 0.696472 0.5 1.55552C0.5 2.41458 1.17161 3.11105 2 3.11105C2.82839 3.11105 3.5 2.41458 3.5 1.55552ZM3.5 8C3.5 7.14095 2.82839 6.44448 2 6.44448C1.17161 6.44448 0.5 7.14095 0.5 8C0.5 8.85905 1.17161 9.55552 2 9.55552C2.82839 9.55552 3.5 8.85905 3.5 8ZM3.5 14.4445C3.5 13.5854 2.82839 12.889 2 12.889C1.17161 12.889 0.5 13.5854 0.5 14.4445C0.5 15.3035 1.17161 16 2 16C2.82839 16 3.5 15.3035 3.5 14.4445Z" fill="#51668A"/>
-                        </Svg> */}
                       </TouchableOpacity>
                     </View>
                   )
-                }) }
+                }): 
+                <Text style={styles.userCommentTexts}>No Comments Available </Text>
+                }
       </ScrollView>
         <View style={styles.UserComments}>
             <View style={styles.inputCont} >

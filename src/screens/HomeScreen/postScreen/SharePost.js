@@ -46,6 +46,8 @@ const  Sharepost = () => {
   const handlePress = () => setExpanded(!expanded);
   const [isOpen, setIsOpen]     = useState(false);
   const [checked, setChecked]   = useState(false);
+  const [specialNames, setSpecialNames]   = useState();
+  const [whoCanSee, setWhoCanSee]   = useState();
   const [userdata, setuserdata] = useState({
     fullname:'',
     profile:'',
@@ -79,8 +81,8 @@ const  Sharepost = () => {
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing:true,
-      aspect: [1, 1],
+      // allowsEditing:true,
+      // aspect: [1, 1],
       quality: 1,
     });
     if (!result.cancelled) {
@@ -149,9 +151,8 @@ const  Sharepost = () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
       allowsMultipleSelection: true,
-      aspect: [1, 1],
+      // aspect: [1, 1],
       quality: 0.1,
     });
    // console.log(result);
@@ -177,7 +178,9 @@ const postDesc= (e)=>{
 }
 
 const publishCheck = (e)=>{
-  // console.log(e);
+  console.log("e",e);
+    setWhoCanSee("Public");
+    setSpecialNames();
     setPost({...post,
       publishto:e,
     })
@@ -185,12 +188,13 @@ const publishCheck = (e)=>{
 }
 
 
-const publishCheck1 = (e)=>{
+const publishCheck1 = (e, text)=>{
   // console.log(e);
     setPost({...post,
       publishto:e,
-    })
-  //  bottomSheetModalRefSecond.current?.close();
+    });
+    setWhoCanSee(text)
+  //bottomSheetModalRefSecond.current?.close();
 }
 
 
@@ -199,9 +203,9 @@ const publishCheck1 = (e)=>{
   const handleStudentSubmit = async() =>{
   // console.log("post",post);
     if(post.publishto ==''){
-      Toast.show('Please select Publishto');
+      Toast.show('Please select Publish to');
     }else if(!post.description){
-        Toast.show("Please Write Something About Your Post!!!!!!!");
+      Toast.show("Please Write Something About Your Post!!!!!!!");
     }else if(!post.postType){
       Toast.show("Please select PostType");
     }else{
@@ -303,10 +307,18 @@ const publishCheck1 = (e)=>{
 
     //console.log("temp",temp );
     setSpl(temp);
+
     const specialityId = temp
       .filter((val) => val.checked == true)
       .map((temp) => temp.speciality_id);
-//console.log("specialityId",specialityId);
+
+    const specialityName = temp
+      .filter((val) => val.checked == true)
+      .map((temp) => temp.speciality);
+
+console.log("specialityName",specialityName);
+setSpecialNames(specialityName)
+
     setPost({ ...post, 
       publishto:3,
       custspeciality:specialityId
@@ -332,8 +344,12 @@ const publishCheck1 = (e)=>{
             <View style={{marginTop:5,}} >
               <TouchableOpacity  onPress={handlePresentModalSecond} style={{flexDirection:'row',alignItems:'center'}}> 
                 <Ionicons name="md-earth" size={13} color="#45B5C0" />  
-                <Text style={styles.publicOption}>Publish</Text>
+                <Text style={styles.publicOption}>{whoCanSee? whoCanSee: "Publish"}</Text>
                 <AntDesign name="down" size={12} color="#51668A" />
+                <Text 
+                  style={[styles.publicOption,{width:170}]} numberOfLines={1} >
+                    {specialNames?.map(data => data+ " ")}
+                  </Text>
               </TouchableOpacity>
             </View>
           </View> 
@@ -471,7 +487,7 @@ const publishCheck1 = (e)=>{
                 }}
                 titleStyle={{marginHorizontal:5, fontSize:16, fontFamily:'Inter-Regular'}}
                 title="My Circle"
-                onPress={() => { publishCheck1(3)}} 
+                onPress={() => { publishCheck1(3, "My Circle")}} 
                 left={props => <FontAwesome5 name="users" size={20} color="#45B5C0" />}>
                      <View style={{width:"100%",margin:10, height:1, backgroundColor:'#cecece', }}></View>
                   {circlespeciality && circlespeciality?.map((element, index)=> {

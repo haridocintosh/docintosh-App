@@ -77,7 +77,7 @@ const PublicReactions = ({item}) => {
                   <TouchableOpacity>
                       <Image source={require('../../assets/dr-icon/gift.png')} style={styles.socialImages}/>
                   </TouchableOpacity>
-                  <Text style={styles.socialCountText}>2k</Text>
+                  <Text style={styles.socialCountText}></Text>
                 </View>
                 
                 <View style={styles.socialCount}>
@@ -99,9 +99,9 @@ const PublicReactions = ({item}) => {
           </View> 
           {likeCount > 0 && 
            <View style={{flexDirection:'row',marginTop:5,marginLeft:10, marginBottom:10}}>
-              {allLikeData?.data.map((data,i) => {
+              {allLikeData?.data?.slice(0, 3).map((data,i) => {
                 return(
-                  <Image source={data?.profileimage ? {uri:data?.profileimage}:require('../../assets/images/profilePicture.png')} style={styles.likedImage} key={i}/>
+                  <Image source={data?.profileimage && {uri:data?.profileimage}} style={styles.likedImage} key={i}/>
                 )
               })}
               <Text style={{fontSize:12, fontWeight:'400',color:'#51668A',padding:5}}>

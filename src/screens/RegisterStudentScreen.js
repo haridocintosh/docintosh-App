@@ -266,16 +266,6 @@ const form_submit = async() =>{
     }
   }
 
-  const [fontsLoaded] = useFonts({
-    'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),
-    'Inter-SemiBold':require('../assets/fonts/Inter-SemiBold.ttf'),
-    'PlusJakartaSans-Regular': require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
-    'PlusJakartaSans-Bold':require('../assets/fonts/PlusJakartaSans-Bold.ttf'),
-
-  });
-  if(!fontsLoaded) {
-    return null;
-  }
 
   if(loader){
     return(
@@ -459,7 +449,6 @@ return (
         <Text style={{fontSize:18, fontWeight:'600',alignSelf:'center',marginTop:65,marginBottom:-5}}>Congratulations!!!</Text>
         <Text style={{fontSize:14, padding:10, fontWeight:'400',alignContent:'center',textAlign:'center', color:'#51668A',}}>You are now part of the Docintosh family. While profile verification can take up to 48 hours, you can be part of the community just by logging in.</Text>
       </View>
-   
     </Modal>
 
 
