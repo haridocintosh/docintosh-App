@@ -22,6 +22,8 @@ import { styles } from './Homestyle';
 import moment from "moment";
 import { useIsFocused } from '@react-navigation/native';
 import OptionModal from './optionModal';
+import { getallcomment } from '../../../redux/reducers/publicReactionSlice';
+
 
 
 
@@ -56,7 +58,6 @@ const HomeScreen = ({navigation})=> {
     outputRange: [10, 6, 5],
     extrapolate: 'clamp',
   });
-
   const imagePosition = scrollPosition.interpolate({
     inputRange: [0, 500],
     outputRange: [(21 * Dimensions.get('window').width) / 100, 30],
@@ -119,6 +120,8 @@ const handleOption = (post_id) => {
     // console.log("postDetails",postDetails); 
     const result = await dispatch(userPostData(postDetails));
     setLoader(false);
+    // const allCommentsCount = {}
+    // const sentResult = await dispatch(getallcomment(allCommentsCount));
     // const allPostData = result && result.payload.filter(Post => Post.user_role != 5)
     setallPost(result.payload);
     // console.log("result.payload",result);
@@ -136,7 +139,6 @@ const handleOption = (post_id) => {
   }
 
     const renderItem = ({item}) => {
-      
       return(
         <Card style={styles.cardOfPosts} >
           <View style={styles.userInfo}>
@@ -144,7 +146,7 @@ const handleOption = (post_id) => {
               <Image source={{uri:item.profileimage}} onPress={() => navigation.navigate('ProfileScreen2')} style={{width:38, height:38,marginRight:5,borderRadius:50}} />
                 <View >
                   <Text style={{fontSize:14, fontWeight:'400', fontFamily:"Inter-Regular"}}>
-                    {item.role =='4' ? 'Dr.' : ''} {item.first_name && item.first_name} {item.last_name && item.last_name} 
+                    {item.role == '4' ? 'Dr.' : ''} {item.first_name && item.first_name} {item.last_name && item.last_name} 
                     <MaterialCommunityIcons name="check-decagram" size={12} color="#0F9C69" />
                   </Text>
                   <View style={{flexDirection:'row',alignItems:'center'}}>

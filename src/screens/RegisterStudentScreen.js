@@ -171,9 +171,9 @@ const pickImage = async (arg) => {
         body :formData
      });
 
-    const result1=  await responce.json();
+    const result1 =  await responce.json();
 
-    setregister({ ...register,
+    setregister({...register,
       mrnproof: result1,
     });
     setmrnproofErr('')
@@ -187,14 +187,14 @@ const pickprofile = async (arg) => {
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: false,
       aspect: [2, 2],
-      quality: 1,
+      quality: 0.5,
     });
   }else{
     var result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: false,
       aspect: [2, 2],
-      quality: 1,
+      quality: 0.5,
     });
   }
  
@@ -414,7 +414,7 @@ return (
    <Text style={[styles.headTexts,{fontFamily:"Inter-SemiBold"}]}>Upload College ID/Library Card</Text>
  
    <View>
-  <TouchableOpacity onPress={() => setisModalShow(true)}>
+    <TouchableOpacity onPress={() => setisModalShow(true)}>
       <View style={{borderColor:"#D5DEED",borderRadius:4,borderStyle: 'dashed',borderWidth:1.4,width:"100%",height:102,justifyContent:"center",alignItems:"center"}}>
       <Image source={require('../assets/icons/upload-img.png')} style={{alignSelf:"center"}}  />
       <Text style={{textAlign:"center",fontSize:14,color:"#2376E5",fontWeight:"600",paddingVertical:6,fontFamily:"Inter-SemiBold"}} >Upload your file</Text>

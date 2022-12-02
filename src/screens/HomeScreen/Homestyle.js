@@ -252,7 +252,11 @@ userUsername:{
   fontFamily:'Inter-SemiBold'
 },
 userCommentTexts:{
-  fontFamily:'Inter-Regular'
+  fontFamily:'Inter-Regular',
+},
+NoCommentTexts:{
+  fontFamily:'Inter-SemiBold',
+  alignSelf:'center',
 },
 
 //-------------------------------public Reaction-------------------------------------
@@ -331,5 +335,56 @@ optionList4:{
   width:18,
   height:18,
   marginRight:7
+},
+//--------------------delete confirmation Modal----------------------
+centeredView: {
+  flex: 1,
+  justifyContent: "center",
+  alignItems: "center",
+  backgroundColor:'rgba(0,0,0,0.4)'  
+},
+modalView: {
+  margin: 20,
+  backgroundColor: "white",
+  borderRadius: 20,
+  padding: 35,
+  alignItems: "center",
+  shadowColor: "#000",
+  shadowOffset: {
+    width: 0,
+    height: 2
+  },
+  shadowOpacity: 0.25,
+  shadowRadius: 4,
+  elevation: 5,
+},
+textBold:{
+  fontFamily:'Inter-SemiBold',
+},
+textNormal:{
+  fontFamily:"Inter-Regular",
+},
+buttonsContainer:{
+  flexDirection:'row',
+},
+buttonsDesign:{
+  borderWidth:1,
+  paddingHorizontal:25,
+  borderRadius:5,
+  paddingVertical:7,
+  marginTop:20
+},
+leftButtonsDesign:{
+  borderColor:'#1A7078'
+},
+RightButtonsDesign:{
+  borderColor:'#1A7078',
+  backgroundColor:'#1A7078'
+},
+leftText:{
+  color:'#1A7078'
+},
+RightText:{
+  color:'#fff'
 },
 });

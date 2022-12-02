@@ -71,6 +71,8 @@ export default function ContactPermission() {
           setContact(contact);
           setLoading(false);
          }
+      }else{
+        navigation.navigate('Login');
       }
     }
     getPrermission();

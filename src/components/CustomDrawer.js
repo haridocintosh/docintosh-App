@@ -25,6 +25,8 @@ import { useDrawerStatus } from '@react-navigation/drawer';
 import {createDrawerNavigator,DrawerItem} from '@react-navigation/drawer';
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import { navigationRef } from '../navigation/RootNavigation';
+import ContactPermission from '../screens/ContactPermission';
+
 
 
 
@@ -91,7 +93,7 @@ const CustomDrawer = (props) => {
 
         <View style={styles.profoleDetailsContainer}>
           <View style={styles.profoleDetails}>
-            <TouchableOpacity  onPress={() => navigation.navigate('EditProfileScreen')}>
+            <TouchableOpacity  onPress={() => navigation.navigate('ProfileScreen')}>
               <MaterialIcons name="arrow-forward-ios" size={16} color="white" style={styles.forwardIcon}/>
             </TouchableOpacity>
             <Image source={userdata.profile ? {uri:userdata.profile}:profilePicture} style={styles.profilePic}/>
@@ -106,7 +108,7 @@ const CustomDrawer = (props) => {
               <Entypo name="trophy" size={25} color="white" />
               <Text style={styles.sideDrawerName}>Leaderboard</Text>
             </TouchableOpacity > */}
-            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
+            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ContactPermission")}}>
               <MaterialIcons name="person-add-alt-1" size={25} color="white" />
               <Text style={styles.sideDrawerName}>Invite</Text>
             </TouchableOpacity >

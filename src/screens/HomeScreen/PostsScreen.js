@@ -15,47 +15,25 @@ const PostsScreen = ({route}) => {
     const [userData, setUserData] =useState([]);
     const [postId, setPostId] =useState();
     const [optionModal, setOptionModal]   = useState(false);
-    const { item } =route?.params;
+    const { item } = route?.params;
     const navigation = useNavigation();
     navigation.setOptions({ title: `${item?.first_name}'s Post` });
     // const {allPost} =route?.params;
 
 
-    const handleOption = (post_id) =>{
+    const handleOption = (post_id) => {
+      setPostId(post_id);
+      if(postId == post_id){
         setOptionModal(!optionModal);
-        setPostId(post_id)
+        return;
+      }
+      setOptionModal(true);
     }
     useEffect(() => {
         setUserData(item?.attach_array)
     }, [])
-    // console.log("item",item);
 
 
-    // const OptionComp = () => {
-    //     return(
-    //       <>
-    //       {optionModal &&
-    //         <View style={styles.optionModal}>
-    //         <TouchableOpacity style={styles.optionList}>
-    //           <Image source={require('../../assets/dr-icon/savePost.png')} style={styles.optionListImage}/>
-    //           <Text style={styles.optionListText}>Save Post</Text>
-    //         </TouchableOpacity>
-    //         <TouchableOpacity style={styles.optionList}>
-    //           <Image source={require('../../assets/dr-icon/reportPost.png')} style={styles.optionList2}/>
-    //           <Text style={styles.optionListText}>Report Post</Text>
-    //         </TouchableOpacity>
-    //         <TouchableOpacity style={styles.optionList}>
-    //           <Image source={require('../../assets/dr-icon/unfollow.png')} style={styles.optionList3}/>
-    //           <Text style={styles.optionListText}>Unfollow</Text>
-    //         </TouchableOpacity>
-    //         <TouchableOpacity style={styles.optionList}>
-    //           <Image source={require('../../assets/dr-icon/blockUser.png')} style={styles.optionList4}/>
-    //           <Text style={styles.optionListText}>Block User</Text>
-    //         </TouchableOpacity>
-    //       </View>}
-    //       </>
-    //     )
-    //   }
 
   return (
     <View style={styles.PostContainer}>

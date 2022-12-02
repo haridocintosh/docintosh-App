@@ -35,10 +35,7 @@ const ProfileScreen = () => {
     
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#E6E6E6'}}>
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      nestedScrollEnable={true}
-      style={{}}>
+  
 
     <Card style={{backgroundColor:'#fff',paddingHorizontal:10,paddingVertical:15, borderRadius:10}}>
     <View style={styles.profilePicContainer}>
@@ -79,12 +76,9 @@ const ProfileScreen = () => {
           </TouchableOpacity>
     </View>
 
-     <ProfileScreenPost />
-     <ProfileScreenPost/>
-     <ProfileScreenPost/>
      <ProfileScreenPost/>
 
-  </ScrollView>
+
  </SafeAreaView>
   )
   }

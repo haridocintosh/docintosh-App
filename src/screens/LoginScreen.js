@@ -6,7 +6,6 @@ import {
   TextInput,
   StyleSheet,
   ActivityIndicator,
-  Platform, Settings
   } from 'react-native';
 import { useDispatch } from "react-redux";
 const styelcss = require('../assets/css/style');
@@ -49,7 +48,7 @@ const LoginScreen = () => {
     });
   }
 
-  const authLogin = async (e)=>{
+  const authLogin = async ()=>{
 
     register.email = register.email? register.email : datarm?.data.email;
     register.password = register.password ? register.password :datarm?.data.password ;
@@ -57,26 +56,22 @@ const LoginScreen = () => {
     if(register.email !== "" &&  register.password !== ""){
       setloader(true)
       const token = await dispatch(userLogin(register));
-      
       if(token.payload.status == 'Success'){
-        setloader(false)
-       
-        console.log("token.payload.session_data-------",token.payload.session_data);
-         await storeData('USER_INFO',JSON.stringify({
+          setloader(false)
+          await storeData('USER_INFO',JSON.stringify({
           login:true,
           data:token.payload.session_data
         }));
-        // console.log("token-------",token);
         if(isChecked){
-          storeData('rememberme',JSON.stringify({
+            storeData('rememberme',JSON.stringify({
             data:{...token.meta.arg, isChecked:isChecked }
           }))
         }else{
           AsyncStorage.removeItem("rememberme")
         }
         singlestoreData('isloggedin','true'); 
-        // Toast.show(token.payload.message);
-          navigation.navigate('HomeScreen')
+          navigation.navigate('HomeScreen');
+          setshoweye(true)
       }else{
         setloader(false)
         Toast.show(token.payload.message);
@@ -99,9 +94,7 @@ const LoginScreen = () => {
   const getDatarm = async (key) => {
     try {
       const jsonValue = await AsyncStorage.getItem(key);
-      // await setdatarm(jsonValue != null ? JSON.parse(JSON.parse(jsonValue)) : null);
       const result = jsonValue != null ? JSON.parse(JSON.parse(jsonValue)) : null;
-      console.log("result",result);
       setdatarm(result)
       setChecked(result?.data.isChecked);
       if(result == null){
@@ -153,7 +146,6 @@ const LoginScreen = () => {
           placeholder='Email ID / Mobile Number*'
           placeholderTextColor='#51668A'
           onChangeText={(text)=>updateEmail(text)}
-          // value={datarm?.data.email}
           defaultValue={datarm?.data.email}
           blurOnSubmit={true}
          />
@@ -169,7 +161,6 @@ const LoginScreen = () => {
           placeholderTextColor='#51668A'
           hideShow={showeye}
           fieldButtonFunction={() => {}}
-          // value={datarm?.data.password}
           defaultValue={datarm?.data.password}
           blurOnSubmit={true}
         />

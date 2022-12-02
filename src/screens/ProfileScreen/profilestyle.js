@@ -180,9 +180,7 @@ export const styles = StyleSheet.create({
     fontWeight: "400",
     color: "#51668a",
     fontFamily: "Inter-Regular",
-
   },
-
   dot: {
     borderStyle: "solid",
     borderWidth: 2,
@@ -213,5 +211,20 @@ export const styles = StyleSheet.create({
     backgroundColor:"#F2FAFA",
     flex:1,
     paddingHorizontal:15
+},
+
+//-------------------------profilrScreen post------------------------------
+cardOfPosts: {
+  marginBottom: 25,
+  borderRadius: 10,
+  shadowRadius: 10,
+  padding: 15,
+  // marginTop: -10,
+},
+userInfo: {
+  justifyContent: "space-between",
+  paddingVertical: 10,
+  flexDirection: "row",
+  alignItems: "center",
 },
 });

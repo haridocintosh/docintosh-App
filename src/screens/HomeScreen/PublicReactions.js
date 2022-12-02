@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native'
+import { View, Text, Image, TouchableOpacity, Share} from 'react-native'
 import React, { useState,useEffect } from 'react';
 import {AntDesign,} from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -56,6 +56,25 @@ const PublicReactions = ({item}) => {
  const GotoComments =(post_id,comments_list ) => {
   navigation.navigate('CommentsScreen', {post_id:post_id,comments_list });
  }
+
+ const onShare = async () => {
+  try {
+    const result = await Share.share({
+      message:"gagan",
+    });
+    if (result.action === Share.sharedAction) {
+      if (result.activityType) {
+        // shared with activity type of result.activityType
+      } else {
+        // shared
+      }
+    } else if (result.action === Share.dismissedAction) {
+      // dismissed
+    }
+  } catch (error) {
+    alert(error.message);
+  }
+};
  
   return (
     <View>
@@ -88,7 +107,7 @@ const PublicReactions = ({item}) => {
                 </View>
 
                 <View style={styles.socialCount}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => onShare(item.post_id)}>
                         <Image source={require('../../assets/dr-icon/Share.png')} style={styles.socialImages}/>
                     </TouchableOpacity>
                   <Text style={styles.socialCountText}>4k</Text>
