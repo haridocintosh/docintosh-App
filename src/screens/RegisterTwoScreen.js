@@ -313,9 +313,9 @@ useEffect(()=>{
           const coinResult = await dispatch(coinTransfer(coinDetails));
         //  console.log(coinResult.payload)
           if(result.payload.status == 'Success'){
-            setIsModalVisible(!isModalVisible);
+            setIsModalVisible(true);
             setTimeout(() => {
-            setIsModalVisible(!isModalVisible);
+            setIsModalVisible(false);
             navigation.navigate('SelectInterest',{
               user_id : user_id,
             })
@@ -552,7 +552,7 @@ return (
   </Modal> */}
 
   
-      <Modal isVisible={isModalVisible} width={320} height={"100%"} style={{display:"flex",alignItems:'center', justifyContent:"center", borderWidth:0, borderRadius:30/2, width:320,maxHeight:230, backgroundColor:'#fff', bottom:'-60%',}}>
+      <Modal isVisible={isModalVisible}  height={"100%"} style={{alignItems:'center', justifyContent:"center", borderWidth:0, borderRadius:30/2, width:320,maxHeight:230, backgroundColor:'#fff', bottom:'-65%',}}>
       <View style={{display:"flex",alignItems:'center', justifyContent:"center",}}>
         <Lottie style={{position:"absolute",top:-26,height:"100%",width:80,alignSelf:'center',}}
         source={require('../assets/dr-icon/congratulation.json')} autoPlay={true} loop={false}/>

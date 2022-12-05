@@ -40,7 +40,7 @@ export default function KnowledgeScreen() {
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <ScrollView style={{paddingHorizontal:0}}>
       <View>
-      <Image source={reactangle} style={{width:'100%', height:230, marginTop:20}}></Image>
+      <Image source={require('../assets/images/Rectangle.png')} style={{width:'100%', height:230, marginTop:20}}></Image>
 </View>
 <View style={{borderTopEndRadius:50/2, borderTopStartRadius:50/2, marginTop:-50,zIndex:1, backgroundColor:'#ffff', padding:20, paddingLeft:10}}>
 <View style={{backgroundColor:'#45B5C0', width:81, height:21, borderRadius:12/2,marginTop:20, marginLeft:10}}>
@@ -52,10 +52,9 @@ export default function KnowledgeScreen() {
     </View>
 </View>
 <View style={{flexDirection:'row',marginLeft:10 , marginTop:10}}>
-                <Image source={oval} style={{width:14, height:14}}></Image>
-                <Image source={oval}style={{width:14, height:14,zIndex:1, marginLeft:-5, borderColor:'#000'}} ></Image>
-                <Image source={oval}style={{zIndex:1,width:14, height:14, marginLeft:-5, borderColor:'#000'}} ></Image>
-                {/* <Image source={oval}></Image> */}
+                <Image source={require('../assets/dr-icon/Oval.png')} style={{width:14, height:14}}></Image>
+                <Image source={require('../assets/dr-icon/Oval.png')}style={{width:14, height:14,zIndex:1, marginLeft:-5, borderColor:'#000'}} ></Image>
+                <Image source={require('../assets/dr-icon/Oval.png')}style={{zIndex:1,width:14, height:14, marginLeft:-5, borderColor:'#000'}} ></Image>
                 <Text style={{fontSize:12, fontWeight:'400',color:'#687690', paddingStart:5}}>160+ Members</Text>
                </View>
            <View style={{ flexDirection:'row', marginTop:20}}>
@@ -74,7 +73,6 @@ export default function KnowledgeScreen() {
             <View style={{alignSelf:'center', marginTop:10}}>
             <Ionicons name="time-outline" size={32} color="black" />
 
-  
            </View>
            <Text style={{alignSelf:'center', fontSize:12, fontWeight:'400'}}>12 PM - 2 PM</Text>
             </Card>

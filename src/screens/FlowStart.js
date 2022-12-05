@@ -1,14 +1,6 @@
 import * as React from 'react';
 import { View, Text , StyleSheet, Image,SafeAreaView, ScrollView} from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
-import { FontAwesome5,FontAwesome,MaterialCommunityIcons,Feather,MaterialIcons,Ionicons,AntDesign ,Entypo,Fontisto} from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-// import d from '../assets/dr-icon/d.png';
-// import ts from '../assets/dr-icon/ts.png';
-//import rocketpath from '../assets/images/rocketpath.png';
-//import { Card, TextInput } from 'react-native-paper';
-
-
 
 
 const ReportPost = () => {
@@ -24,7 +16,7 @@ const ReportPost = () => {
 
  
 
-<Image source={rocketpath}
+<Image source={require('../assets/images/rocketpath.png')}
     style={{alignSelf:'center',}}
 />
 

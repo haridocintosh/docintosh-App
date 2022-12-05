@@ -1,16 +1,10 @@
 import React, {useState} from 'react'
-import Feather from 'react-native-vector-icons/Feather';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { View, Text,Image,
-  SafeAreaView,ScrollView,TouchableOpacity,ImageBackground,TextInput,StyleSheet } from 'react-native'
-import {  Card } from 'react-native-paper';
+  SafeAreaView,ScrollView,StyleSheet } from 'react-native'
  import {Button, Input  } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
-import { FontAwesome5 , MaterialCommunityIcons,AntDesign} from '@expo/vector-icons';
-import docintoshlgblk from '../assets/dr-icon/doclg1.png'
-import d from '../assets/dr-icon/d.png';
 
-import OBJECTS from '../assets/dr-icon/OBJECTS.png';
 
 const SentimentixScreen = () => {
     const navigation = useNavigation();
@@ -35,7 +29,7 @@ const SentimentixScreen = () => {
     style={{}}>
 <View style={{padding:10}}>
 <View style={{ alignSelf:'center', marginTop:80, marginBottom:'10%'}}>
-    <Image source={OBJECTS}/>
+    <Image source={require('../assets/dr-icon/OBJECTS.png')}/>
 </View>
 <View>
     <Text style={{alignSelf:'center', fontSize:20, fontWeight:'600'}}>Welcome to Sentimetrix</Text>

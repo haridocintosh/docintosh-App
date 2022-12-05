@@ -3,10 +3,8 @@ import { View,SafeAreaView, ScrollView,Text,Image, TextInput, } from 'react-nati
 import {FontAwesome, Entypo} from 'react-native-vector-icons'
 import { useNavigation } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import contactimg from '../../assets/images/contactimg.png';
 
 const ContactScreen = () => {
-   const navigation = useNavigation();
    
   const [fontsLoaded] = useFonts({
     'Inter-Regular': require('../../assets/fonts/Inter-Regular.ttf'),
@@ -26,7 +24,7 @@ const ContactScreen = () => {
     >
        <View>
         <View style={{alignSelf:'center', marginVertical:50}}>
-            <Image source={contactimg}/>
+            <Image source={require('../../assets/images/contactimg.png')}/>
         </View>
         <Text style={{alignSelf:'center',fontFamily:'PlusJakartaSans-Bold', fontWeight:'600', fontSize:20, color:'#013F60'}}>We are ready to help you</Text>
         <Text style={{alignSelf:'center', marginTop:24, fontFamily:'Inter-Regular', color: '#51668A'}}>Call support timings are from 24 Hours.</Text>

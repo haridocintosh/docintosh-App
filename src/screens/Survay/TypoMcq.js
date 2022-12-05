@@ -2,13 +2,10 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
-  StyleSheet,
-  Dimensions,
   SafeAreaView,
   ScrollView,
   TextInput,
 } from "react-native";
-import { useFonts } from "expo-font";
 import { styles } from "./SurvayStyle";
 
 const TypoMcq = ({ setLiftUpData, currentIndex, allMCQs, length }) => {

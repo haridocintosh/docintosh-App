@@ -3,11 +3,7 @@ import {Image} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import CommunityScreen from '../screens/CommunityScreen';
 import KnowledgeScreen from '../screens/KnowledgeScreen';
-import logo from '../assets/images/logo.png';
 import Animated from 'react-native-reanimated';
-import Engage from '../assets/dr-icon/Engage.png'
-import Knowledge from '../assets/dr-icon/Knowledge.png'
-import Community from '../assets/dr-icon/Community.png'
 import HomeNavigation from './HomeNavigation';
 import EngageNavigation from './EngageNavigation';
 
@@ -42,7 +38,8 @@ const TabNavigator = () => {
         component={HomeNavigation}
         options={() => ({
             tabBarLabel:'Home',
-            tabBarIcon: () => (<Image source={logo} style={{width: 25, height: 35}} />),
+            tabBarIcon: () => (
+            <Image source={require('../assets/images/logo.png')} style={{width: 25, height: 35}} />),
         })} 
       />
 
@@ -51,7 +48,8 @@ const TabNavigator = () => {
         component={EngageNavigation}
         options={{
           tabBarLabel:'Engage',
-          tabBarIcon: () => (<Image source={Engage} style={{width:35,height:35,padding:10}} />),
+          tabBarIcon: () => (
+          <Image source={require('../assets/dr-icon/Engage.png')} style={{width:35,height:35,padding:10}} />),
         }}
       />
 
@@ -67,7 +65,7 @@ const TabNavigator = () => {
           headerTintColor: '#fff',
           tabBarIcon: ({color, size}) => (
             // <Feather name="users" color={color} size={size} />
-            <Image source={Community} style={{width:30,height:30}} />
+            <Image source={require('../assets/dr-icon/Community.png')} style={{width:30,height:30}} />
           ),
         }}
       
@@ -84,11 +82,8 @@ const TabNavigator = () => {
           title: 'Knowledge',
           tabBarIcon: ({color, size}) => (
             // <Ionicons name="person-outline" color={color} size={size} />
-            <Image source={Knowledge} style={{width:30,height:30}} />
-            
-
+            <Image source={require('../assets/dr-icon/Knowledge.png')} style={{width:30,height:30}} />
           ),
-          
         }}
       />
      

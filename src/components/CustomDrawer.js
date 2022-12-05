@@ -14,34 +14,42 @@ import {
 import docintoshlogo from '../assets/dr-icon/docintoshlogo.png';
 import profilePicture from '../assets/images/profilePicture.png';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons,MaterialCommunityIcons,Ionicons,Entypo } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
 import { Feather } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation,DrawerActions, useIsFocused } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { storeData } from '../apis/Apicall';
 import { useDispatch } from 'react-redux';
 import { useDrawerStatus } from '@react-navigation/drawer';
+import {createDrawerNavigator,DrawerItem} from '@react-navigation/drawer';
+import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
+import { navigationRef } from '../navigation/RootNavigation';
+import ContactPermission from '../screens/ContactPermission';
 
 
 
-const CustomDrawer = props => { 
+
+
+const CustomDrawer = (props) => { 
   const navigation = useNavigation();
   const [logoutdata,setlogoutdata]=useState();
   const dispatch = useDispatch();
   const [loader, setLoader] = useState(false);
+  const [colour, setColour] = useState();
   const profile_url="https://docintosh-assets.s3.us-west-2.amazonaws.com/IMAUP/profile/2021_03_17_04_46_55maledefault.png?response-content-disposition=attachment%3B%20filename%3D%222021_03_17_04_46_55maledefault.png%22&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIATI7R7JS76FDN7AZB%2F20220908%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220908T080043Z&X-Amz-SignedHeaders=host&X-Amz-Expires=518400&X-Amz-Signature=8d3da3b8bec2f627811e1c90332193b36525941c260202c7fbbde63af8adf7ab";
   const [userdata,setuserdata]=useState({
     fullname : "",
     profile:"",
     speciality:"",
-    
-  })
-  useEffect(() => {
-    const asyncFetchDailyData = async () => {
+  });
+  const isFocused = useIsFocused();
+  const Drawer = createDrawerNavigator();
+
+  const asyncFetchDailyData = async () => {
     const jsonValue = await AsyncStorage.getItem('USER_INFO');
       const data=await JSON.parse(jsonValue);
-      console.log(JSON.parse(data)['data'])
+      // console.log(JSON.parse(data)['data'])
       setlogoutdata(JSON.parse(data)['data'])
       const result=JSON.parse(data)['data'];
       // setuserdata(JSON.parse(data)['data']['first_name']+" "+JSON.parse(data)['data']['last_name'])
@@ -52,8 +60,11 @@ const CustomDrawer = props => {
         role:`${result['role']}`
       });
     }
-    asyncFetchDailyData();
-  }, [])
+  useEffect(() => {
+    if(isFocused){
+      asyncFetchDailyData();
+    }
+  }, [isFocused])
   
   const removeData = async () => {
     setLoader(true)
@@ -62,10 +73,10 @@ const CustomDrawer = props => {
         login:false,
         data:logoutdata
       }))
-      setTimeout(()=>{
-        navigation.navigate('LoginScreen')
-      },1000)
-      
+      // setTimeout(()=>{
+        navigation.dispatch(DrawerActions.closeDrawer());
+        navigation.navigate('Login')
+      // },1000)
     }catch(e) {
     }
     setLoader(false)
@@ -74,7 +85,7 @@ const CustomDrawer = props => {
   return (
     <View style={styles.DrowerContainer}>
         <View style={styles.DocLogo}>
-          <Image source={docintoshlogo} style={styles.logoImg}></Image>
+          <Image source={require('../assets/dr-icon/docintoshlogo.png')} style={styles.logoImg}></Image>
           <TouchableOpacity onPress={() => props.navigation.closeDrawer()}>
             <AntDesign name="close" color={'#fff'} size={25} />
           </TouchableOpacity>
@@ -82,7 +93,7 @@ const CustomDrawer = props => {
 
         <View style={styles.profoleDetailsContainer}>
           <View style={styles.profoleDetails}>
-            <TouchableOpacity  onPress={() => navigation.navigate('Invite')}>
+            <TouchableOpacity  onPress={() => navigation.navigate('ProfileScreen')}>
               <MaterialIcons name="arrow-forward-ios" size={16} color="white" style={styles.forwardIcon}/>
             </TouchableOpacity>
             <Image source={userdata.profile ? {uri:userdata.profile}:profilePicture} style={styles.profilePic}/>
@@ -93,6 +104,34 @@ const CustomDrawer = props => {
         <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor: '#071B36',}}>
           <View style={styles.drowerChilds}>
             <DrawerItemList {...props} />
+            {/* <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
+              <Entypo name="trophy" size={25} color="white" />
+              <Text style={styles.sideDrawerName}>Leaderboard</Text>
+            </TouchableOpacity > */}
+            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ContactPermission")}}>
+              <MaterialIcons name="person-add-alt-1" size={25} color="white" />
+              <Text style={styles.sideDrawerName}>Invite</Text>
+            </TouchableOpacity >
+            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
+              <MaterialCommunityIcons name="gift" size={25} color="white"/>
+              <Text style={styles.sideDrawerName}>Gift DocCoins</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
+              <Ionicons name="md-newspaper" size={25} color="white"/>
+              <Text style={styles.sideDrawerName}>What’s New</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
+              <MaterialCommunityIcons name="chat-question" size={25} color="white"/>
+              <Text style={styles.sideDrawerName}>Take a Tour</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
+              <Entypo name="text-document-inverted" size={25} color="white"/>
+              <Text style={styles.sideDrawerName}>Business Page</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
+              <Ionicons name="settings-sharp" size={25} color="white"/>
+              <Text style={styles.sideDrawerName}>Settings</Text>
+            </TouchableOpacity>
           </View>
         </DrawerContentScrollView>
 
@@ -106,7 +145,7 @@ const CustomDrawer = props => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15,}}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{flexDirection: 'row', alignItems:'center'}}>
               <Feather name="info" size={20} style={{color:'#fff',paddingRight:10}} />
               <Text
                 style={styles.drawerText}>
@@ -115,9 +154,21 @@ const CustomDrawer = props => {
             </View>
           </TouchableOpacity>
             <View style={{marginVertical:15}}>
+
+            {/* <DrawerItem 
+              label="Log out"
+              color={'#fff'}
+              onPress={()=>{
+                AsyncStorage.clear();
+                navigation.navigate("Login");
+              }}
+              style={{borderWidth:1,borderColor:'#fff',borderRadius:15/2}}
+            />
+            <DrawerItem label="Logout" onPress={() => props.navigation.navigate("LoginScreen")}  */}
+            {/* style={{borderWidth:1,borderColor:'#fff',borderRadius:15/2}}/> */}
             <Button
               onPress={() => removeData()}
-                title={loader ? <ActivityIndicator color={"#fff"}/>: "Logout"}
+                title={"Logout"}
                 type="outline"
                 buttonStyle={{
                   borderColor: '#2C8892',
@@ -182,8 +233,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#071B36', 
     paddingTop: 10
   },
+  sideDrawerComp:{
+    // borderWidth:1,
+    borderColor:'#ccc',
+    height:45,
+    margin:10,
+    borderRadius:5,
+    // backgroundColor:"#45B5C0",
+    flexDirection:'row',
+    alignItems:'center',
+    padding:10
+  },
   profoleDetailsContainer:{
     margin:10
+  },
+  sideDrawerName:{
+    color:"#fff",
+    fontFamily:'Inter-SemiBold',
+    fontSize: 15,
+    marginLeft:10
   },
   forwardIcon:{
     position:'absolute',
@@ -191,9 +259,8 @@ const styles = StyleSheet.create({
   },
   drawerText:{
     fontSize: 15,
-    //fontFamily: 'Inter_900Black',
+    fontFamily:'Inter-SemiBold',
     marginLeft: 5,
-    fontWeight:'400', 
     fontSize:14,
     color:'#FFFFFF'
   },

@@ -1,16 +1,9 @@
 import React, {useState} from 'react'
-import Feather from 'react-native-vector-icons/Feather';
-import DropDownPicker from 'react-native-dropdown-picker';
 import { View, Text,Image,
-  SafeAreaView,ScrollView,TouchableOpacity,ImageBackground,TextInput,StyleSheet } from 'react-native'
-import {  Card } from 'react-native-paper';
- import {Button, Input  } from 'react-native-elements';
+  SafeAreaView,ScrollView,StyleSheet } from 'react-native'
+ import {Button } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
-import { FontAwesome5 , MaterialCommunityIcons,AntDesign} from '@expo/vector-icons';
-import docintoshlgblk from '../assets/dr-icon/doclg1.png'
-import d from '../assets/dr-icon/d.png';
 
-import cong from '../assets/dr-icon/cong.png';
 
 const Sentimentixscreen2 = () => {
     const navigation = useNavigation();
@@ -39,7 +32,7 @@ const Sentimentixscreen2 = () => {
 </View>
 <View style={{alignSelf:'center'}}><Text style={{fontSize:12, fontWeight:'400', color:'#51668A', }}>You are almost there.</Text></View>
 <View style={{ alignSelf:'center', marginTop:60, marginBottom:'10%'}}>
-    <Image source={cong}/>
+    <Image source={require('../assets/dr-icon/cong.png')}/>
 </View>
 
 <View>

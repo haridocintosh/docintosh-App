@@ -4,25 +4,10 @@ import {
   Text,
   SafeAreaView,
   ScrollView,
-  ImageBackground,
-  TextInput,
-  TouchableOpacity,
   useWindowDimensions,
   Image,
 } from 'react-native';
-//import { TabView, SceneMap,TabBar } from 'react-native-tab-view';
-
 import { useNavigation } from '@react-navigation/native';
-
-import reactangle from '../assets/images/Rectangle.png'
-import reactangle1 from '../assets/images/Rectangle1.png'
-import oval from '../assets/dr-icon/Oval.png'
-
-import docintoshd from '../assets/dr-icon/dric.png'
-import Feather from 'react-native-vector-icons/Feather';
-// import {freeGames, paidGames, sliderData} from '../model/data';
-import CustomSwitch from '../components/CustomSwitch';
-import ListItem from '../components/ListItem';
 import { Card } from 'react-native-paper';
 
 export default function KnowledgeScreen() {
@@ -59,11 +44,6 @@ export default function KnowledgeScreen() {
   //   second: SecondRoute,
   //   // third: FirstRoute,
   // });
-
-
-
-    
-
   
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
@@ -87,7 +67,7 @@ export default function KnowledgeScreen() {
       <Card style={{borderRadius:20/2, height:295 ,  marginTop:20, }}  onPress={() => navigation.navigate('Knowledge2Screen')}>
       
       <View>
-      <Image source={reactangle} style={{width:'100%'}}></Image>
+      <Image source={require('../assets/images/Rectangle.png')} style={{width:'100%'}}/>
 
       <View style={{backgroundColor:'#45B5C0', width:81, height:21, borderRadius:12/2,zIndex:1, marginTop:-30, marginLeft:10}}>
       <Text style={{textAlign:'center', color:'#fff', fontSize:12,fontWeight:'600',lineHeight:20}}>Sponsored</Text></View>
@@ -101,17 +81,16 @@ export default function KnowledgeScreen() {
   <Text style={{fontSize:16, fontWeight:'600', color:'#071B36'}}>Telemedicine</Text>
 </View>
 <View style={{flexDirection:'row',alignSelf:'flex-end',marginTop:-15}}>
-  <Image source={docintoshd} style={{marginRight:5}}></Image>
+  <Image source={require('../assets/dr-icon/dric.png')} style={{marginRight:5}}/>
   <Text style={{paddingRight:5}}>250</Text>
   <Text style={{paddingRight:5}}>Or</Text>
   <Text style={{paddingRight:10}}>₹100  </Text>
  
 </View>
 <View style={{flexDirection:'row',marginLeft:10 , marginTop:10}}>
-                <Image source={oval} ></Image>
-                <Image source={oval}style={{zIndex:1, marginLeft:-10, borderColor:'#000'}} ></Image>
-                <Image source={oval}style={{zIndex:1, marginLeft:-10, borderColor:'#000'}} ></Image>
-                {/* <Image source={oval}></Image> */}
+                <Image source={require('../assets/dr-icon/Oval.png')}/>
+                <Image source={require('../assets/dr-icon/Oval.png')}style={{zIndex:1, marginLeft:-10, borderColor:'#000'}} />
+                <Image source={require('../assets/dr-icon/Oval.png')}style={{zIndex:1, marginLeft:-10, borderColor:'#000'}} /> 
                 <Text style={{fontSize:12, fontWeight:'400',color:'#687690',padding:5}}>160+ Members</Text>
                </View>
                <View style={{marginLeft:10, marginTop:10,lineHeight:40, padding:20}}>
@@ -122,7 +101,7 @@ export default function KnowledgeScreen() {
       <Card style={{borderRadius:20/2, height:295 , marginTop:20, }}>
       
       <View>
-      <Image source={reactangle1} style={{width:'100%'}}></Image>
+      <Image source={require('../assets/images/Rectangle1.png')} style={{width:'100%'}}></Image>
 
       
       
@@ -135,17 +114,16 @@ export default function KnowledgeScreen() {
   <Text style={{fontSize:16, fontWeight:'600', color:'#071B36'}}>Telemedicine</Text>
 </View>
 <View style={{flexDirection:'row',alignSelf:'flex-end',marginTop:-15}}>
-  <Image source={docintoshd} style={{marginRight:5}}></Image>
+  <Image source={require('../assets/dr-icon/dric.png')} style={{marginRight:5}}></Image>
   <Text style={{paddingRight:5}}>250</Text>
   {/* <Text style={{paddingRight:5}}>Or</Text>
   <Text style={{paddingRight:10}}>₹100  </Text> */}
  
 </View>
  <View style={{flexDirection:'row',marginLeft:10 , marginTop:10}}>
-                <Image source={oval} ></Image>
-                <Image source={oval}style={{zIndex:1, marginLeft:-10, borderColor:'#000'}} ></Image>
-                <Image source={oval}style={{zIndex:1, marginLeft:-10, borderColor:'#000'}} ></Image>
-                {/* <Image source={oval}></Image> */}
+                <Image source={require('../assets/dr-icon/Oval.png')} ></Image>
+                <Image source={require('../assets/dr-icon/Oval.png')}style={{zIndex:1, marginLeft:-10, borderColor:'#000'}} ></Image>
+                <Image source={require('../assets/dr-icon/Oval.png')}style={{zIndex:1, marginLeft:-10, borderColor:'#000'}} ></Image>
                 <Text style={{fontSize:12, fontWeight:'400',color:'#687690',padding:5}}>160+ Members</Text>
                </View>
                <View style={{marginLeft:10, marginTop:10,lineHeight:40, padding:20}}>

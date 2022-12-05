@@ -29,16 +29,16 @@ const ProfileScreen = () => {
     <View style={{marginHorizontal:10}}>
       <View style={{paddingHorizontal:10, backgroundColor:'#F2FAFA', marginTop:50, margin:10, borderRadius:20/2, borderStyle:'dashed', borderWidth:2, borderColor:'#D5DEED'}}>
         <View style={{alignItems:'center', display:'flex', marginTop:20}}>
-        <Image source={docprofile} style={{zIndex:2}}/>
+        <Image source={require('../assets/images/docprofile.png')} style={{zIndex:2}}/>
         <View style={{marginTop:20, zIndex:1,}}> 
-        <Image source={d} style={{width:50, height:50, zIndex:1, marginTop:-70,marginRight:70, display:'flex'}} />
+        <Image source={require('../assets/dr-icon/d.png')} style={{width:50, height:50, zIndex:1, marginTop:-70,marginRight:70, display:'flex'}} />
         </View>
         <View style={{marginTop:-10}}>
             <Text>Gift DocCoins to Dr.Vineetha</Text>
         </View>
         <View style={{flexDirection:'row', margin:5, marginBottom:10,}}>
             <Text>Available</Text>
-            <Image source={d} style={{width:18, height:18}}></Image>
+            <Image source={require('../assets/dr-icon/d.png')} style={{width:18, height:18}}></Image>
             <Text>782</Text>
         </View>
    
@@ -63,7 +63,7 @@ const ProfileScreen = () => {
              placeholder='Enter DocCoins'
              
            />
-           <Image source={d} style={{width:24, height:24, position:'absolute', alignSelf:'flex-end'}}/>
+           <Image source={require('../assets/dr-icon/d.png')} style={{width:24, height:24, position:'absolute', alignSelf:'flex-end'}}/>
 
       </View>
      
@@ -71,19 +71,19 @@ const ProfileScreen = () => {
       <View style={{flexDirection:'row',alignSelf:'center'}}>
        <View style={{backgroundColor:'#F2FAFA', width:100, height:40,  borderRadius:20/4,marginRight:20}}>
             <View style={{flexDirection:'row', alignSelf:'center'}}>
-                <Image source={d} style={{marginVertical:10, width:24, height:24}}/>
+                <Image source={require('../assets/dr-icon/d.png')} style={{marginVertical:10, width:24, height:24}}/>
                 <Text style={{fontSize:16, fontWeight:'600', marginVertical:10, marginLeft:8}}>100</Text>
             </View>
         </View>
         <View style={{backgroundColor:'#F2FAFA', width:100, height:40,  borderRadius:20/4,marginRight:20}}>
             <View style={{flexDirection:'row', alignSelf:'center'}}>
-                <Image source={d} style={{marginVertical:10, width:24, height:24}}/>
+                <Image source={require('../assets/dr-icon/d.png')} style={{marginVertical:10, width:24, height:24}}/>
                 <Text style={{fontSize:16, fontWeight:'600', marginVertical:10, marginLeft:8}}>250</Text>
             </View>
         </View>
         <View style={{backgroundColor:'#F2FAFA', width:100, height:40,   borderRadius:20/4}}>
             <View style={{flexDirection:'row', alignSelf:'center'}}>
-                <Image source={d} style={{marginVertical:10, width:24, height:24}}/>
+                <Image source={require('../assets/dr-icon/d.png')} style={{marginVertical:10, width:24, height:24}}/>
                 <Text style={{fontSize:16, fontWeight:'600', marginVertical:10, marginLeft:8}}>500</Text>
             </View>
         </View>
@@ -92,19 +92,19 @@ const ProfileScreen = () => {
       <View style={{flexDirection:'row',marginTop:16, alignSelf:'center', }}>
        <View style={{backgroundColor:'#F2FAFA', width:100, height:40,  borderRadius:20/4, marginRight:20}}>
             <View style={{flexDirection:'row', alignSelf:'center'}}>
-                <Image source={d} style={{marginVertical:10, width:24, height:24}}/>
+                <Image source={require('../assets/dr-icon/d.png')} style={{marginVertical:10, width:24, height:24}}/>
                 <Text style={{fontSize:16, fontWeight:'600', marginVertical:10, marginLeft:8}}>1000</Text>
             </View>
         </View>
         <View style={{backgroundColor:'#F2FAFA', width:100, height:40,  borderRadius:20/4,marginRight:20}}>
             <View style={{flexDirection:'row', alignSelf:'center'}}>
-                <Image source={d} style={{marginVertical:10, width:24, height:24}}/>
+                <Image source={require('../assets/dr-icon/d.png')} style={{marginVertical:10, width:24, height:24}}/>
                 <Text style={{fontSize:16, fontWeight:'600', marginVertical:10, marginLeft:8}}>2500</Text>
             </View>
         </View>
         <View style={{backgroundColor:'#F2FAFA', width:100, height:40,   borderRadius:20/4}}>
             <View style={{flexDirection:'row', alignSelf:'center'}}>
-                <Image source={d} style={{marginVertical:10, width:24, height:24}}/>
+                <Image source={require('../assets/dr-icon/d.png')} style={{marginVertical:10, width:24, height:24}}/>
                 <Text style={{fontSize:16, fontWeight:'600', marginVertical:10, marginLeft:8}}>5000</Text>
             </View>
         </View>

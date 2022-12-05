@@ -39,11 +39,11 @@ import { View,
    const [editNumber , setEditNumber] = useState(false);
  
      const resendUserOtp = async() =>{ 
-      setLoader(true);
+       setCounter(30);
         const result = await dispatch(resendOTP({email:email, mobile_no:mobile_no}));
         console.log('resendOtp',result.payload);
         Toast.show(result.payload.message);
-        setLoader(false);
+        // setLoader(false);
      }
  
  
@@ -109,14 +109,6 @@ import { View,
     }   
   }
 
-   const [fontsLoaded] = useFonts({
-    'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),
-    'PlusJakartaSans-Regular': require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
-    'PlusJakartaSans-Bold':require('../assets/fonts/PlusJakartaSans-Bold.ttf')
-  });
-  if(!fontsLoaded) {
-    return null;
-  }
   
   if(loader){
     return(
@@ -188,7 +180,9 @@ import { View,
            style={styles.verifiactionSubText}>
            <Text style={styles.verifiactionInnerText}>Didn’t Receive OTP? </Text>
            <TouchableOpacity onPress={() => resendUserOtp()}>
-             <Text style={{color: '#2376E5', fontWeight: '600',fontSize:16,fontFamily:"PlusJakartaSans-Bold"}}>Resend in {counter}s</Text>
+           <Text style={{color: '#2376E5', fontWeight: '600',fontSize:16,}}>
+              {counter == 0? "Resend OTP" : `Resend in ${counter}s`}
+            </Text>
            </TouchableOpacity>
          </View>
          <Text style={{color:'red',fontFamily:"PlusJakartaSans-Regular",fontSize:16,textAlign:"center",marginBottom:12}}>{message}</Text>

@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, LogBox } from 'react-native';
+import React from 'react';
+import { StyleSheet, LogBox } from 'react-native';
 import AppNav from './src/navigation/AppNav';
 // import { Provider } from 'react-redux';
 import store from './redux/store';
 import { Provider} from 'react-redux';
 import { useFonts } from 'expo-font';
+import { NavigationContainer } from '@react-navigation/native';
+import { navigationRef } from './src/navigation/RootNavigation';
+
 
 export default function App() {
+  LogBox.ignoreLogs(['Warning: ...','Require cycle:']); 
+  LogBox.ignoreAllLogs();
+
 const [fontsLoaded] = useFonts({
   "Inter-Regular": require("./src/assets/fonts/Inter-Regular.ttf"),
   "Inter-SemiBold": require("./src/assets/fonts/Inter-SemiBold.ttf"),
@@ -14,18 +20,15 @@ const [fontsLoaded] = useFonts({
   "PlusJakartaSans-Bold": require("./src/assets/fonts/PlusJakartaSans-Bold.ttf"),
 });
 
-// LogBox.ignoreLogs([
-//   "ViewPropTypes will be removed",
-//   "ColorPropType will be removed",
-// ])
-
 if (!fontsLoaded) {
   return null;
 }
 
   return (
     <Provider store={store}>
-      <AppNav/>
+      <NavigationContainer ref={navigationRef}>
+        <AppNav/>
+      </NavigationContainer>
     </Provider>
   );
 }

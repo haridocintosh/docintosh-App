@@ -57,14 +57,14 @@ const ScratchOffer = ({ setShowOffer }) => {
           <View>
             <View style={styles.ScratchBottomOffer}>
               <Image
-                source={tankyouCelebration}
+                source={require("../../assets/dr-icon/tankyouCelebration.png")}
                 style={styles.ScratchOffertankyouCelebration}
               />
               <TouchableOpacity onPress={() => closeModal()}>
                 <AntDesign name="close" size={25} style={styles.closeIcon} />
               </TouchableOpacity>
               <Image
-                source={amazon}
+                source={require("../../assets/images/amazon.png")}
                 style={{ marginTop: 30, width: 80, height: 30 }}
               />
               <Text style={styles.wonMoney}>₹100</Text>
@@ -92,7 +92,7 @@ const ScratchOffer = ({ setShowOffer }) => {
             </View>
             {removeScratch ? (
               <ImageBackground
-                source={scratchCard}
+                source={require("../../assets/images/scratchCard.png")}
                 style={styles.ScratchTopImage}
               >
                 <Text style={styles.tabToWin}>Double tap for your Reward</Text>

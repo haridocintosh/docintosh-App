@@ -49,15 +49,17 @@
 
 
    const resendUserOtp = async() =>{ 
-      setLoader(true);
+      // setLoader(true);
+      setCounter(30)
       const result = await dispatch(resendOTP({email:email, mobile_no:mobile_no}));
       console.log('resendOtp',result.payload);
       Toast.show(result.payload.message);
-      setLoader(false);
+      // setLoader(false);
    }
 
 
    useEffect(() => {
+    
    const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
    return () => clearInterval(timer);
    }, [counter]);
@@ -104,7 +106,7 @@
       <Image source={require('../assets/images/image-verification-otp.png')}/>
    </View>
 
-   <Text style={styles.verifyText}>Please enter OTP sent to </Text>
+   <Text style={styles.verifyText}>Please enter OTP sent to</Text>
 
    <View style={styles.InputFieldVerify}>
 
@@ -147,18 +149,20 @@
    {/* <Otp/> */}
    
    <OTPTextView 
-   handleTextChange={(text) => setotpInput(text)}
-   containerStyle={styles.textInputContainer}
-   textInputStyle={styles.roundedTextInput}
-   autoComplete="sms-otp"
-   inputCount={4}
+      handleTextChange={(text) => setotpInput(text)}
+      containerStyle={styles.textInputContainer}
+      textInputStyle={styles.roundedTextInput}
+      autoComplete="sms-otp"
+      inputCount={4}
    />
    <View
    style={styles.verifiactionSubText}>
    <Text style={styles.verifiactionInnerText}>Didn’t Receive OTP? </Text>
    <TouchableOpacity onPress={() => resendUserOtp()}>
      {/* userRegister() */}
-   <Text style={{color: '#2376E5', fontWeight: '600',fontSize:16,}}>Resend in {counter}s</Text>
+    <Text style={{color: '#2376E5', fontWeight: '600',fontSize:16,}}>
+      {counter == 0? "Resend OTP" : `Resend in ${counter}s`}
+    </Text>
    </TouchableOpacity>
    </View>
     <View >

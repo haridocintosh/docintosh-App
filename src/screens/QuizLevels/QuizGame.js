@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { SafeAreaView,ScrollView,Easing,Dimensions,Text} from 'react-native'
+import { SafeAreaView,ScrollView,Easing,Dimensions,Text,View} from 'react-native'
 import Svg, { Path } from 'react-native-svg';
 import Animated from 'react-native-reanimated';
 import TimeOutModal from './TimeOutModal';
@@ -19,7 +19,7 @@ const QuizGame = ({route}) => {
     const [isTop, setIsTop] = useState(true);
     const [timeOUtModal, setTimeOUtModal] = useState(false);
     const [mcqQue, setMcqQue] = useState([]);
-    const [seconds, setSeconds] = React.useState(10);
+    const [seconds, setSeconds] = React.useState(60);
     const [isOptionsDisabled, setIsOptionsDisabled] = useState(false);
 
     navigation.setOptions({ title: title })
@@ -27,7 +27,7 @@ const QuizGame = ({route}) => {
     const startAnimation = toValue => {
         Animated.timing(animatedValue, {
             toValue,
-            duration: 10000,
+            duration: 60000,
             easing: Easing.linear,
             useNativeDriver: true
         }).start(() => {
@@ -75,7 +75,11 @@ const QuizGame = ({route}) => {
         </Svg>
       </Animated.View>
       <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true} style={{padding:10}}>
-      <Text style={styles.mcqSecTiming}>{seconds} Sec</Text>
+        <View style={styles.mcqSecTiming}>
+          <Text style={styles.mcqSecTimingText}>{seconds}</Text>
+          <Text style={styles.mcqSecTimingText}>Sec</Text>
+        </View>
+      
         <QuizGameQuetion 
           mcqQue={mcqQue} 
           isTop={isTop} 

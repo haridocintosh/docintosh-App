@@ -151,7 +151,6 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     marginTop:20
   },
-
   viewDoccin: {
     fontSize: 18,
     fontWeight: "600",
@@ -162,8 +161,6 @@ export const styles = StyleSheet.create({
     fontWeight: "500",
     fontFamily:"Inter-Regular"
   },
- 
-
 triangle: {
   width: 0,
   height: 0,
@@ -186,7 +183,6 @@ darkBlueOnWhatsNew: {
   height: 20,
   backgroundColor: '#342CE0',
   position:'absolute',
-
 },
 
 // ---------------------------postsScreen-----------------------------------
@@ -246,12 +242,21 @@ inputCont:{
 usersCommentContainer:{
   flexDirection:'row',
   paddingBottom:20,
+  justifyContent:'space-between',
+  alignItems:'center'
+},
+usersCommentPictureContainer:{
+  flexDirection:'row',
 },
 userUsername:{
   fontFamily:'Inter-SemiBold'
 },
 userCommentTexts:{
-  fontFamily:'Inter-Regular'
+  fontFamily:'Inter-Regular',
+},
+NoCommentTexts:{
+  fontFamily:'Inter-SemiBold',
+  alignSelf:'center',
 },
 
 //-------------------------------public Reaction-------------------------------------
@@ -262,7 +267,10 @@ socialImages:{
 },
 likedImage :{
   marginLeft:-10, 
-  borderColor:'#000'
+  borderColor:'#000',
+  width:25,
+  height:25,
+  borderRadius:50
 },
 socialCount:{
   paddingRight:20,
@@ -307,7 +315,6 @@ optionList:{
 optionListText:{
   color:'#071B36',
   fontFamily:"Inter-Regular",
-
 },
 optionListImage:{
   width:15.5,
@@ -315,7 +322,7 @@ optionListImage:{
   marginRight:7
 },
 optionList2:{
-  width:18,
+  width:21,
   height:16,
   marginRight:7
 },
@@ -328,5 +335,56 @@ optionList4:{
   width:18,
   height:18,
   marginRight:7
+},
+//--------------------delete confirmation Modal----------------------
+centeredView: {
+  flex: 1,
+  justifyContent: "center",
+  alignItems: "center",
+  backgroundColor:'rgba(0,0,0,0.4)'  
+},
+modalView: {
+  margin: 20,
+  backgroundColor: "white",
+  borderRadius: 20,
+  padding: 35,
+  alignItems: "center",
+  shadowColor: "#000",
+  shadowOffset: {
+    width: 0,
+    height: 2
+  },
+  shadowOpacity: 0.25,
+  shadowRadius: 4,
+  elevation: 5,
+},
+textBold:{
+  fontFamily:'Inter-SemiBold',
+},
+textNormal:{
+  fontFamily:"Inter-Regular",
+},
+buttonsContainer:{
+  flexDirection:'row',
+},
+buttonsDesign:{
+  borderWidth:1,
+  paddingHorizontal:25,
+  borderRadius:5,
+  paddingVertical:7,
+  marginTop:20
+},
+leftButtonsDesign:{
+  borderColor:'#1A7078'
+},
+RightButtonsDesign:{
+  borderColor:'#1A7078',
+  backgroundColor:'#1A7078'
+},
+leftText:{
+  color:'#1A7078'
+},
+RightText:{
+  color:'#fff'
 },
 });

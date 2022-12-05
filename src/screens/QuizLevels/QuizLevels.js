@@ -115,7 +115,7 @@ const QuizLevels = () => {
                     <View style={styles.doccoin}>
                         <View style={styles.d}>
                           <Image
-                            source={dcoin}
+                            source={require("../../assets/dr-icon/dcoin.png")}
                             style={{ width: 20, height: 20, marginRight: 5 }}
                           />
                           <Text>25</Text>

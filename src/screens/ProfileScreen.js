@@ -1,32 +1,18 @@
 import React from 'react';
 import { View, Text ,Image,SafeAreaView, ScrollView, TouchableOpacity, Animated ,StyleSheet} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-// import { SafeAreaView, ScrollView } from 'react-native-web';
-import profileimg from '../assets/images/p2.png';
 import { FontAwesome5,FontAwesome,Feather } from '@expo/vector-icons';
-import icon from '../assets/images/Vector.png';
 import { Card } from 'react-native-paper';
-import d from '../assets/dr-icon/d.png'
-import discount1 from '../assets/dr-icon/discount1.png'
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
-import grid1 from '../assets/images/grid1.png'
-import grid3 from '../assets/images/grid3.png'
-import grid4 from '../assets/images/grid4.png'
-import grid5 from '../assets/images/grid5.png'
-import oval from '../assets/dr-icon/Oval.png'
 import {
-  MenuContext,
   Menu,
   MenuOptions,
   MenuOption,
   MenuTrigger,
   MenuProvider,
 } from 'react-native-popup-menu';
-
-
-
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -44,12 +30,12 @@ const ProfileScreen = () => {
     <View style={{flexDirection:'row'}}>
 
 <View style={{backgroundColor:'#DCE0E8',marginTop:21, margin:10, borderRadius:50, width:90, height:90,}}>
-<Image source={profileimg} style={{ alignSelf:'center',marginTop:5,width:80, height:80,}}></Image>
+<Image source={require('../assets/images/p2.png')} style={{ alignSelf:'center',marginTop:5,width:80, height:80,}}></Image>
 
 </View>
 <View style={{marginTop:30}}>
 
-    <Text style={{fontSize:16, fontWeight:'bold'}}>Dr. Kiran Y. <Image source={icon}></Image></Text>    
+    <Text style={{fontSize:16, fontWeight:'bold'}}>Dr. Kiran Y. <Image source={require('../assets/images/Vector.png')}></Image></Text>    
     <Text style={{}}>Cardiologist | Bangalore</Text>
     <TouchableOpacity style={{flexDirection:'row'}}>
     <Text style={{color:'blue',}}> View / </Text>
@@ -62,7 +48,7 @@ const ProfileScreen = () => {
     
    <Card style={styles.box1}>
    <View style={{flexDirection:'row'}}>
-   <Image source={d} style={{marginStart:20, marginVertical:10}}></Image>
+   <Image source={require('../assets/dr-icon/d.png')} style={{marginStart:20, marginVertical:10}}/>
     <Text style={{margin:13, fontWeight:'bold'}}>3600</Text>
    </View>
     
@@ -70,7 +56,7 @@ const ProfileScreen = () => {
   
    <Card style={styles.box2}>
    <View style={{flexDirection:'row'}}>
-   <Image source={discount1} style={{marginStart:20, marginVertical:10}}></Image>
+   <Image source={require('../assets/dr-icon/discount1.png')} style={{marginStart:20, marginVertical:10}}/>
     <Text style={{margin:13, fontWeight:'bold'}}>7</Text>
    </View>
    </Card> 
@@ -84,11 +70,11 @@ const ProfileScreen = () => {
 
 
 <View  style={{flexDirection:'row',alignItems:"center",justifyContent:"space-between"}}>
-<Image source={profileimg} style={{ alignSelf:'center',margin:10,width:38, height:38,}}></Image>
+<Image source={require('../assets/images/p2.png')} style={{ alignSelf:'center',margin:10,width:38, height:38,}}/>
 
 <View style={{marginTop:0,}}>
 
-<Text style={{fontSize:14, fontWeight:'400'}}>Dr. Kiran Y. <Image source={icon}></Image>
+<Text style={{fontSize:14, fontWeight:'400'}}>Dr. Kiran Y. <Image source={require('../assets/images/Vector.png')}></Image>
 
 </Text>  
 <View style={{flexDirection:'row',}}>
@@ -162,7 +148,7 @@ marginLeft:10,
     </View>
     <Text style={{paddingLeft:12,paddingBottom:12}}>Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur.#new_venture </Text>
     <View style={{marginBottom:50}}>
-    <Image source={grid1} style={{width:360, alignSelf:'center'}}></Image>
+    <Image source={require('../assets/images/grid1.png')} style={{width:360, alignSelf:'center'}}></Image>
     <View style={{backgroundColor:'#45B5C0', borderRadius:50/2, width:30, height:30, padding:2,marginTop:-80,alignSelf:'center', shadowColor:'#000', zIndex:1}}>
     <AntDesign name="caretright" size={24} color="#fff"  />
     </View>
@@ -170,21 +156,21 @@ marginLeft:10,
     
     <View style={{flexDirection:'row',margin:15}}>
     <View style={{}}>
-    <Image source={grid3} style={{width:113}}></Image>
+    <Image source={require('../assets/images/grid3.png')} style={{width:113}}></Image>
     <View style={styles.careticon}>
     <AntDesign name="caretright" size={24} color="#fff"  />
     </View>
 
     </View>
     <View style={{}}>
-    <Image source={grid4} style={{width:113, marginLeft:10 }}></Image>
+    <Image source={require('../assets/images/grid4.png')} style={{width:113, marginLeft:10 }}></Image>
     <View style={styles.careticon}>
     <AntDesign name="caretright" size={24} color="#fff"  />
     </View>
 
     </View>
     <View>
-    <Image source={grid5} style={{ width:113, marginLeft:10}}></Image>
+    <Image source={require('../assets/images/grid5.png')} style={{ width:113, marginLeft:10}}></Image>
     <View style={styles.plusthree}>
     <Text style={{color:'#fff',fontSize:20,fontWeight:'900'}}>3+</Text>
     </View>
@@ -208,10 +194,9 @@ marginLeft:10,
                </View>
                </View>
                <View style={{flexDirection:'row',marginLeft:20 , marginTop:10, marginBottom:10}}>
-                <Image source={oval} ></Image>
-                <Image source={oval}style={{zIndex:1, marginLeft:-10, borderColor:'#000'}} ></Image>
-                <Image source={oval}style={{zIndex:1, marginLeft:-10, borderColor:'#000'}} ></Image>
-                {/* <Image source={oval}></Image> */}
+                <Image source={require('../assets/dr-icon/Oval.png')} ></Image>
+                <Image source={require('../assets/dr-icon/Oval.png')}style={{zIndex:1, marginLeft:-10, borderColor:'#000'}} ></Image>
+                <Image source={require('../assets/dr-icon/Oval.png')}style={{zIndex:1, marginLeft:-10, borderColor:'#000'}} ></Image>
                 <Text style={{fontSize:12, fontWeight:'400',color:'#687690',padding:5}}>Liked by Kunal Patel and 44,686 others</Text>
                </View>
    </Card>
@@ -221,11 +206,11 @@ marginLeft:10,
 
 
 <View  style={{flexDirection:'row',alignItems:"center",justifyContent:"space-between"}}>
-<Image source={profileimg} style={{ alignSelf:'center',margin:10,width:38, height:38,}}></Image>
+<Image source={require('../assets/images/p2.png')} style={{ alignSelf:'center',margin:10,width:38, height:38,}}></Image>
 
 <View style={{marginTop:0,}}>
 
-<Text style={{fontSize:14, fontWeight:'400'}}>Dr. Kiran Y. <Image source={icon}></Image>
+<Text style={{fontSize:14, fontWeight:'400'}}>Dr. Kiran Y. <Image source={require('../assets/images/Vector.png')}></Image>
 
 </Text>  
 <View style={{flexDirection:'row',}}>
@@ -269,7 +254,7 @@ marginLeft:10,
     </View>
     <Text style={{paddingLeft:12,paddingBottom:12}}>Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur.#new_venture </Text>
     <View style={{marginBottom:50}}>
-    <Image source={grid1} style={{width:360, alignSelf:'center'}}></Image>
+    <Image source={require('../assets/images/grid1.png')} style={{width:360, alignSelf:'center'}}></Image>
     <View style={{backgroundColor:'#45B5C0', borderRadius:50/2, width:30, height:30, padding:2,marginTop:-80,alignSelf:'center', shadowColor:'#000', zIndex:1}}>
     <AntDesign name="caretright" size={24} color="#fff"  />
     </View>
@@ -277,21 +262,21 @@ marginLeft:10,
     
     <View style={{flexDirection:'row',margin:15}}>
     <View style={{}}>
-    <Image source={grid3} style={{width:113}}></Image>
+    <Image source={require('../assets/images/grid3.png')} style={{width:113}}></Image>
     <View style={styles.careticon}>
     <AntDesign name="caretright" size={24} color="#fff"  />
     </View>
 
     </View>
     <View style={{}}>
-    <Image source={grid4} style={{width:113, marginLeft:10 }}></Image>
+    <Image source={require('../assets/images/grid4.png')} style={{width:113, marginLeft:10 }}></Image>
     <View style={styles.careticon}>
     <AntDesign name="caretright" size={24} color="#fff"  />
     </View>
 
     </View>
     <View>
-    <Image source={grid5} style={{ width:113, marginLeft:10}}></Image>
+    <Image source={require('../assets/images/grid5.png')} style={{ width:113, marginLeft:10}}></Image>
     <View style={styles.plusthree}>
     <Text style={{color:'#fff',fontSize:20,fontWeight:'900'}}>3+</Text>
     </View>
@@ -315,11 +300,10 @@ marginLeft:10,
                </View>
                </View>
                <View style={{flexDirection:'row',marginLeft:20 , marginTop:10, marginBottom:10}}>
-                <Image source={oval} ></Image>
-                <Image source={oval}style={{zIndex:1, marginLeft:-10, borderColor:'#000'}} ></Image>
-                <Image source={oval}style={{zIndex:1, marginLeft:-10, borderColor:'#000'}} ></Image>
-                {/* <Image source={oval}></Image> */}
-                <Text style={{fontSize:12, fontWeight:'400',color:'#687690',padding:5}}>Liked by Kunal Patel and 44,686 others</Text>
+                <Image source={require('../assets/dr-icon/Oval.png')} ></Image>
+                <Image source={require('../assets/dr-icon/Oval.png')}style={{zIndex:1, marginLeft:-10, borderColor:'#000'}} ></Image>
+                <Image source={require('../assets/dr-icon/Oval.png')}style={{zIndex:1, marginLeft:-10, borderColor:'#000'}} ></Image>
+               <Text style={{fontSize:12, fontWeight:'400',color:'#687690',padding:5}}>Liked by Kunal Patel and 44,686 others</Text>
                </View>
                
    </Card>

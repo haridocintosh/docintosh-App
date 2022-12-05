@@ -20,6 +20,9 @@ import CommentsScreen from '../screens/HomeScreen/CommentsScreen';
 import MessagesScreen from '../screens/MessagesScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import LoginScreen from '../screens/LoginScreen';
+import EditProfileScreen from '../screens/EditProfileScreen';
+import { showHeaderItemOnSkip } from './ReuseLogics';
+
 
 
 const HomeNavigation = () => {
@@ -30,15 +33,22 @@ const HomeNavigation = () => {
         <Stack.Navigator initialRouteName="HomeScreen">
           <Stack.Screen name="HomeScreen" component={HomeScreen} options={{headerShown: false, headerTintColor: '#fff'}} />
           <Stack.Screen name="Knowledge2Screen" component={Knowledge2Screen} options={{headerShown: false}}/>
-          <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={{headerShown: false}} />
+          <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={{headerShown: true,
+              headerStyle: { backgroundColor: '#071B36'},
+              headerTintColor: '#fff',
+              title: 'Profile'}} />
           <Stack.Screen name="Polls" component={Polls} options={{headerShown: false}} />
           <Stack.Screen name="Polls1" component={Polls1}  options={{headerShown: false}} />
           <Stack.Screen name="SentimentixScreen" component={SentimentixScreen} options={{headerShown: true,  
               title: 'Sentimetrix'}}/>
-          <Stack.Screen name="ProfileScreenFollowers" component={ProfileScreenFollowers} options={{headerShown: false,  
-              title: 'Search'}}/>
-          <Stack.Screen name="ProfileScreenFollowing" component={ProfileScreenFollowing} options={{headerShown: false,  
-              title: 'Search'}}/>
+          <Stack.Screen name="ProfileScreenFollowers" component={ProfileScreenFollowers} options={{headerShown: true, 
+              headerStyle: { backgroundColor: '#071B36'},
+              headerTintColor: '#fff', 
+              title: 'Followers'}}/>
+          <Stack.Screen name="ProfileScreenFollowing" component={ProfileScreenFollowing} options={{headerShown: true,  
+              headerStyle: { backgroundColor: '#071B36'},
+              headerTintColor: '#fff',
+              title: 'Following'}}/>
           <Stack.Screen name="MultipleImagesUpload" component={MultipleImagesUpload} options={{headerShown: false,  
               title: 'Search'}}/>
           <Stack.Screen name="SentimentrixCong" component={SentimentrixCong} options={{headerShown: true,  
@@ -77,7 +87,10 @@ const HomeNavigation = () => {
               title: "Comments",
               headerStyle: {backgroundColor: '#071B36'},
               headerTintColor: '#fff'}}/>
-          <Stack.Screen name="LoginScreen"component={LoginScreen} options={{headerShown: false }}/>
+          <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} options={{headerShown: true,  
+              title: "Edit Profile",
+              headerStyle: {backgroundColor: '#071B36'},
+              headerTintColor: '#fff'}}/>
         </Stack.Navigator>
       );
 }

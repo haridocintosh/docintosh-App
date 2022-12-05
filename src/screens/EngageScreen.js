@@ -3,10 +3,6 @@ import { View, Text,Image,
   SafeAreaView,ScrollView,ActivityIndicator,StyleSheet } from 'react-native'
 import {  Card } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import cardfootimg from '../assets/images/cardfootimg.png';
-import QuizTimer from '../assets/images/QuizTimer.png';
-import Surveys from '../assets/images/Surveys.png';
-import cardfootimg2 from '../assets/images/cardfootimg2.png';
 
 const EngageScreen = ({navigation}) => {
   const [loader, setLoader] = useState(true);
@@ -44,7 +40,6 @@ useEffect(() => {
   
   <Card style={{borderRadius:20/2,  marginTop:10,backgroundColor:'#f7f8ff'}} onPress={() => navigation.navigate('QuizLevels')}>
 
-
   <View style={{ padding:10,flexDirection:'row',justifyContent:'space-between' }}>
    <View>
     <Text style={{fontSize:18, fontWeight:'800', color:"#404DB7", }}>Quiz</Text>
@@ -52,11 +47,11 @@ useEffect(() => {
        Can you answer 10 questions in 60 {"\n"}seconds?
     </Text>
    </View >
-     <Image source={QuizTimer} style={{width:68,height:79,marginRight:10}}/>
+     <Image source={require('../assets/images/QuizTimer.png')} style={{width:68,height:79,marginRight:10}}/>
    </View>
 
     <View style={styles.cardfooterstyle}>
-      <Image source={cardfootimg} style={styles.imgcolor} />
+      <Image source={require('../assets/images/cardfootimg.png')} style={styles.imgcolor} />
     </View>
    </Card>
    
@@ -110,10 +105,10 @@ useEffect(() => {
           We appreciate your feedback.
         </Text>
     </View>
-      <Image source={Surveys} style={{width:68,height:79,marginRight:10}}/>
+      <Image source={require('../assets/images/Surveys.png')} style={{width:68,height:79,marginRight:10}}/>
     </View>
     <View style={styles.cardfooterstyle}>
-      <Image source={cardfootimg2}  style={styles.imgcolor} />
+      <Image source={require('../assets/images/cardfootimg2.png')}  style={styles.imgcolor} />
     </View>
    </Card>
 

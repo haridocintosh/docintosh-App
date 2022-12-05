@@ -199,8 +199,7 @@ export const Slider_comp = () => {
       <View style = {styles.ragistertext0}>
       <Text style = {styles.ragistertext2}>Already a member ? </Text> 
       <TouchableOpacity onPress = {() => navigation.navigate('Login')} >
-      <Text style = {{ color: '#2376E5', fontWeight: '600',fontSize: 16,fontFamily:"Inter-Regular"}}
-        onPress = {() => navigation.navigate('Login')} > Login </Text> 
+      <Text style = {{ color: '#2376E5', fontWeight: '600',fontSize: 16,fontFamily:"Inter-Regular"}}> Login </Text> 
       </TouchableOpacity> 
       </View>
       </View>

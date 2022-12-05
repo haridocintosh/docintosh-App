@@ -12,7 +12,7 @@ export const userPostData = createAsyncThunk("getAllPost", async (postDetails)=>
             body :JSON.stringify({
                 postType:0,
                 role:postDetails.role,
-                circle_type:1,
+                circle_type:postDetails.circle_type,
                 city_id:postDetails.city_id,
                 assoc_id:postDetails.assoc_id,
                 pageCounter:600,
@@ -32,7 +32,6 @@ export const userPostData = createAsyncThunk("getAllPost", async (postDetails)=>
 
 
 export const postCreate = createAsyncThunk("postupload", async(uploadData)=>{
-    console.log('postdata1',uploadData);
     try{
        const responce = await fetch(`${mainApi.baseUrl}/ApiController/createPostReact`, {
             method : 'POST',
@@ -42,8 +41,6 @@ export const postCreate = createAsyncThunk("postupload", async(uploadData)=>{
             body : JSON.stringify(uploadData)
         });
         const result=  await responce.json();
-        console.log('postSlice',result);
-        //result.data.token;
         return result
     }
     catch(e){
@@ -63,6 +60,18 @@ export const getMycircle = createAsyncThunk("getCircle", async (data)=>{
     const result = await response.json();
     //console.log('mycircle', result);
     return result;
+})
+
+export const getMyPostsApi = createAsyncThunk("getCircle", async (data)=>{
+    const response = await fetch(`${mainApi.baseUrl}/ApiController/getmyPost`,{
+        method : 'POST',
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        body : JSON.stringify(data)
+    });
+    const getMyPostsResult = await response.json();
+    return getMyPostsResult;
 })
 
 
@@ -89,6 +98,7 @@ export const postData = createSlice({
                 state.loading = false;
                 state.error   = true
             }, 
+
 
         [postCreate.pending] : (state)=>
             {
@@ -118,6 +128,22 @@ export const postData = createSlice({
                 state.circleData    = action.payload;
             }, 
         [getMycircle.rejected] : (state)=>
+            {
+                state.loading = false;
+                state.error   = true
+            }, 
+
+        // get My post    
+        [getMyPostsApi.pending] : (state)=>
+            {
+                state.loading   =  true;
+            }, 
+        [getMyPostsApi.fulfilled] : (state, action)=>
+            {   
+                state.loading       =  false;
+                state.circleData    = action.payload;
+            }, 
+        [getMyPostsApi.rejected] : (state)=>
             {
                 state.loading = false;
                 state.error   = true

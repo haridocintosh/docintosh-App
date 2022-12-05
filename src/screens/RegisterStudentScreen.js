@@ -8,6 +8,7 @@ import {
   Image,
   TextInput, Pressable,
   ActivityIndicator,
+  Dimensions
 } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -170,9 +171,9 @@ const pickImage = async (arg) => {
         body :formData
      });
 
-    const result1=  await responce.json();
+    const result1 =  await responce.json();
 
-    setregister({ ...register,
+    setregister({...register,
       mrnproof: result1,
     });
     setmrnproofErr('')
@@ -186,14 +187,14 @@ const pickprofile = async (arg) => {
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: false,
       aspect: [2, 2],
-      quality: 1,
+      quality: 0.5,
     });
   }else{
     var result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: false,
       aspect: [2, 2],
-      quality: 1,
+      quality: 0.5,
     });
   }
  
@@ -255,9 +256,9 @@ const form_submit = async() =>{
     console.log("RegisterSTudent", result.payload);
     Toast.show(result.payload.message);
       if(result.payload.status == 'Success'){
-        setIsModalVisible(!isModalVisible);
+        setIsModalVisible(true);
         setTimeout(() => {
-          setIsModalVisible(!isModalVisible);
+          setIsModalVisible(false);
           navigation.navigate('ContactPermission')
          },3000) 
       }
@@ -265,20 +266,6 @@ const form_submit = async() =>{
     }
   }
 
-  // const showcong = ()=>{
-  //   setIsModalVisible(!isModalVisible);
-  // }
-
-  const [fontsLoaded] = useFonts({
-    'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),
-    'Inter-SemiBold':require('../assets/fonts/Inter-SemiBold.ttf'),
-    'PlusJakartaSans-Regular': require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
-    'PlusJakartaSans-Bold':require('../assets/fonts/PlusJakartaSans-Bold.ttf'),
-
-  });
-  if(!fontsLoaded) {
-    return null;
-  }
 
   if(loader){
     return(
@@ -308,8 +295,7 @@ return (
     <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{profilErr}</Text>
   </View>
 </Pressable>
-
-      <View style={styles.verificationForm}>
+    <View style={styles.verificationForm}>
       <TextInput style={[styles.customInputVerifyFull,{fontFamily:"PlusJakartaSans-Regular"}] } 
        autoCapitalize="none"
        keyboardType="number-pad"
@@ -428,7 +414,7 @@ return (
    <Text style={[styles.headTexts,{fontFamily:"Inter-SemiBold"}]}>Upload College ID/Library Card</Text>
  
    <View>
-  <TouchableOpacity onPress={() => setisModalShow(true)}>
+    <TouchableOpacity onPress={() => setisModalShow(true)}>
       <View style={{borderColor:"#D5DEED",borderRadius:4,borderStyle: 'dashed',borderWidth:1.4,width:"100%",height:102,justifyContent:"center",alignItems:"center"}}>
       <Image source={require('../assets/icons/upload-img.png')} style={{alignSelf:"center"}}  />
       <Text style={{textAlign:"center",fontSize:14,color:"#2376E5",fontWeight:"600",paddingVertical:6,fontFamily:"Inter-SemiBold"}} >Upload your file</Text>
@@ -443,7 +429,6 @@ return (
 
    <View style={styles.verifyNextFooterpara}>
       {/* <Text style={styles.headTextpara}> </Text> */}
- 
       <View style={{
               flexDirection:"row"
             }}>
@@ -457,14 +442,13 @@ return (
     <Text style={{color:'red'}}>{err}</Text>
     {submitbtn?<CustomButton label={'Submitting...'}  />:<CustomButton label={'Continue'} onPress={() => form_submit()} />}
 
-    <Modal isVisible={isModalVisible} width={320} height={"100%"} style={{display:"flex",alignItems:'center', justifyContent:"center", borderWidth:0, borderRadius:30/2, width:320,maxHeight:230, backgroundColor:'#fff', bottom:'-60%',}}>
+    <Modal isVisible={isModalVisible} height={"100%"} style={{alignItems:'center', justifyContent:"center", borderWidth:0, borderRadius:30/2,maxHeight:230, backgroundColor:'#fff', bottom:'-65%',}}>
       <View style={{display:"flex",alignItems:'center', justifyContent:"center",}}>
         <Lottie style={{position:"absolute",top:-26,height:"100%",width:80,alignSelf:'center',}}
         source={require('../assets/dr-icon/congratulation.json')} autoPlay={true} loop={false}/>
         <Text style={{fontSize:18, fontWeight:'600',alignSelf:'center',marginTop:65,marginBottom:-5}}>Congratulations!!!</Text>
         <Text style={{fontSize:14, padding:10, fontWeight:'400',alignContent:'center',textAlign:'center', color:'#51668A',}}>You are now part of the Docintosh family. While profile verification can take up to 48 hours, you can be part of the community just by logging in.</Text>
       </View>
-   
     </Modal>
 
 

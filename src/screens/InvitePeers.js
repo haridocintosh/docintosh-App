@@ -7,13 +7,11 @@ import { useNavigation } from '@react-navigation/native';
 
 
 const InvitePeers = ({route}) => {
-    //console.log(route.params);
     const navigation = useNavigation();
     const {alluserContact} = route.params;
     const [isChecked, setChecked] = useState(false);
     const [contactData, setcontactData] = useState('');
     const [contactData1, setcontactData1] = useState(alluserContact);
-    const [checkboxdata,setcheckboxdata]=useState();
 
     const onChecked = (usernumber)=>{
         let copy=[...contactData];
@@ -49,7 +47,6 @@ const InvitePeers = ({route}) => {
     const onAllChecked=()=>{
        
         const newItem = contactData1.map((val)=>{
-            //console.log(item.speciality_id);
             let copy=[...contactData];
             copy =[...copy,val.phoneNumbers[0].number]
             setcontactData(copy)
@@ -66,7 +63,6 @@ const InvitePeers = ({route}) => {
          
     }
     useEffect(() => {
-
        const setdata= async ()=>{
         const newdata =await alluserContact.map(element=> {return{...element,isSelected:false}}); 
        setcontactData1(newdata);
@@ -110,7 +106,7 @@ const InvitePeers = ({route}) => {
                   
         </ScrollView>
         <View style={{marginTop:10,zIndex:1,width:"100%",bottom:0,backgroundColor:"#f1f1f1",paddingTop:6}}>
-                <CustomButton label={'Continue'} onPress={() => navigation.navigate('LoginScreen')} />
+                <CustomButton label={'Continue'} onPress={() => navigation.navigate('Login')} />
                 <Text style={{textAlign:"center",fontSize:14,fontWeight:"700",color:"#2376E5",marginBottom:10,marginTop:-15}}>Select Manually</Text>
         </View>
     </View>

@@ -49,6 +49,10 @@ const KnowYourHeart = ({ route }) => {
   useEffect(() => {
     getLeaderboardData();
   }, []);
+  
+  const handleAlldata = () => {
+    setSliceData();
+  };
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "#2C8892", position: "relative" }}
@@ -208,23 +212,24 @@ const KnowYourHeart = ({ route }) => {
                       </View>
                     );
                   })}
+                  <View>
+                    <TouchableOpacity onPress={() => handleAlldata()}>
+                      <Text style={styles.ViewAllText}>View All</Text>
+                    </TouchableOpacity>
+
+                    <Button
+                      title="Back to Categories"
+                      buttonStyle={styles.buttonStyle}
+                      titleStyle={{
+                        color: "#fff",
+                        fontFamily: "PlusJakartaSans-Bold",
+                      }}
+                      onPress={() => navigation.navigate("QuizLevels")}
+                    />
+                  </View>
               </ScrollView>
             </View>
-            <View>
-              <TouchableOpacity onPress={() => handleAlldata()}>
-                <Text style={styles.ViewAllText}>View All</Text>
-              </TouchableOpacity>
-
-              <Button
-                title="Back to Categories"
-                buttonStyle={styles.buttonStyle}
-                titleStyle={{
-                  color: "#fff",
-                  fontFamily: "PlusJakartaSans-Bold",
-                }}
-                onPress={() => navigation.navigate("QuizLevels")}
-              />
-            </View>
+            
           </View>
         </View>
       </Card>
