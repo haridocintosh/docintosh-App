@@ -115,7 +115,6 @@ export const Slider_comp = () => {
     animationRef.current?.play()
     // Or set a specific startFrame and endFrame with:
     animationRef.current?.play(30, 120);
-
   }, [])
 
   return ( 

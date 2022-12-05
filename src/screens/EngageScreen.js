@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text,Image,
-  SafeAreaView,ScrollView,ActivityIndicator,ImageBackground,TextInput,StyleSheet } from 'react-native'
+  SafeAreaView,ScrollView,ActivityIndicator,StyleSheet } from 'react-native'
 import {  Card } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import cardfootimg from '../assets/images/cardfootimg.png';
 import QuizTimer from '../assets/images/QuizTimer.png';
 import Surveys from '../assets/images/Surveys.png';
 import cardfootimg2 from '../assets/images/cardfootimg2.png';
-import cardfootimg3 from '../assets/images/cardfootimg3.png';
-import checkwrong from '../assets/images/checkwrong.png';
 
 const EngageScreen = ({navigation}) => {
   const [loader, setLoader] = useState(true);

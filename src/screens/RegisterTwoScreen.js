@@ -540,6 +540,8 @@ return (
 
 {/* 
    <Modal isVisible={isModalVisible} width={320} height={200} style={{alignSelf:'center', borderWidth:0,  borderRadius:30/2, width:320,maxHeight:320, backgroundColor:'#ffff', bottom:'-50%',}}>
+
+   <Modal isVisible={isModalVisible} width={340} height={200} style={{alignSelf:'center', borderWidth:0,  borderRadius:30/2, width:320,maxHeight:320, backgroundColor:'#ffff', bottom:'-50%',}}>
         <View>
         <Lottie style={{position:"absolute",top:-65,height:180,width:180,alignSelf:'center',}}
         source={require('../assets/dr-icon/congratulation.json')} autoPlay={true} loop={true}/>

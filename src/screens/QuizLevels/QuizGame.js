@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { SafeAreaView,ScrollView,Easing,ActivityIndicator, Dimensions ,View,Text} from 'react-native'
+import { SafeAreaView,ScrollView,Easing,Dimensions,Text} from 'react-native'
 import Svg, { Path } from 'react-native-svg';
 import Animated from 'react-native-reanimated';
 import TimeOutModal from './TimeOutModal';
@@ -9,8 +9,6 @@ import { GetQuizQuestions } from '../../../redux/reducers/mcqSlice';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from './QuizLevelsStyles';
 
-
-
 const QuizGame = ({route}) => {
   const dispatch =  useDispatch();
   const { basicId } = route?.params;
@@ -19,20 +17,20 @@ const QuizGame = ({route}) => {
     
     const animatedValue = useRef(new Animated.Value(0)).current;
     const [isTop, setIsTop] = useState(true);
+    const [timeOUtModal, setTimeOUtModal] = useState(false);
     const [mcqQue, setMcqQue] = useState([]);
-    const [loader, setLoader] = useState(true);
-    const [seconds, setSeconds] = React.useState(30)
+    const [seconds, setSeconds] = React.useState(10);
+    const [isOptionsDisabled, setIsOptionsDisabled] = useState(false);
 
     navigation.setOptions({ title: title })
 
     const startAnimation = toValue => {
         Animated.timing(animatedValue, {
             toValue,
-            duration: 30000,
+            duration: 10000,
             easing: Easing.linear,
             useNativeDriver: true
         }).start(() => {
-            
         })
     }
 
@@ -47,10 +45,13 @@ const QuizGame = ({route}) => {
   }, []);
 
   useEffect(() => {
-      if (seconds > 0 && isTop) {
-      setTimeout(() => setSeconds(seconds - 1), 1000);
+    if (seconds > 0 && isTop) {
+     const timer = setTimeout(() => setSeconds(seconds - 1), 1000);
+     return () => {clearTimeout(timer)};
     } else {
       setIsTop(false);
+      setIsOptionsDisabled(true);
+      setTimeOUtModal(true);
     }
   });
 
@@ -62,8 +63,10 @@ const QuizGame = ({route}) => {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor:"#fff"}}>
-      {!isTop && <TimeOutModal toggle={setIsTop}/>}
+      {timeOUtModal && <TimeOutModal/>}
+      
       <Animated.View style={[styles.square, { transform: [{ translateY }]}]}>
+        
         <Svg 
           height={200}
           width={Dimensions.get('screen').width/1}
@@ -72,7 +75,15 @@ const QuizGame = ({route}) => {
         </Svg>
       </Animated.View>
       <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true} style={{padding:10}}>
-        <QuizGameQuetion mcqQue={mcqQue} isTop={isTop} singleMcq={basicId} seconds={seconds} />
+      <Text style={styles.mcqSecTiming}>{seconds} Sec</Text>
+        <QuizGameQuetion 
+          mcqQue={mcqQue} 
+          isTop={isTop} 
+          singleMcq={basicId} 
+          seconds={seconds} 
+          disabled={isOptionsDisabled}
+          setDisabled={setIsOptionsDisabled}
+        />
       </ScrollView>
     </SafeAreaView>
   )

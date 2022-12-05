@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, LogBox } from 'react-native';
 import AppNav from './src/navigation/AppNav';
 // import { Provider } from 'react-redux';
 import store from './redux/store';
@@ -13,6 +13,11 @@ const [fontsLoaded] = useFonts({
   "PlusJakartaSans-Regular": require("./src/assets/fonts/PlusJakartaSans-Regular.ttf"),
   "PlusJakartaSans-Bold": require("./src/assets/fonts/PlusJakartaSans-Bold.ttf"),
 });
+
+// LogBox.ignoreLogs([
+//   "ViewPropTypes will be removed",
+//   "ColorPropType will be removed",
+// ])
 
 if (!fontsLoaded) {
   return null;

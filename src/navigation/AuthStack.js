@@ -35,7 +35,6 @@ const AuthStack = () => {
       <Stack.Navigator screenOptions={{headerShown: false}}>
       {/* <Stack.Screen name="RegisterStudentScreen" component={RegisterStudentScreen}  options={{ title: 'Register', headerShown: true}} /> */}
       {/* <Stack.Screen name="PracticeScreen" component={PracticeScreen} /> */}
-      {/**/}
       <Stack.Screen name="Intro" component={IntroStack} />
       <Stack.Screen name="InvitePeers" component={InvitePeers} options={{ title: 'Invite Peers', headerShown: true,  headerRight: () => (
           <Text onPress={() => navigation.navigate('LoginScreen')} style={{color:"#2376E5"}} >Skip</Text>)}}  />

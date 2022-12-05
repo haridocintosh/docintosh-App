@@ -1,7 +1,6 @@
 import React,{useRef} from 'react';
 import {Image} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import EngageScreen from '../screens/EngageScreen';
 import CommunityScreen from '../screens/CommunityScreen';
 import KnowledgeScreen from '../screens/KnowledgeScreen';
 import logo from '../assets/images/logo.png';
@@ -10,6 +9,8 @@ import Engage from '../assets/dr-icon/Engage.png'
 import Knowledge from '../assets/dr-icon/Knowledge.png'
 import Community from '../assets/dr-icon/Community.png'
 import HomeNavigation from './HomeNavigation';
+import EngageNavigation from './EngageNavigation';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -47,29 +48,11 @@ const TabNavigator = () => {
 
       <Tab.Screen
         name="Engage"
-        component={EngageScreen}
-        options={{headerShown: true, 
-          headerStyle: {
-            backgroundColor:'#071B36',
-          },
-          headerTintColor: '#fff', 
-          title: 'Engage',
-          tabBarLabel: 'Engage',
-          // tabBarBadgeStyle: {backgroundColor: 'yellow'},
-          tabBarIcon: ({color, size}) => (
-            <Image source={Engage} style={{width:35,height:35,padding:10}} />
-          ),
+        component={EngageNavigation}
+        options={{
+          tabBarLabel:'Engage',
+          tabBarIcon: () => (<Image source={Engage} style={{width:35,height:35,padding:10}} />),
         }}
-        listeners ={({navigation, route})=>({
-          tabPress: e =>{
-            Animated.spring(tabOffsetValue, {
-              toValue:0,
-              useNativeDriver:true
-            }).start();
-          }
-        })
-
-        }
       />
 
 

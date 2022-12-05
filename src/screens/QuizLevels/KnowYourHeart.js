@@ -27,6 +27,7 @@ import axios from "axios";
 import { mainApi } from "../../apis/constant";
 import { styles } from "./QuizLevelsStyles";
 import { useFonts } from "expo-font";
+
 const KnowYourHeart = ({ route }) => {
   const { score, seconds ,TotalMcq} = route?.params;
 

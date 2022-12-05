@@ -278,12 +278,24 @@ export const styles = StyleSheet.create({
     height: Dimensions.get("window").height,
     backgroundColor: "#D5F2E8",
     position: "absolute",
-    top: "-160%",
+    top: "-140%",
   },
   outOff: {
     fontSize: 16,
     fontWeight: "600",
     position: "absolute",
+  },
+  mcqSecTiming: {
+    borderWidth: 1,
+    borderRadius: 20,
+    backgroundColor: "#0D2A82",
+    flexDirection: "row",
+    alignSelf: "center",
+    paddingVertical: 7,
+    paddingHorizontal: 10,
+    borderColor: "#96AEF8",
+    alignItems: "center",
+    color:'#fff'
   },
   //--------------------------------------Quiz Game Quetion--------------------------
   quizGamequestion: {
@@ -346,12 +358,11 @@ export const styles = StyleSheet.create({
     marginVertical: 20,
   },
   //------------------
-
   QuizLevelcontainer: {
     flex: 1,
     padding: 10,
     borderColor: "#51668A",
-    backgroundColor: "#9cdcd6",
+    backgroundColor: "#f2f2f2",
   },
   circleView: {
     width: 80.4,
@@ -362,18 +373,36 @@ export const styles = StyleSheet.create({
     left: -40.2,
     transform: [{ rotate: "90deg" }],
   },
-
   cartGradiant: {
     width: Dimensions.get("window").width / 1.05,
     height: 125,
     borderRadius: 10,
     marginTop: 10,
-    justifyContent: "center",
-    paddingHorizontal: 50,
+    justifyContent: 'space-between',
+    // paddingHorizontal: 50,
+    padding:15,
+    alignContent:'flex-start'
   },
   cartText: {
     fontSize: 20,
-    textAlign: "center",
     fontFamily: "Inter-SemiBold",
+  },
+  ListsMcqPlay:{
+    justifyContent:'space-between',
+    flexDirection:'row'
+  },
+  doccoin: {
+    backgroundColor: "#45B5C00D",
+    width: 77,
+    height: 34,
+    borderRadius: 40 / 2,
+    borderColor: "#45B5C0",
+    borderWidth: 1,
+    marginRight: 16,
+  },
+  d: {
+    alignSelf: "center",
+    flexDirection: "row",
+    marginVertical: 5,
   },
 });

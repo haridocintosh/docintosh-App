@@ -10,18 +10,18 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 
-const TimeOutModal = ({ toggle }) => {
+const TimeOutModal = ({ setTimeOUtModal }) => {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
-        <View style={styles.iconContainer}>
+        {/* <TouchableOpacity style={styles.iconContainer} onPress={() => setTimeOUtModal(false)}>
           <AntDesign
             name="closecircleo"
             size={25}
-            onPress={() => toggle(true)}
+            
           />
-        </View>
+        </TouchableOpacity> */}
         <View style={styles.McqSelection}>
           <Text style={styles.mcqsListText}>Your Time Out</Text>
           <TouchableOpacity
@@ -67,6 +67,8 @@ const styles = StyleSheet.create({
   },
   McqSelection: {
     padding: 15,
+    marginTop:25,
+    
   },
   mcqsList: {
     padding: 12,
@@ -76,13 +78,15 @@ const styles = StyleSheet.create({
     top: 50,
   },
   mcqsListText: {
-    fontSize: 18,
+    fontSize: 25,
     color: "#000",
     textAlign: "center",
+    fontFamily: "Inter-Regular",
   },
   goBack: {
     fontSize: 20,
     color: "#fff",
     textAlign: "center",
+    fontFamily: "Inter-SemiBold",
   },
 });
