@@ -30,7 +30,7 @@ import { getallcomment } from '../../../redux/reducers/publicReactionSlice';
 
 const HomeScreen = ({navigation})=> {
 // like unlike fun =>
-  const [loader, setLoader] = useState(false);
+  // const [loader, setLoader] = useState(false);
   const [userdata, setuserdata]     = useState({profile:'',user_id:''});
   const [allPost, setallPost]  = useState([]);
   const dispatch = useDispatch();
@@ -105,10 +105,11 @@ const handleOption = (post_id) => {
       user_id:result['id']
     });
     fetchPostData(result['role'],result['city_id'], result['assoc_id'], result['profileimage'], result['id'],result['circle_type'],)
+    setModalVisible(false);
   }
 
   const fetchPostData = async (role,city_id,assoc_id,profileimage,userId,circle_type)=>{ 
-    setLoader(true);
+    // setLoader(true);
     if(role == 5){
       var circle_type = 3;
     } 
@@ -119,24 +120,24 @@ const handleOption = (post_id) => {
       
     // console.log("postDetails",postDetails); 
     const result = await dispatch(userPostData(postDetails));
-    setLoader(false);
+    // setLoader(false);
     // const allCommentsCount = {}
     // const sentResult = await dispatch(getallcomment(allCommentsCount));
     // const allPostData = result && result.payload.filter(Post => Post.user_role != 5)
     setallPost(result.payload);
-    // console.log("result.payload",result);
   }
   
   const handlePost = (item) => {
     navigation.navigate('PostsScreen', {item:item})
   }
 
-  if(loader){
-    return(
-    <View style={{flex:1, justifyContent:'center', alignItems:'center' }}>
-        <ActivityIndicator size={'large'} color={"#2C8892"}/>
-    </View>)
-  }
+  // if(loader){
+  //   return(
+  //   <View style={{flex:1, justifyContent:'center', alignItems:'center' }}>
+  //       <ActivityIndicator size={'large'} color={"#2C8892"}/>
+  //   </View>)
+  // }
+
 
     const renderItem = ({item}) => {
       return(
@@ -159,7 +160,7 @@ const handleOption = (post_id) => {
                         <Ionicons name="time-outline" size={19} color="#51668A" />  
                       </Text>
                       <Text style={{fontSize:12, paddingRight:5, fontWeight:'400',color:'#51668A',fontFamily:"Inter-Regular"}}>
-                         {moment(item?.created_at).fromNow()}
+                        {moment(item?.created_at).fromNow()}
                       </Text>
                   </View>
                 </View> 
@@ -170,7 +171,7 @@ const handleOption = (post_id) => {
                 <Path d="M3.5 1.55552C3.5 0.696472 2.82839 0 2 0C1.17161 0 0.5 0.696472 0.5 1.55552C0.5 2.41458 1.17161 3.11105 2 3.11105C2.82839 3.11105 3.5 2.41458 3.5 1.55552ZM3.5 8C3.5 7.14095 2.82839 6.44448 2 6.44448C1.17161 6.44448 0.5 7.14095 0.5 8C0.5 8.85905 1.17161 9.55552 2 9.55552C2.82839 9.55552 3.5 8.85905 3.5 8ZM3.5 14.4445C3.5 13.5854 2.82839 12.889 2 12.889C1.17161 12.889 0.5 13.5854 0.5 14.4445C0.5 15.3035 1.17161 16 2 16C2.82839 16 3.5 15.3035 3.5 14.4445Z" fill="#51668A"/>
               </Svg>
             </TouchableOpacity>
-              {item?.post_id == postId && <OptionModal modalVisible={modalVisible}/>}
+              {item?.post_id == postId && <OptionModal modalVisible={modalVisible} id={item?.id}/>}
             </View>
           </View>
 
@@ -205,9 +206,11 @@ const handleOption = (post_id) => {
               <Animated.View style={{backgroundColor:'#3477E0', width:imagePosition, height:24,justifyContent:'center',position:'relative'}}>
                 <View style={styles.triangle}/>
                 <View style={styles.darkBlueOnWhatsNew}/>
+                <TouchableOpacity  onPress={()=>{ navigation.navigate('WhatsNew') }}>
                 <Animated.Text style={{fontSize:sizeFont,color:'#fff',marginLeft:10,opacity:opacity}}>
                   What’s New
                 </Animated.Text>
+                </TouchableOpacity>
               </Animated.View>
             </View>
 

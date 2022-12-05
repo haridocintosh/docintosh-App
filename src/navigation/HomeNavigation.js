@@ -22,6 +22,8 @@ import SettingsScreen from '../screens/SettingsScreen';
 import LoginScreen from '../screens/LoginScreen';
 import EditProfileScreen from '../screens/EditProfileScreen';
 import { showHeaderItemOnSkip } from './ReuseLogics';
+import WhatsNew from '../screens/HomeScreen/What\'s New/What\'sNew';
+
 
 
 
@@ -89,6 +91,10 @@ const HomeNavigation = () => {
               headerTintColor: '#fff'}}/>
           <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} options={{headerShown: true,  
               title: "Edit Profile",
+              headerStyle: {backgroundColor: '#071B36'},
+              headerTintColor: '#fff'}}/>
+          <Stack.Screen name="WhatsNew" component={WhatsNew} options={{headerShown: true,  
+              title: "What's New",
               headerStyle: {backgroundColor: '#071B36'},
               headerTintColor: '#fff'}}/>
         </Stack.Navigator>

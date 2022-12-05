@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleSheet, LogBox } from 'react-native';
+import { LogBox } from 'react-native';
 import AppNav from './src/navigation/AppNav';
-// import { Provider } from 'react-redux';
 import store from './redux/store';
 import { Provider} from 'react-redux';
 import { useFonts } from 'expo-font';
@@ -32,11 +31,3 @@ if (!fontsLoaded) {
     </Provider>
   );
 }
-
-
-
-const styles = StyleSheet.create({
-  
-});
-
-

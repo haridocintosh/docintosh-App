@@ -26,7 +26,7 @@ const CommentsScreen = ({route}) => {
 
         const postDetails = {post_id:post_id}
         const sentResult = await dispatch(getallcomment(postDetails));
-        console.log("sentResult.payload.getallcomment",sentResult.payload.getallcomment);
+        // console.log("sentResult.payload.getallcomment",sentResult.payload.getallcomment);
         setInstData(sentResult.payload.getallcomment);
         setLoader(false)
     }
@@ -67,18 +67,20 @@ const CommentsScreen = ({route}) => {
     <View style={styles.commentContainer}>
       <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true} >
                { instData.length > 0 ? instData?.map((element, index)=>{
+                console.log("element",element);
                   return(
                     <View style={styles.usersCommentContainer} key={index}>
                       <View style={styles.usersCommentPictureContainer}>
-                        <Image source={{uri:profile}} style={{width:40,height:40, borderRadius:50,marginRight:10}}/>
+                        <Image source={{uri: element?.profileimage}} style={{width:40,height:40, borderRadius:50,marginRight:10}}/>
                         <View>
-                            <Text style={styles.userUsername}>{"Dr. " + userId.first_name +" "+ userId.last_name}</Text>
-                            <Text style={styles.userCommentTexts}>{element.comment} </Text>
+                            <Text style={styles.userUsername}>{(element?.title == null ?"" :element?.title ) + (element?.fullname)}</Text>
+                            <Text style={styles.userCommentTexts}>{element.comment}</Text>
                         </View>
                       </View>
+                      {element.id === userId.id &&
                       <TouchableOpacity onPress={() => deleteCommentHandle(element?.comment_id)} style={{}}>
                         <MaterialCommunityIcons name='delete-outline' size={30} color={'#A30000'}/>
-                      </TouchableOpacity>
+                      </TouchableOpacity>}
                     </View>
                   )
                 }): 
