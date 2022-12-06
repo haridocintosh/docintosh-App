@@ -2,10 +2,12 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
+import {useNavigation} from '@react-navigation/native';
 
 const optionModal = ({modalVisible,id}) => {
   const [userId, setUserId] = useState()
   // console.log("id",id);
+  const navigation  = useNavigation();
 
   const getId = async () => {
     const jsonValue = await AsyncStorage.getItem('USER_INFO');
@@ -19,6 +21,9 @@ const optionModal = ({modalVisible,id}) => {
   },[])
 
   // console.log("userId",userId?.id);
+  const handleReport = () => {
+    navigation.navigate('ReportPost')
+  }
   return (
     <>
     {modalVisible &&
@@ -35,7 +40,7 @@ const optionModal = ({modalVisible,id}) => {
             <Image source={require('../../assets/dr-icon/savePost.png')} style={styles.optionListImage}/>
             <Text style={styles.optionListText}>Save Post</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.optionList}>
+        <TouchableOpacity style={styles.optionList} onPress={()=> handleReport()}>
             <Image source={require('../../assets/dr-icon/reportPost.png')} style={styles.optionList2}/>
             <Text style={styles.optionListText}>Report Post</Text>
         </TouchableOpacity>

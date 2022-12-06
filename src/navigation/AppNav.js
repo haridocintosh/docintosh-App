@@ -57,6 +57,13 @@ if(loader){
       getData('USER_INFO');
   }, []);
 
+const handleMessage = () => {
+  alert("Successfully completed registration please login")
+  setTimeout(() => {
+    navigation.navigate('Login')
+   }, 3000);
+}
+  
   return (<>
     {statusKeyLoaded && 
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={defaultRoute}>
@@ -74,7 +81,7 @@ if(loader){
             <Stack.Screen name="Congratulation" component={Congratulation} />
             <Stack.Screen name='ContactPermission' component={ContactPermission}  options={{ title: 'Invite Peers' , headerShown: true,
               headerRight: () => (
-                <Text onPress={() => navigation.navigate('Login')} style={{color:"#2376E5"}}>Skip</Text>)
+                <Text onPress={() => handleMessage()} style={{color:"#2376E5"}}>Skip</Text>)
               }} /> 
             <Stack.Screen name="ForgetPassword" component={ForgetPassword} options={{ title: 'Forgot Password' , headerShown: true}} />
             <Stack.Screen name="CreateNewPass" component={CreateNewPass} options={{ title: 'Create New Password' , headerShown: true}} />
