@@ -23,6 +23,8 @@ import LoginScreen from '../screens/LoginScreen';
 import EditProfileScreen from '../screens/EditProfileScreen';
 import { showHeaderItemOnSkip } from './ReuseLogics';
 import ContactPermission from '../screens/ContactPermission';
+import WhatsNew from '../screens/HomeScreen/What\'s New/What\'sNew';
+
 
 
 
@@ -95,6 +97,10 @@ const HomeNavigation = () => {
           <Stack.Screen name='insideContactPermission' component={ContactPermission}  options={{ title: 'Invite Peers' , headerShown: true,
       
             }} />
+          <Stack.Screen name="WhatsNew" component={WhatsNew} options={{headerShown: true,  
+              title: "What's New",
+              headerStyle: {backgroundColor: '#071B36'},
+              headerTintColor: '#fff'}}/>
         </Stack.Navigator>
       );
 }

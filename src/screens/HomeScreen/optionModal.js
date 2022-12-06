@@ -1,12 +1,37 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
 
-const optionModal = ({modalVisible}) => {
+const optionModal = ({modalVisible,id}) => {
+  const [userId, setUserId] = useState()
+  // console.log("id",id);
+
+  const getId = async () => {
+    const jsonValue = await AsyncStorage.getItem('USER_INFO');
+    const data = await JSON.parse(jsonValue);
+    const result = JSON.parse(data)['data'];
+    setUserId(result);
+  }
+
+  useEffect(() => {
+    getId();
+  },[])
+
+  // console.log("userId",userId?.id);
   return (
     <>
     {modalVisible &&
     <View style={styles.optionModal}>
-        <TouchableOpacity style={styles.optionList}>
+      {userId?.id === id ?
+      <TouchableOpacity style={styles.optionList}>
+        {/* <Image source={require('../../assets/dr-icon/savePost.png')} style={styles.optionListImage}/> */}
+        <MaterialCommunityIcons name='delete-outline' size={23} color={'#A30000'}/>
+        <Text style={styles.optionListText}>delete</Text>
+      </TouchableOpacity>
+      :
+      <>
+      <TouchableOpacity style={styles.optionList}>
             <Image source={require('../../assets/dr-icon/savePost.png')} style={styles.optionListImage}/>
             <Text style={styles.optionListText}>Save Post</Text>
         </TouchableOpacity>
@@ -22,6 +47,9 @@ const optionModal = ({modalVisible}) => {
         <Image source={require('../../assets/dr-icon/blockUser.png')} style={styles.optionList4}/>
             <Text style={styles.optionListText}>Block User</Text>
         </TouchableOpacity>
+        </>
+    }
+        
     </View>
   }
     
@@ -41,7 +69,8 @@ optionModal:{
     borderRadius:5,
     justifyContent:"center",
     // alignItems:'center',
-    padding:15,
+    paddingHorizontal:15,
+    paddingVertical:10,
     zIndex:1,
   
     shadowColor: 'black',

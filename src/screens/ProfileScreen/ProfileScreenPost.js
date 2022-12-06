@@ -35,10 +35,11 @@ const ProfileScreenPost = () => {
     const jsonValue = await AsyncStorage.getItem('USER_INFO');
     const data= await JSON.parse(jsonValue);
     const result = JSON.parse(data)['data'];
+    console.log("log",result);
     const postDetails = {
       postType:0,
       role:result?.role,
-      circle_type:result?.circle_type,
+      circle_type:result?.role == 4 ? 1 : result?.circle_type,
       city_id:result?.city_id,
       assoc_id:result?.assoc_id,
       pageCounter:600,
@@ -111,7 +112,7 @@ const ProfileScreenPost = () => {
     )
   }
   
-  console.log("myPost",myPost);
+  // console.log("myPost",myPost);
 
   return (
     <View style={{padding:10,backgroundColor:'#E6E6E6',flex:1}}>

@@ -116,7 +116,7 @@ const CustomDrawer = (props) => {
               <MaterialCommunityIcons name="gift" size={25} color="white"/>
               <Text style={styles.sideDrawerName}>Gift DocCoins</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
+            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("WhatsNew")}}>
               <Ionicons name="md-newspaper" size={25} color="white"/>
               <Text style={styles.sideDrawerName}>What’s New</Text>
             </TouchableOpacity>

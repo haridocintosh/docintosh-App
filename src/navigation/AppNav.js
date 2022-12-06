@@ -86,7 +86,6 @@ if(loader){
               }} />
             <Stack.Screen name="TermsAndCondition" component={TermsAndCondition} options={{ title: 'Terms & Condition', headerShown: true}} />
             <Stack.Screen name="ForgotPasswordOTP" component={ForgotPasswordOTP} options={{ title: 'Verification OTP', headerShown: true}} />
-            {/* <Stack.Screen name="AppStack" component={AppStack} /> */}
             <Stack.Screen name="QuizLevels" component={QuizLevels} />
             <Stack.Screen name="HomeScreen" component={AppStack} options={{headerShown: false}} />
       </Stack.Navigator>
