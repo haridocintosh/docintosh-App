@@ -1,4 +1,4 @@
-import React,{useRef} from 'react';
+import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Knowledge2Screen from '../screens/Knowledge2Screen';
 import SharePost from '../screens/HomeScreen/postScreen/SharePost';
@@ -19,16 +19,18 @@ import PostsScreen from '../screens/HomeScreen/PostsScreen';
 import CommentsScreen from '../screens/HomeScreen/CommentsScreen';
 import MessagesScreen from '../screens/MessagesScreen';
 import SettingsScreen from '../screens/SettingsScreen';
-import LoginScreen from '../screens/LoginScreen';
 import EditProfileScreen from '../screens/EditProfileScreen';
-import { showHeaderItemOnSkip } from './ReuseLogics';
 import WhatsNew from '../screens/HomeScreen/What\'s New/What\'sNew';
-
 import ContactPermission from '../screens/ContactPermission';
-
+import ReportPost from '../screens/HomeScreen/ReportPost/ReportPost';
+import ReportTrack from '../screens/HomeScreen/ReportPost/ReportTrack';
+import { TouchableOpacity} from 'react-native';
+import {AntDesign} from 'react-native-vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 
 const HomeNavigation = () => {
+    const navigation  = useNavigation();
 
     const Stack = createNativeStackNavigator();
     
@@ -101,6 +103,20 @@ const HomeNavigation = () => {
           <Stack.Screen name='insideContactPermission' component={ContactPermission}  options={{  headerShown: true,
               title: 'Invite Peers' 
             }} />
+          <Stack.Screen name='ReportPost' component={ReportPost}  options={{  headerShown: true,
+             title: "Report Post",
+             headerStyle: {backgroundColor: '#071B36'},
+             headerTintColor: '#fff'}} />
+          <Stack.Screen name='ReportTrack' component={ReportTrack}  options={{  headerShown: true,
+             title: "Report Post",
+             headerStyle: {backgroundColor: '#071B36'},
+             headerTintColor: '#fff',
+             headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
+                   <AntDesign name="close" size={25} style={{color:"#fff",marginRight:5}} />
+                </TouchableOpacity>
+                )
+                }} />
         </Stack.Navigator>
       );
 }
