@@ -120,11 +120,12 @@ const handleOption = (post_id) => {
       
     // console.log("postDetails",postDetails); 
     const result = await dispatch(userPostData(postDetails));
+   // console.log(result.payload);
     // setLoader(false);
     // const allCommentsCount = {}
     // const sentResult = await dispatch(getallcomment(allCommentsCount));
-    // const allPostData = result && result.payload.filter(Post => Post.user_role != 5)
-    setallPost(result.payload);
+     const allPostData = result && result.payload.filter(Post => Post.user_role != 5)
+    setallPost(allPostData);
   }
   
   const handlePost = (item) => {
@@ -147,7 +148,7 @@ const handleOption = (post_id) => {
               <Image source={{uri:item.profileimage}} onPress={() => navigation.navigate('ProfileScreen2')} style={{width:38, height:38,marginRight:5,borderRadius:50}} />
                 <View >
                   <Text style={{fontSize:14, fontWeight:'400', fontFamily:"Inter-Regular"}}>
-                    {item.role == '4' ? 'Dr.' : ''} {item.first_name && item.first_name} {item.last_name && item.last_name} 
+                    {item.utitle && item.utitle} {item.first_name && item.first_name} {item.last_name && item.last_name} 
                     <MaterialCommunityIcons name="check-decagram" size={12} color="#0F9C69" />
                   </Text>
                   <View style={{flexDirection:'row',alignItems:'center'}}>
