@@ -179,7 +179,12 @@ const postDesc= (e)=>{
 
 const publishCheck = (e)=>{
   console.log("e",e);
+  if(e == 8){
     setWhoCanSee("Public");
+  }else{
+    setWhoCanSee("My Speciality"); 
+  }
+    
     setSpecialNames();
     setPost({...post,
       publishto:e,
@@ -347,7 +352,7 @@ setSpecialNames(specialityName)
                 <Text style={styles.publicOption}>{whoCanSee? whoCanSee: "Publish"}</Text>
                 <AntDesign name="down" size={12} color="#51668A" />
                 <Text 
-                  style={[styles.publicOption,{width:170}]} numberOfLines={1} >
+                  style={[styles.publicOption,{width:140}]} numberOfLines={1} >
                     {specialNames?.map(data => data+ " ")}
                   </Text>
               </TouchableOpacity>
@@ -566,7 +571,7 @@ const styles = StyleSheet.create({
     backgroundColor:"#F2FAFA",
     flexDirection:'row',
     justifyContent:"space-between",
-    alignItems:'center'
+    alignItems:'center',
   },
   imageProfile:{ 
     width:50, 

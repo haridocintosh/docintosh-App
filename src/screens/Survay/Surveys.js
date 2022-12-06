@@ -111,7 +111,7 @@ const Surveys = ({ route }) => {
                           color="red"
                         />
                         <Text style={styles.ExpiringText}>
-                          Expairing on{" "}
+                        Expiring on{" "}
                           {moment(data?.senddate, [
                             "DD-MM-YYYY",
                             "MM-DD-YYYY",

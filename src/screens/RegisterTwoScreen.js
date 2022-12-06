@@ -310,9 +310,9 @@ useEffect(()=>{
           setloader(false);
           console.log(result.payload);
           const coinDetails = {task : 1, receiverId:result.payload.user_id } 
-          const coinResult = await dispatch(coinTransfer(coinDetails));
-        //  console.log(coinResult.payload)
-          if(result.payload.status == 'Success'){
+          const coinResult  = await dispatch(coinTransfer(coinDetails));
+          //console.log(coinResult.payload)
+          if(coinResult.payload.status == 'Success'){
             setIsModalVisible(true);
             setTimeout(() => {
             setIsModalVisible(false);
