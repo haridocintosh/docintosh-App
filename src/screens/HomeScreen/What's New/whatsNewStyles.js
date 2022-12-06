@@ -5,8 +5,12 @@ export const styles = StyleSheet.create({
         backgroundColor:"#fff",
         borderRadius:10,
         overflow:'hidden',
-        marginBottom:15
-        
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,  
+        elevation: 2,
+        margin:10
     },
     titleDtails:{
         flexDirection:'row',
@@ -27,6 +31,21 @@ export const styles = StyleSheet.create({
         fontFamily:'PlusJakartaSans-Bold',
         fontSize:18,
         color: '#404DB7',
+    },
+    CartTitlePolls:{
+        fontFamily:'PlusJakartaSans-Bold',
+        fontSize:18,
+        color: '#DC5343',
+    },
+    CartTitleSurveys:{
+        fontFamily:'PlusJakartaSans-Bold',
+        fontSize:18,
+        color: '#008D85',
+    },
+    CartTitleSentimetrix:{
+        fontFamily:'PlusJakartaSans-Bold',
+        fontSize:18,
+        color: '#006592',
     },
     cartOffersText:{
         fontFamily:'PlusJakartaSans-Bold',
