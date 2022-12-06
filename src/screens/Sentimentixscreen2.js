@@ -13,10 +13,8 @@ const Sentimentixscreen2 = () => {
       {label: 'Spain', value: 'spain'},
       {label: 'Madrid', value: 'madrid', parent: 'spain'},
       {label: 'Barcelona', value: 'barcelona', parent: 'spain'},
-  
       {label: 'Italy', value: 'italy'},
       {label: 'Rome', value: 'rome', parent: 'italy'},
-  
       {label: 'Finland', value: 'finland'}
     ]);
 
@@ -45,16 +43,15 @@ const Sentimentixscreen2 = () => {
     marginTop:40,
     width:"100%",
     height:48,
-   alignSelf:'center',
-                borderColor: '#fff',
-                borderRadius:15/2,
-                backgroundColor:'#2C8892',
-                
-              }}
-              titleStyle={{
-                color:'#fff'
-              }}
-              onPress={() => navigation.navigate('Engage1Screen')}
+    alignSelf:'center',
+    borderColor: '#fff',
+    borderRadius:15/2,
+    backgroundColor:'#2C8892',
+  }}
+    titleStyle={{
+      color:'#fff'
+    }}
+    onPress={() => navigation.navigate('Engage1Screen')}
              
 />
 <Button

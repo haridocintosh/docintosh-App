@@ -108,7 +108,7 @@ const CustomDrawer = (props) => {
               <Entypo name="trophy" size={25} color="white" />
               <Text style={styles.sideDrawerName}>Leaderboard</Text>
             </TouchableOpacity > */}
-            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ContactPermission")}}>
+            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("insideContactPermission")}}>
               <MaterialIcons name="person-add-alt-1" size={25} color="white" />
               <Text style={styles.sideDrawerName}>Invite</Text>
             </TouchableOpacity >

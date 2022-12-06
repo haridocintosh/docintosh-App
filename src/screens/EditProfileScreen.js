@@ -202,12 +202,12 @@ const EditProfileScreen = () => {
             </Text>
             <Text style={{paddingLeft:10,fontSize:14,fontWeight:'400',color:'#51668A'}}>12345 | 2010</Text>
         </View>
-        <View style={{flexDirection:'row',paddingTop:16}}>
+        {/* <View style={{flexDirection:'row',paddingTop:16}}>
             <Text style={{fontSize:14,fontWeight:'500'}}>
             MRN Reg:
             </Text>
             <Text style={{paddingLeft:10,fontSize:14,fontWeight:'400',color:'#51668A'}}>Himachal Pradesh</Text>
-        </View>
+        </View> */}
         </View>
     </Card>  
 

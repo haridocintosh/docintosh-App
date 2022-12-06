@@ -22,6 +22,7 @@ import SettingsScreen from '../screens/SettingsScreen';
 import LoginScreen from '../screens/LoginScreen';
 import EditProfileScreen from '../screens/EditProfileScreen';
 import { showHeaderItemOnSkip } from './ReuseLogics';
+import ContactPermission from '../screens/ContactPermission';
 
 
 
@@ -91,6 +92,9 @@ const HomeNavigation = () => {
               title: "Edit Profile",
               headerStyle: {backgroundColor: '#071B36'},
               headerTintColor: '#fff'}}/>
+          <Stack.Screen name='insideContactPermission' component={ContactPermission}  options={{ title: 'Invite Peers' , headerShown: true,
+      
+            }} />
         </Stack.Navigator>
       );
 }
