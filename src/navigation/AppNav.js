@@ -62,11 +62,8 @@ if(loader){
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={defaultRoute}>
             {/* <Stack.Screen name="RegisterStudentScreen" component={RegisterStudentScreen}  options={{ title: 'Register', headerShown: true}} /> */}
             {/* <Stack.Screen name="PracticeScreen" component={PracticeScreen} /> */}
-            <Stack.Screen name="HomeScreen" component={AppStack} options={{headerShown: false}} />
             <Stack.Screen name="Intro" component={IntroStack} />
-            <Stack.Screen name="InvitePeers" component={InvitePeers} options={{ title: 'Invite Peers', headerShown: true,  
-            headerRight: () => (
-                <Text onPress={() => navigation.navigate('Login')} style={{color:"#2376E5"}}>Skip</Text>)}}  />
+            <Stack.Screen name="InvitePeers" component={InvitePeers} options={{ title: 'Invite Peers', headerShown: true, headerRight: () => (<Text onPress={() => navigation.navigate('Login')} style={{color:"#2376E5"}}>Skip</Text>)}}  />
             <Stack.Screen name="MobileScreen" component={MobileScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Register" component={RegisterScreen}  />
@@ -90,6 +87,7 @@ if(loader){
             <Stack.Screen name="TermsAndCondition" component={TermsAndCondition} options={{ title: 'Terms & Condition', headerShown: true}} />
             <Stack.Screen name="ForgotPasswordOTP" component={ForgotPasswordOTP} options={{ title: 'Verification OTP', headerShown: true}} />
             <Stack.Screen name="QuizLevels" component={QuizLevels} />
+            <Stack.Screen name="HomeScreen" component={AppStack} options={{headerShown: false}} />
       </Stack.Navigator>
   }
   </>

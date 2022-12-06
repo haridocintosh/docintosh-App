@@ -24,6 +24,7 @@ import EditProfileScreen from '../screens/EditProfileScreen';
 import { showHeaderItemOnSkip } from './ReuseLogics';
 import WhatsNew from '../screens/HomeScreen/What\'s New/What\'sNew';
 
+import ContactPermission from '../screens/ContactPermission';
 
 
 
@@ -97,6 +98,9 @@ const HomeNavigation = () => {
               title: "What's New",
               headerStyle: {backgroundColor: '#071B36'},
               headerTintColor: '#fff'}}/>
+          <Stack.Screen name='insideContactPermission' component={ContactPermission}  options={{  headerShown: true,
+              title: 'Invite Peers' 
+            }} />
         </Stack.Navigator>
       );
 }

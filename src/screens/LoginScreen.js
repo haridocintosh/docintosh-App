@@ -52,8 +52,8 @@ const LoginScreen = () => {
 
     register.email = register.email? register.email : datarm?.data.email;
     register.password = register.password ? register.password :datarm?.data.password ;
-
-    if(register.email !== "" &&  register.password !== ""){
+    //console.log("line55", register);
+    if(register.email !== "" &&  register.password !== "" && register.email !== undefined &&  register.password !== undefined){
       setloader(true)
       const token = await dispatch(userLogin(register));
       if(token.payload.status == 'Success'){
@@ -77,6 +77,7 @@ const LoginScreen = () => {
         Toast.show(token.payload.message);
       }
     }else{
+      setloader(false)
       setmessage('Please fill the above details');
     }
   }
