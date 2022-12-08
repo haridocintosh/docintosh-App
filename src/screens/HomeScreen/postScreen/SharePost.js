@@ -13,10 +13,11 @@ import { useDispatch } from "react-redux";
 // import { getAllSpeciality } from "../../redux/reducers/getSpeciality";
 import Toast from 'react-native-simple-toast';
 import { postCreate } from "../../../../redux/reducers/postData";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { getMycircle } from "../../../../redux/reducers/postData";
 import { mainApi } from "../../../apis/constant";
+import { getLocalData } from "../../../apis/GetLocalData";
+
 
 
 
@@ -269,36 +270,29 @@ const publishCheck1 = (e, text)=>{
     
 
   useEffect(() => {
-    const asyncFetchDailyData = async () => {
-   // setloader(true);
-    const jsonValue = await AsyncStorage.getItem('USER_INFO');
-      const data=await JSON.parse(jsonValue);
-      //setloader(false);
-      const result=JSON.parse(data)['data'];
+    getLocalData('USER_INFO').then((res) => {
+      const reData = res?.data;
+      setUserId(reData);
       setuserdata({...userdata, 
-        fullname: `${result['first_name']} ${result['last_name']}`,
-        profile: result['profileimage'],
-        role:result['role'],
-        speciality:result['speciality'],
-        speciality_id:result['speciality_id'],
-        city_id:result['city_id'],
-        assoc_id:result['assoc_id'],
-        id:result['id'],
-        circle_type:result['role'] == 5 ? 3 : 1
+        fullname: `${reData?.first_name} ${reData?.last_name}`,
+        profile: reData?.profileimage,
+        role:reData?.role,
+        speciality:reData?.speciality,
+        speciality_id:reData?.speciality_id,
+        city_id:reData?.city_id,
+        assoc_id:reData?.assoc_id,
+        id:reData?.id,
+        circle_type:reData?.role == 5 ? 3 : 1
       });
-      fetchSpecialities(result['id']);
-    }
+      fetchSpecialities(reData?.id);
+    });
     bottomSheetModalRef.current?.present();
-
-    asyncFetchDailyData();
-   // fetchSpecialities();
   }, [])
 
   const fetchSpecialities = async (id)=>{
     const postDetails = {user_id : id}
     const result = await dispatch(getMycircle(postDetails));
     setSpl(result.payload);
-    // setTodos(value ? JSON.parse(value) : [])
    }
 
    const handleChange = (speciality_id) => {

@@ -560,4 +560,8 @@ export const styles = StyleSheet.create({
     color: "#51668A",
     fontFamily: "Inter-Regular",
   },
+  error:{
+    fontFamily: "Inter-SemiBold",
+    color:"#D01212",
+  }
 });

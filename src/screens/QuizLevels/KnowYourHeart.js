@@ -207,7 +207,7 @@ const KnowYourHeart = ({ route }) => {
                         </View>
                         <View style={styles.row}>
                           <Image source={dcoin} style={styles.imaguser} />
-                          <Text style={styles.TotalDCoins}> 20976</Text>
+                          <Text style={styles.TotalDCoins}>20976</Text>
                         </View>
                       </View>
                     );

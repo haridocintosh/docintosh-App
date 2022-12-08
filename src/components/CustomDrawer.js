@@ -18,14 +18,11 @@ import { MaterialIcons,MaterialCommunityIcons,Ionicons,Entypo } from '@expo/vect
 import { Button } from 'react-native-elements';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation,DrawerActions, useIsFocused } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { storeData } from '../apis/Apicall';
 import { useDispatch } from 'react-redux';
 import { useDrawerStatus } from '@react-navigation/drawer';
 import {createDrawerNavigator,DrawerItem} from '@react-navigation/drawer';
-import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
-import { navigationRef } from '../navigation/RootNavigation';
-import ContactPermission from '../screens/ContactPermission';
+import { getLocalData } from '../apis/GetLocalData';
 
 
 
@@ -47,19 +44,17 @@ const CustomDrawer = (props) => {
   const Drawer = createDrawerNavigator();
 
   const asyncFetchDailyData = async () => {
-    const jsonValue = await AsyncStorage.getItem('USER_INFO');
-      const data=await JSON.parse(jsonValue);
-      // console.log(JSON.parse(data)['data'])
-      setlogoutdata(JSON.parse(data)['data'])
-      const result=JSON.parse(data)['data'];
-      // setuserdata(JSON.parse(data)['data']['first_name']+" "+JSON.parse(data)['data']['last_name'])
+    getLocalData('USER_INFO').then((res) => {
+      const reData = res?.data;
+      setlogoutdata(reData);
       setuserdata({ ...userdata, 
-        fullname: `${result['first_name']} ${result['last_name']}`,
-        speciality: `${result['speciality']}`,
-        profile: `${result['profileimage']}`,
-        role:`${result['role']}`
+        fullname: `${reData?.first_name} ${reData?.last_name}`,
+        speciality: `${reData?.speciality}`,
+        profile: `${reData?.profileimage}`,
+        role:`${reData?.role}`
       });
-    }
+    });
+  }
   useEffect(() => {
     if(isFocused){
       asyncFetchDailyData();

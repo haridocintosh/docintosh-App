@@ -11,18 +11,16 @@ import {
 } from 'react-native';
 import { Card } from 'react-native-paper';
 import { useDispatch } from "react-redux";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Ionicons,MaterialCommunityIcons,AntDesign,FontAwesome5,Feather} from '@expo/vector-icons';
-import oval from '../../assets/dr-icon/Oval.png';
-import bgtophome from '../../assets/images/bg-top-home.png';
-import { userPostData } from '../../../redux/reducers/postData';
+import { getAllCoins, userPostData } from '../../../redux/reducers/postData';
 import Svg, {Path} from 'react-native-svg';
 import PublicReactions from './PublicReactions';
 import { styles } from './Homestyle';
 import moment from "moment";
 import { useIsFocused } from '@react-navigation/native';
 import OptionModal from './optionModal';
-import { getallcomment } from '../../../redux/reducers/publicReactionSlice';
+import { getLocalData } from '../../apis/GetLocalData';
+
 
 
 
@@ -36,6 +34,7 @@ const HomeScreen = ({navigation})=> {
   const dispatch = useDispatch();
   const [postId, setPostId] = useState();
   const [modalVisible, setModalVisible] = useState(false);
+  const [allcoins, setAllcoins] = useState(0);
   const isFocused = useIsFocused();
 
   //---------------- header Animation------------------
@@ -72,8 +71,8 @@ const HomeScreen = ({navigation})=> {
   });
 
 
-//   const tooglePlay =() =>{
-//     isPlaying === false ? setIsPlaying(true) : setIsPlaying(false);
+//  const tooglePlay =() => {
+//    isPlaying === false ? setIsPlaying(true) : setIsPlaying(false);
 //  };
 
 const handleOption = (post_id) => {
@@ -84,62 +83,42 @@ const handleOption = (post_id) => {
   }
   setModalVisible(true);
 }
-  // const closeModal = () => {
-  //   setVisible(false);
-  // };
+  const getStorageData =  () => {
+    getLocalData('USER_INFO').then( async (res) =>{
+      const allCoins = { user_id:res.data.id};
+      const allCoinsResult = await dispatch(getAllCoins(allCoins));
+      console.log("allCoinsResult",allCoinsResult.payload.coins);
+      setAllcoins(allCoinsResult.payload.coins);
+    });
+  };
 
   useEffect(()=>{
     if(isFocused){
       asyncFetchDailyData();
+      getStorageData();
     }
   },[isFocused]);
 
 
   const asyncFetchDailyData = async () => {
-    const jsonValue = await AsyncStorage.getItem('USER_INFO');
-    const data=await JSON.parse(jsonValue);
-    const result=JSON.parse(data)['data'];
-    // console.log("result",result);
-    setuserdata({
-      profile:result['profileimage'],
-      user_id:result['id']
-    });
-    fetchPostData(result['role'],result['city_id'], result['assoc_id'], result['profileimage'], result['id'],result['circle_type'],)
-    setModalVisible(false);
+    getLocalData('USER_INFO').then( async (res) =>{
+      const reData = res?.data
+      setuserdata({
+        profile:reData?.profileimage,
+        user_id:reData?.id
+      });
+      setModalVisible(false);
+      const postDetails = {role:reData?.role,city_id:reData?.city_id,assoc_id:reData?.assoc_id,profileimage:reData?.profileimage,userId:reData?.id,circle_type:reData?.role == 5 ? 3 : 1};
+      const result = await dispatch(userPostData(postDetails));
+      const allPostData = result && result.payload.filter(Post => Post.user_role != 5);
+      setallPost(allPostData);
+    })
   }
 
-  const fetchPostData = async (role,city_id,assoc_id,profileimage,userId,circle_type)=>{ 
-    // setLoader(true);
-    if(role == 5){
-      var circle_type = 3;
-    } 
-    else{
-      circle_type = 1
-    }
-    const postDetails = {role,city_id,assoc_id,profileimage,userId,circle_type}
-      
-    // console.log("postDetails",postDetails); 
-    const result = await dispatch(userPostData(postDetails));
-   // console.log(result.payload);
-    // setLoader(false);
-    // const allCommentsCount = {}
-    // const sentResult = await dispatch(getallcomment(allCommentsCount));
-     const allPostData = result && result.payload.filter(Post => Post.user_role != 5)
-    setallPost(allPostData);
-  }
   
   const handlePost = (item) => {
-    navigation.navigate('PostsScreen', {item:item})
+    navigation.navigate('PostsScreen', {item})
   }
-
-  // if(loader){
-  //   return(
-  //   <View style={{flex:1, justifyContent:'center', alignItems:'center' }}>
-  //       <ActivityIndicator size={'large'} color={"#2C8892"}/>
-  //   </View>)
-  // }
-
-
     const renderItem = ({item}) => {
       return(
         <Card style={styles.cardOfPosts} >
@@ -188,7 +167,7 @@ const handleOption = (post_id) => {
               width: Dimensions.get("window").width, 
               height:300}} resizeMode={'contain'}/>
           </TouchableOpacity>
-            <PublicReactions item={item}/>
+            <PublicReactions item={item} getStorageData={getStorageData}/>
         </Card>
       )
     }
@@ -227,9 +206,10 @@ const handleOption = (post_id) => {
 
           <Animated.View style={[styles.collectedCoins,{transform: [{translateY: scoresPosition}]}]} >
             <Image source={require('../../assets/dr-icon/d.png')} style={styles.d} />
-            <Text style={styles.count}>7822 |</Text>
+            <Text style={styles.count}>
+              {allcoins[0]?.coinTotal ? allcoins[0]?.coinTotal : 0} |</Text>
             <Image source={require('../../assets/dr-icon/discount1.png')} style={{width:16, height:16, marginVertical:5,  marginHorizontal:5}}></Image>
-            <Text style={styles.count}>102</Text>
+            <Text style={styles.count}>0</Text>
           </Animated.View>
       </Animated.View>
       

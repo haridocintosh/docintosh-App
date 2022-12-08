@@ -1,10 +1,11 @@
 import { View, Text, ActivityIndicator,Image,TextInput, ScrollView ,TouchableOpacity,Modal} from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Ionicons,MaterialCommunityIcons} from '@expo/vector-icons';
 import { commentData ,deleteComment,getallcomment} from '../../../redux/reducers/publicReactionSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { styles } from './Homestyle';
+import { getLocalData } from '../../apis/GetLocalData';
+
 
 const CommentsScreen = ({route}) => {
   const  {post_id, comments_list} = route.params;
@@ -18,15 +19,13 @@ const CommentsScreen = ({route}) => {
     const dispatch = useDispatch();
 
     const getData = async() => {
-        const jsonValue = await AsyncStorage.getItem('USER_INFO');
-        const data=await JSON.parse(jsonValue);
-        const result = JSON.parse(data)['data'];
-        setProfile(result.profileimage);
-        setUserId(result);
-
+      getLocalData('USER_INFO').then((res) => {
+        const reData = res?.data;
+        setUserId(reData);
+        setProfile(reData?.profileimage);
+      });
         const postDetails = {post_id:post_id}
         const sentResult = await dispatch(getallcomment(postDetails));
-        // console.log("sentResult.payload.getallcomment",sentResult.payload.getallcomment);
         setInstData(sentResult.payload.getallcomment);
         setLoader(false)
     }
@@ -67,7 +66,7 @@ const CommentsScreen = ({route}) => {
     <View style={styles.commentContainer}>
       <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true} >
                { instData.length > 0 ? instData?.map((element, index)=>{
-                console.log("element",element);
+                // console.log("element",element);
                   return(
                     <View style={styles.usersCommentContainer} key={index}>
                       <View style={styles.usersCommentPictureContainer}>

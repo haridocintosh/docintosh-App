@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { View, Text,Image,
   SafeAreaView,ScrollView,ActivityIndicator,StyleSheet } from 'react-native'
 import {  Card } from 'react-native-paper';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getLocalData } from '../apis/GetLocalData';
 
 const EngageScreen = ({navigation}) => {
   const [loader, setLoader] = useState(true);
@@ -11,15 +11,13 @@ const EngageScreen = ({navigation}) => {
   })
 
 useEffect(() => {
-    const userData = async () =>{
-    const jsonValue = await AsyncStorage.getItem('USER_INFO');
-    const data = await JSON.parse(jsonValue);
-    const result=JSON.parse(data)['data'];
-      setuserdata({ ...userdata, 
-        role:`${result['role']}`
-      });
-    }
-    userData();
+  getLocalData('USER_INFO').then((res) => {
+    const reData = res?.data;
+    setuserdata(reData);
+    setuserdata({ ...userdata, 
+      role:`${reData?.role}`
+    });
+  });
     setLoader(false)
   }, [])
 

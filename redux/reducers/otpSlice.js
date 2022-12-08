@@ -11,7 +11,7 @@ export const doctorOtp = createAsyncThunk("doctor/otp", async(doctorOtp)=>{
             body : JSON.stringify(doctorOtp)
         });
         const result =  await responce.json();
-        console.log('sliceTrARRA',result);
+        // console.log('sliceTrARRA',result);
         //result.data.token;
         return result
     }

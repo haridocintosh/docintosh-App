@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Alert, BackHandler, LogBox } from 'react-native';
+import React from 'react';
+import {LogBox} from 'react-native';
 import AppNav from './src/navigation/AppNav';
 import store from './redux/store';
 import { Provider} from 'react-redux';
@@ -11,29 +11,6 @@ import { navigationRef } from './src/navigation/RootNavigation';
 const App = () => {
   LogBox.ignoreLogs(['Warning: ...','Require cycle:']); 
   LogBox.ignoreAllLogs();
-
-
-  useEffect(() => {
-    const backAction = () => {
-      Alert.alert("Hold on!", "Are you sure you want to go back?", [
-        {
-          text: "Cancel",
-          onPress: () => null,
-          style: "cancel"
-        },
-        { text: "YES", onPress: () => BackHandler.exitApp() }
-      ]);
-      return true;
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction
-    );
-
-    return () => backHandler.remove();
-  }, []);
-
 
 const [fontsLoaded] = useFonts({
   "Inter-Regular": require("./src/assets/fonts/Inter-Regular.ttf"),
@@ -56,3 +33,4 @@ if (!fontsLoaded) {
 }
 
 export default App;
+

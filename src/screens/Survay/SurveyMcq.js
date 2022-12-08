@@ -26,6 +26,7 @@ const SurveyMcq = ({ route }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [liftUpData, setLiftUpData] = useState(null);
   const [liftUpCheckData, setLiftUpCheckData] = useState([]);
+  const [error, setError] = useState();
   const { surveyid } = route.params;
 
   const navigation = useNavigation();
@@ -47,6 +48,7 @@ const SurveyMcq = ({ route }) => {
 
   const MCQsLength = parseInt(allMCQs.length);
   //-----------------save survay ans--------------------------
+  
 
   const nextMcq = async (basic_id, qid) => {
     const jsonValue = await AsyncStorage.getItem("USER_INFO");
@@ -54,7 +56,6 @@ const SurveyMcq = ({ route }) => {
     const result = JSON.parse(data)["data"];
 
     // console.log("liftUpCheckData",liftUpCheckData.length != 0);
-    
     if (liftUpCheckData && (liftUpCheckData.length != 0)) {
       liftUpCheckData.map((data) =>
         PosData(result.id, basic_id, qid, data, result.profileimage)
@@ -65,7 +66,10 @@ const SurveyMcq = ({ route }) => {
       } else {
         navigation.navigate("ThankYouPage", { surveyid: surveyid });
       }
+    }else{
+      setError("Please Select your answer")
     }
+
     if (liftUpData) {
       PosData(result.id, basic_id, qid, liftUpData, result.profileimage);
       setLiftUpData(null);
@@ -74,13 +78,9 @@ const SurveyMcq = ({ route }) => {
       } else {
         navigation.navigate("ThankYouPage", { surveyid: surveyid });
       }
+    }else{
+      setError("Please type your answer");
     }
-    // if (currentQuestionIndex !== MCQsLength - 1) {
-    //   setCurrentQuestionIndex(currentQuestionIndex + 1);
-    // } else {
-    //   // navigation.navigate('ScratchOffer');
-    //   navigation.navigate("ThankYouPage", { surveyid: surveyid });
-    // }
   };
 
   const prevMcq = () => {
@@ -109,6 +109,12 @@ const SurveyMcq = ({ route }) => {
     asyncFetchDailyData();
   }, []);
 
+  useEffect(() => {
+    if(liftUpData){
+      setError(null);
+    }
+  }, [liftUpData,liftUpCheckData]);
+
   const outOff = currentQuestionIndex / allMCQs.length;
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#ecf2f6" }}>
@@ -123,21 +129,12 @@ const SurveyMcq = ({ route }) => {
             <Text style={styles.OutOffTotal}>/{allMCQs.length}</Text>
           </View>
           <View style={styles.NexrPrevIcons}>
-            <TouchableOpacity
-              style={{ marginRight: 15 }}
-              onPress={() => prevMcq()}
-            >
+            <TouchableOpacity style={{ marginRight: 15 }} onPress={() => prevMcq()} >
               <AntDesign name="leftcircle" size={32} color="#2C8892" />
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.iconStyle}
-              onPress={() =>
-                nextMcq(
-                  allMCQs[currentQuestionIndex]?.basic_id,
-                  allMCQs[currentQuestionIndex]?.qid
-                )
-              }
-            >
+              onPress={() => nextMcq(allMCQs[currentQuestionIndex]?.basic_id, allMCQs[currentQuestionIndex]?.qid)} >
               <AntDesign name="rightcircle" size={32} color="#2C8892" />
             </TouchableOpacity>
           </View>
@@ -161,6 +158,7 @@ const SurveyMcq = ({ route }) => {
           currentIndex={currentQuestionIndex}
           allMCQs={allMCQs}
           nextMcq={nextMcq}
+          error={error}
         />
       )}
 
@@ -169,6 +167,7 @@ const SurveyMcq = ({ route }) => {
           setLiftUpData={setLiftUpCheckData}
           currentIndex={currentQuestionIndex}
           allMCQs={allMCQs}
+          error={error}
         />
       )}
 
@@ -178,6 +177,7 @@ const SurveyMcq = ({ route }) => {
           currentIndex={currentQuestionIndex}
           allMCQs={allMCQs}
           length={liftUpData}
+          error={error}
         />
       )}
       

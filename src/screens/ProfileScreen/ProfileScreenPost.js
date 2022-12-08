@@ -3,7 +3,6 @@ import React,{ useEffect,useState }  from 'react';
 import { Card } from 'react-native-paper';
 import {Ionicons,MaterialCommunityIcons,FontAwesome5} from '@expo/vector-icons';
 import { styles } from './profilestyle';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch } from 'react-redux';
 import { getMyPostsApi } from '../../../redux/reducers/postData';
 import PublicReactions from '../HomeScreen/PublicReactions';
@@ -11,6 +10,7 @@ import moment from "moment";
 import Svg, {Path} from 'react-native-svg';
 import OptionModal from '../HomeScreen/optionModal';
 import { useNavigation } from '@react-navigation/native';
+import { getLocalData } from '../../apis/GetLocalData';
 
 
 
@@ -32,22 +32,14 @@ const ProfileScreenPost = () => {
   }
 
   const getMyPosts = async () => {
-    const jsonValue = await AsyncStorage.getItem('USER_INFO');
-    const data= await JSON.parse(jsonValue);
-    const result = JSON.parse(data)['data'];
-    console.log("log",result);
-    const postDetails = {
-      postType:0,
-      role:result?.role,
-      circle_type:result?.role == 4 ? 1 : result?.circle_type,
-      city_id:result?.city_id,
-      assoc_id:result?.assoc_id,
-      pageCounter:600,
-      user_id:result?.id,
-      id:result?.id
-    }
-    const allPostResult = await dispatch(getMyPostsApi(postDetails));
-    setMyPost(allPostResult.payload);
+    getLocalData('USER_INFO').then( async (res) =>{
+      const resData = res?.data;
+      const postDetails = { postType:0,role:resData?.role,circle_type:resData?.role == 4 ? 1 : resData?.circle_type,
+        city_id:resData?.city_id,assoc_id:resData?.assoc_id,pageCounter:600,user_id:resData?.id,id:resData?.id
+      }
+      const allPostResult = await dispatch(getMyPostsApi(postDetails));
+      setMyPost(allPostResult.payload);
+    });
   }
 
 
