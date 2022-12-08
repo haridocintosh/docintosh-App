@@ -29,7 +29,7 @@ const EngageNavigation = () => {
             title: 'Search'}}/>
         <Stack.Screen name="KnowYourHeart" component={KnowYourHeart} options={{headerShown: true, 
             title: 'Know Your Heart', 
-            // headerLeft: ()=> null,
+            headerLeft: () => <Text/>,
             headerStyle: {backgroundColor: '#071B36'},
             headerTintColor: '#fff'}}/>
         <Stack.Screen name="QuizGame" component={QuizGame} options={{headerShown: true,

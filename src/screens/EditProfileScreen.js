@@ -5,7 +5,8 @@ import { Card } from 'react-native-paper';
 import { Entypo } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
 import Modal from "react-native-modal";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getLocalData } from '../apis/GetLocalData';
+
 
 
 const EditProfileScreen = () => {
@@ -143,15 +144,11 @@ const EditProfileScreen = () => {
   };
 
   const asyncFetchDailyData = async () => {
-    const jsonValue = await AsyncStorage.getItem('USER_INFO');
-      const data = await JSON.parse(jsonValue);
-      console.log(JSON.parse(data)['data'])
-      const result=JSON.parse(data)['data'];
-      console.log("asdasd--result", result);
-      // setuserdata(JSON.parse(data)['data']['first_name']+" "+JSON.parse(data)['data']['last_name'])
-      setuserdata(result);
-
-    }
+    getLocalData('USER_INFO').then((res) => {
+      const reData = res?.data;
+      setuserdata(reData);
+    });
+  }
   
 
     useEffect(()=>{

@@ -7,8 +7,10 @@ import {
 } from "react-native";
 import CheckBox from "react-native-check-box";
 import { styles } from "./SurvayStyle";
+import { Ionicons } from '@expo/vector-icons';
 
-const SurvayCheckBoxMcq = ({ setLiftUpData, currentIndex, allMCQs }) => {
+
+const SurvayCheckBoxMcq = ({ setLiftUpData, currentIndex, allMCQs,error }) => {
   const [allMcq, setAllMcq] = useState(allMCQs[currentIndex]);
 
   const handleChange = (opt_id) => {
@@ -48,6 +50,9 @@ const SurvayCheckBoxMcq = ({ setLiftUpData, currentIndex, allMCQs }) => {
             );
           })}
         </View>
+        <Text style={styles.error}>
+            {error && <><Ionicons name="warning" size={15} color="#D01212"/> {error}</>}
+        </Text>
       </View>
     </SafeAreaView>
   );

@@ -52,7 +52,7 @@ import { View,
          console.log(otpInput);
          console.log(user_id);
          const result = await dispatch(doctorOtp({user_id:user_id, otp:otpInput, user_role:role}));
-         console.log('doctorOtp',result);
+        //  console.log('doctorOtp',result);
          Toast.show(result.payload.message);
          if((result.payload.role == '4') && (result.payload.status == 'Success')){
             navigation.navigate('RegisterTwoScreen', {

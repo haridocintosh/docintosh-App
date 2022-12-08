@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, ActivityIndicator } from 'react-native';
+import { StyleSheet, BackHandler, ActivityIndicator,Modal,TouchableOpacity,View,Text } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -23,11 +23,13 @@ import ContactPermission from '../screens/ContactPermission';
 import QuizLevels from '../screens/QuizLevels/QuizLevels';
 import TermsAndCondition from '../screens/commonpage/TermsAndCondition';
 import ContactScreen from '../screens/commonpage/ContactScreen';
+import HandleBack from './HandleBack';
+
 
 export default function AppNav() {
 const [loader, setLoader] = useState(false);
 const [defaultRoute, setDefaultRoute] = useState();
-const [statusKeyLoaded, setStatusKeyLoaded] = useState(false)
+const [statusKeyLoaded, setStatusKeyLoaded] = useState(false);
 const Stack = createNativeStackNavigator();
 const navigation  = useNavigation();
 
@@ -61,10 +63,11 @@ const handleMessage = () => {
   alert("Successfully completed registration please login")
   setTimeout(() => {
     navigation.navigate('Login')
-   }, 3000);
+   }, 2000);
 }
-  
+
   return (<>
+    <HandleBack/>
     {statusKeyLoaded && 
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={defaultRoute}>
             {/* <Stack.Screen name="RegisterStudentScreen" component={RegisterStudentScreen}  options={{ title: 'Register', headerShown: true}} /> */}

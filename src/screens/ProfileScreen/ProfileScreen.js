@@ -4,8 +4,9 @@ import { useNavigation } from '@react-navigation/native';
 import icon from '../../assets/images/Vector.png';
 import { Card } from 'react-native-paper';
 import ProfileScreenPost from './ProfileScreenPost';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { styles } from './profilestyle';
+import { getLocalData } from '../../apis/GetLocalData';
+
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -16,18 +17,17 @@ const ProfileScreen = () => {
   })
 
   const asyncFetchDailyData = async () => {
-    const jsonValue = await AsyncStorage.getItem('USER_INFO');
-      const data = await JSON.parse(jsonValue);
-      console.log(JSON.parse(data)['data'])
-      const result=JSON.parse(data)['data'];
-      // setuserdata(JSON.parse(data)['data']['first_name']+" "+JSON.parse(data)['data']['last_name'])
+    getLocalData('USER_INFO').then((res) => {
+      const reData = res?.data;
+      setUserId(reData);
       setuserdata({ ...userdata, 
-        fullname: `${result['first_name']} ${result['last_name']}`,
-        speciality: `${result['speciality']}`,
-        profile: `${result['profileimage']}`,
-        role:`${result['role']}`
+        fullname: `${reData?.first_name} ${reData?.last_name}`,
+        speciality: reData?.speciality,
+        profile: reData?.profileimage,
+        role:reData?.role
       });
-    }
+    });
+  }
 
     useEffect(()=>{
       asyncFetchDailyData();

@@ -1,8 +1,9 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import {useNavigation} from '@react-navigation/native';
+import { getLocalData } from '../../apis/GetLocalData';
+
 
 const optionModal = ({modalVisible,id}) => {
   const [userId, setUserId] = useState()
@@ -10,10 +11,10 @@ const optionModal = ({modalVisible,id}) => {
   const navigation  = useNavigation();
 
   const getId = async () => {
-    const jsonValue = await AsyncStorage.getItem('USER_INFO');
-    const data = await JSON.parse(jsonValue);
-    const result = JSON.parse(data)['data'];
-    setUserId(result);
+    getLocalData('USER_INFO').then((res) => {
+      const reData = res?.data;
+      setUserId(reData);
+    });
   }
 
   useEffect(() => {

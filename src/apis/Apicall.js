@@ -24,7 +24,7 @@ const singlestoreData = async (key,value) => {
 
 
 
-// const getData = async (key) => {
+// const getLocalData = async (key) => {
 //     try {
 //       const jsonValue = await AsyncStorage.getItem(key);
 //       setdata(jsonValue != null ? JSON.parse(jsonValue) : null)

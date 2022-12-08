@@ -4,7 +4,6 @@ import CustomButton from '../components/CustomButton';
 import * as Contacts from 'expo-contacts';
 import { useFonts } from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 // import Checkbox from 'expo-checkbox';
 import CheckBox from "react-native-check-box";
 const styelcss = require('../assets/css/style');

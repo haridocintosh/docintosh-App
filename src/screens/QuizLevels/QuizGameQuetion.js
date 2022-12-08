@@ -3,19 +3,15 @@ import {
   View,
   Text,
   TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-  Modal,
-  Animated,
+
 } from "react-native";
 import * as Progress from "react-native-progress";
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
-import { COLORS } from "../../components/constant";
 import { saveQuizAnswer } from "../../../redux/reducers/mcqSlice";
 import { styles } from "./QuizLevelsStyles";
-import { useFonts } from "expo-font";
+import { getLocalData } from "../../apis/GetLocalData";
+
 
 const QuizGameQuetion = ({ mcqQue,singleMcq ,seconds,disabled,setDisabled}) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -33,16 +29,14 @@ const QuizGameQuetion = ({ mcqQue,singleMcq ,seconds,disabled,setDisabled}) => {
   //   })
 
   const validateAnswer = async (ans) => {
-    const jsonValue = await AsyncStorage.getItem("USER_INFO");
-    const data = await JSON.parse(jsonValue);
-    const id = JSON.parse(data)["data"].id;
-
-    fetchPostData(id, ans.qid, ans.opt_id, singleMcq);
+    getLocalData("USER_INFO").then((res) => {
+      const resData = res?.data
+      fetchPostData(resData?.id, ans.qid, ans.opt_id, singleMcq);
+    })
 
     if (currentQuestionIndex !== TotalMcq - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      // setShowScoreModal(true);
       setDisabled(true);
       navigation.navigate("KnowYourHeart", {
         score: score,
@@ -50,7 +44,6 @@ const QuizGameQuetion = ({ mcqQue,singleMcq ,seconds,disabled,setDisabled}) => {
         seconds:seconds
       });
     }
-
     if (ans.is_correct == 1) {
       setScore(score + 1);
     }
@@ -62,12 +55,7 @@ const QuizGameQuetion = ({ mcqQue,singleMcq ,seconds,disabled,setDisabled}) => {
   };
 
   const fetchPostData = async (id, qid, opt_id, basic_id) => {
-    const postDetails = {
-      id: id,
-      qid: qid,
-      opt_id: opt_id,
-      basic_id: basic_id,
-    };
+    const postDetails = {id: id,qid: qid,opt_id: opt_id,basic_id: basic_id};
     const result = await dispatch(saveQuizAnswer(postDetails));
   };
 
