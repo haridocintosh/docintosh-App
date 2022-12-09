@@ -225,9 +225,9 @@ const publishCheck1 = (e, text)=>{
           Toast.show(result.payload.message);
           //  navigation.navigate('HomeScreen')
           const coinDetails = {task : 4, receiverId:userdata.id } 
-          console.log("checkSharepostCoins", coinDetails);
+          // console.log("checkSharepostCoins", coinDetails);
           const coinResult  = await dispatch(coinTransfer(coinDetails));
-          console.log(coinResult.payload)
+          // console.log(coinResult.payload)
           if(coinResult.payload.status == 'Success')
           {
               navigation.navigate('HomeScreen');

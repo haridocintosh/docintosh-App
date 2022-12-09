@@ -9,6 +9,7 @@ import savePost  from '../../assets/dr-icon/savePost.png';
 import reportPost  from '../../assets/dr-icon/reportPost.png';
 import unfollow  from '../../assets/dr-icon/unfollow.png';
 import blockUser  from '../../assets/dr-icon/blockUser.png';
+import moment from "moment";
 import OptionModal from './optionModal';
 
 const PostsScreen = ({route}) => {
@@ -58,7 +59,7 @@ const PostsScreen = ({route}) => {
                             <Text style={{marginHorizontal:5}}>
                                 <Ionicons name="time-outline" size={19} color="#51668A" />  
                             </Text>
-                            <Text style={{fontSize:12, paddingRight:5, fontWeight:'400',color:'#51668A',fontFamily:"Inter-Regular"}}>1hr ago</Text>
+                            <Text style={{fontSize:12, paddingRight:5, fontWeight:'400',color:'#51668A',fontFamily:"Inter-Regular"}}>{moment(item?.created_at).fromNow()}</Text>
                             {/* {item.post_date}  */}
                         </View>
                        </View> 

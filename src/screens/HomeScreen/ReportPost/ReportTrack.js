@@ -24,10 +24,8 @@ const customStyles = {
 }
 
     const {reportSelect} = route?.params;
-
-  
-  return (
-    <SafeAreaView style={{flex:1}}>
+    return (
+        <SafeAreaView style={{flex:1}}>
         <View style={styles.selectedReportContainer}>
             <Text style={styles.selectedReport}>{reportSelect}</Text>
         </View>
@@ -40,7 +38,7 @@ const customStyles = {
         <View style={styles.StepIndicator}>
             <StepIndicator
                 customStyles={customStyles}
-                currentPosition={2}
+                currentPosition={1}
                 direction={'vertical'}
                 stepCount={"3"}
             />

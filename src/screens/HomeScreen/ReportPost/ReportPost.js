@@ -1,13 +1,21 @@
 import { View, Text,SafeAreaView,TouchableOpacity ,Modal} from 'react-native'
-import React,{ useState } from 'react'
+import React,{ useState, useEffect } from 'react'
 import { styles } from './ReportPostStyles';
-import {EvilIcons} from '@expo/vector-icons';
+import { EvilIcons } from '@expo/vector-icons';
+import { getLocalData } from '../../../apis/GetLocalData';
+import { useDispatch } from 'react-redux';
+import { reportPost } from '../../../../redux/reducers/postAction';
 
 
-const ReportPost = ({navigation}) => {
+const ReportPost = ({navigation, route}) => {
+    const {post_id, id} = route?.params;
+    const dispatch =  useDispatch();
     const [reportSelect,setReportSelect] = useState();
     const [modalVisible, setModalVisible] = useState(false);
-
+    const [userdata, setuserdata] = useState({
+      userid:'',
+    })
+// console.log("postID", post_id, id);
     const handleSelect = (val) => {
         // console.log("val", val);
         switch (val) {
@@ -42,13 +50,28 @@ const ReportPost = ({navigation}) => {
     }
     // console.log("reportSelect",reportSelect);
     
-    const handleSend =() => {
-        console.log(reportSelect);
-        setModalVisible(false);
-        navigation.navigate("ReportTrack", {reportSelect});
-
+    const handleSend = async() => {
+      console.log(reportSelect);
+      const postDetails = {fromuserid:userdata.userid, post_id:post_id, touserid:id,postreason:reportSelect}
+      console.log(postDetails);
+      const result      = await dispatch(reportPost(postDetails));
+      console.log("reportPost", result.payload.status);
+        if(result.payload.status  == 'Success'){
+          setModalVisible(false);
+          navigation.navigate("ReportTrack", {reportSelect});
+        }
     }
-    
+
+    useEffect(()=>{
+      getLocalData("USER_INFO").then((res) => {
+       // console.log(res);
+        const resData = res?.data;
+        setuserdata({ ...userdata, 
+          userid:resData?.id,
+        });
+      })
+    },[])
+
   return (
     <SafeAreaView>
         <Text style={styles.reportTitle}>What’s going wrong?</Text>

@@ -3,13 +3,17 @@ import React, { useEffect, useState } from 'react';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import {useNavigation} from '@react-navigation/native';
 import { getLocalData } from '../../apis/GetLocalData';
+import { deletePost } from '../../../redux/reducers/postAction';
+import { useDispatch } from 'react-redux';
+import { coinTransfer } from '../../../redux/reducers/coinSlice';
 
 
-const optionModal = ({modalVisible,id}) => {
-  const [userId, setUserId] = useState()
-  // console.log("id",id);
+const optionModal = ({modalVisible,id,post_id,setSucc}) => {
+  const [userId, setUserId] = useState();
+
+  const dispatch    = useDispatch();
   const navigation  = useNavigation();
-
+  
   const getId = async () => {
     getLocalData('USER_INFO').then((res) => {
       const reData = res?.data;
@@ -21,16 +25,32 @@ const optionModal = ({modalVisible,id}) => {
     getId();
   },[])
 
+
+  const handleDeletePost = async()=>{
+    const postDetails = {post_id:post_id}
+    const result      = await dispatch(deletePost(postDetails));
+    //console.log("deletePost", result.payload.status);
+      if(result.payload.status  == 'Success'){
+        const coinDetails = {task:15, receiverId:0, senderId:id} 
+      //  console.log("checkDetails", coinDetails);
+        const coinResult  = await dispatch(coinTransfer(coinDetails));
+        if(coinResult.payload.status  == 'Success'){
+          setSucc(true)
+        }
+      }
+    }
   // console.log("userId",userId?.id);
   const handleReport = () => {
-    navigation.navigate('ReportPost')
+    navigation.navigate('ReportPost', {
+       post_id, id})
   }
+
   return (
     <>
     {modalVisible &&
     <View style={styles.optionModal}>
       {userId?.id === id ?
-      <TouchableOpacity style={styles.optionList}>
+      <TouchableOpacity style={styles.optionList} onPress={() =>{handleDeletePost()}}>
         {/* <Image source={require('../../assets/dr-icon/savePost.png')} style={styles.optionListImage}/> */}
         <MaterialCommunityIcons name='delete-outline' size={23} color={'#A30000'}/>
         <Text style={styles.optionListText}>delete</Text>
