@@ -19,7 +19,6 @@ import { userLogin } from '../../redux/reducers/loginAuth';
 import Toast from 'react-native-simple-toast';
 import { useFonts } from 'expo-font';
 
-
 const LoginScreen = () => {
   const navigation = useNavigation();
   const dispatch   = useDispatch();
@@ -133,7 +132,7 @@ const LoginScreen = () => {
     <SafeAreaView style={{paddingHorizontal:30}}>
       <View style={{marginTop:40}}>
         <Text  style={styles.headingtexts}>
-          Welcome 
+          Welcome
         </Text>
         <Text  style={styles.headingtext}>
          {data?((data.data.role<='4')?'Dr. ':''):''}{data?data.data.first_name+' '+data.data.last_name:''}

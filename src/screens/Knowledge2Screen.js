@@ -22,7 +22,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import UserAvatar from '@muhzi/react-native-user-avatar';
 // import {freeGames, paidGames, sliderData} from '../model/data';
 import CustomSwitch from '../components/CustomSwitch';
-import ListItem from '../components/ListItem';
+
 import { Button } from 'react-native-elements';
 
 import { Card } from 'react-native-paper';

@@ -25,6 +25,7 @@ import { userRegisterSecond } from '../../redux/reducers/loginAuth';
 import Toast from 'react-native-simple-toast';
 import Lottie from 'lottie-react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { coinTransfer } from '../../redux/reducers/coinSlice';
 
 
 const RegisterStudentScreen = ({route}) => {
@@ -256,11 +257,16 @@ const form_submit = async() =>{
     console.log("RegisterSTudent", result.payload);
     Toast.show(result.payload.message);
       if(result.payload.status == 'Success'){
-        setIsModalVisible(true);
-        setTimeout(() => {
-          setIsModalVisible(false);
-          navigation.navigate('ContactPermission')
-         },3000) 
+        const coinDetails = {task : 1, receiverId:result.payload.user_id } 
+        const coinResult  = await dispatch(coinTransfer(coinDetails));
+          console.log(coinResult.payload)
+          if(coinResult.payload.status == 'Success'){
+            setIsModalVisible(true);
+            setTimeout(() => {
+            setIsModalVisible(false);
+            navigation.navigate('ContactPermission')
+          },3000);
+        }
       }
       setloader(false);
     }
