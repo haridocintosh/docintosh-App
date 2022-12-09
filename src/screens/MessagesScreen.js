@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState ,useEffect} from 'react'
 import { View, Text, SafeAreaView, StatusBar, Image, TouchableOpacity, Modal, Animated } from 'react-native'
 import { COLORS, SIZES } from '../components/constant';
 import data from '../model/data';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const Quiz = () => {
+const Quiz = ({navigation}) => {
 
     const allQuestions = data;
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -13,7 +13,11 @@ const Quiz = () => {
     const [isOptionsDisabled, setIsOptionsDisabled] = useState(false);
     const [score, setScore] = useState(0)
     const [showNextButton, setShowNextButton] = useState(false)
-    const [showScoreModal, setShowScoreModal] = useState(false)
+    const [showScoreModal, setShowScoreModal] = useState(false);
+
+    useEffect(() => {
+        navigation.setOptions({ title: 'Comments'});
+    },[])
 
     const validateAnswer = (selectedOption) => {
         let correct_option = allQuestions[currentQuestionIndex]['correct_option'];

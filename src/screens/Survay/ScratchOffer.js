@@ -3,32 +3,26 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  StyleSheet,
-  Dimensions,
   Clipboard,
   ToastAndroid,
   ImageBackground,
+  Linking
 } from "react-native";
 import React, { useEffect, useState, useRef } from "react";
-import scratchCard from "../../assets/images/scratchCard.png";
-import amazon from "../../assets/images/amazon.png";
 import Svg, { Path } from "react-native-svg";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { TapGestureHandler, ScrollView } from "react-native-gesture-handler";
-import tankyouCelebration from "../../assets/dr-icon/tankyouCelebration.png";
-import { color } from "react-native-reanimated";
-import { useFonts } from "expo-font";
 import { styles } from "./SurvayStyle";
-
-import coupon from "../../assets/dr-icon/coupon1.png";
 
 const ScratchOffer = ({ setShowOffer }) => {
   const [removeScratch, setRemoveScratch] = useState(true);
-
-  const [isOpen, setIsOpen] = useState(true);
+  const [fullDetails, setfullDetails] = useState(false);
+  const [increaseHeight, setIncreaseHeight] = useState(30);
+  const [intialHeight, setIntialHeight] = useState(1);
   const bottomSheetRef = useRef(null);
-  const snapPoints = [removeScratch ? '1%' : "27%"];
+  const snapPoints = [ intialHeight,`${increaseHeight}%`];
+  // const snapPoints = [1 , `30%`];
 
   const copyToClipboard = (code) => {
     Clipboard.setString(code);
@@ -41,11 +35,22 @@ const ScratchOffer = ({ setShowOffer }) => {
 
   const handleRemoveScratch = () => {
     setRemoveScratch(false);
+    bottomSheetRef.current?.expand();
+    
   };
 
   const closeModal = () => {
     setShowOffer(false);
   };
+  const fullOfferDetails = () => {
+    setIncreaseHeight(50);
+    setfullDetails(true);
+    setIntialHeight(200)
+  }
+
+  useEffect(()=>{
+    bottomSheetRef.current?.close();
+  },[])
   
   return (
     <View style={styles.Scratchcontainer}>
@@ -112,46 +117,33 @@ const ScratchOffer = ({ setShowOffer }) => {
       >
         <BottomSheetView>
           <ScrollView>
-            {removeScratch ? (
+            {fullDetails ? (
               <View style={styles.SheetContentContainer}>
-                {/* <Image source={coupon} style={{ width: 30, height: 30 }} />
-                <Text
-                  style={[
-                    styles.beforeCratchText,
-                    { fontFamily: "PlusJakartaSans-Bold" },
-                  ]}
-                >
-                  Scratch the card to win exciting gifts{" "}
-                </Text> */}
+              <View style={styles.TermsAndCondContainer}>
+                <TouchableOpacity>
+                  <Text style={styles.requireStepsTitle}>Kindly find the below steps :</Text>
+                  <Text style={styles.requireSteps}>
+                    Login to 
+                    <Text style={{color: 'blue'}}onPress={() => Linking.openURL('http://amazon.in ')}>  amazon.in </Text>
+
+                    
+                    website.
+                    </Text>
+                  <Text style={styles.requireSteps}>Click on Amazon pay balance.</Text>
+                  <Text style={styles.requireSteps}>Then select Add gift card.</Text>
+                  <Text style={styles.requireSteps}>Enter the 14-digit alpha-numeric claim code details in the format of 4 digit- 6 digit- 4 digit.</Text>
+                  <Text style={styles.requireSteps}>Then the amount will be added to the amazon wallet.</Text>
+                  <Text style={styles.requireSteps}>You can purchase any product you want to buy by selecting the payment option as Amazon pay balance.</Text>
+                </TouchableOpacity>
               </View>
+            </View>
             ) : (
               <View style={styles.SheetContentContainer}>
-                {/* <Text style={styles.CongratsText}>
-                  Congrats! You won an amazon voucher worth ₹ 100{" "}
-                </Text>
-                <Text style={styles.AboutVoucherText}>About this Voucher </Text>
-                <Text style={styles.DetailsVoucherText}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
-                  aliquet cursus pellentesque. Mauris gravida libero nec sapien
-                  ultricies blandit.
-                </Text> */}
                 <View style={styles.TermsAndCondContainer}>
-                  {/* <Text style={styles.TermsAndCondVoucher}>
-                    Use of this voucher is subjected to{" "}
-                  </Text> */}
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={()=> fullOfferDetails()}>
                     <Text style={styles.termsCondText}>Know How to Redeem your Voucher</Text>
                   </TouchableOpacity>
                 </View>
-                {/* <Image
-                  source={amazon}
-                  style={{
-                    marginTop: 20,
-                    width: 80,
-                    height: 30,
-                    alignSelf: "flex-end",
-                  }}
-                /> */}
               </View>
             )}
           </ScrollView>

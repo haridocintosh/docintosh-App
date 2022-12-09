@@ -10,10 +10,11 @@ import { styles } from "./SurvayStyle";
 import { Ionicons } from '@expo/vector-icons';
 
 
-const SurvayCheckBoxMcq = ({ setLiftUpData, currentIndex, allMCQs,error }) => {
+const SurvayCheckBoxMcq = ({ setLiftUpData, currentIndex, allMCQs,error,setError }) => {
   const [allMcq, setAllMcq] = useState(allMCQs[currentIndex]);
 
   const handleChange = (opt_id) => {
+    setError(null)
     let temp = allMcq?.options.map((mcq) => {
       if (opt_id === mcq.opt_id) {
         return { ...mcq, checked: !mcq.checked };
@@ -27,6 +28,7 @@ const SurvayCheckBoxMcq = ({ setLiftUpData, currentIndex, allMCQs,error }) => {
       .filter((val) => val.checked == true)
       .map((temp) => temp.opt_id);
     setLiftUpData(optId);
+    
     console.log("optId",optId);
   };
 

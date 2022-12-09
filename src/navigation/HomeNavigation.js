@@ -27,96 +27,69 @@ import ReportTrack from '../screens/HomeScreen/ReportPost/ReportTrack';
 import { TouchableOpacity} from 'react-native';
 import {AntDesign} from 'react-native-vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import HandleBack from './HandleBack';
+import BellNotification from '../screens/HomeScreen/BellNotification/BellNotification';
+import QuizLevels from '../screens/QuizLevels/QuizLevels';
+import { showHeaderItem, showHeaderItemBackless } from './ReuseLogics';
+import QuizGame from '../screens/QuizLevels/QuizGame';
+import KnowYourHeart from '../screens/QuizLevels/KnowYourHeart';
+import Surveys from '../screens/Survay/Surveys';
+import SurveyMcq from '../screens/Survay/SurveyMcq';
+import ThankYouPage from '../screens/Survay/ThankYouPage';
+
+
 
 const HomeNavigation = () => {
     const navigation  = useNavigation();
 
     const Stack = createNativeStackNavigator();
     
-    return (
-        <Stack.Navigator initialRouteName="HomeScreen">
-          <Stack.Screen name="HomeScreen" component={HomeScreen} options={{headerShown: false, headerTintColor: '#fff'}} />
-          <Stack.Screen name="Knowledge2Screen" component={Knowledge2Screen} options={{headerShown: false}}/>
-          <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={{headerShown: true,
-              headerStyle: { backgroundColor: '#071B36'},
-              headerTintColor: '#fff',
-              title: 'Profile'}} />
-          <Stack.Screen name="Polls" component={Polls} options={{headerShown: false}} />
-          <Stack.Screen name="Polls1" component={Polls1}  options={{headerShown: false}} />
-          <Stack.Screen name="SentimentixScreen" component={SentimentixScreen} options={{headerShown: true,  
-              title: 'Sentimetrix'}}/>
-          <Stack.Screen name="ProfileScreenFollowers" component={ProfileScreenFollowers} options={{headerShown: true, 
-              headerStyle: { backgroundColor: '#071B36'},
-              headerTintColor: '#fff', 
-              title: 'Followers'}}/>
-          <Stack.Screen name="ProfileScreenFollowing" component={ProfileScreenFollowing} options={{headerShown: true,  
-              headerStyle: { backgroundColor: '#071B36'},
-              headerTintColor: '#fff',
-              title: 'Following'}}/>
-          <Stack.Screen name="MultipleImagesUpload" component={MultipleImagesUpload} options={{headerShown: false,  
-              title: 'Search'}}/>
-          <Stack.Screen name="SentimentrixCong" component={SentimentrixCong} options={{headerShown: true,  
-              title: 'Sentimetrix'}}/>
-          <Stack.Screen name="Sentimentrix6" component={Sentimentrix6} options={{headerShown: true,  
-              title: 'Sentimetrix'}}/>
-          <Stack.Screen name="Sentimentixscreen2" component={Sentimentixscreen2} options={{headerShown: true,  
-              title: 'Sentimetrix',
-              headerStyle: { backgroundColor: '#071B36'},
-              headerTintColor: '#fff'}}/>
-          <Stack.Screen  name="SharePost" component={SharePost} options={{headerShown: true,
-              title: "Create post",
-              headerStyle: {backgroundColor: '#071B36'},
-              headerTintColor: '#fff' }} />
-          <Stack.Screen name="Sentimentrix3" component={Sentimentrix3} options={{headerShown: true,  
-              title: 'Sentimetrix',
-              headerStyle: { backgroundColor: '#071B36'},
-              headerTintColor: '#fff'}}/>
-          <Stack.Screen name="CommonSearchScreen" component={CommonSearchScreen} options={{headerShown: true,  
-              title: 'Search',
-              headerStyle: {backgroundColor: '#071B36'},
-              headerTintColor: '#fff'}}/>
-          <Stack.Screen name="PostsScreen" component={PostsScreen} options={{headerShown: true,  
-              title: "Post's",
-              headerStyle: {backgroundColor: '#071B36'},
-              headerTintColor: '#fff'}}/>
-          <Stack.Screen name="CommentsScreen" component={CommentsScreen} options={{headerShown: true,  
-              title: "Comments",
-              headerStyle: {backgroundColor: '#071B36'},
-              headerTintColor: '#fff'}} />
-          <Stack.Screen name="MessagesScreen" component={MessagesScreen} options={{headerShown: true,  
-              title: "Comments",
-              headerStyle: {backgroundColor: '#071B36'},
-              headerTintColor: '#fff'}} />
-          <Stack.Screen name="SettingsScreen" component={SettingsScreen} options={{headerShown: true,  
-              title: "Comments",
-              headerStyle: {backgroundColor: '#071B36'},
-              headerTintColor: '#fff'}}/>
-          <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} options={{headerShown: true,  
-              title: "Edit Profile",
-              headerStyle: {backgroundColor: '#071B36'},
-              headerTintColor: '#fff'}}/>
-          <Stack.Screen name="WhatsNew" component={WhatsNew} options={{headerShown: true,  
-              title: "What's New",
-              headerStyle: {backgroundColor: '#071B36'},
-              headerTintColor: '#fff'}}/>
-          <Stack.Screen name='insideContactPermission' component={ContactPermission}  options={{  headerShown: true,
-              title: 'Invite Peers' 
-            }} />
-          <Stack.Screen name='ReportPost' component={ReportPost}  options={{  headerShown: true,
-             title: "Report Post",
-             headerStyle: {backgroundColor: '#071B36'},
-             headerTintColor: '#fff'}} />
-          <Stack.Screen name='ReportTrack' component={ReportTrack}  options={{  headerShown: true,
+    return (<>
+    <HandleBack/>
+        <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="HomeScreen">
+          <Stack.Screen name="Knowledge2Screen" component={Knowledge2Screen} options={showHeaderItem} />
+          <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={showHeaderItem}/>
+          <Stack.Screen name="HomeScreen" component={HomeScreen}/>
+          <Stack.Screen name="Polls" component={Polls} options={showHeaderItem}/>
+          <Stack.Screen name="Polls1" component={Polls1} options={showHeaderItem}/>
+          <Stack.Screen name="SentimentixScreen" component={SentimentixScreen} options={showHeaderItem}/>
+          <Stack.Screen name="ProfileScreenFollowers" component={ProfileScreenFollowers} options={showHeaderItem}/>
+          <Stack.Screen name="ProfileScreenFollowing" component={ProfileScreenFollowing} options={showHeaderItem}/>
+          <Stack.Screen  name="SharePost" component={SharePost} options={showHeaderItem} />
+          <Stack.Screen name="CommonSearchScreen" component={CommonSearchScreen} options={showHeaderItem}/>
+          <Stack.Screen name="PostsScreen" component={PostsScreen} options={showHeaderItem}/>
+          <Stack.Screen name="CommentsScreen" component={CommentsScreen} options={showHeaderItem} />
+          <Stack.Screen name="MessagesScreen" component={MessagesScreen} options={showHeaderItem} />
+          <Stack.Screen name="SettingsScreen" component={SettingsScreen} options={showHeaderItem}/>
+          <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} options={showHeaderItem}/>
+          <Stack.Screen name="WhatsNew" component={WhatsNew} options={showHeaderItem}/>
+          <Stack.Screen name='insideContactPermission' component={ContactPermission}  options={showHeaderItem} />
+          <Stack.Screen name='BellNotification' component={BellNotification}  options={showHeaderItem} />
+          <Stack.Screen name='ReportPost' component={ReportPost}  options={showHeaderItem} />
+          <Stack.Screen name='ReportTrack' component={ReportTrack} options={{ headerShown: true,
              title: "Report Post",
              headerStyle: {backgroundColor: '#071B36'},
              headerTintColor: '#fff',
              headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
+                <TouchableOpacity onPress={() => navigation.navigate('ReportPost')}>
                    <AntDesign name="close" size={25} style={{color:"#fff",marginRight:5}} />
-                </TouchableOpacity>
+                 </TouchableOpacity>
                 )
-                }} />
+            }}/>
+        <Stack.Screen name="QuizLevels" component={QuizLevels} options={showHeaderItem}/>
+        <Stack.Screen name="QuizGame" component={QuizGame} options={showHeaderItem} />
+        <Stack.Screen name="KnowYourHeart" component={KnowYourHeart} options={showHeaderItemBackless}/>
+        <Stack.Screen name="Surveys" component={Surveys} options={showHeaderItem}/>
+        <Stack.Screen name="SurveyMcq" component={SurveyMcq} options={showHeaderItem}/>
+        <Stack.Screen name="ThankYouPage" component={ThankYouPage} options={showHeaderItemBackless}/>
+
+        {/* <Stack.Screen name="MultipleImagesUpload" component={MultipleImagesUpload}/>
+          <Stack.Screen name="SentimentrixCong" component={SentimentrixCong} options={showHeaderItem}/>
+          <Stack.Screen name="Sentimentrix6" component={Sentimentrix6} options={showHeaderItem}/>
+          <Stack.Screen name="Sentimentixscreen2" component={Sentimentixscreen2} options={showHeaderItem}/> 
+          <Stack.Screen name="Sentimentrix3" component={Sentimentrix3} options={showHeaderItem}/>*/}
         </Stack.Navigator>
+        </>
       );
 }
 

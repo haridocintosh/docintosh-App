@@ -15,6 +15,7 @@ const PublicReactions = ({item,getStorageData}) => {
  const [heart,setHeart] = useState(item?.post_like_status?.[0].flag == 1);
  const [result,setResult] = useState();
 
+ console.log("item",item);
  const dispatch = useDispatch();
  const navigation = useNavigation();
 
@@ -29,22 +30,23 @@ const PublicReactions = ({item,getStorageData}) => {
  // console.log("item?.post_like_status------------",item.post_id);
 
  const handleLikes = async (post_id) => {
-  // console.log("post_id",post_id);
   const postDetails = {user_id:result.id, post_id:post_id}
   const sentResult = await dispatch(postLikeData(postDetails));
   const getallLikesData = await dispatch(getallLikes({postid:post_id}));
   setAllLikeData(getallLikesData.payload)
   setLikeCount(getallLikesData.payload.count);
-  const likeCounter = {senderId : 0,receiverId:result.id,task:2}
-  getStorageData();
-
+  
   if(sentResult?.payload?.count){
+    const likeCounter = {senderId : 0,receiverId:result.id,task:2}
+    const getlikeCounter = await dispatch(getCointransfer(likeCounter));
     setHeart(true);
   }else{
+    const likeCounter = {senderId : result.id,receiverId:0,task:13}
     const getlikeCounter = await dispatch(getCointransfer(likeCounter));
-    console.log("getlikeCounter",getlikeCounter);
     setHeart(false);
   }
+
+  getStorageData();
  }
 
  useEffect(() => {
@@ -78,12 +80,12 @@ const PublicReactions = ({item,getStorageData}) => {
     <View>
      <View style={styles.publicReactionsContainer}>
               <View style={{ flexDirection: 'row',marginVertical:5,}}>
-
                 <View style={styles.socialCount}>
                   <TouchableOpacity onPress={()=> handleLikes(item.post_id,item.likecount)} >
-                      <AntDesign 
+                      <AntDesign
                         name={ heart ? "heart":"hearto"} 
-                        size={22} color="red" />
+                        size={22} color="red"
+                      />
                   </TouchableOpacity>
                   <Text style={styles.socialCountText}>
                     {likeCount}

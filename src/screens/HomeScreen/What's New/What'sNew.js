@@ -1,13 +1,16 @@
 import { View, Text ,SafeAreaView,TouchableOpacity,ImageBackground,Image,ScrollView} from 'react-native'
-import React from 'react';
+import React,{useEffect} from 'react';
 import { styles } from './whatsNewStyles';
 
 
-const WhatsNew = () => {
+const WhatsNew = ({navigation}) => {
+    useEffect(()=>{
+        navigation.setOptions({ title: `What's New`});
+    },[])
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#F2FAFA'}}>
       <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true}>
-        <View style={styles.container}>
+        {/* <View style={styles.container}>
             <View style={styles.titleDtails}>
                 <View>
                 <Text style={styles.CartTitle}>Webinar</Text>
@@ -31,7 +34,7 @@ const WhatsNew = () => {
                     <Text style={styles.buttonText}>Book Now</Text>
                 </TouchableOpacity>
             </ImageBackground>
-        </View>
+        </View> */}
 
         <View style={styles.container}>
             <View style={styles.titleDtails}>
@@ -50,7 +53,7 @@ const WhatsNew = () => {
             <Text style={styles.trendTitle}>Bleeding Disorders</Text>
             <Text style={styles.trendTitleContent}>Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur.</Text>
             <ImageBackground source={require('../../../assets/images/QuizWave.png')} style={styles.CartWave}>
-                <TouchableOpacity style={styles.ButtonContainer}>
+                <TouchableOpacity style={styles.ButtonContainer} onPress={() => navigation.navigate('QuizLevels')}>
                     <Text style={styles.buttonText}>Participate</Text>
                 </TouchableOpacity>
             </ImageBackground>
@@ -100,7 +103,7 @@ const WhatsNew = () => {
 
             <Text style={styles.trendTitleContent}>Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur.</Text>
             <ImageBackground source={require('../../../assets/images/SurveysWave.png')} style={styles.CartWave}>
-                <TouchableOpacity style={styles.ButtonContainer}>
+                <TouchableOpacity style={styles.ButtonContainer} onPress={()=>{ navigation.navigate('Surveys') }}>
                     <Text style={styles.buttonText}>Participate</Text>
                 </TouchableOpacity>
             </ImageBackground>

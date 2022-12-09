@@ -270,6 +270,7 @@ const publishCheck1 = (e, text)=>{
     
 
   useEffect(() => {
+    navigation.setOptions({ title: 'Create post'});
     getLocalData('USER_INFO').then((res) => {
       const reData = res?.data;
       setUserId(reData);

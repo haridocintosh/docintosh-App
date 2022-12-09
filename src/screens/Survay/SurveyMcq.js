@@ -3,7 +3,6 @@ import {
   SafeAreaView,
   View,
   Text,
-  ActivityIndicator,
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -19,7 +18,8 @@ import SurvayCheckBoxMcq from "./SurvayCheckBoxMcq";
 import { AntDesign } from "@expo/vector-icons";
 import { ProgressBar } from "react-native-paper";
 import { styles } from "./SurvayStyle";
-import { useFonts } from "expo-font";
+import { getLocalData } from "../../apis/GetLocalData";
+
 
 const SurveyMcq = ({ route }) => {
   const [allMCQs, setAllMCQs] = useState([]);
@@ -33,54 +33,74 @@ const SurveyMcq = ({ route }) => {
   const dispatch = useDispatch();
 
   const asyncFetchDailyData = async () => {
-    const jsonValue = await AsyncStorage.getItem("USER_INFO");
-    const data = await JSON.parse(jsonValue);
-    const result = JSON.parse(data)["data"];
-    fetchPostData(result.id, surveyid);
-  };
-
-  const fetchPostData = async (id, surveyid) => {
-    const postDetails = { surveyid: surveyid, id: id };
-    const result = await dispatch(getSurveyQuestions(postDetails));
-    const data = await result.payload.questions;
-    setAllMCQs(data);
+    navigation.setOptions({ title: `Surveys`});
+    getLocalData("USER_INFO").then( async (res) =>{
+      const resData = res?.data;
+      const postDetails = { surveyid: surveyid, id: resData?.id};
+      const result = await dispatch(getSurveyQuestions(postDetails));
+      const data = await result.payload.questions;
+      setAllMCQs(data);
+    })
   };
 
   const MCQsLength = parseInt(allMCQs.length);
+  // console.log("allMCQs",allMCQs[currentQuestionIndex]?.question_type);
   //-----------------save survay ans--------------------------
   
 
-  const nextMcq = async (basic_id, qid) => {
-    const jsonValue = await AsyncStorage.getItem("USER_INFO");
-    const data = await JSON.parse(jsonValue);
-    const result = JSON.parse(data)["data"];
+  const nextMcq = async (basic_id, qid, Q_type) => {
+    getLocalData("USER_INFO").then((res) =>{
+      const resData = res?.data;
+      console.log("Q_type",Q_type);
 
-    // console.log("liftUpCheckData",liftUpCheckData.length != 0);
-    if (liftUpCheckData && (liftUpCheckData.length != 0)) {
-      liftUpCheckData.map((data) =>
-        PosData(result.id, basic_id, qid, data, result.profileimage)
-      );
-      setLiftUpCheckData(null);
-      if (currentQuestionIndex !== MCQsLength - 1) {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
-      } else {
-        navigation.navigate("ThankYouPage", { surveyid: surveyid });
+      if(Q_type == 1){
+        if (liftUpData) {
+          PosData(resData?.id, basic_id, qid, liftUpData, resData?.profileimage);
+          setLiftUpData(null);
+          if (currentQuestionIndex !== MCQsLength - 1) {
+            setCurrentQuestionIndex(currentQuestionIndex + 1);
+            setError(null)
+          } else {
+            navigation.navigate("ThankYouPage", { surveyid: surveyid });
+          }
+        }else{
+            setError("Please Select your answer");
+        }
       }
-    }else{
-      setError("Please Select your answer")
-    }
+      
+      if(Q_type == 2){
+        if (liftUpCheckData && (liftUpCheckData.length != 0)) {
+          liftUpCheckData.map((data) =>
+            PosData(resData?.id, basic_id, qid, data, resData?.profileimage)
+          );
+          setLiftUpCheckData(null);
+          if (currentQuestionIndex !== MCQsLength - 1) {
+            setCurrentQuestionIndex(currentQuestionIndex + 1);
+            setError(null)
+          } else {
+            navigation.navigate("ThankYouPage", { surveyid: surveyid });
+          }
+        }else{
+            setError("Please Select your answer");
+        }
+      }
 
-    if (liftUpData) {
-      PosData(result.id, basic_id, qid, liftUpData, result.profileimage);
-      setLiftUpData(null);
-      if (currentQuestionIndex !== MCQsLength - 1) {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
-      } else {
-        navigation.navigate("ThankYouPage", { surveyid: surveyid });
+      if(Q_type == 3){
+        if (liftUpData) {
+          PosData(resData?.id, basic_id, qid, liftUpData, resData?.profileimage);
+          setLiftUpData(null);
+          if (currentQuestionIndex !== MCQsLength - 1) {
+            setCurrentQuestionIndex(currentQuestionIndex + 1);
+            setError(null)
+          } else {
+            navigation.navigate("ThankYouPage", { surveyid: surveyid });
+          }
+        }else{
+            setError("Please type your answer");
+        }
       }
-    }else{
-      setError("Please type your answer");
-    }
+
+    })
   };
 
   const prevMcq = () => {
@@ -91,16 +111,8 @@ const SurveyMcq = ({ route }) => {
   };
 
   const PosData = async (id, basic_id, qid, opt_id, profileimage) => {
-    const postDetails = {
-      id: id,
-      basic_id: basic_id,
-      qid: qid,
-      opt_id: opt_id,
-      profileimage: profileimage,
-    };
-    // console.log('postDetails===',postDetails);
+    const postDetails = {id: id, basic_id: basic_id, qid: qid, opt_id: opt_id,profileimage: profileimage};
     const result = await dispatch(saveSurveyAnswers(postDetails));
-    // console.log('result===',result);
   };
 
 
@@ -134,7 +146,11 @@ const SurveyMcq = ({ route }) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.iconStyle}
-              onPress={() => nextMcq(allMCQs[currentQuestionIndex]?.basic_id, allMCQs[currentQuestionIndex]?.qid)} >
+              onPress={() => 
+                nextMcq(
+                  allMCQs[currentQuestionIndex]?.basic_id, 
+                  allMCQs[currentQuestionIndex]?.qid,
+                  allMCQs[currentQuestionIndex]?.question_type)} >
               <AntDesign name="rightcircle" size={32} color="#2C8892" />
             </TouchableOpacity>
           </View>
@@ -157,7 +173,6 @@ const SurveyMcq = ({ route }) => {
           liftUpData={liftUpData}
           currentIndex={currentQuestionIndex}
           allMCQs={allMCQs}
-          nextMcq={nextMcq}
           error={error}
         />
       )}
@@ -168,6 +183,7 @@ const SurveyMcq = ({ route }) => {
           currentIndex={currentQuestionIndex}
           allMCQs={allMCQs}
           error={error}
+          setError={setError}
         />
       )}
 

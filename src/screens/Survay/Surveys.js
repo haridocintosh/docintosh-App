@@ -8,8 +8,6 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import coupon from "../../assets/dr-icon/coupon1.png";
 import { Card } from "react-native-paper";
 import Svg, { Path } from "react-native-svg";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -18,39 +16,27 @@ import { survayList } from "../../../redux/reducers/survaySlice";
 import moment from "moment";
 import SweetAlert from "../SweetAlert/SweetAlert";
 import { styles } from "./SurvayStyle";
+import { getLocalData } from "../../apis/GetLocalData";
 
-const Surveys = ({ route }) => {
+const Surveys = ({ route,navigation }) => {
   const [survayData, setSurvayData] = useState([]);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [loader, setLoader] = useState(true);
 
-  const navigation = useNavigation();
   const dispatch = useDispatch();
 
   const recall = route?.params?.surveyid;
 
   const asyncFetchDailyData = async () => {
-    const jsonValue = await AsyncStorage.getItem("USER_INFO");
-    const data = await JSON.parse(jsonValue);
-    const result = JSON.parse(data)["data"];
-    fetchPostData(result.assoc_id, result.id);
+    navigation.setOptions({ title: `Surveys`});
+    getLocalData("USER_INFO").then(async (res)=>{
+      const resData = res?.data;
+      const postDetails = {speciality_id: null,city_id: null,assoc_id: resData?.assoc_id,earntype: 0,id: resData?.id};
+      const result = await dispatch(survayList(postDetails));
+      setSurvayData(result.payload);
+      setLoader(false);
+    })
   };
-
-  const fetchPostData = async (assoc_id, id) => {
-    const postDetails = {
-      speciality_id: null,
-      city_id: null,
-      assoc_id: assoc_id,
-      earntype: 0,
-      id: id,
-    };
-    const result = await dispatch(survayList(postDetails));
-    setSurvayData(result.payload);
-    setLoader(false)
-  };
-
-  // console.log("result.payload",survayData);
-
 
   const handleCardEntry = (value) => {
     // == 'No'

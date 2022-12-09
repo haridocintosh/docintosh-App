@@ -11,6 +11,7 @@ const EngageScreen = ({navigation}) => {
   })
 
 useEffect(() => {
+  navigation.setOptions({ title: 'Engage'});
   getLocalData('USER_INFO').then((res) => {
     const reData = res?.data;
     setuserdata(reData);

@@ -1,9 +1,12 @@
 import { View, Text,SafeAreaView,TouchableOpacity ,Modal} from 'react-native'
-import React,{ useState } from 'react';
+import React,{ useEffect } from 'react';
 import { styles } from './ReportPostStyles';
 import StepIndicator from 'react-native-step-indicator';
 
-const ReportTrack = ({route}) => {
+const ReportTrack = ({route,navigation}) => {
+    useEffect(()=>{
+        navigation.setOptions({ title: 'Report Post'});
+    },[])
 // const labels = ["Report Received","Under Review","Descision Delivered",];
 const customStyles = {
   stepIndicatorSize: 25,

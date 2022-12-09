@@ -7,9 +7,8 @@ import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
 import { navigationRef } from './src/navigation/RootNavigation';
 
-
 const App = () => {
-  LogBox.ignoreLogs(['Warning: ...','Require cycle:']); 
+  LogBox.ignoreLogs(['Warning: ...']); 
   LogBox.ignoreAllLogs();
 
 const [fontsLoaded] = useFonts({
@@ -19,9 +18,7 @@ const [fontsLoaded] = useFonts({
   "PlusJakartaSans-Bold": require("./src/assets/fonts/PlusJakartaSans-Bold.ttf"),
 });
 
-if (!fontsLoaded) {
-  return null;
-}
+if (!fontsLoaded) return null;
 
   return (
     <Provider store={store}>

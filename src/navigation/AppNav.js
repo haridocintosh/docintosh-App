@@ -26,6 +26,7 @@ import ContactScreen from '../screens/commonpage/ContactScreen';
 import HandleBack from './HandleBack';
 
 
+
 export default function AppNav() {
 const [loader, setLoader] = useState(false);
 const [defaultRoute, setDefaultRoute] = useState();
@@ -76,7 +77,7 @@ const handleMessage = () => {
             <Stack.Screen name="InvitePeers" component={InvitePeers} options={{ title: 'Invite Peers', headerShown: true, headerRight: () => (<Text onPress={() => navigation.navigate('Login')} style={{color:"#2376E5"}}>Skip</Text>)}}  />
             <Stack.Screen name="MobileScreen" component={MobileScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Register" component={RegisterScreen}  />
+            <Stack.Screen name="Register" component={RegisterScreen}  options={{ title: 'Register', headerShown: true}}/>
             <Stack.Screen name="OtpVerification" component={OtpVerification} options={{ title: 'Verification OTP', headerShown: true}} />
             <Stack.Screen name="DoctorOtp" component={DoctorOtp} options={{ title: 'Verification OTP', headerShown: true}} />  
             <Stack.Screen name="RegisterTwoScreen" component={RegisterTwoScreen} options={{ title: 'Register', headerShown: true}} />

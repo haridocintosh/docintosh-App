@@ -9,7 +9,7 @@ import { getLocalData } from '../apis/GetLocalData';
 
 
 
-const EditProfileScreen = () => {
+const EditProfileScreen = ({navigation}) => {
     // form validation start here
     const [userInfo, setUserInfo] = useState({
       email:'',
@@ -144,6 +144,7 @@ const EditProfileScreen = () => {
   };
 
   const asyncFetchDailyData = async () => {
+    navigation.setOptions({ title: 'Edit Profile'});
     getLocalData('USER_INFO').then((res) => {
       const reData = res?.data;
       setuserdata(reData);

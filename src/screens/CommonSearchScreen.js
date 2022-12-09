@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { View, Text ,useWindowDimensions,Image,SafeAreaView,ScrollView,Alert, Button,TouchableOpacity} from 'react-native'
 import { TabView, SceneMap } from 'react-native-tab-view'; 
 const styelcss = require('../assets/css/style');
@@ -9,6 +9,9 @@ const showAlert=()=>{
 
 const FirstRoute = () => {
   const navigation = useNavigation();
+  useEffect(() => {
+    navigation.setOptions({ title: 'Search' });
+  },[])
   return (
     
     <SafeAreaView style={styelcss.maindDivBannermcq}>

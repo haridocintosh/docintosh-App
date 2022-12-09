@@ -5,9 +5,10 @@ import { commentData ,deleteComment,getallcomment} from '../../../redux/reducers
 import { useDispatch, useSelector } from 'react-redux';
 import { styles } from './Homestyle';
 import { getLocalData } from '../../apis/GetLocalData';
+import { getCointransfer } from '../../../redux/reducers/postData';
 
 
-const CommentsScreen = ({route}) => {
+const CommentsScreen = ({route,navigation}) => {
   const  {post_id, comments_list} = route.params;
     const [profile, setProfile] = useState();
     const [text, onChangeText] = useState();
@@ -19,6 +20,7 @@ const CommentsScreen = ({route}) => {
     const dispatch = useDispatch();
 
     const getData = async() => {
+      navigation.setOptions({ title: 'Comments'});
       getLocalData('USER_INFO').then((res) => {
         const reData = res?.data;
         setUserId(reData);
@@ -34,6 +36,8 @@ const CommentsScreen = ({route}) => {
       const postDetails = {user_id:userId.id,post_id:post_id,postcomment:text}
       const sentResult = await dispatch(commentData(postDetails));
       console.log("sentResult", sentResult.payload);
+      const likeCounter = {senderId : 0,receiverId:userId.id,task:3}
+      const getlikeCounter = await dispatch(getCointransfer(likeCounter));
       getData();
       onChangeText()
     }
@@ -59,6 +63,8 @@ const CommentsScreen = ({route}) => {
       const DelDetails = {comment_id:postId}
       const deleteResult = await dispatch(deleteComment(DelDetails));
       console.log("deleteResult",deleteResult.payload);
+      const likeCounter = {senderId :userId.id,receiverId:0,task:14}
+      const getlikeCounter = await dispatch(getCointransfer(likeCounter));
       setModalVisible(false);
       getData();
     }
@@ -66,7 +72,6 @@ const CommentsScreen = ({route}) => {
     <View style={styles.commentContainer}>
       <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true} >
                { instData.length > 0 ? instData?.map((element, index)=>{
-                // console.log("element",element);
                   return(
                     <View style={styles.usersCommentContainer} key={index}>
                       <View style={styles.usersCommentPictureContainer}>

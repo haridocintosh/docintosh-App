@@ -15,17 +15,18 @@ import dcoin from "../../assets/dr-icon/dcoin.png";
 import tankyouCelebration from "../../assets/dr-icon/tankyouCelebration.png";
 import { Button } from "react-native-elements";
 import { Card } from "react-native-paper";
-import { useNavigation } from "@react-navigation/native";
 import ScratchOffer from "./ScratchOffer";
 import Lottie from 'lottie-react-native';
 import { styles } from "./SurvayStyle";
 import ThankYouFireBlast from '../../assets/intro/ThankYou_FireBlast.json'
 
-const ThankYouPage = ({ route }) => {
+const ThankYouPage = ({ route,navigation }) => {
   const [showOffer, setShowOffer] = useState(true);
-  const navigation = useNavigation();
   const { surveyid } = route.params;
-  // console.log("surveyid",surveyid);
+
+  useEffect(() =>{
+    navigation.setOptions({ title: `Surveys`});
+  },[])
 
   return (
     <SafeAreaView

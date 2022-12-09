@@ -23,7 +23,6 @@ import { useNavigation } from '@react-navigation/native';
 import QuizLevels from '../screens/QuizLevels/QuizLevels';
 import TermsAndCondition from '../screens/commonpage/TermsAndCondition';
 import ContactScreen from '../screens/commonpage/ContactScreen';
-import HomeScreen from '../screens/HomeScreen/HomeScreen';
 
 
 

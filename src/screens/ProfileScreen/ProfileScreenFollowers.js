@@ -1,10 +1,12 @@
 import { View, Text,SafeAreaView, ScrollView, StyleSheet, Image } from 'react-native'
-import React from 'react';
-import profileimg from '../../assets/images/p2.png';
+import React,{useEffect} from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { styles } from './profilestyle';
 
-const ProfileScreenFollowers = () => {
+const ProfileScreenFollowers = ({navigation}) => {
+   useEffect(() => {
+      navigation.setOptions({ title: 'Followers' });
+    },[])
   return (
     <SafeAreaView style={styles.Follwerscontainer}>
         <ScrollView

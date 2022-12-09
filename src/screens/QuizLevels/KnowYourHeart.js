@@ -4,12 +4,10 @@ import {
   Text,
   SafeAreaView,
   Image,
-  StyleSheet,
   ScrollView,
   ActivityIndicator,
   TouchableOpacity,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import beginnerBadge from "../../assets/dr-icon/beginnerBadge.png";
 import intermediateBadge from "../../assets/dr-icon/intermediateBadge.png";
 import ExpertBadge from "../../assets/dr-icon/ExpertBadge.png";
@@ -21,22 +19,20 @@ import goldCrown from "../../assets/dr-icon/gold-crown.png";
 import outoffWhiteBadge from "../../assets/dr-icon/outoffWhiteBadge.png";
 import whiteAccesstime from "../../assets/dr-icon/whiteAccesstime.png";
 import { Button } from "react-native-elements";
-import UserAvatar from "../../assets/images/p2.png";
 import { Card } from "react-native-paper";
 import axios from "axios";
 import { mainApi } from "../../apis/constant";
 import { styles } from "./QuizLevelsStyles";
-import { useFonts } from "expo-font";
 
-const KnowYourHeart = ({ route }) => {
+const KnowYourHeart = ({ route,navigation }) => {
   const { score, seconds ,TotalMcq} = route?.params;
 
   const [userData, setUserData] = useState([]);
   const [loader, setLoader] = useState(true);
   const [sliceData, setSliceData] = useState(10);
-  const navigation = useNavigation();
 
   const getLeaderboardData = () => {
+    navigation.setOptions({ title: 'Know Your Heart' });
     axios
       .get(`${mainApi.baseUrl}/ApiController/global_leaderboard`)
       .then((res) => {

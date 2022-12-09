@@ -11,9 +11,6 @@ import EngageNavigation from './EngageNavigation';
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
-    // Animated Tab Indicator...
-    const tabOffsetValue = useRef(new Animated.Value(0)).current;
-   // console.log(tabOffsetValue);
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({

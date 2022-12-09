@@ -1,11 +1,13 @@
 import { View, Text,SafeAreaView, ScrollView, StyleSheet, Image } from 'react-native'
-import React from 'react';
-import profileimg from '../../assets/images/p3.png';
+import React,{useEffect} from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { styles } from './profilestyle';
 
 
-const ProfileScreenFollowing = () => {
+const ProfileScreenFollowing = ({navigation}) => {
+   useEffect(() => {
+      navigation.setOptions({ title: 'Following' });
+    },[])
   return (
     <SafeAreaView style={styles.container}>
         <ScrollView

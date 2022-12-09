@@ -1,5 +1,5 @@
 import { View, Text,SafeAreaView,TouchableOpacity ,Modal} from 'react-native'
-import React,{ useState } from 'react'
+import React,{ useState,useEffect } from 'react'
 import { styles } from './ReportPostStyles';
 import {EvilIcons} from '@expo/vector-icons';
 
@@ -7,6 +7,10 @@ import {EvilIcons} from '@expo/vector-icons';
 const ReportPost = ({navigation}) => {
     const [reportSelect,setReportSelect] = useState();
     const [modalVisible, setModalVisible] = useState(false);
+
+    useEffect(()=>{
+      navigation.setOptions({ title: 'Report Post'});
+    },[])
 
     const handleSelect = (val) => {
         // console.log("val", val);

@@ -20,10 +20,7 @@ import moment from "moment";
 import { useIsFocused } from '@react-navigation/native';
 import OptionModal from './optionModal';
 import { getLocalData } from '../../apis/GetLocalData';
-
-
-
-
+import { getallLikes } from '../../../redux/reducers/publicReactionSlice';
 
 
 const HomeScreen = ({navigation})=> {
@@ -87,7 +84,6 @@ const handleOption = (post_id) => {
     getLocalData('USER_INFO').then( async (res) =>{
       const allCoins = { user_id:res.data.id};
       const allCoinsResult = await dispatch(getAllCoins(allCoins));
-      console.log("allCoinsResult",allCoinsResult.payload.coins);
       setAllcoins(allCoinsResult.payload.coins);
     });
   };
@@ -116,8 +112,9 @@ const handleOption = (post_id) => {
   }
 
   
-  const handlePost = (item) => {
-    navigation.navigate('PostsScreen', {item})
+  const handlePost = (singleItem) => {
+    console.log("item",singleItem);
+    navigation.navigate('PostsScreen', {singleItem})
   }
     const renderItem = ({item}) => {
       return(
@@ -125,25 +122,25 @@ const handleOption = (post_id) => {
           <View style={styles.userInfo}>
             <View  style={{flexDirection:'row',alignItems:'center'}}>
               <Image source={{uri:item.profileimage}} onPress={() => navigation.navigate('ProfileScreen2')} style={{width:38, height:38,marginRight:5,borderRadius:50}} />
-                <View >
-                  <Text style={{fontSize:14, fontWeight:'400', fontFamily:"Inter-Regular"}}>
-                    {item.utitle && item.utitle} {item.first_name && item.first_name} {item.last_name && item.last_name} 
-                    <MaterialCommunityIcons name="check-decagram" size={12} color="#0F9C69" />
+              <View >
+                <Text style={{fontSize:14, fontWeight:'400', fontFamily:"Inter-Regular"}}>
+                  {item.utitle && item.utitle} {item.first_name && item.first_name} {item.last_name && item.last_name} 
+                  <MaterialCommunityIcons name="check-decagram" size={12} color="#0F9C69" />
+                </Text>
+                <View style={{flexDirection:'row',alignItems:'center'}}>
+                  <Text style={{marginLeft:5}}>
+                    <FontAwesome5 name="users" size={17} color="#45B5C0" />  
                   </Text>
-                  <View style={{flexDirection:'row',alignItems:'center'}}>
-                      <Text style={{marginLeft:5}}>
-                        <FontAwesome5 name="users" size={17} color="#45B5C0" />  
-                      </Text>
-                      <View style={styles.dot}/>
-                      <Text style={{fontSize:12, fontWeight:'400',color:'#51668A', fontFamily:"Inter-Regular"}}>{item?.speciality}</Text>
-                      <Text style={{marginHorizontal:4}}>
-                        <Ionicons name="time-outline" size={19} color="#51668A" />  
-                      </Text>
-                      <Text style={{fontSize:12, paddingRight:5, fontWeight:'400',color:'#51668A',fontFamily:"Inter-Regular"}}>
-                        {moment(item?.created_at).fromNow()}
-                      </Text>
-                  </View>
-                </View> 
+                  <View style={styles.dot}/>
+                  <Text style={{fontSize:12, fontWeight:'400',color:'#51668A', fontFamily:"Inter-Regular"}}>{item?.speciality}</Text>
+                  <Text style={{marginHorizontal:4}}>
+                    <Ionicons name="time-outline" size={19} color="#51668A" />  
+                  </Text>
+                  <Text style={{fontSize:12, paddingRight:5, fontWeight:'400',color:'#51668A',fontFamily:"Inter-Regular"}}>
+                    {moment(item?.created_at).fromNow()}
+                  </Text>
+                </View>
+              </View> 
             </View>
             <View>
             <TouchableOpacity onPress={() => handleOption(item?.post_id)} style={{padding:10,right:-10,top:-10}}>
@@ -195,12 +192,12 @@ const handleOption = (post_id) => {
             </View>
 
             <Animated.View style={{flexDirection:'row'}} >
-              <View>
+              <TouchableOpacity>
                 <Feather name="search" size={24} color="#ffff" onPress={()=>{ navigation.navigate('CommonSearchScreen') }} />
-              </View>
-              <View style={{marginLeft:10}}>
+              </TouchableOpacity>
+              <TouchableOpacity style={{marginLeft:10}} onPress={() => navigation.navigate('BellNotification')}>
                 <MaterialCommunityIcons name="bell-ring-outline" size={24} color="#ffff" />
-              </View>
+              </TouchableOpacity>
             </Animated.View>
           </View>
 

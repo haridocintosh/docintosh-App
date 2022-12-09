@@ -17,6 +17,7 @@ import { quizPostData } from "../../../redux/reducers/mcqSlice";
 import { useFonts } from "expo-font";
 import {AntDesign} from 'react-native-vector-icons';
 import dcoin from "../../assets/dr-icon/dcoin.png";
+import { getLocalData } from "../../apis/GetLocalData";
 
 
 const QuizLevels = () => {
@@ -41,32 +42,16 @@ const QuizLevels = () => {
   // };
 
   const asyncFetchDailyData = async () => {
-    const jsonValue = await AsyncStorage.getItem("USER_INFO");
-    const data = await JSON.parse(jsonValue);
-    const result = JSON.parse(data)["data"];
-    fetchPostData(
-      result["role"],
-      result["city_id"],
-      result["assoc_id"],
-      result["circle_type"],
-      result["id"]
-    );
+    navigation.setOptions({ title: 'Quiz Levels' });
+    getLocalData("USER_INFO").then( async (res) => {
+      const resData = res?.data;
+      const postDetails = {role:resData?.role, city_id:resData?.city_id,assoc_id:resData?.assoc_id,circle_type:resData?.circle_type,userId:resData?.id};
+       const result = await dispatch(quizPostData(postDetails));
+      setQuizData(result.payload);
+      setLoader(false);
+    });
   };
 
-  const fetchPostData = async (
-    role,
-    city_id,
-    assoc_id,
-    circle_type,
-    userId
-  ) => {
-    const postDetails = { role, city_id, assoc_id, circle_type, userId };
-    const result = await dispatch(quizPostData(postDetails));
-    // console.log('jdjdbj',result.payload);
-    setQuizData(result.payload);
-    setLoader(false);
-  };
-  //console.log('checkData',Object.values(quizData))
   useEffect(() => {
     asyncFetchDailyData();
   }, []);

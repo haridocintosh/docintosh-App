@@ -1,10 +1,13 @@
-import React from 'react'
+import React,{ useEffect } from 'react'
 import { View, Text , StyleSheet} from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { FontAwesome5,FontAwesome,Feather,Ionicons ,Fontisto} from '@expo/vector-icons';
 
 
-const SettingsScreen = () => {
+const SettingsScreen = ({navigation}) => {
+  useEffect(()=>{
+    navigation.setOptions({ title: 'Comments'});
+  },[])
   return (
     <View style={{flex:1,padding:25}}>
       <View style={{flexDirection:'row'}}>

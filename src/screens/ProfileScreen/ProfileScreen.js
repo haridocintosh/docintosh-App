@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text ,Image,SafeAreaView, ScrollView, TouchableOpacity, Animated ,StyleSheet} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import icon from '../../assets/images/Vector.png';
 import { Card } from 'react-native-paper';
 import ProfileScreenPost from './ProfileScreenPost';
@@ -8,8 +7,7 @@ import { styles } from './profilestyle';
 import { getLocalData } from '../../apis/GetLocalData';
 
 
-const ProfileScreen = () => {
-  const navigation = useNavigation();
+const ProfileScreen = ({navigation}) => {
   const [userdata,setuserdata]=useState({
     fullname : "",
     profile:"",
@@ -17,6 +15,7 @@ const ProfileScreen = () => {
   })
 
   const asyncFetchDailyData = async () => {
+    navigation.setOptions({ title: 'Profile'});
     getLocalData('USER_INFO').then((res) => {
       const reData = res?.data;
       setUserId(reData);

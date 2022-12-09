@@ -23,7 +23,7 @@ const optionModal = ({modalVisible,id}) => {
 
   // console.log("userId",userId?.id);
   const handleReport = () => {
-    navigation.navigate('ReportPost')
+    navigation.navigate('ReportPost');
   }
   return (
     <>

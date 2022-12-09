@@ -2,16 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, ScrollView,Image, ActivityIndicator,Platform,Linking } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import * as Contacts from 'expo-contacts';
-import { useFonts } from 'expo-font';
-import { useNavigation } from '@react-navigation/native';
-// import Checkbox from 'expo-checkbox';
 import CheckBox from "react-native-check-box";
 const styelcss = require('../assets/css/style');
 
 
-export default function ContactPermission() {
-
-  const navigation = useNavigation();
+export default function ContactPermission({navigation}) {
   const [contactList, setContact]= useState([]);
   const [isChecked, setisChecked] = useState(false);
   // const [contactData, setcontactData] = useState('');
@@ -58,6 +53,7 @@ export default function ContactPermission() {
   }
 
   useEffect(() => {
+    navigation.setOptions({ title: 'Invite Peers'});
     async function getPrermission(){
       //setLoading(true);
       const { status } = await Contacts.requestPermissionsAsync();

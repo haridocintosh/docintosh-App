@@ -1,13 +1,11 @@
-import React, {useState} from 'react'
+import React, {useState,useEffect} from 'react'
 import DropDownPicker from 'react-native-dropdown-picker';
 import { View, Text,Image,
   SafeAreaView,ScrollView,StyleSheet } from 'react-native'
  import {Button, Input  } from 'react-native-elements';
-import { useNavigation } from '@react-navigation/native';
 
 
-const SentimentixScreen = () => {
-    const navigation = useNavigation();
+const SentimentixScreen = ({navigation}) => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(['italy', 'spain', 'barcelona', 'finland']);
     const [items, setItems] = useState([
@@ -20,6 +18,10 @@ const SentimentixScreen = () => {
   
       {label: 'Finland', value: 'finland'}
     ]);
+
+    useEffect(() => {
+      navigation.setOptions({ title: 'Sentimetrix'});
+    },[])
 
   return (
     <SafeAreaView style={{flex: 1,}}>
