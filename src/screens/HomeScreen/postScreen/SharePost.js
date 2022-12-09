@@ -17,8 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 import { getMycircle } from "../../../../redux/reducers/postData";
 import { mainApi } from "../../../apis/constant";
 import { getLocalData } from "../../../apis/GetLocalData";
-
-
+import { coinTransfer } from "../../../../redux/reducers/coinSlice";
 
 
 const  Sharepost = () => {
@@ -207,26 +206,32 @@ const publishCheck1 = (e, text)=>{
 
 
   const handleStudentSubmit = async() =>{
-  // console.log("post",post);
     if(post.publishto ==''){
-      Toast.show('Please select Publish to');
+      Toast.show('Please Select Publish to');
     }else if(!post.description){
       Toast.show("Please Write Something About Your Post!!!!!!!");
     }else if(!post.postType){
-      Toast.show("Please select PostType");
+      Toast.show("Please Select PostType");
     }else{
       const uploadData = {userdata,post};
     
       console.log("uploadData",uploadData);
     
       setloader(true);
-     const result = await dispatch(postCreate(uploadData));
-    //  console.log("result",result);
-         if(result.payload.status == 'Success'){
+      const result = await dispatch(postCreate(uploadData));
+      console.log("result",result);
+        if(result.payload.status == 'Success'){
           setloader(false);
-           Toast.show(result.payload.message);
-           navigation.navigate('HomeScreen')
-          // setPost('');
+          Toast.show(result.payload.message);
+          //  navigation.navigate('HomeScreen')
+          const coinDetails = {task : 4, receiverId:userdata.id } 
+          console.log("checkSharepostCoins", coinDetails);
+          const coinResult  = await dispatch(coinTransfer(coinDetails));
+          console.log(coinResult.payload)
+          if(coinResult.payload.status == 'Success')
+          {
+              navigation.navigate('HomeScreen');
+          }
         }
         setloader(false);
       }
@@ -272,7 +277,6 @@ const publishCheck1 = (e, text)=>{
   useEffect(() => {
     getLocalData('USER_INFO').then((res) => {
       const reData = res?.data;
-      setUserId(reData);
       setuserdata({...userdata, 
         fullname: `${reData?.first_name} ${reData?.last_name}`,
         profile: reData?.profileimage,
@@ -339,7 +343,7 @@ setSpecialNames(specialityName)
         <View  style={{flexDirection:'row'}}>
           <Image source={{uri:userdata.profile}} style={styles.imageProfile}/>
           <View style={{justifyContent:'center'}}>
-            <Text style={styles.userName}>{userdata?((userdata.role<='4')?'Dr.':''):''} {userdata['fullname']} <MaterialCommunityIcons name="check-decagram" size={12} color="#0F9C69" /></Text>
+            <Text style={styles.userName}>{userdata?((userdata.role<='4')?'Dr.':''):''} {userdata?.fullname} <MaterialCommunityIcons name="check-decagram" size={12} color="#0F9C69" /></Text>
             <View style={{marginTop:5,}} >
               <TouchableOpacity  onPress={handlePresentModalSecond} style={{flexDirection:'row',alignItems:'center'}}> 
                 <Ionicons name="md-earth" size={13} color="#45B5C0" />  

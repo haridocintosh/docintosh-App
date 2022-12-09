@@ -155,9 +155,13 @@ const handleOption = (post_id) => {
             </View>
           </View>
 
-          <View style={item?.ptitle &&{ flexDirection:'row',paddingVertical:10}}>
+          <View style={item?.description &&{ flexDirection:'row',paddingVertical:10}}>
             <Text style={{color:'#51668A',fontFamily:"Inter-Regular" }}>
-            {item?.ptitle }
+            {/* {item?.description } */}
+
+          {item.description.replace(/<[^>]+>/g, '')}
+
+            
             </Text>
           </View>
 
