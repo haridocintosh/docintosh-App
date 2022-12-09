@@ -35,16 +35,13 @@ const SelectInterest = ({route}) => {
     let copy=[...selectitem];
     copy =[...copy,spl]
    setselectitem(copy)
-   //console.log('selectarray', selectitem);
   const newItem = filteredDataSource.map((val)=>{
-    //console.log(item.speciality_id);
     if(val.speciality_id===item.speciality_id){
       return {...val, isSelected:!val.isSelected }
     }else{
       return val
     }
   })
-  //console.log("dsandsjdnk",newItem);
   setFilteredDataSource(newItem);
 
   var array = [...selectitem]; // make a separate copy of the array
@@ -52,7 +49,6 @@ const SelectInterest = ({route}) => {
     if(index !== -1) {
       array.splice(index, 1);
       setselectitem(array);
-     // console.log('deletearray',selectitem);
     }
     fetchPostData(spl)
   };
@@ -60,9 +56,6 @@ const SelectInterest = ({route}) => {
   const fetchPostData = async (speciality_id)=>{
     const postDetails = {speciality_id:speciality_id,id:user_id}
     const result = await dispatch(addCircle(postDetails));
-    console.log(result.payload);
-    //const data = await result.payload;
-    //setAllMCQs(data);
  }
   
   useEffect(() => {

@@ -32,9 +32,7 @@ const RegisterTwoScreen = ({route}) => {
 const navigation  = useNavigation();
 
 const dispatch    = useDispatch();
-  //console.log(route.params);
   const {user_id,fullname,role} = route.params;
-  //const fullname="gagan";
   const [isOpen, setIsOpen]     = useState(false);
   const bottomSheetModalRef       = useRef(null);
   const bottomSheetModalRefSecond = useRef(null);
@@ -304,14 +302,11 @@ useEffect(()=>{
       setsubmitbtn(true);
       setloader(true);
       const result = await dispatch(userRegisterSecond(register));
-      console.log('Registertkn',result);
       Toast.show(result.payload.message);
         if(result.payload.status == 'Success'){
           setloader(false);
-          console.log(result.payload);
           const coinDetails = {task : 1, receiverId:result.payload.user_id } 
           const coinResult  = await dispatch(coinTransfer(coinDetails));
-          //console.log(coinResult.payload)
           if(coinResult.payload.status == 'Success'){
             setIsModalVisible(true);
             setTimeout(() => {

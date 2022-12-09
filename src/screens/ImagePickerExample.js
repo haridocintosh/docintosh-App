@@ -9,9 +9,7 @@ export default function App() {
 
   const openPicker = async () => {
     try {
-      console.log('openmultipleImage');
       const response = await MultipleImagePicker.openPicker();
-      console.log('response: ', response);
       setImages(response);
     } catch (e) {
       console.log(e.code, e.message);

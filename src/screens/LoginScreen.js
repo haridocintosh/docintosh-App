@@ -51,7 +51,6 @@ const LoginScreen = () => {
 
     register.email = register.email? register.email : datarm?.data.email;
     register.password = register.password ? register.password :datarm?.data.password ;
-    //console.log("line55", register);
     if(register.email !== "" &&  register.password !== "" && register.email !== undefined &&  register.password !== undefined){
       setloader(true)
       const token = await dispatch(userLogin(register));

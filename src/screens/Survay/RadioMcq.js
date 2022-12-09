@@ -11,9 +11,8 @@ import { Ionicons } from '@expo/vector-icons';
 const RadioMcq = ({ setLiftUpData, currentIndex, allMCQs, error }) => {
   const [optId, setOptId] = useState(null);
 
-  const validateAnswer = async (ans, basic_id, qid) => {
+  const validateAnswer = async (ans) => {
     setLiftUpData(ans.opt_id);
-    console.log("ans.opt_id", ans.opt_id);
     setOptId(ans.opt_id);
   };
   return (

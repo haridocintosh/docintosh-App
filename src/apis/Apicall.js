@@ -8,60 +8,17 @@ const storeData = async (key,value) => {
       const jsonValue = JSON.stringify(value)
       await AsyncStorage.setItem(key, jsonValue)
     } catch (e) {
-      // saving error
+      console.log(e);
     }
 }
 
 const singlestoreData = async (key,value) => {
   try {
-   // const jsonValue = JSON.stringify(value)
-  //  console.log(key,value);
     await AsyncStorage.setItem(key, value)
   }catch (e) {
-    // saving error
+    console.log(e);
   }
 }
-
-
-
-// const getLocalData = async (key) => {
-//     try {
-//       const jsonValue = await AsyncStorage.getItem(key);
-//       setdata(jsonValue != null ? JSON.parse(jsonValue) : null)
-//     } catch(e) {
-//      console.log(e)
-//     }
-// }
-
-
-
-//  function quickloginnotworking(email,mobile_no) {
-//     fetch(`${mainApi.baseUrl}/ApiController/loginwithotp`, {
-//         method: 'POST',
-//         body: JSON.stringify({
-//             email: email,
-//             mobile_no: mobile_no,
-//           }),
-//           headers: {
-//               "Content-type": "application/json; charset=UTF-8"
-//           }
-//         })
-//         .then(response =>response.json())
-//         .then((result)=>{
-//             console.log(result);
-//             if(result["status"]=='Success') {
-//                 storeData('user_id',result["userid"])  
-//              //  console.log(getData('user_id'))
-//             // navigation.navigate('OtpVerification');
-//                 Toast.show("Please Check Your OTP")
-//             }else{
-//                 Toast.show(result["message"])
-//             }
-//         })
-//         .catch((error) => {
-//             console.error(error);
-//         });
-// }
 
 
 const login = (email,password) =>
@@ -77,9 +34,7 @@ new Promise((resolve, reject) => {
     responseType: 'json',
   })
     .then(res => {
-     // console.log(res);
       if(res.status === 200) {
-        console.log(res.data);
         storeData('USER_INFO',JSON.stringify({
           login:true,
           data:res.data["session_data"]
@@ -108,7 +63,6 @@ new Promise((resolve, reject) => {
       responseType: 'json',
     })
       .then(res => {
-       // console.log(res);
         if(res.status === 200) {
           resolve(res.data);
           Toast.show(res.data["message"])
@@ -135,7 +89,6 @@ const verifyOtp = (otp,user_id) =>
     })
       .then(res => {
         if(res.status === 200) {
-         console.log(res.data);
         storeData('USER_INFO',JSON.stringify({
           login:true,
           data:res.data["session_data"]
@@ -164,7 +117,6 @@ const verifyOtp = (otp,user_id) =>
     })
       .then(res => {
         if(res.status === 200) {
-          console.log(res.data);
           resolve(res.data);
           if(res.data["message"])
           Toast.show(res.data["message"])
@@ -176,60 +128,6 @@ const verifyOtp = (otp,user_id) =>
       });
   })
   
- 
- 
-  const mobile_check= (e)=>{
-    // fetch(`${mainApi.baseUrl}/ApiController/mobile_check`, {
-    //   method: 'POST',
-    //   body: JSON.stringify({
-    //     mobile: e
-    //     }),
-    //     headers: {
-    //         "Content-type": "application/json; charset=UTF-8"
-    //     }
-    //   })
-    //   .then(response => response.json())
-    //   .then((json) => {
-    //       if (json["status_code"]=='Exists') {
-    //         seterr(json["message"])
-    //       }else{
-    //         setphone(e);
-    //          seterr('');
-    //       }
-    //   })
-    //   .catch((error) => {
-    //       console.error(error);
-    //   });
-
-
-    // ==================email===========
-
-    // {
-    //   fetch(`${mainApi.baseUrl}/ApiController/email_check`, {
-    //     method: 'POST',
-    //     body: JSON.stringify({
-    //         email: e
-    //       }),
-    //       headers: {
-    //           "Content-type": "application/json; charset=UTF-8"
-    //       }
-    //     })
-    //     .then(response => response.json())
-    //     .then((json) => {
-    //         if (json["status_code"]=='Exists') {
-    //           seterr(json["message"])
-    //         }else{
-    //           setemail(e);
-    //            seterr('');
-    //         }
-    //     })
-    //     .catch((error) => {
-    //         console.error(error);
-    //     });
-    // }
-  }
-
-
 
   const forgotverifyOtp = (otp,user_id) =>
   new Promise((resolve, reject) => {
@@ -245,7 +143,6 @@ const verifyOtp = (otp,user_id) =>
     })
       .then(res => {
         if(res.status === 200) {
-         console.log(res.data); 
         resolve(res.data);
         Toast.show('OTP Verify Successfully')
         } else reject(res);

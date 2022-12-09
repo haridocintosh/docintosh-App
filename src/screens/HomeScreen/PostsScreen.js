@@ -14,10 +14,6 @@ const PostsScreen = ({route}) => {
     const [optionModal, setOptionModal]   = useState(false);
     const { singleItem } = route?.params;
     const navigation = useNavigation();
-    console.log("singleItem",singleItem);
-    
-    // const {allPost} = route?.params;
-
 
     const handleOption = (post_id) => {
       setPostId(post_id);

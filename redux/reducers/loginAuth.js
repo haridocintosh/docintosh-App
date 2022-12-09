@@ -13,8 +13,6 @@ export const userLogin = createAsyncThunk("user/login", async(loginData)=>{
             body : JSON.stringify(loginData)
         });
         const userresult=  await responce.json();
-     //   console.log('slice',userresult);
-        //result.data.token;
         return userresult
     }
     catch(e){
@@ -32,8 +30,6 @@ export const userRegisterOne = createAsyncThunk("user/register", async(regData)=
             body : JSON.stringify(regData)
         });
         const result=  await responce.json();
-        console.log('registerSlice',result);
-        //result.data.token;
         return result
     }
     catch(e){
@@ -51,7 +47,6 @@ export const userRegisterSecond = createAsyncThunk("user/regSecond", async(regDa
             body : JSON.stringify(regData)
         });
         const result=  await responce.json();
-        console.log('registerSecondSlice',result);
         return result
     }
     catch(e){
@@ -69,7 +64,6 @@ export const checkEmail = createAsyncThunk("user/email_check", async(regData)=>{
             body : JSON.stringify(regData)
         });
         const result=  await responce.json();
-       // console.log('emailCheck',result);
         return result
     }
     catch(e){
@@ -98,7 +92,6 @@ export const checkMobile = createAsyncThunk("user/check_mobile", async(regData)=
 
 export const resendOTP = createAsyncThunk("user/resendOTP", async(regData)=>{
     try{
-        console.log(regData);
        const responce = await fetch(`${mainApi.baseUrl}/ApiController/loginwithotp`, {
             method : 'POST',
             headers:{
@@ -107,7 +100,6 @@ export const resendOTP = createAsyncThunk("user/resendOTP", async(regData)=>{
             body : JSON.stringify(regData)
         });
         const result = await responce.json();
-        console.log("checkresend",result);
         return result
     }catch(e){
        console.log(e);
@@ -129,18 +121,10 @@ export const loginAuth = createSlice({
     },
     reducers : {
         logout : (currentState)=>{
-            console.log(currentState);
             currentState.loading    = false;
             currentState.usertoken  = null;
             currentState.loading    = false;
         },
-        // getUserInfo :  (currentState)=>{
-        //   //  currentState.userName =  AsyncStorage.getItem('USER_INFO');
-        //     // console.log("reactAuthData",jsonValue);
-        //     // const data=await JSON.parse(jsonValue);
-        //     //  currentState.userName=JSON.parse(data)['data'];
-        // },
-        
     },
     extraReducers :{
        [userLogin.pending] : (state)=>
@@ -185,7 +169,7 @@ export const loginAuth = createSlice({
             state.loading =  true
         }, 
         [userRegisterSecond.fulfilled] : (state, action)=>
-        {  // console.log(fulfilled);
+        {  
             state.loading       = false,
             state.isLoggedIn    = true
             state.registerTwoData  = action.payload;

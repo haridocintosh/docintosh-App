@@ -41,18 +41,13 @@ import { View,
      const resendUserOtp = async() =>{ 
        setCounter(30);
         const result = await dispatch(resendOTP({email:email, mobile_no:mobile_no}));
-        console.log('resendOtp',result.payload);
         Toast.show(result.payload.message);
-        // setLoader(false);
      }
  
  
      const submitOtp = async()=>{
        if(otpInput !== ""){
-         console.log(otpInput);
-         console.log(user_id);
          const result = await dispatch(doctorOtp({user_id:user_id, otp:otpInput, user_role:role}));
-        //  console.log('doctorOtp',result);
          Toast.show(result.payload.message);
          if((result.payload.role == '4') && (result.payload.status == 'Success')){
             navigation.navigate('RegisterTwoScreen', {
@@ -94,7 +89,6 @@ import { View,
         id:user_id
       }))
       Toast.show(token.payload.message);
-      console.log(token.payload.status);
       if(token.payload.status == 'Success'){
         navigation.navigate('DoctorOtp',{
           mobile_no: token.payload.userdetails,

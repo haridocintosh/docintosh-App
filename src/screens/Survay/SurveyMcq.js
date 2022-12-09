@@ -44,14 +44,12 @@ const SurveyMcq = ({ route }) => {
   };
 
   const MCQsLength = parseInt(allMCQs.length);
-  // console.log("allMCQs",allMCQs[currentQuestionIndex]?.question_type);
   //-----------------save survay ans--------------------------
   
 
   const nextMcq = async (basic_id, qid, Q_type) => {
     getLocalData("USER_INFO").then((res) =>{
       const resData = res?.data;
-      console.log("Q_type",Q_type);
 
       if(Q_type == 1){
         if (liftUpData) {

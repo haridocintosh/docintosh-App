@@ -83,7 +83,6 @@ const QuizLevels = () => {
 
         {quizData &&
           quizData?.map((user, index) => {
-            // console.log("user",user);
             return (
               <TouchableOpacity
                 onPress={() => McqDataHandle(user?.basic_id, user?.title)}

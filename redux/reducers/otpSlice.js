@@ -11,8 +11,6 @@ export const doctorOtp = createAsyncThunk("doctor/otp", async(doctorOtp)=>{
             body : JSON.stringify(doctorOtp)
         });
         const result =  await responce.json();
-        // console.log('sliceTrARRA',result);
-        //result.data.token;
         return result
     }
     catch(e){
@@ -31,7 +29,6 @@ export const userIdupdate = createAsyncThunk("user/otp", async(userUpdate)=>{
             body : JSON.stringify(userUpdate)
         });
         const result =  await responce.json();
-        console.log('resultuserUpdate',result);
         return result
     }
     catch(e){
@@ -53,17 +50,15 @@ export const otpSlice = createSlice({
     extraReducers :{
         [doctorOtp.pending] : (state)=>
         {   
-            console.log("pending");
             state.loading =  true;
         }, 
         [doctorOtp.fulfilled] : (state, action)=>
-        {   console.log('ftaamdsmdks', action);  
+        {   
             state.loading =  false;
             state.doctorOtp = action.payload;
         }, 
         [doctorOtp.rejected] : (state)=>
         {
-            console.log("rejected");
             state.loading = false;
             state.error = true
         }, 

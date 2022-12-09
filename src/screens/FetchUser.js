@@ -29,9 +29,6 @@ export const FetchUser = ()=>{
          <Text> dasndnjassdj</Text>  
          <Text> dasndnjassdj</Text>  
         <CustomButton style={{   }} label={"getuserData"} onPress={() => dispatch(getAllUsers())} />
-
-        <Text>{console.log("test",userAllData)}</Text>  
-         
         <Text>{loading?"loading....":""}</Text> 
          {
         userAllData.map((element,index) => {

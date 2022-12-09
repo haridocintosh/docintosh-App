@@ -19,7 +19,6 @@ export const quizPostData = createAsyncThunk("getAllPost", async (data)=>{
             })
          });
         const result=  await responce.json();
-    //   console.log('resultttdaata',result);
         return result;
      }
      catch(e){
@@ -27,7 +26,6 @@ export const quizPostData = createAsyncThunk("getAllPost", async (data)=>{
      }
 })
 export const GetQuizQuestions = createAsyncThunk("getQuizQuestions", async (data)=>{
-//    console.log('GetQuizQuestions11',data);
     try{
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/getQuizQuestions`, {
             method : 'POST',
@@ -37,7 +35,6 @@ export const GetQuizQuestions = createAsyncThunk("getQuizQuestions", async (data
             body :JSON.stringify(data)
          });
         const result=  await responce.json();
-     //   console.log('resultttdaata',result);
         return result;
      }
      catch(e){
@@ -46,7 +43,6 @@ export const GetQuizQuestions = createAsyncThunk("getQuizQuestions", async (data
 });
 
 export const saveQuizAnswer = createAsyncThunk("saveQuizAnswer", async (data)=>{
-//    console.log('saveQuizAnswer',data);
     try{
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/saveQuizAnswer`, {
             method : 'POST',
@@ -56,7 +52,6 @@ export const saveQuizAnswer = createAsyncThunk("saveQuizAnswer", async (data)=>{
             body :JSON.stringify(data)
          });
         const result=  await responce.json();
-     //   console.log('resultttdaata',result);
         return result;
      }
      catch(e){

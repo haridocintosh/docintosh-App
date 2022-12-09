@@ -15,7 +15,6 @@ const PublicReactions = ({item,getStorageData}) => {
  const [heart,setHeart] = useState(item?.post_like_status?.[0].flag == 1);
  const [result,setResult] = useState();
 
- console.log("item",item);
  const dispatch = useDispatch();
  const navigation = useNavigation();
 
@@ -27,7 +26,6 @@ const PublicReactions = ({item,getStorageData}) => {
       setAllLikeData(getallLikesData.payload);
     })
   }
- // console.log("item?.post_like_status------------",item.post_id);
 
  const handleLikes = async (post_id) => {
   const postDetails = {user_id:result.id, post_id:post_id}

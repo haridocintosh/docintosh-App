@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { mainApi } from "../../src/apis/constant";
 
 export const survayList = createAsyncThunk("getSurveyList", async (data) => {
-  //  console.log("survayListDataaaa",data);
   try {
     const responce = await fetch(
       `${mainApi.baseUrl}/ApiController/getSurveyList`,
@@ -15,7 +14,6 @@ export const survayList = createAsyncThunk("getSurveyList", async (data) => {
       }
     );
     const surveyDatalist = await responce.json();
-    // console.log('resultttdaataxgdgfhfhf',result);
     return surveyDatalist;
   } catch (e) {
     console.log(e);
@@ -25,7 +23,6 @@ export const survayList = createAsyncThunk("getSurveyList", async (data) => {
 export const getSurveyQuestions = createAsyncThunk(
   "getSurveyQuestions",
   async (data) => {
-    //  console.log("survayListDataaaa",data);
     try {
       const responce = await fetch(
         `${mainApi.baseUrl}/ApiController/getSurveyQuestions`,
@@ -38,7 +35,6 @@ export const getSurveyQuestions = createAsyncThunk(
         }
       );
       const result = await responce.json();
-      // console.log('getSurveyQuestions',result);
       return result;
     } catch (e) {
       console.log(e);
@@ -48,7 +44,6 @@ export const getSurveyQuestions = createAsyncThunk(
 export const saveSurveyAnswers = createAsyncThunk(
   "saveSurveyAnswers",
   async (data) => {
-    //  console.log("saveSurveyAnswers",data);
     try {
       const responce = await fetch(
         `${mainApi.baseUrl}/ApiController/saveSurveyAnswers`,
@@ -61,7 +56,6 @@ export const saveSurveyAnswers = createAsyncThunk(
         }
       );
       const result = await responce.json();
-      // console.log('saveSurveyAnswers',result);
       return result;
     } catch (e) {
       console.log(e);

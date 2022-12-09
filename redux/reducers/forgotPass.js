@@ -50,7 +50,6 @@ export const forgotPasswordSlice = createSlice({
     extraReducers :{
        [forgotPassword_.pending] : (state)=>
         {
-            console.log("pending")
             state.loading =  true;
         }, 
         [forgotPassword_.fulfilled] : (state, action)=>

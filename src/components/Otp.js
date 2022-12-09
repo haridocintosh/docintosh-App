@@ -15,8 +15,6 @@ const Otp = () => {
           textInputStyle={styles.roundedTextInput}
           inputCount={4}
         />
-        <Text>{ console.log(otpInput) }</Text>
-   
     </View>
   )
 }
