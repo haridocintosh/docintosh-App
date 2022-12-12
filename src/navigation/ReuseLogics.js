@@ -5,7 +5,7 @@ import { Text } from "react-native";
 const handleMessage = () => {
   alert("Successfully completed registration please login")
   setTimeout(() => {
-    navigation.navigate('Login')
+//     navigation.navigate('Login');
    }, 2000);
 }
 

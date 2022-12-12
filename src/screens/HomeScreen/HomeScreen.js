@@ -114,7 +114,6 @@ const handleOption = (post_id) => {
 
   
   const handlePost = (singleItem) => {
-    //console.log("item",singleItem);
     navigation.navigate('PostsScreen', {singleItem})
   }
     const renderItem = ({item}) => {
