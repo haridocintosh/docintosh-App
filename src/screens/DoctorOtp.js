@@ -42,7 +42,6 @@ import { View,
         Toast.show(result.payload.message);
      }
  
- 
      const submitOtp = async()=>{
        if(otpInput !== ""){
          const result = await dispatch(doctorOtp({user_id:user_id, otp:otpInput, user_role:role}));
@@ -61,9 +60,7 @@ import { View,
               role      : result.payload.role,
           }) 
          }
-         
         }
-         
        }else{
            setmessage('Please Enter Otp');
        }

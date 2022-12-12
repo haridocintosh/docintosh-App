@@ -291,7 +291,12 @@ const form_submit = async() =>{
             
        <View style={{ display:"flex" ,flexDirection:"row",alignItems:'center', flexDirection:"column"}}>
 
-        <TextInput style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular',}]} placeholderTextColor='#687690' placeholder='First name'  onChangeText={(e)=>{firstName(e);}}/>
+        <TextInput style={[styelcss.customInputVerifyFullMobile,{fontFamily:'PlusJakartaSans-Regular'}]} 
+            placeholderTextColor='#687690' 
+            placeholder='First name'  
+            onChangeText={(e)=> firstName(e)}
+            // autoFocus={true}
+        />
         <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{fn}</Text>
 
         <TextInput style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular',}]}  placeholderTextColor='#687690' placeholder='Last Name' 
@@ -303,7 +308,7 @@ const form_submit = async() =>{
           <View>
             <RadioButton 
             value="male" status={ checkgender === 'male' ? 'checked' : 'unchecked' }
-            onPress={() => {setcheckgender('male'); selectedgender('male')}} />
+            onPress={() => {setcheckgender('male'); selectedgender('male')}}/>
             <View  style={{marginTop:-56,zIndex:-1, alignSelf:'center',
             alignItems:'center', paddingVertical:10,
             flexDirection:'row',backgroundColor:'#fff', width:110, borderRadius:20/2}}>
@@ -317,7 +322,6 @@ const form_submit = async() =>{
               status={ checkgender === 'female' ? 'checked' : 'unchecked' }
               onPress={() => {setcheckgender('female'); selectedgender('female')}}
             />
-
           <View  style={{marginTop:-56,zIndex:-1,alignSelf:'center', alignItems:'center', paddingVertical:10, flexDirection:'row', backgroundColor:'#fff', width:110,height:46, borderRadius:20/2}} ><View style={{marginRight:20}}></View><MaterialCommunityIcons name="gender-female" size={24} color="#51668A" /><Text style={{color:'#51668A',fontSize:16, fontWeight:'400'}}>Female</Text></View>
         </View>
         </View>

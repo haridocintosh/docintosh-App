@@ -8,7 +8,8 @@ import {
   Image,
   TextInput, Pressable,
   ActivityIndicator,
-  Dimensions
+  PermissionsAndroid,
+  Platform
 } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -26,6 +27,7 @@ import Toast from 'react-native-simple-toast';
 import Lottie from 'lottie-react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { coinTransfer } from '../../redux/reducers/coinSlice';
+
 
 
 const RegisterStudentScreen = ({route}) => {
@@ -131,24 +133,36 @@ const setCollege= (e) =>{
 //Image Picker//
 
 const pickImage = async (arg) => {
-  if(arg==1){
-    var result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
-      aspect: [4, 3],
-      quality: 1,
-    });
-  }else{
-    var result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
-      aspect: [4, 3],
-      quality: 1,
-    });
+  if (Platform.OS === 'android'){
+    const { granted } = await ImagePicker.requestCameraPermissionsAsync();
+
+      if (granted === true) {
+        if(arg==1){
+          var res = await ImagePicker.launchCameraAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: false,
+            aspect: [4, 3],
+            quality: 1,
+          });
+        }else{
+          var res = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: false,
+            aspect: [4, 3],
+            quality: 1,
+          });
+        }
+      } else {
+        console.log('Camera permission denied');
+        Toast.show('Camera permission denied');
+      }
+  } else {
+    return true;
   }
  
-  let localUri = result.uri;
-  setimgurl(localUri)
+  let localUri = res.uri;console.log("localUri",localUri);
+
+  setimgurl(localUri);
       let filename = localUri.split('/').pop();
       // Infer the type of the image
       let match = /\.(\w+)$/.exec(filename);
@@ -177,28 +191,35 @@ const pickImage = async (arg) => {
       mrnproof: result1,
     });
     setmrnproofErr('')
-
 };
 
 
 const pickprofile = async (arg) => {
-  if(arg==1){
-    var result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
-      aspect: [2, 2],
-      quality: 0.5,
-    });
-  }else{
-    var result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
-      aspect: [2, 2],
-      quality: 0.5,
-    });
-  }
+    const { granted } = await ImagePicker.requestCameraPermissionsAsync();
+    if (granted === true) {
+      if(arg==1){
+        var result = await ImagePicker.launchCameraAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: false,
+          aspect: [4, 3],
+          quality: 1,
+        });
+      }else{
+        var result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: false,
+          aspect: [4, 3],
+          quality: 1,
+        });
+      }
+    } else {
+      console.log('Camera permission denied');
+      Toast.show('Camera permission denied');
+    }
+
  
   let localUri = result.uri;
+  console.log("localUri",localUri);
   setprofileurl(localUri)
       let filename = localUri.split('/').pop();
    
@@ -232,7 +253,6 @@ const pickprofile = async (arg) => {
     });
     setprofilErr('')
 };
-
 
 const form_submit = async() =>{ 
   if(!register.pincode){

@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   Image,
   ActivityIndicator,
+  PermissionsAndroid,
+  Platform,
   TextInput,Pressable} from 'react-native'
 import React, {useEffect, useState, useRef, useCallback} from 'react'
 import { useDispatch } from 'react-redux';
@@ -32,7 +34,8 @@ const RegisterTwoScreen = ({route}) => {
 const navigation  = useNavigation();
 
 const dispatch    = useDispatch();
-  const {user_id,fullname,role} = route.params;
+const fullname = "taara";
+ // const {user_id,fullname,role} = route.params;
   const [isOpen, setIsOpen]     = useState(false);
   const bottomSheetModalRef       = useRef(null);
   const bottomSheetModalRefSecond = useRef(null);
@@ -69,11 +72,15 @@ const dispatch    = useDispatch();
   const [profilErr,setprofilErr] = useState();
   const [mrnproofErr,setmrnproofErr] = useState();
   const [passworderr,setPasswordErr] = useState();
+
+
+
   function toggleCameraType() {
     setType((current) => (
       current === CameraType.back ? CameraType.front : CameraType.back
     ));
   }
+
   const [items, setItems] = useState([
     {label: '1970', value: '1970'}
   ]);
@@ -103,8 +110,8 @@ const dispatch    = useDispatch();
     password:"",
     profile_pic:"",
     mrnproof:"",
-    role:role,
-    user_id:user_id
+    role:4,
+    user_id:123
   });
 
  
@@ -154,22 +161,26 @@ const showcong = ()=>{
 }
 
 const pickImage = async (arg) => {
-  if(arg==1){
-    var result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
-      aspect: [4, 3],
-      quality: 1,
-    });
-  }else{
-    var result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
-      aspect: [4, 3],
-      quality: 1,
-    });
-  }
-
+    const { granted } = await ImagePicker.requestCameraPermissionsAsync();
+    if (granted === true) {
+      if(arg==1){
+        var result = await ImagePicker.launchCameraAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: false,
+          aspect: [1, 1],
+          quality: 1,
+        });
+      }else{
+        var result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: false,
+          aspect: [1, 1],
+          quality: 1,
+        });
+      }
+    } else {
+      Toast.show('Camera permission denied');
+    }
   let localUri = result.uri;
   bottomSheetModalRefSecond.current?.close();
   setimgurl(localUri)
@@ -207,26 +218,30 @@ const pickImage = async (arg) => {
 
 const pickprofile = async (arg) => {
   // No permissions request is necessary for launching the image library
+    const { granted } = await ImagePicker.requestCameraPermissionsAsync();
+    if (granted === true) {
+      if(arg==1){
+        var result = await ImagePicker.launchCameraAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: false,
+          aspect: [1, 1],
+          quality: 0.5,
+        });
+      }else{
+        var result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: false,
+          aspect: [1, 1],
+          quality: 0.5,
+        });
+      }
+    } else {
+      Toast.show('Camera permission denied');
+    }
 
-  if(arg==1){
-    var result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
-      aspect: [2, 2],
-      quality: 1,
-    });
-   
-  }else{
-    var result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
-      aspect: [2, 2],
-      quality: 1,
-    });
-    
-  }
- 
   let localUri = result.uri;
+  console.log("localUri",localUri);
+  
   bottomSheetModalRef.current?.close();
   setprofileurl(localUri)
  

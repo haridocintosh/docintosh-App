@@ -5,7 +5,6 @@ import * as Contacts from 'expo-contacts';
 import CheckBox from "react-native-check-box";
 const styelcss = require('../assets/css/style');
 
-
 export default function ContactPermission({navigation}) {
   const [contactList, setContact]= useState([]);
   const [isChecked, setisChecked] = useState(false);
