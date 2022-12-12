@@ -10,10 +10,11 @@ import CustomButton from '../components/CustomButton';
 import { mainApi } from '../apis/constant';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from "react-redux";
-import { addCircle } from '../../redux/reducers/circleSlice';
+import { addCircle, getInterestSpl } from '../../redux/reducers/circleSlice';
 const styelcss = require('../assets/css/style');
 import Toast from 'react-native-simple-toast';
 import { useFonts } from 'expo-font';
+
 
 
 const SelectInterest = ({route}) => {
@@ -25,8 +26,8 @@ const SelectInterest = ({route}) => {
   const [selectitem,setselectitem]=useState('');
   const [loader, setLoader] = useState(true);
 
-  //const user_id ='229533'
-   const {user_id} = route.params;
+  const user_id ='229533'
+   //const {user_id} = route.params;
  
   const getItem = (item) => {
    // alert(item.speciality);
@@ -57,18 +58,18 @@ const SelectInterest = ({route}) => {
     const postDetails = {speciality_id:speciality_id,id:user_id}
     const result = await dispatch(addCircle(postDetails));
  }
-  
+
+
+ const getInterestSplData = async () => {
+  const postDetails = {speciality_id:'102'}
+  const result = await dispatch(getInterestSpl(postDetails));
+  setFilteredDataSource(result?.payload);
+  setMasterDataSource(result?.payload);
+  setLoader(false)
+ }
+
   useEffect(() => {
-    fetch(`${mainApi.baseUrl}/ApiController/getSpecialities`)
-      .then((response) => response.json())
-      .then((responseJson) => {
-        setFilteredDataSource(responseJson);
-        setMasterDataSource(responseJson);
-        setLoader(false)
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    getInterestSplData()
   }, []);
 
   const searchFilterFunction = (text) => {

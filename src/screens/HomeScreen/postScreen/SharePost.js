@@ -80,7 +80,7 @@ const  Sharepost = () => {
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       // allowsEditing:true,
       // aspect: [1, 1],
       quality: 1,
@@ -201,6 +201,7 @@ const publishCheck1 = (e, text)=>{
       Toast.show("Please Write Something About Your Post!!!!!!!");
     }else if(!post.postType){
       Toast.show("Please Select PostType");
+      bottomSheetModalRef.current?.present();
     }else{
       const uploadData = {userdata,post};
       setloader(true);
