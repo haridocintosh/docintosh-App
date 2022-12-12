@@ -53,7 +53,7 @@ const PostsScreen = ({route}) => {
                             <Text style={{marginHorizontal:5}}>
                                 <Ionicons name="time-outline" size={19} color="#51668A" />  
                             </Text>
-                            <Text style={{fontSize:12, paddingRight:5, fontWeight:'400',color:'#51668A',fontFamily:"Inter-Regular"}}>{moment(item?.created_at).fromNow()}</Text>
+                            <Text style={{fontSize:12, paddingRight:5, fontWeight:'400',color:'#51668A',fontFamily:"Inter-Regular"}}>{moment(singleItem?.created_at).fromNow()}</Text>
                             {/* {item.post_date}  */}
                         </View>
                        </View> 
