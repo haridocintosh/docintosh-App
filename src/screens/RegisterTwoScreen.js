@@ -7,8 +7,6 @@ import {
   TouchableOpacity,
   Image,
   ActivityIndicator,
-  PermissionsAndroid,
-  Platform,
   TextInput,Pressable} from 'react-native'
 import React, {useEffect, useState, useRef, useCallback} from 'react'
 import { useDispatch } from 'react-redux';
@@ -156,40 +154,23 @@ const showcong = ()=>{
 }
 
 const pickImage = async (arg) => {
-  console.log("prfile");
-  if (Platform.OS === 'android'){
-    const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.CAMERA,
-      {
-        title: 'Access to photos',
-        message: 'Our App would like to access your photos on your device',
-        buttonNegative: 'Deny',
-        buttonPositive: 'Allow',
-      },
-    );
-    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      if(arg==1){
-        var result = await ImagePicker.launchCameraAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          allowsEditing: false,
-          aspect: [2, 2],
-          quality: 0.5,
-        });
-      }else{
-        var result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          allowsEditing: false,
-          aspect: [2, 2],
-          quality: 0.5,
-        });
-      }
-    } else {
-      console.log('Camera permission denied');
-      Toast.show('Camera permission denied');
-    } 
+  if(arg==1){
+    var result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: false,
+      aspect: [4, 3],
+      quality: 1,
+    });
+  }else{
+    var result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: false,
+      aspect: [4, 3],
+      quality: 1,
+    });
   }
+
   let localUri = result.uri;
-  console.log(localUri);
   bottomSheetModalRefSecond.current?.close();
   setimgurl(localUri)
       let filename = localUri.split('/').pop();
@@ -227,59 +208,25 @@ const pickImage = async (arg) => {
 const pickprofile = async (arg) => {
   // No permissions request is necessary for launching the image library
 
-
-  if (Platform.OS === 'android'){
-    const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.CAMERA,
-      {
-        title: 'Access to photos',
-        message: 'Our App would like to access your photos on your device',
-        buttonNegative: 'Deny',
-        buttonPositive: 'Allow',
-      },
-    );
-    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      if(arg==1){
-        var result = await ImagePicker.launchCameraAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          allowsEditing: false,
-          aspect: [2, 2],
-          quality: 0.5,
-        });
-      }else{
-        var result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          allowsEditing: false,
-          aspect: [2, 2],
-          quality: 0.5,
-        });
-      }
-    } else {
-      console.log('Camera permission denied');
-      Toast.show('Camera permission denied');
-    } 
-  }
-
-  // if(arg==1){
-  //   var result = await ImagePicker.launchCameraAsync({
-  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
-  //     allowsEditing: false,
-  //     aspect: [2, 2],
-  //     quality: 1,
-  //   });
+  if(arg==1){
+    var result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: false,
+      aspect: [2, 2],
+      quality: 1,
+    });
    
-  // }else{
-  //   var result = await ImagePicker.launchImageLibraryAsync({
-  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
-  //     allowsEditing: false,
-  //     aspect: [2, 2],
-  //     quality: 1,
-  //   });
+  }else{
+    var result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: false,
+      aspect: [2, 2],
+      quality: 1,
+    });
     
-  // }
+  }
  
   let localUri = result.uri;
-  console.log();
   bottomSheetModalRef.current?.close();
   setprofileurl(localUri)
  
