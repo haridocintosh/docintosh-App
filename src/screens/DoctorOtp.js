@@ -11,12 +11,10 @@ import { View,
   import React, { useState, useEffect } from 'react';
   import { useNavigation } from '@react-navigation/native';
   import CustomButton from '../components/CustomButton';
-  import Icon from 'react-native-vector-icons/FontAwesome';
   import {AntDesign,Ionicons,FontAwesome} from 'react-native-vector-icons';
   import OTPTextView from 'react-native-otp-textinput';
   import { useDispatch } from 'react-redux';
   import Toast from 'react-native-simple-toast';
-  import { useFonts } from 'expo-font';
   import { doctorOtp } from '../../redux/reducers/otpSlice';
   import { resendOTP } from '../../redux/reducers/loginAuth';
   import { userIdupdate } from '../../redux/reducers/otpSlice';
