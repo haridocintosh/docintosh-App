@@ -5,10 +5,10 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-  Image,
+  Image, Platform,
   TextInput, Pressable,
   ActivityIndicator,
-  Dimensions
+  PermissionsAndroid
 } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -131,22 +131,38 @@ const setCollege= (e) =>{
 //Image Picker//
 
 const pickImage = async (arg) => {
-  if(arg==1){
-    var result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
-      aspect: [4, 3],
-      quality: 1,
-    });
-  }else{
-    var result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
-      aspect: [4, 3],
-      quality: 1,
-    });
+  if (Platform.OS === 'android'){
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.CAMERA,
+      {
+        title: 'Access to photos',
+        message: 'Our App would like to access your photos on your device',
+        buttonNegative: 'Deny',
+        buttonPositive: 'Allow',
+      },
+    );
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      if(arg==1){
+        var result = await ImagePicker.launchCameraAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: false,
+          aspect: [2, 2],
+          quality: 0.5,
+        });
+      }else{
+        var result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: false,
+          aspect: [2, 2],
+          quality: 0.5,
+        });
+      }
+    } else {
+      console.log('Camera permission denied');
+      Toast.show('Camera permission denied');
+    } 
   }
- 
+
   let localUri = result.uri;
   setimgurl(localUri)
       let filename = localUri.split('/').pop();
@@ -182,21 +198,39 @@ const pickImage = async (arg) => {
 
 
 const pickprofile = async (arg) => {
-  if(arg==1){
-    var result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
-      aspect: [2, 2],
-      quality: 0.5,
-    });
-  }else{
-    var result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
-      aspect: [2, 2],
-      quality: 0.5,
-    });
+  if (Platform.OS === 'android'){
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.CAMERA,
+      {
+        title: 'Access to photos',
+        message: 'Our App would like to access your photos on your device',
+        buttonNegative: 'Deny',
+        buttonPositive: 'Allow',
+      },
+    );
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      if(arg==1){
+        var result = await ImagePicker.launchCameraAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: false,
+          aspect: [2, 2],
+          quality: 0.5,
+        });
+      }else{
+        var result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: false,
+          aspect: [2, 2],
+          quality: 0.5,
+        });
+      }
+    } else {
+      console.log('Camera permission denied');
+      Toast.show('Camera permission denied');
+    } 
   }
+
+ 
  
   let localUri = result.uri;
   setprofileurl(localUri)
