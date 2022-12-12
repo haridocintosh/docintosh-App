@@ -11,7 +11,6 @@ const BellNotification = ({navigation}) => {
 
     const handlePresentModal = () => {
         bottomSheetRef.current?.expand();
-        console.log("bottomSheetRef",bottomSheetRef.current);
     }
     useEffect(()=>{
         navigation.setOptions({ title: 'Notification'});

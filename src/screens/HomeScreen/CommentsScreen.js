@@ -35,7 +35,6 @@ const CommentsScreen = ({route,navigation}) => {
     const handleComment = async () => {
       const postDetails = {user_id:userId.id,post_id:post_id,postcomment:text}
       const sentResult = await dispatch(commentData(postDetails));
-      console.log("sentResult", sentResult.payload);
       const likeCounter = {senderId : 0,receiverId:userId.id,task:3}
       const getlikeCounter = await dispatch(getCointransfer(likeCounter));
       getData();
@@ -55,14 +54,12 @@ const CommentsScreen = ({route,navigation}) => {
     }
 
     const deleteCommentHandle =  (val) => {
-      console.log("dot",val);
       setModalVisible(true)
       setPostId(val);
     }
     const handleDelete = async () => {
       const DelDetails = {comment_id:postId}
       const deleteResult = await dispatch(deleteComment(DelDetails));
-      console.log("deleteResult",deleteResult.payload);
       const likeCounter = {senderId :userId.id,receiverId:0,task:14}
       const getlikeCounter = await dispatch(getCointransfer(likeCounter));
       setModalVisible(false);

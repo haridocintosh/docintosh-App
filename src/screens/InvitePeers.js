@@ -19,7 +19,6 @@ const InvitePeers = ({route}) => {
          setcontactData(copy)
     
         const newItem = contactData1.map((val)=>{
-            //console.log(item.speciality_id);
             if(val.phoneNumbers[0].number==usernumber){
               return {...val, isSelected:!val.isSelected }
             }else{
@@ -33,9 +32,7 @@ const InvitePeers = ({route}) => {
             if(index !== -1) {
               array.splice(index, 1);
               setcontactData(array);
-             // console.log('deletearray',selectitem);
             }
-           console.log(contactData1.length==(contactData.length),contactData)
             if(contactData.length){
                 if(contactData1.length==(contactData.length)){
                     setChecked(true)}else{
@@ -77,8 +74,6 @@ const InvitePeers = ({route}) => {
             <View style={[styelcss.selectAllList,{flex:12,height:"100%"}]}>
                 <Text style={styelcss.invitePeersHeadTxt}>Select all</Text>
                 <Checkbox  onValueChange={()=>{ onAllChecked()}} value={isChecked} />
-                {/* <Checkbox value={isChecked} onValueChange={setChecked} color={isChecked ? '#45B5C0' : undefined} /> */}
-                {/* <Text>{console.log(alldata)}</Text> */}
             </View>
            
             {

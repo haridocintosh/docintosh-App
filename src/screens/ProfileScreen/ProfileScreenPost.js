@@ -104,8 +104,6 @@ const ProfileScreenPost = () => {
     )
   }
   
-  // console.log("myPost",myPost);
-
   return (
     <View style={{padding:10,backgroundColor:'#E6E6E6',flex:1}}>
     <FlatList

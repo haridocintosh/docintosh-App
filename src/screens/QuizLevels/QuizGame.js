@@ -39,7 +39,6 @@ const QuizGame = ({route}) => {
       const result = await dispatch(GetQuizQuestions({basic_id : basicId}));
       setMcqQue(result.payload.questions);
     };
-// console.log("loader",loader);
   useEffect(() => {
       Mcqs();
       startAnimation(isTop && 1);

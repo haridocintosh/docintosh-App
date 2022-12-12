@@ -21,7 +21,6 @@ const QuizGameQuetion = ({ mcqQue,singleMcq ,seconds,disabled,setDisabled}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   
-  // console.log("disabled",disabled);
   // const [progress, setProgress] = useState(new Animated.Value(0));
   //   const progressAnim = progress.interpolate({
   //       inputRange: [0, TotalMcq],

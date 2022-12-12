@@ -8,12 +8,13 @@ import {
   ImageBackground,
   Linking
 } from "react-native";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useTransition } from "react";
 import Svg, { Path } from "react-native-svg";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { TapGestureHandler, ScrollView } from "react-native-gesture-handler";
 import { styles } from "./SurvayStyle";
+
 
 const ScratchOffer = ({ setShowOffer }) => {
   const [removeScratch, setRemoveScratch] = useState(true);
@@ -125,9 +126,7 @@ const ScratchOffer = ({ setShowOffer }) => {
                   <Text style={styles.requireSteps}>
                     Login to 
                     <Text style={{color: 'blue'}}onPress={() => Linking.openURL('http://amazon.in ')}>  amazon.in </Text>
-
-                    
-                    website.
+                      website.
                     </Text>
                   <Text style={styles.requireSteps}>Click on Amazon pay balance.</Text>
                   <Text style={styles.requireSteps}>Then select Add gift card.</Text>

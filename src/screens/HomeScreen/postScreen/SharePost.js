@@ -111,7 +111,6 @@ const  Sharepost = () => {
         body :formData
      });
     const result1=  await responce.json();
-    console.log("postcheck",result1);
       setPost({...post, 
         postImage: result1.postImage,
       });
@@ -126,7 +125,6 @@ const  Sharepost = () => {
       aspect: [4, 3],
       quality: 1,
     });
-  //  console.log(result);
     if (!result.cancelled) {
       setVideo(result.uri ? result.uri : result.selected);
     }
@@ -141,7 +139,6 @@ const  Sharepost = () => {
       aspect: [4, 3],
       quality: 1,
     });
- //   console.log(result);
     if (!result.cancelled) {
       setAudio(result.uri ? result.uri : result.selected);
     }
@@ -155,14 +152,12 @@ const  Sharepost = () => {
       // aspect: [1, 1],
       quality: 0.1,
     });
-   // console.log(result);
     if (!result.cancelled) {
       setDocument(result.uri ? result.uri : result.selected);
     }
   };
 
   const postCheck= (e)=>{
-    console.log(e);
     const name = e;
     setPost({ ...post, 
       postType:name,
@@ -171,14 +166,12 @@ const  Sharepost = () => {
   }
 
 const postDesc= (e)=>{
-  //console.log(e);
   setPost({ ...post, 
     description:e,
   });
 }
 
 const publishCheck = (e)=>{
-  console.log("e",e);
   if(e == 8){
     setWhoCanSee("Public");
   }else{
@@ -194,15 +187,11 @@ const publishCheck = (e)=>{
 
 
 const publishCheck1 = (e, text)=>{
-  // console.log(e);
     setPost({...post,
       publishto:e,
     });
     setWhoCanSee(text)
-  //bottomSheetModalRefSecond.current?.close();
 }
-
-
 
 
   const handleStudentSubmit = async() =>{
@@ -214,20 +203,13 @@ const publishCheck1 = (e, text)=>{
       Toast.show("Please Select PostType");
     }else{
       const uploadData = {userdata,post};
-    
-      console.log("uploadData",uploadData);
-    
       setloader(true);
       const result = await dispatch(postCreate(uploadData));
-      console.log("result",result);
         if(result.payload.status == 'Success'){
           setloader(false);
           Toast.show(result.payload.message);
-          //  navigation.navigate('HomeScreen')
           const coinDetails = {task : 4, receiverId:userdata.id } 
-          // console.log("checkSharepostCoins", coinDetails);
           const coinResult  = await dispatch(coinTransfer(coinDetails));
-          // console.log(coinResult.payload)
           if(coinResult.payload.status == 'Success')
           {
               navigation.navigate('HomeScreen');
@@ -309,7 +291,6 @@ const publishCheck1 = (e, text)=>{
       return data;
     });
 
-    //console.log("temp",temp );
     setSpl(temp);
 
     const specialityId = temp
@@ -320,7 +301,6 @@ const publishCheck1 = (e, text)=>{
       .filter((val) => val.checked == true)
       .map((temp) => temp.speciality);
 
-console.log("specialityName",specialityName);
 setSpecialNames(specialityName)
 
     setPost({ ...post, 

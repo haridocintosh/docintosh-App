@@ -21,15 +21,11 @@ const SurvayCheckBoxMcq = ({ setLiftUpData, currentIndex, allMCQs,error,setError
       }
       return mcq;
     });
-    // console.log("temp",{ ...allMcq, options: temp });
     setAllMcq({ ...allMcq, options: temp });
-    
     const optId = temp
       .filter((val) => val.checked == true)
       .map((temp) => temp.opt_id);
     setLiftUpData(optId);
-    
-    console.log("optId",optId);
   };
 
   
@@ -38,7 +34,6 @@ const SurvayCheckBoxMcq = ({ setLiftUpData, currentIndex, allMCQs,error,setError
       <View style={{ paddingHorizontal: 15 }}>
         <View>
           {allMcq?.options.map((data, i) => {
-            // console.log("isChecked",data?.checked);
             return (
               <TouchableOpacity style={styles.SurvayOptions} key={i} onPress={() => handleChange(data.opt_id)}>
                 <CheckBox

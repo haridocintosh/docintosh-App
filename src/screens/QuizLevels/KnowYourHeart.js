@@ -36,12 +36,10 @@ const KnowYourHeart = ({ route,navigation }) => {
     axios
       .get(`${mainApi.baseUrl}/ApiController/global_leaderboard`)
       .then((res) => {
-        // console.log("res",res.data);
         setUserData(res.data);
         setLoader(false);
       });
   };
-  // console.log("userData",userData);
   useEffect(() => {
     getLeaderboardData();
   }, []);

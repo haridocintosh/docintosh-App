@@ -85,7 +85,6 @@ const handleOption = (post_id) => {
     getLocalData('USER_INFO').then( async (res) =>{
       const allCoins = { user_id:res.data.id};
       const allCoinsResult = await dispatch(getAllCoins(allCoins));
-      //console.log("allCoinsResult",allCoinsResult.payload.coins);
       setAllcoins(allCoinsResult.payload.coins);
     });
   };
@@ -115,7 +114,6 @@ const handleOption = (post_id) => {
 
   
   const handlePost = (singleItem) => {
-    //console.log("item",singleItem);
     navigation.navigate('PostsScreen', {singleItem})
   }
     const renderItem = ({item}) => {

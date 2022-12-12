@@ -42,7 +42,6 @@ const EditProfileScreen = ({navigation}) => {
  
 
     const  handleOnChangeEmail = (text)=>{
-      //console.log(text);
       if(!isValidemailRegex.test(text)){
           setmessage("Please enter valid email!");
       }else{

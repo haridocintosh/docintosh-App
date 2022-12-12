@@ -51,9 +51,8 @@ const LoginScreen = () => {
 
     register.email = register.email? register.email : datarm?.data.email;
     register.password = register.password ? register.password :datarm?.data.password ;
-    //console.log("line55", register);
     if(register.email !== "" &&  register.password !== "" && register.email !== undefined &&  register.password !== undefined){
-      setloader(true)
+      setloader(true);
       const token = await dispatch(userLogin(register));
       if(token.payload.status == 'Success'){
           setloader(false)
@@ -70,6 +69,7 @@ const LoginScreen = () => {
         }
         singlestoreData('isloggedin','true'); 
           navigation.navigate('HomeScreen');
+          setloader(true);
           setshoweye(true)
       }else{
         setloader(false)
@@ -98,7 +98,7 @@ const LoginScreen = () => {
       setdatarm(result)
       setChecked(result?.data.isChecked);
       if(result == null){
-        setregister({email: "",password :""});
+        setregister({email: "",password:""});
       }
     } catch(e) {
      console.log(e)
@@ -185,7 +185,6 @@ const LoginScreen = () => {
           Remember Me
         </Text>
       </View>
-
           <Text style={{
             fontSize: 14,
             fontWeight: '600',

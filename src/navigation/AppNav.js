@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, BackHandler, ActivityIndicator,Modal,TouchableOpacity,View,Text } from 'react-native';
+import { ActivityIndicator,View,Text } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppStack from './AppStack';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
@@ -24,6 +23,7 @@ import QuizLevels from '../screens/QuizLevels/QuizLevels';
 import TermsAndCondition from '../screens/commonpage/TermsAndCondition';
 import ContactScreen from '../screens/commonpage/ContactScreen';
 import HandleBack from './HandleBack';
+import { getLocalData } from '../apis/GetLocalData';
 
 
 
@@ -41,23 +41,25 @@ if(loader){
   </View>)
 }
 
-  const getData = async (key) => {
+  const getData = async () => {
     try {
-      const jsonValue = await AsyncStorage.getItem(key);
-      const logData = jsonValue != null ? JSON.parse(JSON.parse(jsonValue)) : null;
-      if(logData?.login){
-        setDefaultRoute("HomeScreen");
-      }else{
-        setDefaultRoute("Login");
-      }
-      setStatusKeyLoaded(true)
+      getLocalData('USER_INFO').then((res) => {
+        const resData = res?.login;
+        console.log("resData",resData);
+        if(resData){
+          setDefaultRoute("HomeScreen");
+        }else{
+          setDefaultRoute("Login");
+        }
+        setStatusKeyLoaded(true)
+      })
     } catch(e) {
       console.log(e);
     }
   }
 
   useEffect(() => {
-      getData('USER_INFO');
+      getData();
   }, []);
 
 const handleMessage = () => {
@@ -70,7 +72,7 @@ const handleMessage = () => {
   return (<>
     <HandleBack/>
     {statusKeyLoaded && 
-      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={defaultRoute}>
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={"Login"}>
             {/* <Stack.Screen name="RegisterStudentScreen" component={RegisterStudentScreen}  options={{ title: 'Register', headerShown: true}} /> */}
             {/* <Stack.Screen name="PracticeScreen" component={PracticeScreen} /> */}
             <Stack.Screen name="Intro" component={IntroStack} />

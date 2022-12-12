@@ -7,7 +7,6 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   getSurveyQuestions,
   saveSurveyAnswers,
@@ -44,14 +43,12 @@ const SurveyMcq = ({ route }) => {
   };
 
   const MCQsLength = parseInt(allMCQs.length);
-  // console.log("allMCQs",allMCQs[currentQuestionIndex]?.question_type);
   //-----------------save survay ans--------------------------
   
 
   const nextMcq = async (basic_id, qid, Q_type) => {
     getLocalData("USER_INFO").then((res) =>{
       const resData = res?.data;
-      console.log("Q_type",Q_type);
 
       if(Q_type == 1){
         if (liftUpData) {

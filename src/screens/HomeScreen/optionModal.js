@@ -29,17 +29,14 @@ const optionModal = ({modalVisible,id,post_id,setSucc}) => {
   const handleDeletePost = async()=>{
     const postDetails = {post_id:post_id}
     const result      = await dispatch(deletePost(postDetails));
-    //console.log("deletePost", result.payload.status);
       if(result.payload.status  == 'Success'){
         const coinDetails = {task:15, receiverId:0, senderId:id} 
-      //  console.log("checkDetails", coinDetails);
         const coinResult  = await dispatch(coinTransfer(coinDetails));
         if(coinResult.payload.status  == 'Success'){
           setSucc(true)
         }
       }
     }
-  // console.log("userId",userId?.id);
   const handleReport = () => {
     navigation.navigate('ReportPost', {
        post_id, id})

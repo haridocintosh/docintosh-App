@@ -11,7 +11,6 @@ export const deletePost = createAsyncThunk("postAction/delete", async(data)=>{
           body : JSON.stringify(data)
       });
       const result=  await responce.json();
-    //  console.log('deleteResponce',result);
       return result
   }
   catch(e){
@@ -30,7 +29,6 @@ export const reportPost = createAsyncThunk("postAction/reportPost", async(data)=
             body : JSON.stringify(data)
         });
         const result=  await responce.json();
-        console.log('reportResponce',result);
         return result
     }
     catch(e){

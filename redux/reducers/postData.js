@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { mainApi } from "../../src/apis/constant";
 
 export const userPostData = createAsyncThunk("getAllPost", async (postDetails)=>{
-    // console.log('postdata1',postDetails.role);
     try{
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/getPost`, {
             method : 'POST',
@@ -21,7 +20,6 @@ export const userPostData = createAsyncThunk("getAllPost", async (postDetails)=>
             })
          });
         const result=  await responce.json();
-    //    console.log('tara12345654',result);
         return result;
      }
      catch(e){
@@ -56,7 +54,6 @@ export const getMycircle = createAsyncThunk("getCircle", async (data)=>{
         body : JSON.stringify(data)
     });
     const result = await response.json();
-    //console.log('mycircle', result);
     return result;
 })
 
@@ -127,7 +124,7 @@ export const postData = createSlice({
                 state.loading =  true
             }, 
         [postCreate.fulfilled] : (state, action)=>
-            {  // console.log(fulfilled);
+            {  
                 state.loading       = false,
                 state.isLoggedIn    = true
                 state.registerData  = action.payload;

@@ -25,8 +25,6 @@ const ForgetPassword = () => {
       const token =await dispatch(forgotPassword_({
         email:inputtext
       }))
-      // Toast.show(token.payload.message);
-      // console.log(token.payload);
       if(token.payload.status == 'Success'){
         navigation.navigate('ForgotPasswordOTP',{
           mobile_no: inputtext,
@@ -70,7 +68,6 @@ const ForgetPassword = () => {
        />
         <View style={{marginVertical:23}}>
     <CustomButton label={(forgotpasswordState.loading)?'Sending OTP...':'Receive OTP'}  onPress={()=>{handleSubmit()}} disabled={!forgotpasswordState.loading} />
-    {/* <Text>{console.log(forgotpasswordState.loading)}</Text> */}
     </View>
     </ScrollView>
   </SafeAreaView>

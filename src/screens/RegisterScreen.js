@@ -65,9 +65,6 @@ export default function RegisterScreen() {
         return {label: ele.speciality, value: ele.speciality_id};
      }))
     }
-    // DeviceInfo.getAndroidId().then((androidId) => {
-    //  console.log(androidId);
-    // });
     fetchSpecialities()
   },[]);
 
@@ -109,7 +106,6 @@ const email= async(e)=>{
   setemail('')
    const result =  await dispatch(checkEmail({email: e}))
     if(result.payload.status_code="Exists"){
-      console.log("frontend",result.payload.message)
       setemail(result.payload.message)
     }
   }
@@ -129,13 +125,9 @@ const phonenumber= async(e)=>{
     setmobile("Please enter valid mobile no.")
   }else{
     const result =  await dispatch(checkMobile({mobile: e}))
-    //console.log("frontendCheck",result.payload)
     if(result.payload.status_code="Exists"){
       setmobile(result.payload.message)
     }
-    // else{
-    //   setmobile('')
-    // }
   }
   
   setregister({
@@ -167,7 +159,6 @@ const setuserrole= (e)=>{
 }
 
 const form_submit = async() =>{
-  // console.log("Doctor",register.mobile);
   // if(!register.fname || !register.lname  || !register.mobile || !register.email || !register.gender || !register.role || !register.speciality || checked === 4 ?!value:''){
   //     seterr("Please fill the above form");
   // }else if(emailId != ''){
@@ -200,7 +191,6 @@ const form_submit = async() =>{
     setloader(true)
     const result = await dispatch(userRegisterOne(register));
     setloader(false)
-    console.log('Registertkn',result);
     Toast.show(result.payload.message);
     setregister({
       fname : "",
@@ -220,7 +210,6 @@ const form_submit = async() =>{
   }
 
   const handleStudentSubmit = async() =>{
-    console.log("student",register);
     // if(!register.fname || !register.lname || !register.email || !register.mobile || !register.gender ||  !register.role || checked === 5 ?!value:''){
     //     seterr("Please fill the above form")
     // }else if(emailId != ''){

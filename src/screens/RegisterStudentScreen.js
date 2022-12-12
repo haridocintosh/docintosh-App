@@ -99,7 +99,6 @@ useEffect(()=>{
    }))
   }
   fetchUniversity()
-  //console.log("cl")
 },[]);
 
 const setuniversity= (e) =>{
@@ -252,14 +251,11 @@ const form_submit = async() =>{
     setsubmitbtn(true);
     setloader(true);
     const result = await dispatch(userRegisterSecond(register));
-    console.log("refisterone", result);
     setloader(false);
-    console.log("RegisterSTudent", result.payload);
     Toast.show(result.payload.message);
       if(result.payload.status == 'Success'){
         const coinDetails = {task : 1, receiverId:result.payload.user_id } 
         const coinResult  = await dispatch(coinTransfer(coinDetails));
-          console.log(coinResult.payload)
           if(coinResult.payload.status == 'Success'){
             setIsModalVisible(true);
             setTimeout(() => {
