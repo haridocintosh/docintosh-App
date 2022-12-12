@@ -72,7 +72,7 @@ const handleMessage = () => {
   return (<>
     <HandleBack/>
     {statusKeyLoaded && 
-      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={"Login"}>
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={defaultRoute}>
             {/* <Stack.Screen name="RegisterStudentScreen" component={RegisterStudentScreen}  options={{ title: 'Register', headerShown: true}} /> */}
             {/* <Stack.Screen name="PracticeScreen" component={PracticeScreen} /> */}
             <Stack.Screen name="Intro" component={IntroStack} />
