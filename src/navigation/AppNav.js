@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, BackHandler, ActivityIndicator,Modal,TouchableOpacity,View,Text } from 'react-native';
+import { ActivityIndicator,View,Text } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AppStack from './AppStack';

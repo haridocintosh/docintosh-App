@@ -185,7 +185,6 @@ const LoginScreen = () => {
           Remember Me
         </Text>
       </View>
-
           <Text style={{
             fontSize: 14,
             fontWeight: '600',
