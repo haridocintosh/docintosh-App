@@ -226,7 +226,7 @@ const pickupImage = (arg,arg2) => {
           }else{
             formData.append('profile_pic', imageData);
           }
-          formData.append('profile_pic', imageData);
+
           const responce = await fetch(`https://docintosh.com/ApiController/image_upload`, {
             method : 'POST',
             headers:{
@@ -235,12 +235,23 @@ const pickupImage = (arg,arg2) => {
             body :formData
          });
         const result=  await responce.json();
+
+        if(arg2 == 'doc'){
+          setregister({ ...register,
+            mrnproof: result,
+          });
+        }else{
+          setregister({ ...register,
+            profile_pic: result,
+          });
+        }
         setprofilErr('');
         setmrnproofErr('');
     });
 };
 
 const form_submit = async() =>{ 
+  console.log(register);
   if(!register.pincode){
     setPincode("Please enter a valid pincode");
   }else if(!register.university){
