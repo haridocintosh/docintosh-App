@@ -26,7 +26,7 @@ import { getallLikes } from '../../../redux/reducers/publicReactionSlice';
 const HomeScreen = ({navigation})=> {
 // like unlike fun =>
   // const [loader, setLoader] = useState(false);
-  const [userdata, setuserdata]     = useState({profile:'',user_id:''});
+  const [userdata, setuserdata]     = useState({profile:'',user_id:'',role:''});
   const [allPost, setallPost]  = useState([]);
   const dispatch = useDispatch();
   const [postId, setPostId] = useState();
@@ -102,7 +102,8 @@ const handleOption = (post_id) => {
       const reData = res?.data
       setuserdata({
         profile:reData?.profileimage,
-        user_id:reData?.id
+        user_id:reData?.id,
+        role:reData?.role,
       });
       setModalVisible(false);
       const postDetails = {role:reData?.role,city_id:reData?.city_id,assoc_id:reData?.assoc_id,profileimage:reData?.profileimage,userId:reData?.id,circle_type:reData?.role == 5 ? 3 : 1};
@@ -111,7 +112,6 @@ const handleOption = (post_id) => {
       setallPost(allPostData);
     })
   }
-
   
   const handlePost = (singleItem) => {
     navigation.navigate('PostsScreen', {singleItem})
@@ -154,23 +154,18 @@ const handleOption = (post_id) => {
               {item?.post_id == postId && <OptionModal modalVisible={modalVisible} id={item?.id} post_id={item?.post_id} setSucc={setSucc} />}
             </View>
           </View>
-
           <View style={item?.description &&{ flexDirection:'row',paddingVertical:10}}>
             <Text style={{color:'#51668A',fontFamily:"Inter-Regular" }}>
-            {/* {item?.description } */}
-
-          {item.description.replace(/<[^>]+>/g, '')}
-
-            
+              {item.description.replace(/<[^>]+>/g, "")}
             </Text>
           </View>
-
-          <TouchableOpacity style={{justifyContent:'center',alignItems:'center'}} onPress={() => handlePost(item)} >
+          {/* onPress={() => handlePost(item)} */}
+          <View style={{justifyContent:'center',alignItems:'center'}}  >
             <Image source={item.imgPath?{uri:item.imgPath}:''} 
             style={{flex: 1, 
               width: Dimensions.get("window").width, 
               height:300}} resizeMode={'contain'}/>
-          </TouchableOpacity>
+          </View>
             <PublicReactions item={item} getStorageData={getStorageData}/>
         </Card>
       )
@@ -218,7 +213,7 @@ const handleOption = (post_id) => {
       </Animated.View>
       
     <View style={{padding:10}}>
-      <Card style={{marginTop:-35, zIndex:1, borderRadius:50,shadowRadius:10, shadowOffset:10}} onPress={() => navigation.navigate('SharePost')}>
+      <Card style={{marginTop:-35, zIndex:1, borderRadius:50,shadowRadius:10, shadowOffset:10}} onPress={() => userdata?.role == 4 && navigation.navigate('SharePost')}>
         <View style={{flexDirection:'row', margin:10,justifyContent:'space-between',alignItems:'center'}} >
           <View style={{flexDirection:'row'}}>
           <Image source={userdata.profile?{uri:userdata.profile}:''}  style={{width:32, height:32, borderRadius:50}}></Image>

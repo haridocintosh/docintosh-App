@@ -18,6 +18,7 @@ import { getMycircle } from "../../../../redux/reducers/postData";
 import { mainApi } from "../../../apis/constant";
 import { getLocalData } from "../../../apis/GetLocalData";
 import { coinTransfer } from "../../../../redux/reducers/coinSlice";
+import { PickImageAll } from "../../../navigation/ReuseLogics";
 
 
 const  Sharepost = () => {
@@ -78,20 +79,11 @@ const  Sharepost = () => {
     }, 100);
   }
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      // allowsEditing:true,
-      // aspect: [1, 1],
-      quality: 1,
-    });
-    if (!result.cancelled) {
-      setImages(result.uri ? result.uri : result.selected);
-    }
-    let localUri = result.uri;
+  const pickImage =  () => {
+    PickImageAll().then(async (res) =>{
+      let localUri = res?.uri;
+      setImages(localUri)
       let filename = localUri.split('/').pop();
-      let match = /\.(\w+)$/.exec(filename);
-      let type = match ? `image/${match[1]}` : `image`;
       let uriParts = localUri.split('.');
       let fileType = uriParts[uriParts.length - 1];
       let formData = new FormData();
@@ -100,7 +92,6 @@ const  Sharepost = () => {
         name: filename,
         type: `image/${fileType}`,
       }
-    
       formData.append('postImage', imageData);
       formData.append('post_id', '3032');
       const responce = await fetch(`${mainApi.baseUrl}/ApiController/postuploadDocsReact`, {
@@ -114,48 +105,9 @@ const  Sharepost = () => {
       setPost({...post, 
         postImage: result1.postImage,
       });
+    })
   };
 
-  const pickVideo = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Videos,
-      allowsEditing: false,
-      allowsMultipleSelection: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    if (!result.cancelled) {
-      setVideo(result.uri ? result.uri : result.selected);
-    }
-  };
-
-  const pickAudio = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
-      allowsMultipleSelection: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    if (!result.cancelled) {
-      setAudio(result.uri ? result.uri : result.selected);
-    }
-  };
-
-  const pickDocument = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsMultipleSelection: true,
-      // aspect: [1, 1],
-      quality: 0.1,
-    });
-    if (!result.cancelled) {
-      setDocument(result.uri ? result.uri : result.selected);
-    }
-  };
 
   const postCheck= (e)=>{
     const name = e;

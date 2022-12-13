@@ -35,6 +35,7 @@ const RegisterStudentScreen = ({route}) => {
 const navigation = useNavigation();
 const dispatch = useDispatch();
 const [modalVisible, setModalVisible]     = useState(false);
+const [fromWhere, setFromWhere] = useState(null);
 const [isModalVisible, setIsModalVisible] = useState(false);  
 const [isModalShow, setisModalShow]       = useState(false);
 const [loader, setloader] = useState(false)
@@ -45,7 +46,7 @@ const [profilErr,setprofilErr] = useState();
 const [mrnproofErr,setmrnproofErr] = useState();
 const [passworderr,setPasswordErr] = useState();  
 const [showeye, setshoweye] = useState(true);
-//const fullname="gagan";
+// const fullname="gagan";
 const {user_id, fullname, role} = route.params;
 const [register , setregister] = useState({
   pincode : "",
@@ -54,6 +55,8 @@ const [register , setregister] = useState({
   password:"",
   profile_pic:"",
   mrnproof:"",
+  // role:4,
+  // user_id:1234,
   role:role,
   user_id:user_id,
 });
@@ -199,15 +202,9 @@ const setCollege= (e) =>{
 // };
 
 
-const pickupImage = (arg,arg2) => {
+const pickupImage = (arg) => {
     PickImage(arg).then(async (res) => {
       let localUri = res?.uri;
-      console.log("localUri",localUri);
-      if(arg2 == 'doc'){
-        setimgurl(localUri);
-      }else{
-        setprofileurl(localUri);
-      }
           let filename = localUri.split('/').pop();
           // Infer the type of the image
           // let match = /\.(\w+)$/.exec(filename);
@@ -221,12 +218,13 @@ const pickupImage = (arg,arg2) => {
             type: `image/${fileType}`,
           }
 
-          if(arg2 == 'doc'){
+          if(fromWhere == 'document'){
+            setimgurl(localUri);
             formData.append('mrnproof', imageData);
           }else{
+            setprofileurl(localUri);
             formData.append('profile_pic', imageData);
           }
-          formData.append('profile_pic', imageData);
           const responce = await fetch(`https://docintosh.com/ApiController/image_upload`, {
             method : 'POST',
             headers:{
@@ -235,12 +233,23 @@ const pickupImage = (arg,arg2) => {
             body :formData
          });
         const result=  await responce.json();
+
+        if(fromWhere == 'document'){
+          setregister({ ...register,
+            mrnproof: result,
+          });
+        }else{
+          setregister({ ...register,
+            profile_pic: result,
+          });
+        }
         setprofilErr('');
         setmrnproofErr('');
     });
 };
 
 const form_submit = async() =>{ 
+  console.log("register",register);
   if(!register.pincode){
     setPincode("Please enter a valid pincode");
   }else if(!register.university){
@@ -282,6 +291,11 @@ const form_submit = async() =>{
     </View>)
   }
 
+  const handlePickupModal = (val) => {
+    // console.log("val",val);
+    setFromWhere(val)
+    setModalVisible(true);
+  }
 return (
   <SafeAreaView style={{flex: 0, justifyContent: 'center',paddingTop:0}}>
   <ScrollView
@@ -289,7 +303,7 @@ return (
     showsVerticalScrollIndicator={false}
     nestedScrollEnable={true}>
 {/* onPress={() => setModalVisible(true)} */}
-    <Pressable onPress={() => setModalVisible(true)}>
+    <Pressable onPress={() => handlePickupModal("profile")}>
       <View style={styles.suceesheadBox}>
         <View style={styles.registermainText}>
           <Image style={{width:56,height:56,borderRadius:50}} source={profileurl?{ uri: profileurl }:require('../assets/images/p2.png')}/>
@@ -335,7 +349,6 @@ return (
                 fontSize: 16,
                 color:"#687690",
                 fontFamily: 'PlusJakartaSans-Regular',
-               
               }}
               listItemLabelStyle={{
                 color: "#687690",
@@ -375,7 +388,6 @@ return (
                 if(value!=null){
                   setCollege(value)
                 }
-               
               }}
               textStyle={{
                 fontSize: 16,
@@ -421,7 +433,7 @@ return (
    <Text style={[styles.headTexts,{fontFamily:"Inter-SemiBold"}]}>Upload College ID/Library Card</Text>
  
    <View>
-    <TouchableOpacity onPress={() => setisModalShow(true)}>
+    <TouchableOpacity onPress={() => handlePickupModal("document")}>
       <View style={{borderColor:"#D5DEED",borderRadius:4,borderStyle: 'dashed',borderWidth:1.4,width:"100%",height:102,justifyContent:"center",alignItems:"center"}}>
       <Image source={require('../assets/icons/upload-img.png')} style={{alignSelf:"center"}}  />
       <Text style={{textAlign:"center",fontSize:14,color:"#2376E5",fontWeight:"600",paddingVertical:6,fontFamily:"Inter-SemiBold"}} >Upload your file</Text>
@@ -500,45 +512,6 @@ return (
       </View>
     </Modal>
 
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={isModalShow}
-      onRequestClose={() => {
-        Alert.alert("Modal2 has been closed.");
-        setisModalShow(!isModalShow);
-      }}
-    >
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-        <TouchableOpacity
-          style={styles.chooseBtn}
-          onPress={() => {
-            pickupImage(1, "doc");
-            setisModalShow(false);
-          }}>
-        <Text style={styles.chooseTxt}>Take Photo</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.chooseBtn}
-          onPress={() => {
-            pickupImage(2,"doc");
-            setisModalShow(false);
-          }}>
-         
-      <Text style={styles.chooseTxt}>Choose from Gallery</Text>
-        </TouchableOpacity>
-          <Pressable
-            style={[styles.button, styles.buttonClose]}
-            onPress={() => setisModalShow(!isModalShow)}
-          >
-            <Text style={styles.textStyleb}>close</Text>
-          </Pressable>
-        </View>
-      </View>
-    </Modal>
-         
      
       </View>
        </ScrollView>

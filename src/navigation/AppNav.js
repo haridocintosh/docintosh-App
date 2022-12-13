@@ -48,10 +48,10 @@ if(loader){
       if(logData?.login){
         setDefaultRoute("HomeScreen");
       }else{
-        setDefaultRoute("Login");
-       // setDefaultRoute("SelectInterest");
+        setDefaultRoute("Intro");
+      //  setDefaultRoute("RegisterStudentScreen");
       }
-      setStatusKeyLoaded(true)
+      setStatusKeyLoaded(true);
     } catch(e) {
       console.log(e);
     }

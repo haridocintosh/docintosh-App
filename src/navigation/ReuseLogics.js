@@ -1,5 +1,6 @@
-import { Text } from "react-native"; 
 import * as ImagePicker from 'expo-image-picker'; 
+import React from 'react';
+import { Text } from 'react-native';
 
 export const showHeaderItem = {
       headerShown: true,  
@@ -20,7 +21,7 @@ export const PickImage = async (arg) => {
                   var camera = await ImagePicker.launchCameraAsync({
                   mediaTypes: ImagePicker.MediaTypeOptions.Images,
                   allowsEditing: false,
-                  aspect: [1, 1],
+                  // aspect: [1, 1],
                   quality: 0.5,
                   });
                   if (!camera.cancelled) {
@@ -31,7 +32,7 @@ export const PickImage = async (arg) => {
                   var library = await ImagePicker.launchImageLibraryAsync({
                   mediaTypes: ImagePicker.MediaTypeOptions.Images,
                   allowsEditing: false,
-                  aspect: [1, 1],
+                  // aspect: [, 1],
                   quality: 0.5,
                   });
                   if (!library.cancelled) {
@@ -43,5 +44,22 @@ export const PickImage = async (arg) => {
             // alert("You've refused to allow this app to access your camera!");
             return denied;
       }
-
+}
+export const PickImageAll = async () => {
+   const { granted } = await ImagePicker.requestCameraPermissionsAsync();
+      if (granted === true) {
+            var library = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: false,
+            // aspect: [1, 1],
+            quality: 0.9,
+            });
+            if (!library.cancelled) {
+                  return library;
+            }
+      } else {
+            const denied = 'Camera permission denied';
+            // alert("You've refused to allow this app to access your camera!");
+            return denied;
+      }
 }

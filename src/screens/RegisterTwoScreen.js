@@ -31,7 +31,7 @@ const RegisterTwoScreen = ({route}) => {
 const navigation  = useNavigation();
 
 const dispatch    = useDispatch();
-
+  // const fullname = 'asj'
   const {user_id,fullname,role,specialityId} = route.params;
   const [isOpen, setIsOpen]     = useState(false);
   const bottomSheetModalRef       = useRef(null);
@@ -53,6 +53,7 @@ const dispatch    = useDispatch();
     }, 100);
   }
   const [modalVisible, setModalVisible] = useState(false);
+  const [fromWhere, setFromWhere] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);  
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -67,12 +68,6 @@ const dispatch    = useDispatch();
   const [profilErr,setprofilErr] = useState();
   const [mrnproofErr,setmrnproofErr] = useState();
   const [passworderr,setPasswordErr] = useState();
-
-  function toggleCameraType() {
-    setType((current) => (
-      current === CameraType.back ? CameraType.front : CameraType.back
-    ));
-  }
 
   const [items, setItems] = useState([
     {label: '1970', value: '1970'}
@@ -103,6 +98,8 @@ const dispatch    = useDispatch();
     password:"",
     profile_pic:"",
     mrnproof:"",
+    // role:4,
+    // user_id:23334
     role:role,
     user_id:user_id
   });
@@ -153,21 +150,17 @@ const showcong = ()=>{
 }
 
 
-const pickupImage = (arg,arg2) => {
+const pickupImage = (arg) => {
+  console.log("fromWhere",fromWhere);
   bottomSheetModalRefSecond.current?.close();
   bottomSheetModalRef.current?.close();
     PickImage(arg).then(async (res) => {
       let localUri = res?.uri;
-      console.log("localUri",localUri);
-      if(arg2 == 'doc'){
-        setimgurl(localUri);
-      }else{
-        setprofileurl(localUri);
-      }
+
           let filename = localUri.split('/').pop();
           // Infer the type of the image
-          let match = /\.(\w+)$/.exec(filename);
-          let type = match ? `image/${match[1]}` : `image`;
+          // let match = /\.(\w+)$/.exec(filename);
+          // let type = match ? `image/${match[1]}` : `image`;
           let uriParts = localUri.split('.');
           let fileType = uriParts[uriParts.length - 1];
           let formData = new FormData();
@@ -176,9 +169,11 @@ const pickupImage = (arg,arg2) => {
             name: filename,
             type: `image/${fileType}`,
           }
-          if(arg2 == 'doc'){
+          if(fromWhere == 'document'){
+            setimgurl(localUri);
             formData.append('mrnproof', imageData);
           }else{
+            setprofileurl(localUri);
             formData.append('profile_pic', imageData);
           }
           const responce = await fetch(`https://docintosh.com/ApiController/image_upload`, {
@@ -190,7 +185,7 @@ const pickupImage = (arg,arg2) => {
          });
         const result=  await responce.json();
 
-        if(arg2 == 'doc'){
+        if(fromWhere == 'document'){
           setregister({ ...register,
             mrnproof: result,
           });
@@ -201,7 +196,6 @@ const pickupImage = (arg,arg2) => {
         }
         setprofilErr('');
         setmrnproofErr('');
-        
     });
 };
  
@@ -225,7 +219,6 @@ useEffect(()=>{
     fetchState();
   },[]);
 
-//||checked === 4 ?!value:''
   const form_submit = async() =>{
     if(!register.pincode){
       setPincode("Please enter a valid pincode");
@@ -256,21 +249,26 @@ useEffect(()=>{
             setIsModalVisible(false);
             navigation.navigate('SelectInterest',{
               user_id : user_id,
-              specialityId:specialityId
+              specialityId:'specialityId'
             })
             },3000);
           }
         }
       }
     }
-
-
 if(loader){
   return(
   <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
       <ActivityIndicator size={'large'} color={"#2C8892"}/>
   </View>)
 }
+
+const handlePickupModal = (val) => {
+  // console.log("val",val);
+  setFromWhere(val)
+  setModalVisible(true);
+}
+
 
 return (
   <GestureHandlerRootView>
@@ -282,7 +280,7 @@ return (
     showsVerticalScrollIndicator={true}
     nestedScrollEnable={true}>
     <View style={styles.suceesheadBox}>
-    <Pressable onPress={() =>handlePresentModal()}>
+    <Pressable onPress={() => handlePickupModal('Profile')}>
      <View style={styles.registermainText}>
           <Image style={{width:56,height:56,borderRadius:50}} source={profileurl?{ uri: profileurl }:require('../assets/images/p2.png')}/>
           <View style={styles.headtopInner}>
@@ -432,7 +430,7 @@ return (
    
     <Text style={[styles.headTexts,{fontFamily:"Inter-SemiBold"}]}>Upload a JPG for MRN Document</Text>
   <View>
-    <TouchableOpacity  onPress={() => handlePresentModalSecond()}>
+    <TouchableOpacity  onPress={() => handlePickupModal("document")}>
       <View style={{borderColor:"#D5DEED",borderRadius:4,borderStyle: 'dashed',borderWidth:1.4,width:"100%",height:102,justifyContent:"center",alignItems:"center"}}>
       <Image source={require('../assets/icons/upload-img.png')} style={{alignSelf:"center"}}  />
      
@@ -489,59 +487,44 @@ return (
     </Modal>
 
   
-
-    <BottomSheetModal
-          ref={bottomSheetModalRef}
-          index={1}
-          snapPoints={snapPoints}
-          backgroundStyle={{ borderRadius: 30 }}
-          onDismiss={() => setIsOpen(false)}>
-        <View>
-          <View style={{margin:10, alignSelf:'flex-start'}}>
-            <TouchableOpacity  onPress={() => { pickupImage(1); 
-              setModalVisible(false);}}>
-              <View style={{flexDirection:'row'}}>
-                <Entypo name="camera" size={24} color="#45B5C0" />
-                <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}} >Camera</Text>
-              </View>
-            </TouchableOpacity>
-         
-            <View style={{marginTop:20}}></View>
-              <TouchableOpacity   onPress={() => {pickupImage(2); setModalVisible(false);}}>
-                <View style={{flexDirection:'row',}} >
-                <FontAwesome name="photo" size={24} color="#45B5C0" />
-                <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}}>Choose Your Gallary</Text>
-                </View>
-              </TouchableOpacity>
-            </View>        
-        </View>
-    </BottomSheetModal>
-
-
-    <BottomSheetModal
-      ref={bottomSheetModalRefSecond}
-      index={1}
-      snapPoints={snapPoints}
-      backgroundStyle={{ borderRadius: 30 }}
-      onDismiss={() => setIsOpen(false)}>
-      <View>
-      <View style={{margin:10, alignSelf:'flex-start'}}>
-        <TouchableOpacity  onPress={() => {pickupImage(1,"doc");setIsOpen(false);}}>
-          <View style={{flexDirection:'row',}}>
-            <Entypo name="camera" size={24} color="#45B5C0" />
-            <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}}>Camera</Text>
-          </View>
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={() => {
+        Alert.alert("Modal has been closed.");
+        setModalVisible(!modalVisible);
+      }}
+    >
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+        <TouchableOpacity
+          style={styles.chooseBtn}
+          onPress={() => {
+            pickupImage(1);
+            setModalVisible(false);
+          }}>
+        <Text style={styles.chooseTxt}>Take Photo</Text>
         </TouchableOpacity>
-        <View style={{marginTop:20}}></View>
-          <TouchableOpacity  onPress={() => {pickupImage(2,"doc");setIsOpen(false);}}>
-            <View style={{flexDirection:'row',}} >
-            <FontAwesome name="photo" size={24} color="#45B5C0"/>
-            <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}}>Choose Your Gallary</Text>
-            </View>
-          </TouchableOpacity>
-        </View>        
-    </View>
-    </BottomSheetModal>
+        <TouchableOpacity
+          style={styles.chooseBtn}
+          onPress={() => {
+            pickupImage(2);
+            setModalVisible(false);
+          }}>
+        <Text style={styles.chooseTxt}>Choose from Gallery</Text>
+         
+        </TouchableOpacity>
+          <Pressable
+            style={[styles.button, styles.buttonClose]}
+            onPress={() => setModalVisible(!modalVisible)}
+          >
+            <Text style={styles.textStyleb}>close</Text>
+          </Pressable>
+        </View>
+      </View>
+    </Modal>
+
 
         </View>
       </ScrollView>
