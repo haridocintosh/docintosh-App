@@ -32,7 +32,8 @@ const RegisterTwoScreen = ({route}) => {
 const navigation  = useNavigation();
 
 const dispatch    = useDispatch();
-  const {user_id,fullname,role} = route.params;
+
+  const {user_id,fullname,role,specialityId} = route.params;
   const [isOpen, setIsOpen]     = useState(false);
   const bottomSheetModalRef       = useRef(null);
   const bottomSheetModalRefSecond = useRef(null);
@@ -313,6 +314,7 @@ useEffect(()=>{
             setIsModalVisible(false);
             navigation.navigate('SelectInterest',{
               user_id : user_id,
+              specialityId:specialityId
             })
             },3000);
           }

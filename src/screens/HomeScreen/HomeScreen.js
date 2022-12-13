@@ -98,7 +98,7 @@ const handleOption = (post_id) => {
 
 
   const asyncFetchDailyData = async () => {
-    getLocalData('USER_INFO').then( async (res) =>{
+    getLocalData('USER_INFO').then(async (res) =>{
       const reData = res?.data
       setuserdata({
         profile:reData?.profileimage,
@@ -117,11 +117,14 @@ const handleOption = (post_id) => {
     navigation.navigate('PostsScreen', {singleItem})
   }
     const renderItem = ({item}) => {
+      // console.log('profilePic',item);
       return(
         <Card style={styles.cardOfPosts} >
           <View style={styles.userInfo}>
             <View  style={{flexDirection:'row',alignItems:'center'}}>
-              <Image source={{uri:item.profileimage}} onPress={() => navigation.navigate('ProfileScreen2')} style={{width:38, height:38,marginRight:5,borderRadius:50}} />
+              <Image source={{uri:item?.profileimage}} 
+               style={{width:38, height:38,marginRight:5,borderRadius:50}}
+                />
               <View >
                 <Text style={{fontSize:14, fontWeight:'400', fontFamily:"Inter-Regular"}}>
                   {item.utitle && item.utitle} {item.first_name && item.first_name} {item.last_name && item.last_name} 

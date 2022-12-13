@@ -149,6 +149,7 @@ const selectedgender=(e)=>{
     ...register,
     gender: e,
    })
+   errgender('')
 }
 
 const setuserrole= (e)=>{
@@ -159,13 +160,6 @@ const setuserrole= (e)=>{
 }
 
 const form_submit = async() =>{
-  // if(!register.fname || !register.lname  || !register.mobile || !register.email || !register.gender || !register.role || !register.speciality || checked === 4 ?!value:''){
-  //     seterr("Please fill the above form");
-  // }else if(emailId != ''){
-  //   setemail("This Email ID is registered with us");
-  // }else if(mobileId != ''){
-  //   setmobile("This mobile no. is registred with us");
-
   if(!register.fname){
     fnerr("Please enter First Name");
   }else if(!register.lname){
@@ -173,11 +167,11 @@ const form_submit = async() =>{
   }else if(!register.email){
     setemail("Please enter valid Email ID");
   }
-  // else if(emailIderr != ''){
-  //   setemail("This Email ID is registered with us");
-  // }else if(mobileId !=''){
-  //   setemail("This mobile no. is registred with us");
-  // }
+  else if(emailIderr != ''){
+    setemail("This Email ID is registered with us");
+  }else if(mobileId !=''){
+    setemail("This mobile no. is registred with us");
+  }
   else if(!register.mobile){
     setmobile("Pleaes enter valid mobile no.");
   }else if(!register.gender){
@@ -199,36 +193,31 @@ const form_submit = async() =>{
       mobile:"",
       gender:"",
       role:"",
+      speciality:""
    })
+  // console.log(result.payload);
     navigation.navigate('DoctorOtp', {
       mobile_no : result.payload.mobilenumber,
       email     : result.payload.email,
       user_id   : result.payload.user_id,
       role      : result.payload.role,
+      speciality: result.payload.speciality,
     })
     }
   }
 
   const handleStudentSubmit = async() =>{
-    // if(!register.fname || !register.lname || !register.email || !register.mobile || !register.gender ||  !register.role || checked === 5 ?!value:''){
-    //     seterr("Please fill the above form")
-    // }else if(emailId != ''){
-    //     setemail("This Email ID is registered with us");
-    // }else if(mobileId != ''){
-    //     setmobile("This mobile no. is registred with us");
     if(!register.fname){
       fnerr("Please enter First Name");
     }else if(!register.lname){
       lnerr("Please enter Last Name");
     }else if(!register.gender){
       errgender("Please Select gender");
-    }
-    // else if(emailIderr != ''){
-    //   setemail("This Email ID is registered with us");
-    // }else if(mobileId !=''){
-    //   setemail("This mobile no. is registred with us");
-    // }
-    else if(!register.email){
+    }else if(emailIderr != ''){
+      setemail("This Email ID is registered with us");
+    }else if(mobileId !=''){
+      setemail("This mobile no. is registred with us");
+    }else if(!register.email){
       setemail("Please enter valid Email ID");
     }else if(!register.mobile){
       setmobile("Pleaes enter valid mobile no.");

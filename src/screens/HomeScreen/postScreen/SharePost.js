@@ -197,6 +197,7 @@ const publishCheck1 = (e, text)=>{
   const handleStudentSubmit = async() =>{
     if(post.publishto ==''){
       Toast.show('Please Select Publish to');
+      bottomSheetModalRefSecond.current?.present();
     }else if(!post.description){
       Toast.show("Please Write Something About Your Post!!!!!!!");
     }else if(!post.postType){
@@ -332,7 +333,7 @@ setSpecialNames(specialityName)
                 <Text style={styles.publicOption}>{whoCanSee? whoCanSee: "Publish"}</Text>
                 <AntDesign name="down" size={12} color="#51668A" />
                 <Text 
-                  style={[styles.publicOption,{width:140}]} numberOfLines={1} >
+                  style={[styles.publicOption,{width:120}]} numberOfLines={1} >
                     {specialNames?.map(data => data+ " ")}
                   </Text>
               </TouchableOpacity>

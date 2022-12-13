@@ -26,9 +26,9 @@ const SelectInterest = ({route}) => {
   const [selectitem,setselectitem]=useState('');
   const [loader, setLoader] = useState(true);
 
-  const user_id ='229533'
-   //const {user_id} = route.params;
- 
+  //const user_id ='229533'
+  const {user_id, specialityId} = route.params;
+ console.log(user_id, specialityId)
   const getItem = (item) => {
    // alert(item.speciality);
     // Function for click on an item
@@ -61,7 +61,7 @@ const SelectInterest = ({route}) => {
 
 
  const getInterestSplData = async () => {
-  const postDetails = {speciality_id:'102'}
+  const postDetails = {speciality_id:specialityId}
   const result = await dispatch(getInterestSpl(postDetails));
   setFilteredDataSource(result?.payload);
   setMasterDataSource(result?.payload);
