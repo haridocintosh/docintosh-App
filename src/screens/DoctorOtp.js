@@ -22,12 +22,14 @@ import { View,
  
  const DoctorOtp = ({route}) => {
    const dispatch = useDispatch(); 
+  //  console.log("routedata",route);
   //  const mobile_no = '9029634011';
   //  const email ='tara@docintosh.com';
   //  const user_id = '228737';
   //  const role = '4'
 
-  const {mobile_no, email, user_id, role} = route.params;
+  const {mobile_no, email, user_id, role, speciality} = route.params;
+
    const [phone ,setPhone] =useState("");
    const navigation = useNavigation();
    const [counter, setCounter] = useState(30);
@@ -48,9 +50,10 @@ import { View,
          Toast.show(result.payload.message);
          if((result.payload.role == '4') && (result.payload.status == 'Success')){
             navigation.navigate('RegisterTwoScreen', {
-                user_id   : result.payload.user_id,
-                fullname  : result.payload.fullname,
-                role      : result.payload.role,
+                user_id     : result.payload.user_id,
+                fullname    : result.payload.fullname,
+                role        : result.payload.role,
+                specialityId: speciality,
             })
         }else{
           if(result.payload.status == 'Success'){

@@ -66,7 +66,8 @@ export default function ContactPermission({navigation}) {
           setLoading(false);
          }
       }else{
-        // navigation.navigate('Login');
+       // navigation.navigate('Login');
+       Toast.show('Permission deny');
       }
     }
     getPrermission();
