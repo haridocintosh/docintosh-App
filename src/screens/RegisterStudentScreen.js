@@ -27,6 +27,7 @@ import Toast from 'react-native-simple-toast';
 import Lottie from 'lottie-react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { coinTransfer } from '../../redux/reducers/coinSlice';
+import { PickImage } from '../navigation/ReuseLogics';
 
 
 
@@ -132,126 +133,117 @@ const setCollege= (e) =>{
 
 //Image Picker//
 
-const pickImage = async (arg) => {
-  if (Platform.OS === 'android'){
-    const { granted } = await ImagePicker.requestCameraPermissionsAsync();
+// const pickImage = async (arg) => {
+//   PickImage(arg).then( async (res) => {
+//     let localUri = res.uri;console.log("localUri",localUri);
+//       setimgurl(localUri);
+//       let filename = localUri.split('/').pop();
+//       // Infer the type of the image
+//       let match = /\.(\w+)$/.exec(filename);
+//       let type = match ? `image/${match[1]}` : `image`;
+//       let uriParts = localUri.split('.');
+//       let fileType = uriParts[uriParts.length - 1];
+//       let formData = new FormData();
+//       const imageData = {
+//         uri : localUri,
+//         name: filename,
+//         type: `image/${fileType}`,
+//       }
+//       formData.append('mrnproof', imageData);
+//       const responce = await fetch(`https://docintosh.com/ApiController/image_upload`, {
+//         method : 'POST',
+//         headers:{
+//             'Content-Type': 'multipart/form-data'
+//         },
+//         body :formData
+//      });
+//     const result1 =  await responce.json();
+//     setregister({...register,
+//       mrnproof: result1,
+//     });
+//     setmrnproofErr('');
+//   })};
 
-      if (granted === true) {
-        if(arg==1){
-          var res = await ImagePicker.launchCameraAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: false,
-            aspect: [4, 3],
-            quality: 1,
+
+// const pickprofile = async (arg) => {
+//   PickImage(arg).then( async (res) => {
+//   let localUri = res?.uri;
+//   console.log("localUri",localUri);
+//   setprofileurl(localUri)
+//       let filename = localUri.split('/').pop();
+//       // Infer the type of the image
+//       let match = /\.(\w+)$/.exec(filename);
+//       let type = match ? `image/${match[1]}` : `image`;
+//       let uriParts = localUri.split('.');
+//       let fileType = uriParts[uriParts.length - 1];
+//       let formData = new FormData();
+//       const imageData = {
+//         uri : localUri,
+//         name: filename,
+//         type: `image/${fileType}`,
+//       }
+//       formData.append('profile_pic', imageData);
+//       const responce = await fetch(`https://docintosh.com/ApiController/image_upload`, {
+//         method : 'POST',
+//         headers:{
+//             'Content-Type': 'multipart/form-data'
+//         },
+//         body :formData
+//      });
+//     const result1=  await responce.json();
+//     setregister({ ...register,
+//       profile_pic: result1,
+//     });
+//     setprofilErr('');
+//   })
+// };
+
+
+const pickupImage = (arg,arg2) => {
+  bottomSheetModalRefSecond.current?.close();
+  bottomSheetModalRef.current?.close();
+    PickImage(arg).then(async (res) => {
+      let localUri = res?.uri;
+      console.log("localUri",localUri);
+      if(arg2 == 'doc'){
+        setimgurl(localUri);
+      }else{
+        setprofileurl(localUri);
+      }
+          let filename = localUri.split('/').pop();
+          // Infer the type of the image
+          let match = /\.(\w+)$/.exec(filename);
+          let type = match ? `image/${match[1]}` : `image`;
+          let uriParts = localUri.split('.');
+          let fileType = uriParts[uriParts.length - 1];
+          let formData = new FormData();
+          const imageData = {
+            uri : localUri,
+            name: filename,
+            type: `image/${fileType}`,
+          }
+          formData.append('profile_pic', imageData);
+          const responce = await fetch(`https://docintosh.com/ApiController/image_upload`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'multipart/form-data'
+            },
+            body :formData
+         });
+        const result=  await responce.json();
+
+        if(arg2 == 'doc'){
+          setregister({ ...register,
+            mrnproof: result,
           });
         }else{
-          var res = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: false,
-            aspect: [4, 3],
-            quality: 1,
+          setregister({ ...register,
+            profile_pic: result,
           });
         }
-      } else {
-        console.log('Camera permission denied');
-        Toast.show('Camera permission denied');
-      }
-  } else {
-    return true;
-  }
- 
-  let localUri = res.uri;console.log("localUri",localUri);
-
-  setimgurl(localUri);
-      let filename = localUri.split('/').pop();
-      // Infer the type of the image
-      let match = /\.(\w+)$/.exec(filename);
-      let type = match ? `image/${match[1]}` : `image`;
-      let uriParts = localUri.split('.');
-      let fileType = uriParts[uriParts.length - 1];
-      let formData = new FormData();
-      const imageData = {
-        uri : localUri,
-        name: filename,
-        type: `image/${fileType}`,
-      }
-   
-      formData.append('mrnproof', imageData);
-      const responce = await fetch(`https://docintosh.com/ApiController/image_upload`, {
-        method : 'POST',
-        headers:{
-            'Content-Type': 'multipart/form-data'
-        },
-        body :formData
-     });
-
-    const result1 =  await responce.json();
-
-    setregister({...register,
-      mrnproof: result1,
+        setprofilErr('');
+        setmrnproofErr('');
     });
-    setmrnproofErr('')
-};
-
-
-const pickprofile = async (arg) => {
-    const { granted } = await ImagePicker.requestCameraPermissionsAsync();
-    if (granted === true) {
-      if(arg==1){
-        var result = await ImagePicker.launchCameraAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          allowsEditing: false,
-          aspect: [4, 3],
-          quality: 1,
-        });
-      }else{
-        var result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          allowsEditing: false,
-          aspect: [4, 3],
-          quality: 1,
-        });
-      }
-    } else {
-      console.log('Camera permission denied');
-      Toast.show('Camera permission denied');
-    }
-
- 
-  let localUri = result.uri;
-  console.log("localUri",localUri);
-  setprofileurl(localUri)
-      let filename = localUri.split('/').pop();
-   
-      // Infer the type of the image
-      let match = /\.(\w+)$/.exec(filename);
-      let type = match ? `image/${match[1]}` : `image`;
-     
-
-      let uriParts = localUri.split('.');
-      let fileType = uriParts[uriParts.length - 1];
-      let formData = new FormData();
-      const imageData = {
-        uri : localUri,
-        name: filename,
-        type: `image/${fileType}`,
-      }
-   
-      formData.append('profile_pic', imageData);
-      const responce = await fetch(`https://docintosh.com/ApiController/image_upload`, {
-        method : 'POST',
-        headers:{
-            'Content-Type': 'multipart/form-data'
-        },
-        body :formData
-     });
-
-    const result1=  await responce.json();
-   
-    setregister({ ...register,
-      profile_pic: result1,
-    });
-    setprofilErr('')
 };
 
 const form_submit = async() =>{ 
@@ -397,7 +389,6 @@ return (
                 fontFamily: 'PlusJakartaSans-Regular',
                 textTransform:"capitalize"
               }}
-
               listItemLabelStyle={{
                 color: "#687690",
                 fontWeight:"800",
@@ -473,7 +464,6 @@ return (
       </View>
     </Modal>
 
-
     <Modal
       animationType="slide"
       transparent={true}
@@ -488,7 +478,7 @@ return (
         <TouchableOpacity
           style={styles.chooseBtn}
           onPress={() => {
-            pickprofile(1);
+            pickupImage(1);
             setModalVisible(false);
           }}>
 
@@ -498,7 +488,7 @@ return (
         <TouchableOpacity
           style={styles.chooseBtn}
           onPress={() => {
-            pickprofile(2);
+            pickupImage(2);
             setModalVisible(false);
           }}>
          
@@ -530,24 +520,21 @@ return (
         <TouchableOpacity
           style={styles.chooseBtn}
           onPress={() => {
-            pickImage(1);
+            pickupImage(1, "doc");
             setisModalShow(false);
           }}>
-
         <Text style={styles.chooseTxt}>Take Photo</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.chooseBtn}
           onPress={() => {
-            pickImage(2);
+            pickupImage(2,"doc");
             setisModalShow(false);
           }}>
          
       <Text style={styles.chooseTxt}>Choose from Gallery</Text>
-         
         </TouchableOpacity>
-
           <Pressable
             style={[styles.button, styles.buttonClose]}
             onPress={() => setisModalShow(!isModalShow)}

@@ -50,9 +50,6 @@
       "eas": {
         "projectId": "49ae4f85-f2ca-4e4f-a0dd-f3c561c211db"
       }
-    },
-    "android": {
-      "permissions": ["CAMERA"]
     }
   }
 }

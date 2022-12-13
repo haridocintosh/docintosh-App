@@ -7,13 +7,10 @@ import {
   TouchableOpacity,
   Image,
   ActivityIndicator,
-  PermissionsAndroid,
-  Platform,
   TextInput,Pressable} from 'react-native'
 import React, {useEffect, useState, useRef, useCallback} from 'react'
 import { useDispatch } from 'react-redux';
 import { Camera, CameraType } from 'expo-camera';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {Ionicons,Entypo, FontAwesome} from 'react-native-vector-icons';
 import Modal from "react-native-modal";
 import CustomButton from '../components/CustomButton';
@@ -24,18 +21,18 @@ import { getAllState } from '../../redux/reducers/getSpeciality';
 import { userRegisterSecond } from '../../redux/reducers/loginAuth';
 import { coinTransfer } from '../../redux/reducers/coinSlice';
 import Toast from 'react-native-simple-toast';
-import successic from '../assets/dr-icon/Ic_Success.png';
 import Lottie from 'lottie-react-native';
-import { useFonts } from 'expo-font';
 import { BottomSheetModal,BottomSheetModalProvider} from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { PickImage } from '../navigation/ReuseLogics';
+
 
 const RegisterTwoScreen = ({route}) => {
 const navigation  = useNavigation();
 
 const dispatch    = useDispatch();
-const fullname = "taara";
- // const {user_id,fullname,role} = route.params;
+// const fullname = "taara";
+ const {user_id,fullname,role} = route.params;
   const [isOpen, setIsOpen]     = useState(false);
   const bottomSheetModalRef       = useRef(null);
   const bottomSheetModalRefSecond = useRef(null);
@@ -57,13 +54,11 @@ const fullname = "taara";
   }
   const [modalVisible, setModalVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);  
-  const [isModalShow, setisModalShow] = useState(false);  
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [openState, setOpenState] = useState(false);
   const [valueState, setValueState] = useState(null);
   const [err,seterr] = useState();
-  const [resourcePath,setResourcePath] = useState({});
   const [showeye, setshoweye] = useState(true);
   const [pincodeerr,setPincode] = useState();
   const [mrnId,setmrnId] = useState();
@@ -72,8 +67,6 @@ const fullname = "taara";
   const [profilErr,setprofilErr] = useState();
   const [mrnproofErr,setmrnproofErr] = useState();
   const [passworderr,setPasswordErr] = useState();
-
-
 
   function toggleCameraType() {
     setType((current) => (
@@ -110,10 +103,9 @@ const fullname = "taara";
     password:"",
     profile_pic:"",
     mrnproof:"",
-    role:4,
-    user_id:123
+    role:role,
+    user_id:user_id
   });
-
  
   const Pincode= (e) =>{
     const isValidnameRegex = /^(\[0-9]?)?\d{6}$/;;
@@ -160,117 +152,90 @@ const showcong = ()=>{
   setIsModalVisible(!isModalVisible);
 }
 
-const pickImage = async (arg) => {
-    const { granted } = await ImagePicker.requestCameraPermissionsAsync();
-    if (granted === true) {
-      if(arg==1){
-        var result = await ImagePicker.launchCameraAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          allowsEditing: false,
-          aspect: [1, 1],
-          quality: 1,
-        });
-      }else{
-        var result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          allowsEditing: false,
-          aspect: [1, 1],
-          quality: 1,
-        });
-      }
-    } else {
-      Toast.show('Camera permission denied');
-    }
-  let localUri = result.uri;
+// const pickImage = (arg) => {
+//     PickImage(arg).then( async (res) => {
+//       let localUri = res?.uri;
+//       bottomSheetModalRefSecond.current?.close();
+//       setimgurl(localUri)
+//           let filename = localUri.split('/').pop();
+//           // Infer the type of the image
+//           let match = /\.(\w+)$/.exec(filename);
+//           let type = match ? `image/${match[1]}` : `image`;
+         
+//           let uriParts = localUri.split('.');
+//           let fileType = uriParts[uriParts.length - 1];
+//           let formData = new FormData();
+//           const imageData = {
+//             uri : localUri,
+//             name: filename,
+//             type: `image/${fileType}`,
+//           }
+       
+//           formData.append('mrnproof', imageData);
+//           const responce = await fetch(`https://docintosh.com/ApiController/image_upload`, {
+//             method : 'POST',
+//             headers:{
+//                 'Content-Type': 'multipart/form-data'
+//             },
+//             body :formData
+//          });
+    
+//         const result1=  await responce.json();
+    
+//         setregister({ ...register,
+//           mrnproof: result1,
+//         });
+//         setmrnproofErr('');
+//     });
+// };
+
+
+const pickupImage = (arg,arg2) => {
   bottomSheetModalRefSecond.current?.close();
-  setimgurl(localUri)
-      let filename = localUri.split('/').pop();
-      // Infer the type of the image
-      let match = /\.(\w+)$/.exec(filename);
-      let type = match ? `image/${match[1]}` : `image`;
-     
-      let uriParts = localUri.split('.');
-      let fileType = uriParts[uriParts.length - 1];
-      let formData = new FormData();
-      const imageData = {
-        uri : localUri,
-        name: filename,
-        type: `image/${fileType}`,
-      }
-   
-      formData.append('mrnproof', imageData);
-      const responce = await fetch(`https://docintosh.com/ApiController/image_upload`, {
-        method : 'POST',
-        headers:{
-            'Content-Type': 'multipart/form-data'
-        },
-        body :formData
-     });
-
-    const result1=  await responce.json();
-
-    setregister({ ...register,
-      mrnproof: result1,
-    });
-    setmrnproofErr('');
-};
-
-
-const pickprofile = async (arg) => {
-  // No permissions request is necessary for launching the image library
-    const { granted } = await ImagePicker.requestCameraPermissionsAsync();
-    if (granted === true) {
-      if(arg==1){
-        var result = await ImagePicker.launchCameraAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          allowsEditing: false,
-          aspect: [1, 1],
-          quality: 0.5,
-        });
-      }else{
-        var result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          allowsEditing: false,
-          aspect: [1, 1],
-          quality: 0.5,
-        });
-      }
-    } else {
-      Toast.show('Camera permission denied');
-    }
-
-  let localUri = result.uri;
-  console.log("localUri",localUri);
-  
   bottomSheetModalRef.current?.close();
-  setprofileurl(localUri)
- 
-      let filename = localUri.split('/').pop();
-      // Infer the type of the image
-      let match = /\.(\w+)$/.exec(filename);
-      let type = match ? `image/${match[1]}` : `image`;
-      let uriParts = localUri.split('.');
-      let fileType = uriParts[uriParts.length - 1];
-      let formData = new FormData();
-      const imageData = {
-        uri : localUri,
-        name: filename,
-        type: `image/${fileType}`,
+    PickImage(arg).then(async (res) => {
+      let localUri = res?.uri;
+      console.log("localUri",localUri);
+      if(arg2 == 'doc'){
+        setimgurl(localUri);
+      }else{
+        setprofileurl(localUri);
       }
-      formData.append('profile_pic', imageData);
-      const responce = await fetch(`https://docintosh.com/ApiController/image_upload`, {
-        method : 'POST',
-        headers:{
-            'Content-Type': 'multipart/form-data'
-        },
-        body :formData
-     });
+          let filename = localUri.split('/').pop();
+          // Infer the type of the image
+          let match = /\.(\w+)$/.exec(filename);
+          let type = match ? `image/${match[1]}` : `image`;
+          let uriParts = localUri.split('.');
+          let fileType = uriParts[uriParts.length - 1];
+          let formData = new FormData();
+          const imageData = {
+            uri : localUri,
+            name: filename,
+            type: `image/${fileType}`,
+          }
+          formData.append('profile_pic', imageData);
+          const responce = await fetch(`https://docintosh.com/ApiController/image_upload`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'multipart/form-data'
+            },
+            body :formData
+         });
+        const result=  await responce.json();
 
-    const result1=  await responce.json();
-    setregister({ ...register,
-      profile_pic: result1,
+        if(arg2 == 'doc'){
+          setregister({ ...register,
+            mrnproof: result,
+          });
+        }else{
+          setregister({ ...register,
+            profile_pic: result,
+          });
+        }
+        setprofilErr('');
+        setmrnproofErr('');
+        
     });
-    setprofilErr('')
 };
  
  
@@ -278,15 +243,12 @@ useEffect(()=>{
   const year = 1972;
   const currentYear =(new Date()).getFullYear();
   const years = Array.from(new Array(51),(val, index) => index + year);
-
   const years_list = years.filter((e)=>{
     return e <= currentYear;
     }).map((ele, index)=>{
     return {label: ele, value: ele};
   });
-
     setItems(years_list);
-
     async function fetchState(){
       const allState = await dispatch(getAllState());
       setState(allState.payload.map((ele,index)=>{
@@ -298,7 +260,6 @@ useEffect(()=>{
 
 //||checked === 4 ?!value:''
   const form_submit = async() =>{
-   
     if(!register.pincode){
       setPincode("Please enter a valid pincode");
     }else if(!register.mrn){
@@ -335,15 +296,6 @@ useEffect(()=>{
       }
     }
 
-  const [fontsLoaded] = useFonts({
-    'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),
-    'Inter-SemiBold':require('../assets/fonts/Inter-SemiBold.ttf'),
-    'PlusJakartaSans-Regular': require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
-    'PlusJakartaSans-Bold':require('../assets/fonts/PlusJakartaSans-Bold.ttf')
-  });
-  if(!fontsLoaded) {
-    return null;
-  }
 
 if(loader){
   return(
@@ -435,9 +387,6 @@ return (
         searchContainerStyle={{
           borderBottomColor: "#687690"
         }}
-
-      
-       
       />
      
       </View>
@@ -581,7 +530,7 @@ return (
           onDismiss={() => setIsOpen(false)}>
         <View>
           <View style={{margin:10, alignSelf:'flex-start'}}>
-            <TouchableOpacity  onPress={() => { pickprofile(1); 
+            <TouchableOpacity  onPress={() => { pickupImage(1); 
               setModalVisible(false);}}>
               <View style={{flexDirection:'row'}}>
                 <Entypo name="camera" size={24} color="#45B5C0" />
@@ -590,7 +539,7 @@ return (
             </TouchableOpacity>
          
             <View style={{marginTop:20}}></View>
-              <TouchableOpacity   onPress={() => {pickprofile(2); setModalVisible(false);}}>
+              <TouchableOpacity   onPress={() => {pickupImage(2); setModalVisible(false);}}>
                 <View style={{flexDirection:'row',}} >
                 <FontAwesome name="photo" size={24} color="#45B5C0" />
                 <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}}>Choose Your Gallary</Text>
@@ -601,31 +550,30 @@ return (
     </BottomSheetModal>
 
 
-        <BottomSheetModal
-          ref={bottomSheetModalRefSecond}
-          index={1}
-          snapPoints={snapPoints}
-          backgroundStyle={{ borderRadius: 30 }}
-          onDismiss={() => setIsOpen(false)}>
-         <View>
-          <View style={{margin:10, alignSelf:'flex-start'}}>
-            <TouchableOpacity  onPress={() => {pickImage(1);setIsOpen(false);}}>
-              <View style={{flexDirection:'row',}}>
-                <Entypo name="camera" size={24} color="#45B5C0" />
-                <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}} >Camera</Text>
-              </View>
-            </TouchableOpacity>
-         
-            <View style={{marginTop:20}}></View>
-              <TouchableOpacity  onPress={() => {pickImage(2);setIsOpen(false);}}>
-                <View style={{flexDirection:'row',}} >
-                <FontAwesome name="photo" size={24} color="#45B5C0" />
-                <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}}>Choose Your Gallary</Text>
-                </View>
-              </TouchableOpacity>
-            </View>        
-        </View>
-        </BottomSheetModal>
+    <BottomSheetModal
+      ref={bottomSheetModalRefSecond}
+      index={1}
+      snapPoints={snapPoints}
+      backgroundStyle={{ borderRadius: 30 }}
+      onDismiss={() => setIsOpen(false)}>
+      <View>
+      <View style={{margin:10, alignSelf:'flex-start'}}>
+        <TouchableOpacity  onPress={() => {pickupImage(1,"doc");setIsOpen(false);}}>
+          <View style={{flexDirection:'row',}}>
+            <Entypo name="camera" size={24} color="#45B5C0" />
+            <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}}>Camera</Text>
+          </View>
+        </TouchableOpacity>
+        <View style={{marginTop:20}}></View>
+          <TouchableOpacity  onPress={() => {pickupImage(2,"doc");setIsOpen(false);}}>
+            <View style={{flexDirection:'row',}} >
+            <FontAwesome name="photo" size={24} color="#45B5C0"/>
+            <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}}>Choose Your Gallary</Text>
+            </View>
+          </TouchableOpacity>
+        </View>        
+    </View>
+    </BottomSheetModal>
 
         </View>
       </ScrollView>

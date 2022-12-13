@@ -49,7 +49,7 @@ if(loader){
         if(resData){
           setDefaultRoute("HomeScreen");
         }else{
-          setDefaultRoute("RegisterTwoScreen");
+          setDefaultRoute("Login");
         }
         setStatusKeyLoaded(true)
       })
