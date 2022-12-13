@@ -200,8 +200,6 @@ const setCollege= (e) =>{
 
 
 const pickupImage = (arg,arg2) => {
-  bottomSheetModalRefSecond.current?.close();
-  bottomSheetModalRef.current?.close();
     PickImage(arg).then(async (res) => {
       let localUri = res?.uri;
       console.log("localUri",localUri);
@@ -212,8 +210,8 @@ const pickupImage = (arg,arg2) => {
       }
           let filename = localUri.split('/').pop();
           // Infer the type of the image
-          let match = /\.(\w+)$/.exec(filename);
-          let type = match ? `image/${match[1]}` : `image`;
+          // let match = /\.(\w+)$/.exec(filename);
+          // let type = match ? `image/${match[1]}` : `image`;
           let uriParts = localUri.split('.');
           let fileType = uriParts[uriParts.length - 1];
           let formData = new FormData();
@@ -221,6 +219,12 @@ const pickupImage = (arg,arg2) => {
             uri : localUri,
             name: filename,
             type: `image/${fileType}`,
+          }
+
+          if(arg2 == 'doc'){
+            formData.append('mrnproof', imageData);
+          }else{
+            formData.append('profile_pic', imageData);
           }
           formData.append('profile_pic', imageData);
           const responce = await fetch(`https://docintosh.com/ApiController/image_upload`, {
@@ -231,16 +235,6 @@ const pickupImage = (arg,arg2) => {
             body :formData
          });
         const result=  await responce.json();
-
-        if(arg2 == 'doc'){
-          setregister({ ...register,
-            mrnproof: result,
-          });
-        }else{
-          setregister({ ...register,
-            profile_pic: result,
-          });
-        }
         setprofilErr('');
         setmrnproofErr('');
     });
