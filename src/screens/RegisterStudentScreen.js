@@ -134,81 +134,11 @@ const setCollege= (e) =>{
   setclgerr('')
 }
 
-//Image Picker//
-
-// const pickImage = async (arg) => {
-//   PickImage(arg).then( async (res) => {
-//     let localUri = res.uri;console.log("localUri",localUri);
-//       setimgurl(localUri);
-//       let filename = localUri.split('/').pop();
-//       // Infer the type of the image
-//       let match = /\.(\w+)$/.exec(filename);
-//       let type = match ? `image/${match[1]}` : `image`;
-//       let uriParts = localUri.split('.');
-//       let fileType = uriParts[uriParts.length - 1];
-//       let formData = new FormData();
-//       const imageData = {
-//         uri : localUri,
-//         name: filename,
-//         type: `image/${fileType}`,
-//       }
-//       formData.append('mrnproof', imageData);
-//       const responce = await fetch(`https://docintosh.com/ApiController/image_upload`, {
-//         method : 'POST',
-//         headers:{
-//             'Content-Type': 'multipart/form-data'
-//         },
-//         body :formData
-//      });
-//     const result1 =  await responce.json();
-//     setregister({...register,
-//       mrnproof: result1,
-//     });
-//     setmrnproofErr('');
-//   })};
-
-
-// const pickprofile = async (arg) => {
-//   PickImage(arg).then( async (res) => {
-//   let localUri = res?.uri;
-//   console.log("localUri",localUri);
-//   setprofileurl(localUri)
-//       let filename = localUri.split('/').pop();
-//       // Infer the type of the image
-//       let match = /\.(\w+)$/.exec(filename);
-//       let type = match ? `image/${match[1]}` : `image`;
-//       let uriParts = localUri.split('.');
-//       let fileType = uriParts[uriParts.length - 1];
-//       let formData = new FormData();
-//       const imageData = {
-//         uri : localUri,
-//         name: filename,
-//         type: `image/${fileType}`,
-//       }
-//       formData.append('profile_pic', imageData);
-//       const responce = await fetch(`https://docintosh.com/ApiController/image_upload`, {
-//         method : 'POST',
-//         headers:{
-//             'Content-Type': 'multipart/form-data'
-//         },
-//         body :formData
-//      });
-//     const result1=  await responce.json();
-//     setregister({ ...register,
-//       profile_pic: result1,
-//     });
-//     setprofilErr('');
-//   })
-// };
-
 
 const pickupImage = (arg) => {
     PickImage(arg).then(async (res) => {
       let localUri = res?.uri;
           let filename = localUri.split('/').pop();
-          // Infer the type of the image
-          // let match = /\.(\w+)$/.exec(filename);
-          // let type = match ? `image/${match[1]}` : `image`;
           let uriParts = localUri.split('.');
           let fileType = uriParts[uriParts.length - 1];
           let formData = new FormData();
