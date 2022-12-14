@@ -249,7 +249,7 @@ useEffect(()=>{
             setIsModalVisible(false);
             navigation.navigate('SelectInterest',{
               user_id : user_id,
-              specialityId:'specialityId'
+              specialityId:specialityId
             })
             },3000);
           }
