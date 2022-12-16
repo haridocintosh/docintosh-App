@@ -25,9 +25,6 @@ import {createDrawerNavigator,DrawerItem} from '@react-navigation/drawer';
 import { getLocalData } from '../apis/GetLocalData';
 
 
-
-
-
 const CustomDrawer = (props) => { 
   const navigation = useNavigation();
   const [logoutdata,setlogoutdata]=useState();
@@ -99,10 +96,6 @@ const CustomDrawer = (props) => {
         <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor: '#071B36',}}>
           <View style={styles.drowerChilds}>
             <DrawerItemList {...props} />
-            {/* <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
-              <Entypo name="trophy" size={25} color="white" />
-              <Text style={styles.sideDrawerName}>Leaderboard</Text>
-            </TouchableOpacity > */}
             <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("insideContactPermission")}}>
               <MaterialIcons name="person-add-alt-1" size={25} color="white" />
               <Text style={styles.sideDrawerName}>Invite</Text>
@@ -131,7 +124,6 @@ const CustomDrawer = (props) => {
         </DrawerContentScrollView>
 
         <View style={styles.deviderLine}/>
-        
         <View style={{paddingHorizontal: 20,}}>
           <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15 }}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -149,18 +141,6 @@ const CustomDrawer = (props) => {
             </View>
           </TouchableOpacity>
             <View style={{marginVertical:15}}>
-
-            {/* <DrawerItem 
-              label="Log out"
-              color={'#fff'}
-              onPress={()=>{
-                AsyncStorage.clear();
-                navigation.navigate("Login");
-              }}
-              style={{borderWidth:1,borderColor:'#fff',borderRadius:15/2}}
-            />
-            <DrawerItem label="Logout" onPress={() => props.navigation.navigate("LoginScreen")}  */}
-            {/* style={{borderWidth:1,borderColor:'#fff',borderRadius:15/2}}/> */}
             <Button
               onPress={() => removeData()}
                 title={"Logout"}
@@ -184,7 +164,8 @@ const styles = StyleSheet.create({
   DrowerContainer:{
     flex: 1,  
     width:325,
-    position:'relative'
+    position:'relative',
+    marginTop:28
   },
   DocLogo:{
     flexDirection:'row',
@@ -226,15 +207,13 @@ const styles = StyleSheet.create({
   drowerChilds:{
     flex: 1, 
     backgroundColor: '#071B36', 
-    paddingTop: 10
   },
   sideDrawerComp:{
-    // borderWidth:1,
     borderColor:'#ccc',
     height:45,
-    margin:10,
+    marginHorizontal:10,
+    marginVertical:5,
     borderRadius:5,
-    // backgroundColor:"#45B5C0",
     flexDirection:'row',
     alignItems:'center',
     padding:10

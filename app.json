@@ -31,7 +31,10 @@
         "CAMERA",
         "WRITE_EXTERNAL_STORAGE",
         "READ_EXTERNAL_STORAGE",
-        "ACCESS_MEDIA_LOCATION"
+        "ACCESS_MEDIA_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "CAMERA_ROLL",
+        "NOTIFICATIONS"
       ]
     },
     "plugins": [
@@ -47,6 +50,17 @@
         {
           "microphonePermission": "Allow Voice to Text Tutorial to access the microphone",
           "speechRecognitionPermission": "Allow Voice to Text Tutorial to securely recognize user speech"
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./local/assets/notification-icon.png",
+          "color": "#ffffff",
+          "sounds": [
+            "./local/assets/notification-sound.wav",
+            "./local/assets/notification-sound-other.wav"
+          ]
         }
       ]
     ],

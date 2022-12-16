@@ -4,12 +4,14 @@ import { styles } from './BlockListStyle';
 import { getLocalData } from '../../../apis/GetLocalData';
 import { getBlockedUsersApi } from '../../../../redux/reducers/SettingsSlice';
 import { useDispatch } from 'react-redux';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 
 const BlockList = ({navigation}) => {
 
     const [item, setItem] = useState();
     const [visible, setVisible] = useState(false);
+    const [name, setName] = useState();
     const dispatch = useDispatch();
 
 
@@ -17,7 +19,6 @@ const BlockList = ({navigation}) => {
         getLocalData("USER_INFO").then( async (res) => {
             const blockedUsers = await dispatch(getBlockedUsersApi({user_id:res?.data?.id}));
             setItem(blockedUsers.payload)
-            console.log(blockedUsers.payload);
         })
     }
 
@@ -27,10 +28,14 @@ const BlockList = ({navigation}) => {
     },[])
 
 
-    const handleUnblock = (id) => {
-        console.log("id",id);
-        setVisible(true)
+    const handleUnblock = (id, name) => {
+        setName(name);
+        setVisible(true);
+    }
 
+    const handleUnblockOk = ()=> {
+        console.log("unblocked");
+        setVisible(false);
     }
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: "#ecf2f6",paddingHorizontal:15,paddingVertical:10 }}>
@@ -43,12 +48,12 @@ const BlockList = ({navigation}) => {
                     <Image source={{uri:data?.profileimage}} style={{width:50,height:50,borderRadius:50}}/>
                     <View style={styles.doctorListContent}>
                         <Text style={{fontWeight:"600",fontSize:15}}>
-                            {data?.utitle} {data?.first_name} {data?.last_name}
+                            {data?.username}
                         </Text>
                         <Text style={styles.communittysubtxt}>{data?.speciality}</Text>
                     </View>
                 </View>
-                <TouchableOpacity onPress={() => handleUnblock(data?.id)}>
+                <TouchableOpacity onPress={() => handleUnblock(data?.id, data?.username)}>
                     <Text style={styles.UnblockText}>Unblock</Text>
                 </TouchableOpacity>
             </View>
@@ -58,23 +63,19 @@ const BlockList = ({navigation}) => {
         <Modal
             animationType="fade"
             transparent={true}
-            visible={visible}
-            >
+            visible={visible}>
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                <Text style={styles.textBold}>Hold on!,</Text>
-                <Text style={styles.textNormal}>Are you sure you want to exit app?</Text>
+                <TouchableOpacity onPress={() => setVisible(!visible)} style={styles.closeModalXIcon}>
+                    <AntDesign name='close' size={25} color={'#51668A'}/>
+                </TouchableOpacity>
+                <Text style={styles.textBold}>Unblock {name}?</Text>
+                <Text style={styles.textNormal}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis porta risus.</Text>
                 <View style={styles.buttonsContainer}>
                     <TouchableOpacity 
-                    style={[styles.buttonsDesign,styles.leftButtonsDesign]} 
-                    onPress={() =>{setVisible(false)}}>
-                    <Text style={[styles.textBold,styles.leftText]}>Cancel</Text>
-                    </TouchableOpacity>
-                    <Text>{"        "}</Text>
-                    <TouchableOpacity 
-                    style={[styles.buttonsDesign,styles.RightButtonsDesign]}
-                    onPress={() => handleExit()}>
-                    <Text style={[styles.textBold,styles.RightText]}>Okay</Text>
+                    style={styles.buttonsDesign}
+                    onPress={() => handleUnblockOk()}>
+                    <Text style={[styles.textBold,styles.RightText]}>Unblock</Text>
                     </TouchableOpacity>
                 </View>
                 </View>
