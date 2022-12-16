@@ -15,7 +15,7 @@ const Speciality = ({filteredDataSource}) => {
                     <Image source={{uri:item?.userprofile}} style={{width:50,height:50,borderRadius:50}}/>
                     <View style={styelcss.doctorListContent}>
                         <Text style={{fontWeight:"600",fontSize:15}}>
-                            {item?.utitle} {item?.first_name} {item?.last_name}
+                            {item?.username}
                         </Text>
                         <Text style={styelcss.communittysubtxt}>{item?.speciality}</Text>
                     </View>
