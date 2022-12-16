@@ -10,6 +10,10 @@ import ThankYouPage from '../screens/Survay/ThankYouPage';
 import EngageScreen from '../screens/EngageScreen';
 import HandleBack from './HandleBack';
 import { showHeaderItem ,showHeaderItemBackless} from './ReuseLogics';
+import SavedPost from '../screens/Settings/SavedPost/SavedPost';
+import BlockList from '../screens/Settings/BlockList/BlockList';
+
+
 
 const EngageNavigation = () => {
     const Stack = createNativeStackNavigator();
@@ -25,6 +29,8 @@ const EngageNavigation = () => {
         <Stack.Screen name="SurveyMcq" component={SurveyMcq} options={showHeaderItem} />
         <Stack.Screen name="Surveys" component={Surveys} options={showHeaderItem} />
         <Stack.Screen name="ThankYouPage" component={ThankYouPage} options={showHeaderItemBackless}/>
+        <Stack.Screen name="SavedPost" component={SavedPost} options={showHeaderItem} />
+        <Stack.Screen name="BlockList" component={BlockList} options={showHeaderItem} />
     </Stack.Navigator>
     </>
   )

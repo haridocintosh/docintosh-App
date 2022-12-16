@@ -119,7 +119,7 @@ export const styles = StyleSheet.create({
     borderColor: "#51668A",
     height: 2,
     borderRadius: 12,
-    marginTop: 6,
+    marginTop: 8,
     marginHorizontal: 5,
   },
   cardOfPosts: {
@@ -128,6 +128,12 @@ export const styles = StyleSheet.create({
     shadowRadius: 10,
     padding: 15,
     marginTop: -10,
+  },
+  SavePostsContainer: {
+    marginBottom: 20,
+    borderRadius: 10,
+    shadowRadius: 10,
+    padding: 15,
   },
   bgtophome: {
     width: "100%",
@@ -139,7 +145,8 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     padding: 15,
     position:'absolute',
-    width:'100%'
+    width:'100%',
+    marginTop:15
   },
   collectedCoins: {
     borderRadius: 50,

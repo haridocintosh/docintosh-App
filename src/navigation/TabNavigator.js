@@ -3,7 +3,6 @@ import {Image} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import CommunityScreen from '../screens/CommunityScreen';
 import KnowledgeScreen from '../screens/KnowledgeScreen';
-import Animated from 'react-native-reanimated';
 import HomeNavigation from './HomeNavigation';
 import EngageNavigation from './EngageNavigation';
 

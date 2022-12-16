@@ -43,7 +43,6 @@ const PublicReactions = ({item,getStorageData}) => {
     const getlikeCounter = await dispatch(getCointransfer(likeCounter));
     setHeart(false);
   }
-
   getStorageData();
  }
 
