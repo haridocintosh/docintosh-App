@@ -1,6 +1,7 @@
 'use strict';
 import {
-  StyleSheet
+  StyleSheet,
+  StatusBar
 } from 'react-native';
 
 module.exports = StyleSheet.create({
@@ -164,17 +165,16 @@ module.exports = StyleSheet.create({
     paddingLeft: 60,
     paddingRight: 80
   },
-  maindDivBannermcq:{
+  searchContainer:{
     paddingHorizontal: 20,
-    marginTop: 35,
-      
+    backgroundColor: "#ecf2f6",
+    flex:1,
   },
   ciculemcq: {
     backgroundColor: "#606060",
     height: 75,
     width: 75,
     borderRadius: 50,
-
   },
   ciculemcqLight: {
     backgroundColor: "#D9D9D9",
@@ -458,10 +458,42 @@ backgroundColor:"#606060",
       height: 98,
       backgroundColor:"grey"
     },
-
     tinyLogo:{
       width:30,
       height:30
-    }
+    },
+    tabBar: {
+      flexDirection: 'row',
+      // paddingVertical:0,
+      // borderWidth:1,
+      backgroundColor:'#F2FAFA'
+    },
+    tabItem: {
+      flex: 1,
+      alignItems: 'center',
+      paddingVertical:20,
+      // borderBottomWidth:2
+    },
+    headerContainer:{
+      marginTop:30,
+      backgroundColor:'#071B36',
+      height:50,
+      flexDirection:'row',
+      alignItems:'center',
+      justifyContent:'space-between',
+      paddingHorizontal:15
+    },
+    communitySubDiv:{
+      marginTop:15,
+      flexDirection:'row',justifyContent:'space-between',alignItems:'center'
+    },
+    doctorListContent:{
+      marginLeft:5
+    },
+    communittysubtxt:{
+      marginTop:3,
+      color:'#51668A',
+      fontSize:12
+    },
 
 });

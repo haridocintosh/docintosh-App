@@ -5,26 +5,34 @@ import { Card } from 'react-native-paper';
 import ProfileScreenPost from './ProfileScreenPost';
 import { styles } from './profilestyle';
 import { getLocalData } from '../../apis/GetLocalData';
+import { getAllCoins } from '../../../redux/reducers/postData';
+import { useDispatch } from 'react-redux';
+
+
 
 
 const ProfileScreen = ({navigation}) => {
+  const [allcoins, setAllcoins] = useState(0);
   const [userdata,setuserdata]=useState({
     fullname : "",
     profile:"",
     speciality:"",
   })
+  const dispatch = useDispatch();
 
-  const asyncFetchDailyData = async () => {
+  const asyncFetchDailyData =  () => {
     navigation.setOptions({ title: 'Profile'});
-    getLocalData('USER_INFO').then((res) => {
+    getLocalData('USER_INFO').then( async (res) => {
       const reData = res?.data;
-      setUserId(reData);
       setuserdata({ ...userdata, 
         fullname: `${reData?.first_name} ${reData?.last_name}`,
         speciality: reData?.speciality,
         profile: reData?.profileimage,
         role:reData?.role
       });
+      const allCoins = { user_id:reData.id};
+      const allCoinsResult = await dispatch(getAllCoins(allCoins));
+      setAllcoins(allCoinsResult.payload.coins);
     });
   }
 
@@ -54,11 +62,11 @@ const ProfileScreen = ({navigation}) => {
       <View style={{flexDirection:'row', marginTop:20}}>
           <View style={styles.ScoreContainer}>
             <Image source={require('../../assets/dr-icon/d.png')} style={styles.scoreImg}/>
-            <Text style={styles.coins}>3600</Text>
+            <Text style={styles.coins}>{allcoins[0]?.coinTotal ? allcoins[0]?.coinTotal : 0}</Text>
           </View>
           <View style={styles.ScoreContainer}>
             <Image source={require('../../assets/dr-icon/coupon1.png')} style={styles.scoreImg}/>
-            <Text style={styles.coins}>102</Text>
+            <Text style={styles.coins}>0</Text>
           </View>
       </View>
     </Card>

@@ -78,7 +78,7 @@ const SelectList=[
 const [college, setcollege] = useState();
 
 const Pincode= (e) =>{
-  const isValidnameRegex = /^(\[0-9]?)?\d{6}$/;;
+  const isValidnameRegex = /^(\[0-9]?)?\d{6}$/;
   const pincode = e;
   if(!isValidnameRegex.test(pincode)){
     setPincode("Please enter valid Pincode")
@@ -147,7 +147,6 @@ const pickupImage = (arg) => {
             name: filename,
             type: `image/${fileType}`,
           }
-
           if(fromWhere == 'document'){
             setimgurl(localUri);
             formData.append('mrnproof', imageData);
@@ -156,12 +155,10 @@ const pickupImage = (arg) => {
             formData.append('profile_pic', imageData);
           }
           const responce = await fetch(`https://docintosh.com/ApiController/image_upload`, {
-            method : 'POST',
-            headers:{
-                'Content-Type': 'multipart/form-data'
-            },
-            body :formData
-         });
+              method : 'POST',
+              headers:{'Content-Type': 'multipart/form-data'},
+              body :formData
+          });
         const result=  await responce.json();
 
         if(fromWhere == 'document'){

@@ -9,7 +9,6 @@ import Sentimentixscreen2 from '../screens/Sentimentixscreen2';
 import SentimentrixCong from '../screens/SentimentrixCong';
 import Sentimentrix3 from '../screens/Sentimentrix3';
 import Sentimentrix6 from '../screens/Sentimentrix6';
-import CommonSearchScreen from '../screens/CommonSearchScreen';
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import ProfileScreenFollowers from '../screens/ProfileScreen/ProfileScreenFollowers';
 import ProfileScreenFollowing from '../screens/ProfileScreen/ProfileScreenFollowing';
@@ -36,8 +35,10 @@ import KnowYourHeart from '../screens/QuizLevels/KnowYourHeart';
 import Surveys from '../screens/Survay/Surveys';
 import SurveyMcq from '../screens/Survay/SurveyMcq';
 import ThankYouPage from '../screens/Survay/ThankYouPage';
-
-
+import CommonSearchScreen from '../screens/HomeScreen/SearchScreens/CommonSearchScreen';
+import Settings from '../screens/Settings/Settings';
+import SavedPost from '../screens/Settings/SavedPost/SavedPost';
+import BlockList from '../screens/Settings/BlockList/BlockList';
 
 
 const HomeNavigation = () => {
@@ -57,7 +58,7 @@ const HomeNavigation = () => {
           <Stack.Screen name="ProfileScreenFollowers" component={ProfileScreenFollowers} options={showHeaderItem}/>
           <Stack.Screen name="ProfileScreenFollowing" component={ProfileScreenFollowing} options={showHeaderItem}/>
           <Stack.Screen  name="SharePost" component={SharePost} options={showHeaderItem} />
-          <Stack.Screen name="CommonSearchScreen" component={CommonSearchScreen} options={showHeaderItem}/>
+          <Stack.Screen name="CommonSearchScreen" component={CommonSearchScreen}/>
           <Stack.Screen name="PostsScreen" component={PostsScreen} options={showHeaderItem}/>
           <Stack.Screen name="CommentsScreen" component={CommentsScreen} options={showHeaderItem} />
           <Stack.Screen name="MessagesScreen" component={MessagesScreen} options={showHeaderItem} />
@@ -67,6 +68,7 @@ const HomeNavigation = () => {
           <Stack.Screen name='insideContactPermission' component={ContactPermission}  options={showHeaderItem} />
           <Stack.Screen name='BellNotification' component={BellNotification}  options={showHeaderItem} />
           <Stack.Screen name='ReportPost' component={ReportPost}  options={showHeaderItem} />
+          <Stack.Screen name='Settings' component={Settings}  options={showHeaderItem} />
           <Stack.Screen name='ReportTrack' component={ReportTrack} options={{ headerShown: true,
              title: "Report Post",
              headerStyle: {backgroundColor: '#071B36'},
@@ -83,6 +85,9 @@ const HomeNavigation = () => {
         <Stack.Screen name="Surveys" component={Surveys} options={showHeaderItem}/>
         <Stack.Screen name="SurveyMcq" component={SurveyMcq} options={showHeaderItem}/>
         <Stack.Screen name="ThankYouPage" component={ThankYouPage} options={showHeaderItemBackless}/>
+        <Stack.Screen name="SavedPost" component={SavedPost} options={showHeaderItem} />
+        <Stack.Screen name="BlockList" component={BlockList} options={showHeaderItem} />
+        
 
         {/* <Stack.Screen name="MultipleImagesUpload" component={MultipleImagesUpload}/>
           <Stack.Screen name="SentimentrixCong" component={SentimentrixCong} options={showHeaderItem}/>

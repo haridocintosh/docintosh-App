@@ -123,7 +123,7 @@ const CustomDrawer = (props) => {
               <Entypo name="text-document-inverted" size={25} color="white"/>
               <Text style={styles.sideDrawerName}>Business Page</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
+            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("Settings")}}>
               <Ionicons name="settings-sharp" size={25} color="white"/>
               <Text style={styles.sideDrawerName}>Settings</Text>
             </TouchableOpacity>
