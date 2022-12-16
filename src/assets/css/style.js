@@ -475,9 +475,9 @@ backgroundColor:"#606060",
       // borderBottomWidth:2
     },
     headerContainer:{
-      marginTop:30,
+      marginTop:28,
       backgroundColor:'#071B36',
-      height:50,
+      height:57,
       flexDirection:'row',
       alignItems:'center',
       justifyContent:'space-between',

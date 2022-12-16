@@ -16,6 +16,7 @@ import { getsearchSplData } from '../../../../redux/reducers/ALL_APIs';
 const CommonSearchScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch(); 
+  const refInput = React.useRef(null);
   
   const layout = useWindowDimensions();
   const [inputText,setInputText] = useState(null);
@@ -118,8 +119,6 @@ const CommonSearchScreen = () => {
     }
   }, []);
 
- 
-
   const onSpeechResults = (result) => {
     setResults(result.value);
   };
@@ -133,6 +132,7 @@ const CommonSearchScreen = () => {
     setInputText(null)
   }
   const startVoice = async () =>{
+    refInput.current.focus();
     await Voice.start("en-US");
     console.log("startVoice");
   }
@@ -140,11 +140,12 @@ const CommonSearchScreen = () => {
 return (
   <>
     <View style={styelcss.headerContainer}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
          <Ionicons name="arrow-back" size={25} color={"#fff"}/>
       </TouchableOpacity>
       <TouchableOpacity style={{flex:1,paddingHorizontal:10}}>
       <TextInput
+          ref={refInput}
           placeholder={"Search"}
           style={{fontSize:18,color:"#fff"}}
           placeholderTextColor={'#fff'}
@@ -153,7 +154,7 @@ return (
       />
       </TouchableOpacity>
       <TouchableOpacity onPress={inputText ? () => emptyField() : () => startVoice()}>
-        <Ionicons name={inputText ? "close-outline":"mic"} size={24} color={"#fff"}/>
+        <Ionicons name={inputText ? "close-outline":"search"} size={24} color={"#fff"}/>
       </TouchableOpacity>
     </View>
     
