@@ -9,11 +9,14 @@ import Page from './Page';
 const styelcss = require('../../../assets/css/style');
 import {Ionicons,AntDesign} from 'react-native-vector-icons';
 import Voice from '@react-native-voice/voice';
-
+import { useDispatch } from 'react-redux';
+import { getsearchSplData } from '../../../../redux/reducers/ALL_APIs';
 
 
 const CommonSearchScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch(); 
+  
   const layout = useWindowDimensions();
   const [inputText,setInputText] = useState(null);
   const [index, setIndex] = React.useState(0);
@@ -23,10 +26,30 @@ const CommonSearchScreen = () => {
     { key: 'third',  title: 'Speciality' },
     { key: 'fourth', title: 'page' },
   ]); 
+  const [item, setItem] = useState();
+  const [filteredDataSource, setFilteredDataSource] = useState();
 
+  const handleRemove = (id) => {
+      const removed = filteredDataSource?.filter(o => o.id != id)
+      setFilteredDataSource(removed);
+  }
+  const onChangeText =  (text) =>{
+    if (text) {
+        const newData = item?.filter((data) => {
+          const itemData = `${data?.first_name.toUpperCase() + data?.last_name.toUpperCase() + data?.speciality.toUpperCase()}`;
+          const textData = text.toUpperCase();
+          return itemData.indexOf(textData) > -1;
+        });
+        setFilteredDataSource(newData);
+        setInputText(text);
+      } else {
+        setFilteredDataSource(item);
+        setInputText(text);
+      }
+  }
   const FirstRoute = () => {
     return(
-      <Doctor inputText={inputText}/>
+      <Doctor filteredDataSource={filteredDataSource} handleRemove={handleRemove}/>
     )
   };
   const SecondRoute = () => { 
@@ -36,7 +59,7 @@ const CommonSearchScreen = () => {
   };
   const ThirdRoute = () => {
     return(
-      <Speciality/>
+      <Speciality filteredDataSource={filteredDataSource} handleRemove={handleRemove}/>
     )
   };
   const fourthRoute = () => {
@@ -51,6 +74,8 @@ const CommonSearchScreen = () => {
     third  : ThirdRoute,
     fourth : fourthRoute,
   });
+  
+  console.log(index);
 
   const renderTabBar = (props) => {
     const inputRange = props.navigationState.routes.map((x, i) => i);
@@ -67,7 +92,7 @@ const CommonSearchScreen = () => {
           return (
             <TouchableOpacity
               style={styelcss.tabItem}
-              onPress={() => setIndex({ index: i })}>
+              onPress={() => setIndex(i)}>
                 <Animated.Text style={{ opacity,fontFamily:"Inter-SemiBold"}}>
                   {route.title}
                 </Animated.Text>
@@ -78,14 +103,22 @@ const CommonSearchScreen = () => {
     );
   };
 
+  const GetsearchData = async () => {
+      const result = await dispatch(getsearchSplData());
+      setItem(result?.payload);
+      setFilteredDataSource(result?.payload);
+  }
+
   useEffect(() => {
+    GetsearchData();
     Voice.onSpeechError = onSpeechError;
     Voice.onSpeechResults = onSpeechResults;
-
     return () => {
       Voice.destroy().then(Voice.removeAllListeners);
     }
   }, []);
+
+ 
 
   const onSpeechResults = (result) => {
     setResults(result.value);
@@ -95,9 +128,7 @@ const CommonSearchScreen = () => {
     console.log(error);
   };
 
-  const onChangeText =  (val) =>{
-    setInputText(val)
-  }
+  
   const emptyField =  () =>{
     setInputText(null)
   }

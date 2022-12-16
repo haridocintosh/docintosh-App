@@ -19,6 +19,8 @@ import moment from "moment";
 import { useIsFocused } from '@react-navigation/native';
 import OptionModal from './optionModal';
 import { getLocalData } from '../../apis/GetLocalData';
+import { getBlockedUsersApi } from '../../../redux/reducers/SettingsSlice';
+
 
 
 const HomeScreen = ({navigation})=> {
@@ -105,7 +107,6 @@ const handleOption = (post_id) => {
       const result = await dispatch(userPostData(postDetails));
       const allPostData = result?.payload.filter(Post => Post.user_role != 5);
       setallPost(allPostData);
-     
     })
   }
   
@@ -179,7 +180,6 @@ const handleOption = (post_id) => {
   <SafeAreaView>
       <Animated.View style={{backgroundColor:'#071B36',height:headerHeight,position:'relative'}}>
         <Animated.Image source={require('../../assets/images/bg-top-home.png')} style={[styles.bgtophome,{height:headerHeight,opacity:opacity}]}/>
-
           <View style={styles.imageConatentContainer}>
             <View style={{flexDirection:'row',alignItems:'center'}}> 
               <TouchableOpacity onPress={() => navigation.openDrawer()}>
@@ -196,7 +196,6 @@ const handleOption = (post_id) => {
                 </TouchableOpacity>
               </Animated.View>
             </View>
-
             <Animated.View style={{flexDirection:'row'}} >
               <TouchableOpacity onPress={()=>{ navigation.navigate('CommonSearchScreen') }}>
                 <Feather name="search" size={24} color="#ffff"  />
@@ -206,7 +205,6 @@ const handleOption = (post_id) => {
               </TouchableOpacity>
             </Animated.View>
           </View>
-
           <Animated.View style={[styles.collectedCoins,{transform: [{translateY: scoresPosition}]}]} >
             <Image source={require('../../assets/dr-icon/d.png')} style={styles.d} />
             <Text style={styles.count}>
@@ -223,18 +221,14 @@ const handleOption = (post_id) => {
           <Image source={userdata.profile?{uri:userdata.profile}:''}  style={{width:32, height:32, borderRadius:50}}/>
           <Text style={styles.whtsnewtxt}>What’s on your mind?</Text>
           </View>
-            
-          
           <AntDesign name="pluscircle" size={26} color="#D5DEED"/>
         </View>
       </Card>
-
       <View>
          <View style={styles.marginten}>
               <Text style={{fontSize:16, fontWeight:'600'}}>Suggested Post</Text>
               <View style={{width:'100%', height:1, backgroundColor:'#D5DEED', marginTop:10}}></View>
           </View>
-
           <View style={{paddingBottom:550}}>
           <Animated.FlatList
               onScroll={Animated.event(
@@ -250,9 +244,7 @@ const handleOption = (post_id) => {
           />
           </View>
       </View>
-      
       </View>
-
   </SafeAreaView>
   );
 }

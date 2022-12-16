@@ -18,7 +18,7 @@ const optionModal = ({modalVisible,id,postId,setSucc,setModalVisible}) => {
 
   const dispatch    = useDispatch();
   const navigation  = useNavigation();
-  
+  console.log("id",id);
   const getId = async () => {
     getLocalData('USER_INFO').then( async (res) => {
       const reData = res?.data;
