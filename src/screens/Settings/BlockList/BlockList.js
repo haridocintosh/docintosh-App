@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView,Image,TouchableOpacity } from 'react-native'
+import { View, Text, SafeAreaView,Image,TouchableOpacity,Modal } from 'react-native'
 import React, { useEffect ,useState} from 'react';
 import { styles } from './BlockListStyle';
 import { getLocalData } from '../../../apis/GetLocalData';
@@ -7,7 +7,9 @@ import { useDispatch } from 'react-redux';
 
 
 const BlockList = ({navigation}) => {
+
     const [item, setItem] = useState();
+    const [visible, setVisible] = useState(false);
     const dispatch = useDispatch();
 
 
@@ -27,6 +29,7 @@ const BlockList = ({navigation}) => {
 
     const handleUnblock = (id) => {
         console.log("id",id);
+        setVisible(true)
 
     }
   return (
@@ -51,6 +54,32 @@ const BlockList = ({navigation}) => {
             </View>
             )
         })}
+
+        <Modal
+            animationType="fade"
+            transparent={true}
+            visible={visible}
+            >
+            <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                <Text style={styles.textBold}>Hold on!,</Text>
+                <Text style={styles.textNormal}>Are you sure you want to exit app?</Text>
+                <View style={styles.buttonsContainer}>
+                    <TouchableOpacity 
+                    style={[styles.buttonsDesign,styles.leftButtonsDesign]} 
+                    onPress={() =>{setVisible(false)}}>
+                    <Text style={[styles.textBold,styles.leftText]}>Cancel</Text>
+                    </TouchableOpacity>
+                    <Text>{"        "}</Text>
+                    <TouchableOpacity 
+                    style={[styles.buttonsDesign,styles.RightButtonsDesign]}
+                    onPress={() => handleExit()}>
+                    <Text style={[styles.textBold,styles.RightText]}>Okay</Text>
+                    </TouchableOpacity>
+                </View>
+                </View>
+            </View>
+        </Modal>
         
      
     </SafeAreaView>

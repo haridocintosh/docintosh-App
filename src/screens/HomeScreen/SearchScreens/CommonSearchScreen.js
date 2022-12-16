@@ -36,7 +36,7 @@ const CommonSearchScreen = () => {
   const onChangeText =  (text) =>{
     if (text) {
         const newData = item?.filter((data) => {
-          const itemData = `${data?.first_name.toUpperCase() + data?.last_name.toUpperCase() + data?.speciality.toUpperCase()}`;
+          const itemData = `${data?.username.toUpperCase() + data?.speciality.toUpperCase()}`;
           const textData = text.toUpperCase();
           return itemData.indexOf(textData) > -1;
         });
