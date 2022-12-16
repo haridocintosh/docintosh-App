@@ -53,25 +53,27 @@ export default function ContactPermission({navigation}) {
 
   useEffect(() => {
     navigation.setOptions({ title: 'Invite Peers'});
-    async function getPrermission(){
-      //setLoading(true);
-      const { status } = await Contacts.requestPermissionsAsync();
-      if(status === 'granted') {
-        const { data } = await Contacts.getContactsAsync({
-          fields: [Contacts.Fields.PhoneNumbers],
-        });
-         if(data.length > 0) {
-          const contact = await data.map(element=> {return{...element,isSelected:false}});;       
-          setContact(contact);
-          setLoading(false);
-         }
-      }else{
-       // navigation.navigate('Login');
-       Toast.show('Permission deny');
-      }
-    }
     getPrermission();
   }, []);
+
+
+    const getPrermission = async()=>{
+    const { status } = await Contacts.requestPermissionsAsync();
+    console.log(status);
+    if(status === 'granted') {
+      const { data } = await Contacts.getContactsAsync({
+        fields: [Contacts.Fields.PhoneNumbers],
+      });
+       if(data.length > 0) {
+        const contact = await data.map(element=> {return{...element,isSelected:false}});;       
+        setContact(contact);
+        setLoading(false);
+       }
+    }else{
+     //navigation.navigate('Login');
+     Toast.show('Permission deny');
+    }
+  }
   
   const handleSubmit = async()=>{
     navigation.navigate('InvitePeers',{

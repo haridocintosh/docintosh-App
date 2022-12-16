@@ -16,7 +16,6 @@ const AppStack = () => {
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawer {...props} /> }
       screenOptions={{
-        // headerShown: true,
         headerTintColor:'#45B5C0' ,
         drawerActiveBackgroundColor: '#45B5C0',
         drawerActiveTintColor: '#fff',      
