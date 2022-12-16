@@ -15,6 +15,7 @@ const BlockList = ({navigation}) => {
         getLocalData("USER_INFO").then( async (res) => {
             const blockedUsers = await dispatch(getBlockedUsersApi({user_id:res?.data?.id}));
             setItem(blockedUsers.payload)
+            console.log(blockedUsers.payload);
         })
     }
 
@@ -36,7 +37,7 @@ const BlockList = ({navigation}) => {
             return(
             <View style={styles.communitySubDiv} key={i}>
                 <View style={{display:"flex",flexDirection:"row",alignItems:"flex-start",alignItems:'center'}}>
-                    <Image source={require('../../../assets/images/p3.png')} style={{width:50,height:50,borderRadius:50}}/>
+                    <Image source={{uri:data?.profileimage}} style={{width:50,height:50,borderRadius:50}}/>
                     <View style={styles.doctorListContent}>
                         <Text style={{fontWeight:"600",fontSize:15}}>
                             {data?.utitle} {data?.first_name} {data?.last_name}

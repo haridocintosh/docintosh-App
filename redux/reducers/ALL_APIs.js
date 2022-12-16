@@ -35,11 +35,23 @@ export const BlockUserApi = createAsyncThunk("blockUserApi", async (data)=>{
      }
 })
 
+export const getsearchSplData = createAsyncThunk("searchSplData", async ()=>{
+    try{
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/getsearchSplData`);
+        const result = await responce.json();
+        return result;
+     }
+     catch(e){
+        console.log(e);;
+     }
+})
+
 export const savePost = createSlice({
     name : "savePost",
     initialState :{
         savePostResult   : {},
         blockUserResult   : {},
+        getsearchResult   : {},
         loading     : false,
         error       : false,
     },
@@ -66,6 +78,19 @@ export const savePost = createSlice({
             state.blockUserResult = action.payload;
         }, 
         [BlockUserApi.rejected] : (state)=>{
+            state.loading       = false;
+            state.error         = true
+        }, 
+    },
+    extraReducers :{
+        [getsearchSplData.pending] : (state)=>{   
+            state.loading       =  true;
+        }, 
+        [getsearchSplData.fulfilled] : (state, action)=>{   
+            state.loading         =  false;
+            state.getsearchResult = action.payload;
+        }, 
+        [getsearchSplData.rejected] : (state)=>{
             state.loading       = false;
             state.error         = true
         }, 
