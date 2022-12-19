@@ -34,7 +34,8 @@
         "ACCESS_MEDIA_LOCATION",
         "ACCESS_FINE_LOCATION",
         "CAMERA_ROLL",
-        "NOTIFICATIONS"
+        "NOTIFICATIONS",
+        "READ_CONTACTS"
       ]
     },
     "plugins": [
