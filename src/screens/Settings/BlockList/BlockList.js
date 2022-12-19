@@ -38,7 +38,6 @@ const BlockList = ({navigation}) => {
     const handleUnblockOk = async ()=> {
         const postDetails = {fromuserid:userData?.id ,touserid:userId};
         const blockPostResult  = await dispatch(BlockUserApi(postDetails));
-        console.log("blockPostResult",blockPostResult.payload);
         getBlockedData();
         setVisible(false);
     }

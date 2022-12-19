@@ -88,6 +88,8 @@ export default function ContactPermission({navigation}) {
       <ActivityIndicator size={'large'} color={"#2C8892"}/>
   </View>)
 }
+
+console.log(contactList.length);
   return (
     <View style={{paddingTop:10,paddingHorizontal:20,flex:1,height:"100%"}}>
 
@@ -101,7 +103,7 @@ export default function ContactPermission({navigation}) {
               isChecked={isChecked} 
             />
         </View>
-       {contactList && contactList.map((element, index)=>{
+       {contactList?.length > 0 ? contactList.map((element, index)=>{
           return ( 
             <View style={styelcss.peersmaniListArea} key={index} >
                 <View style={styelcss.peersSubiListArea}>
@@ -110,8 +112,7 @@ export default function ContactPermission({navigation}) {
                       <Text style={[styelcss.peersubtext,{fontFamily:"Inter-Regular"}]}>{element?.name}</Text>
                       <Text style={[styelcss.peersubtextpara,{fontFamily:"Inter-Regular"}]}>
                           {
-                            element?.phoneNumbers > 0 ? 
-                            element?.phoneNumbers?.number : "You Dnn't have any contact's"
+                              element?.phoneNumbers?.[0]?.number 
                           } 
                       </Text>
                     </View>
@@ -126,8 +127,12 @@ export default function ContactPermission({navigation}) {
             </View>
             )
           
-        })}
+        }) 
+      :
+      <Text>You Don't have any contact's</Text>
+      }
     
+   
         
               
     </ScrollView>

@@ -18,6 +18,7 @@ export const getSavedPostsApi = createAsyncThunk("savedPosts", async(data)=>{
        console.log(e);
     }
   });
+  
 export const getBlockedUsersApi = createAsyncThunk("blockedUsers", async(data)=>{
     try{
        const responce = await fetch(`${mainApi.baseUrl}/ApiController/getBlockedPost`, {
