@@ -258,112 +258,84 @@ const form_submit = async() =>{
   }
 
   return (
-    <SafeAreaView style={{ display:"flex",justifyContent: 'center'}}>
-          <ScrollView 
-          keyboardShouldPersistTaps='handled'
-            showsVerticalScrollIndicator={false}
-            nestedScrollEnable={true}
-            style={{paddingHorizontal: 20}}>
-
+    <SafeAreaView style={{ display:"flex",justifyContent: 'center',paddingHorizontal: 20}}>
+          <ScrollView keyboardShouldPersistTaps='handled'showsVerticalScrollIndicator={false}nestedScrollEnable={true} >
           <View style={{ marginTop :30}}>
-
-            <Text  style={styles.headingtext}
-            >
-              Hey There!
-            </Text>
-            <Text style={styles.headingpara}
-            >
-              Welcome to Docintosh. Let’s create your account. 
-            </Text>
-            </View>
-
+            <Text  style={styles.headingtext}>Hey There!</Text>
+            <Text style={styles.headingpara} >Welcome to Docintosh. Let’s create your account.</Text>
+          </View>
             
        <View style={{ display:"flex" ,flexDirection:"row",alignItems:'center', flexDirection:"column"}}>
 
-        <TextInput style={[styelcss.customInputVerifyFullMobile,{fontFamily:'PlusJakartaSans-Regular'}]} 
-            placeholderTextColor='#687690' 
-            placeholder='First name'  
-            onChangeText={(e)=> firstName(e)}
-            // autoFocus={true}
+        <TextInput 
+          style={[styelcss.customInputVerifyFullMobile,{fontFamily:'PlusJakartaSans-Regular'}]} 
+          placeholderTextColor='#687690' 
+          placeholder='First name'  
+          onChangeText={(e)=> firstName(e)}
         />
         <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{fn}</Text>
 
-        <TextInput style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular',}]}  placeholderTextColor='#687690' placeholder='Last Name' 
-        onChangeText={(e)=>{lastName(e);}} />
+        <TextInput 
+          style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular',}]}  
+          placeholderTextColor='#687690' 
+          placeholder='Last Name' 
+          onChangeText={(e)=>{lastName(e);}} 
+        />
         <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{ln}</Text>
 
         <View style={{ display:"flex" ,flexDirection:"row",alignItems:'center',marginTop:12, marginLeft:0 ,width:"100%"}}>
           <Text style={{ fontFamily: 'Inter-Regular',fontSize:16,color:"#51668A"}}>You are :</Text>
-          <View>
-            <RadioButton 
-            value="male" status={ checkgender === 'male' ? 'checked' : 'unchecked' }
-            onPress={() => {setcheckgender('male'); selectedgender('male')}}/>
-            <View  style={{marginTop:-56,zIndex:-1, alignSelf:'center',
-            alignItems:'center', paddingVertical:10,
-            flexDirection:'row',backgroundColor:'#fff', width:110, borderRadius:20/2}}>
-            <View style={{marginRight:20}}></View><Ionicons name="md-male-sharp" size={24} color="#51668A" />
-            <Text style={{color:'#51668A',fontSize:16, fontWeight:'400'}}>Male</Text></View>
+          <View style={styles.roleContainer}>
+            <TouchableOpacity style={[styles.roleTab,{borderWidth:checkgender == 'male' ? 1 : 0}]} 
+            onPress={() => {setcheckgender('male'); selectedgender('male')}}>
+            <Ionicons name="md-male-sharp" size={20} color="#51668A" />
+              <Text style={styles.roleTabText}>Male</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.roleTab,{borderWidth:checkgender == 'female' ? 1 : 0}]} 
+            onPress={() => {setcheckgender('female'); selectedgender('female')}}>
+            <MaterialCommunityIcons name="gender-female" size={20} color="#51668A" />
+              <Text style={styles.roleTabText}>Female</Text>
+            </TouchableOpacity>
           </View>
-  
-          <View style={{flex:0,   borderRadius:20/2, }}>
-            <RadioButton 
-              value="female"
-              status={ checkgender === 'female' ? 'checked' : 'unchecked' }
-              onPress={() => {setcheckgender('female'); selectedgender('female')}}
-            />
-          <View  style={{marginTop:-56,zIndex:-1,alignSelf:'center', alignItems:'center', paddingVertical:10, flexDirection:'row', backgroundColor:'#fff', width:110,height:46, borderRadius:20/2}} ><View style={{marginRight:20}}></View><MaterialCommunityIcons name="gender-female" size={24} color="#51668A" /><Text style={{color:'#51668A',fontSize:16, fontWeight:'400'}}>Female</Text></View>
-        </View>
         </View>
 
         <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{genderErr}</Text>
-        <TextInput  style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular'}]} placeholderTextColor='#687690' autoComplete='off' autoCapitalize="none" keyboardType="email-address" placeholder='Email ID' onChangeText={(e)=>{email(e)}}/>
+        <TextInput  
+          style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular'}]} 
+          placeholderTextColor='#687690' 
+          autoComplete='off' 
+          autoCapitalize="none" 
+          keyboardType="email-address" 
+          placeholder='Email ID' 
+          onChangeText={(e)=>{email(e)}}
+        />
         <Text style={{color:'red',fontFamily: 'PlusJakartaSans-Regular'}}>{emailIderr !='' && emailIderr}</Text>
-
-        <TextInput style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular',}]}  placeholderTextColor='#687690' placeholder='Mobile Number' keyboardType="numeric"  onChangeText={(e)=>{phonenumber(e)}}  maxLength={10} />
+        <TextInput 
+          style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular',}]}  
+          placeholderTextColor='#687690' 
+          placeholder='Mobile Number' 
+          keyboardType="numeric"  
+          onChangeText={(e)=>{phonenumber(e)}}  
+          maxLength={10} 
+        />
         <Text style={{color:'red',fontFamily: 'PlusJakartaSans-Regular'}}>{mobileId !='' && mobileId}</Text></View>
-
         <View style={{ display:"flex" ,flexDirection:"row",alignItems:'center',marginTop:12, marginLeft:0}}>
           <Text style={{ fontFamily: 'Inter-Regular',fontSize:16,color:"#51668A"}}>You are :</Text>
-          <View>
-            <RadioButton 
-            value="4" 
-            status={ checked === '4' ? 'checked' : 'unchecked' }
-            onPress={() => {setChecked('4'); setuserrole(4)}} />
-            <View  style={{marginTop:-56,zIndex:-1,alignSelf:'center',
-             justifyContent:'center',
-             alignItems:'center',
-             paddingVertical:10,
-             flexDirection:'row',
-             backgroundColor:'#fff', width:110, height:46, borderRadius:20/2}}>
+          <View style={styles.roleContainer}>
+            <TouchableOpacity style={[styles.roleTab,{borderWidth:checked == 4 ? 1 : 0}]} onPress={() => {setChecked('4'); setuserrole(4)}}>
             <Fontisto name="doctor" size={20} color="#51668A" />
-             <Text style={{color:'#51668A',marginLeft:5,fontSize:16, fontWeight:'400'}}>
-              Doctor
-              </Text>
-            </View>
+              <Text style={styles.roleTabText}>Doctor</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={[styles.roleTab,{borderWidth:checked == 5 ? 1 : 0}]} onPress={() => {setChecked('5'); setuserrole(5)}}>
+            <FontAwesome5 name="user-graduate" size={20} color="#51668A" />
+              <Text style={styles.roleTabText}>Student</Text>
+            </TouchableOpacity>
           </View>
-          <View>
-          <RadioButton 
-            value="5"
-            status={ checked === '5' ? 'checked' : 'unchecked' }
-            onPress={() => {setChecked('5'); setuserrole(5)}}
-          />
-            <View  style={{marginTop:-56,zIndex:-1,alignSelf:'center',
-              justifyContent:'center',
-              alignItems:'center',
-              paddingVertical:10,
-              flexDirection:'row',
-              backgroundColor:'#fff', width:110, height:46, borderRadius:20/2}}>
-              <FontAwesome5 name="user-graduate" size={20} color="#51668A" />
-              <Text style={{color:'#51668A', marginLeft:5, fontSize:16, fontWeight:'400'}}>
-                Student
-              </Text>
-            </View>
-        </View>
 
      </View>
 
      <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{userrole}</Text>
-    
     <View style={{alignSelf: 'center' }}>
     {checked === '4'? (
       <DropDownPicker style={styles.customInputVerify}
@@ -483,8 +455,32 @@ const styles = StyleSheet.create({
     borderTopWidth:0,
     borderColor:"#6C81A6",
     paddingLeft:8,
-   
-   
   },
+  roleContainer:{
+    flexDirection:'row',
+  },
+  roleTab:{
+    alignSelf:'center',
+    justifyContent:'center',
+    alignItems:'center',
+    flexDirection:'row',
+    backgroundColor:'#fff', 
+    borderRadius:10,
+    marginHorizontal:5,
+    paddingHorizontal:20,
+    paddingVertical:12,
+    borderColor:'#45B5C0',
+    shadowColor: '#ccc',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,  
+    elevation: 5
+
+  },
+  roleTabText: {color:'#51668A',
+  marginLeft:5,
+  fontSize:16, 
+  fontWeight:'400'
+},
     
 });
