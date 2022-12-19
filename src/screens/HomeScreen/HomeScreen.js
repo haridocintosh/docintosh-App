@@ -127,7 +127,7 @@ const handleOption = (post_id) => {
 
     const renderItem = ({item}) => {
       return(
-        <Card style={styles.cardOfPosts} >
+        <Card style={styles.cardOfPosts}>
           <View style={styles.userInfo}>
             <View  style={{flexDirection:'row',alignItems:'center'}}>
               <Image source={{uri:item?.profileimage}} 

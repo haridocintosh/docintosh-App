@@ -26,7 +26,6 @@ import ContactScreen from '../screens/commonpage/ContactScreen';
 import HandleBack from './HandleBack';
 
 
-
 export default function AppNav() {
 const [loader, setLoader] = useState(false);
 const [defaultRoute, setDefaultRoute] = useState();
@@ -49,7 +48,7 @@ if(loader){
         setDefaultRoute("HomeScreen");
       }else{
         setDefaultRoute("Intro");
-      //  setDefaultRoute("RegisterStudentScreen");
+      //setDefaultRoute("ContactPermission");
       }
       setStatusKeyLoaded(true);
     } catch(e) {
