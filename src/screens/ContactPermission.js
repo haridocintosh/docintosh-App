@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, ScrollView,Image, ActivityIndicator,Platform,Linking } from 'react-native';
+import { StyleSheet, View, Text, ScrollView,Image, ActivityIndicator,Platform,Linking, TouchableOpacity } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import * as Contacts from 'expo-contacts';
 import CheckBox from "react-native-check-box";
@@ -11,7 +11,7 @@ export default function ContactPermission({navigation}) {
   // const [contactData, setcontactData] = useState('');
   // const [contactData1, setcontactData1] = useState(contactList);
   const [selectedList, setSelectedList] = useState();
-  const [loading, setLoading]  = useState(true);
+  const [loading, setLoading]  = useState(false);
  
 
   const handleChange = (phoneNumbers) => {
@@ -109,14 +109,20 @@ export default function ContactPermission({navigation}) {
                     <View style={styelcss.peerListcontent}>
                       <Text style={[styelcss.peersubtext,{fontFamily:"Inter-Regular"}]}>{element?.name}</Text>
                       <Text style={[styelcss.peersubtextpara,{fontFamily:"Inter-Regular"}]}>
-                          {element?.phoneNumbers && element?.phoneNumbers?.number} </Text>
+                          {
+                            element?.phoneNumbers > 0 ? 
+                            element?.phoneNumbers?.number : "You Dnn't have any contact's"
+                          } 
+                      </Text>
                     </View>
                 </View>
-                <CheckBox
-                    onClick={() => handleChange(element.id)}
-                    isChecked={element.isSelected}
-                    checkBoxColor="#2C8892"
-                />
+                <TouchableOpacity>
+                  <CheckBox
+                      onClick={() => handleChange(element.id)}
+                      isChecked={element.isSelected}
+                      checkBoxColor="#2C8892"
+                  />
+                </TouchableOpacity>
             </View>
             )
           

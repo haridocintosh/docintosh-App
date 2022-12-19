@@ -11,26 +11,21 @@ import {Ionicons} from '@expo/vector-icons';
 import { getSavedPostsApi } from '../../../redux/reducers/SettingsSlice';
 
 
-const optionModal = ({modalVisible,id,postId,setSucc,setModalVisible}) => {
+const OptionModal = ({modalVisible,id,postId,deletePostID,BlockId,setModalVisible,saveStatus}) => {
   const [userData, setUserData] = useState();
-  const [savedPost, setSavedPost] = useState(false);
-  const [blockPost, setBlockPost] = useState(false);
-
+  const [savedPost, setSavedPost] = useState(saveStatus);
+  console.log("saveStatus",savedPost);
   const dispatch    = useDispatch();
   const navigation  = useNavigation();
-  console.log("id",id);
   const getId = async () => {
     getLocalData('USER_INFO').then( async (res) => {
       const reData = res?.data;
       const savedResult = await dispatch(getSavedPostsApi({user_id:res?.data?.id}))
-      const saved = savedResult.payload.map(d => d.post_id == postId);
-      // console.log("saved",saved);
-      // setSavedPost(saved);
+      // const saved = savedResult.payload.map(d => d.post_id == postId);
       setUserData(reData);
     });
   }
   
-
   useEffect(() => {
     getId();
   },[])
@@ -42,19 +37,16 @@ const optionModal = ({modalVisible,id,postId,setSucc,setModalVisible}) => {
         const coinDetails = {task:15, receiverId:0, senderId:id} 
         const coinResult  = await dispatch(coinTransfer(coinDetails));
         if(coinResult.payload.status  == 'Success'){
-          setSucc(true);
+          deletePostID(postId);
         }
       }
     }
-  const handleReport = () => {
-    setModalVisible(false);
-    navigation.navigate('ReportPost', {
-      postId, id})
-  }
+
   const SavedPostHandle = async () => {
     const postDetails = {user_id:userData?.id, post_id:postId};
-    const savedPostResult  = await dispatch(SavePostApi(postDetails));
-    console.log("savedPostResult.payload.status",savedPostResult.payload.status);
+    console.log(postDetails);
+    const savedPostResult = await dispatch(SavePostApi(postDetails));
+    // console.log("savedPostResult",savedPostResult.payload);
     if(savedPostResult.payload.status == "Saved"){
       setSavedPost(true);
     }else{
@@ -62,12 +54,24 @@ const optionModal = ({modalVisible,id,postId,setSucc,setModalVisible}) => {
     }
   }
 
+  const handleReport = () => {
+    setModalVisible(false);
+    navigation.navigate('ReportPost', {
+      postId, id})
+  }
+
+
+  const handleUnfollow = () => {
+
+  }
+
   const BlockPostHandle = async () => {
-    const postDetails = {fromuserid:userData?.id, post_id:postId,touserid:id};
+    const postDetails = {fromuserid:userData?.id,touserid:id};
     const blockPostResult  = await dispatch(BlockUserApi(postDetails));
     console.log("blockPostResult",blockPostResult.payload);
     if(blockPostResult?.payload?.status == "Success"){
       setModalVisible(false);
+      BlockId(id);
     }
   }
 
@@ -83,17 +87,17 @@ const optionModal = ({modalVisible,id,postId,setSucc,setModalVisible}) => {
       </TouchableOpacity>
       :
       <>
-      <TouchableOpacity style={styles.optionList} onPress={() => SavedPostHandle()}>
-        <Ionicons name={ savedPost   ? 'bookmark':'bookmark-outline'} size={25} color={"#45B5C0"}/>
+        <TouchableOpacity style={styles.optionList} onPress={() => SavedPostHandle()}>
+        <Ionicons name={ savedPost ? 'bookmark':'bookmark-outline'} size={25} color={"#45B5C0"}/>
             <Text style={styles.optionListText}>
-              {savedPost ? "Saved Post":"Save Post"}
+              {savedPost ? "Saved": "Save Post"}
             </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.optionList} onPress={()=> handleReport()}>
             <Image source={require('../../assets/dr-icon/reportPost.png')} style={styles.optionList2}/>
             <Text style={styles.optionListText}>Report Post</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.optionList}>
+        <TouchableOpacity style={styles.optionList} onPress={()=> handleUnfollow()}>
         <Image source={require('../../assets/dr-icon/unfollow.png')} style={styles.optionList3}/>
             <Text style={styles.optionListText}>Unfollow</Text>
         </TouchableOpacity>
@@ -103,7 +107,6 @@ const optionModal = ({modalVisible,id,postId,setSucc,setModalVisible}) => {
         </TouchableOpacity>
         </>
     }
-        
     </View>
   }
     
@@ -111,7 +114,7 @@ const optionModal = ({modalVisible,id,postId,setSucc,setModalVisible}) => {
   )
 }
 
-export default optionModal
+export default OptionModal
 
 export const styles = StyleSheet.create({
 optionModal:{
