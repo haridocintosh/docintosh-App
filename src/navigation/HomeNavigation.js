@@ -39,6 +39,8 @@ import CommonSearchScreen from '../screens/HomeScreen/SearchScreens/CommonSearch
 import Settings from '../screens/Settings/Settings';
 import SavedPost from '../screens/Settings/SavedPost/SavedPost';
 import BlockList from '../screens/Settings/BlockList/BlockList';
+import SelectInterestInnerScreen from '../screens/SelectInterestInnerScreen';
+
 
 
 const HomeNavigation = () => {
@@ -66,6 +68,7 @@ const HomeNavigation = () => {
           <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} options={showHeaderItem}/>
           <Stack.Screen name="WhatsNew" component={WhatsNew} options={showHeaderItem}/>
           <Stack.Screen name='insideContactPermission' component={ContactPermission}  options={showHeaderItem} />
+          <Stack.Screen name='SelectInterestInnerScreen' component={SelectInterestInnerScreen}  options={showHeaderItem} />
           <Stack.Screen name='BellNotification' component={BellNotification}  options={showHeaderItem} />
           <Stack.Screen name='ReportPost' component={ReportPost}  options={showHeaderItem} />
           <Stack.Screen name='Settings' component={Settings}  options={showHeaderItem} />

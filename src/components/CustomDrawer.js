@@ -99,6 +99,10 @@ const CustomDrawer = (props) => {
             <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("insideContactPermission")}}>
               <MaterialIcons name="person-add-alt-1" size={25} color="white" />
               <Text style={styles.sideDrawerName}>Invite</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("SelectInterestInnerScreen")}}>
+              <MaterialIcons name="person-add-alt-1" size={25} color="white" />
+              <Text style={styles.sideDrawerName}>Select Interest</Text>
             </TouchableOpacity >
             <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
               <MaterialCommunityIcons name="gift" size={25} color="white"/>
