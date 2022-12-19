@@ -90,7 +90,7 @@ const OptionModal = ({modalVisible,id,postId,deletePostID,BlockId,setModalVisibl
         <TouchableOpacity style={styles.optionList} onPress={() => SavedPostHandle()}>
         <Ionicons name={ savedPost ? 'bookmark':'bookmark-outline'} size={25} color={"#45B5C0"}/>
             <Text style={styles.optionListText}>
-              {savedPost ? "Saved Post": "Saved"}
+              {savedPost ? "Saved": "Save Post"}
             </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.optionList} onPress={()=> handleReport()}>
