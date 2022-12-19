@@ -286,13 +286,13 @@ const form_submit = async() =>{
         <View style={{ display:"flex" ,flexDirection:"row",alignItems:'center',marginTop:12, marginLeft:0 ,width:"100%"}}>
           <Text style={{ fontFamily: 'Inter-Regular',fontSize:16,color:"#51668A"}}>You are :</Text>
           <View style={styles.roleContainer}>
-            <TouchableOpacity style={[styles.roleTab,{borderWidth:checkgender == 'male' ? 1 : 0}]} 
-            onPress={() => {setcheckgender('male'); selectedgender('male')}}>
+            <TouchableOpacity style={[styles.roleTab,{borderWidth:checkgender == '1' ? 1 : 0}]} 
+            onPress={() => {setcheckgender('1'); selectedgender('1')}}>
             <Ionicons name="md-male-sharp" size={20} color="#51668A" />
               <Text style={styles.roleTabText}>Male</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.roleTab,{borderWidth:checkgender == 'female' ? 1 : 0}]} 
-            onPress={() => {setcheckgender('female'); selectedgender('female')}}>
+            <TouchableOpacity style={[styles.roleTab,{borderWidth:checkgender == '0' ? 1 : 0}]} 
+            onPress={() => {setcheckgender('0'); selectedgender('0')}}>
             <MaterialCommunityIcons name="gender-female" size={20} color="#51668A" />
               <Text style={styles.roleTabText}>Female</Text>
             </TouchableOpacity>
