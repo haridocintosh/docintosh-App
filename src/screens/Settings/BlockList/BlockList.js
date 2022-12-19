@@ -5,21 +5,23 @@ import { getLocalData } from '../../../apis/GetLocalData';
 import { getBlockedUsersApi } from '../../../../redux/reducers/SettingsSlice';
 import { useDispatch } from 'react-redux';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-
+import { BlockUserApi } from '../../../../redux/reducers/ALL_APIs';
 
 const BlockList = ({navigation}) => {
-
+    const [userId, setUserId] = useState(null);
     const [item, setItem] = useState();
     const [visible, setVisible] = useState(false);
     const [name, setName] = useState();
+    const [userData, setUserData] = useState();
+    
     const dispatch = useDispatch();
-
 
     const getBlockedData = () => {
         getLocalData("USER_INFO").then( async (res) => {
+            setUserData(res?.data)
             const blockedUsers = await dispatch(getBlockedUsersApi({user_id:res?.data?.id}));
             setItem(blockedUsers.payload)
-        })
+        });
     }
 
     useEffect(() => {
@@ -27,14 +29,17 @@ const BlockList = ({navigation}) => {
         getBlockedData();
     },[])
 
-
     const handleUnblock = (id, name) => {
+        setUserId(id);
         setName(name);
         setVisible(true);
     }
 
-    const handleUnblockOk = ()=> {
-        console.log("unblocked");
+    const handleUnblockOk = async ()=> {
+        const postDetails = {fromuserid:userData?.id ,touserid:userId};
+        const blockPostResult  = await dispatch(BlockUserApi(postDetails));
+        console.log("blockPostResult",blockPostResult.payload);
+        getBlockedData();
         setVisible(false);
     }
   return (
@@ -81,7 +86,6 @@ const BlockList = ({navigation}) => {
                 </View>
             </View>
         </Modal>
-        
      
     </SafeAreaView>
   )

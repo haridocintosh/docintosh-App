@@ -7,7 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { navigationRef } from './src/navigation/RootNavigation';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
-import { Text, View, Button, Platform ,LogBox} from 'react-native';
+import { Platform ,LogBox} from 'react-native';
 
 
 Notifications.setNotificationHandler({
@@ -30,7 +30,7 @@ const App = () => {
       setNotification(notification);
     });
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
+      // console.log("response",response);
     });
     return () => {
       Notifications.removeNotificationSubscription(notificationListener.current);
@@ -73,7 +73,7 @@ export default App;
 //   });
 // }
 
-async function registerForPushNotificationsAsync() {
+ const registerForPushNotificationsAsync = async () => {
   let token;
 
   if (Platform.OS === 'android') {
@@ -88,6 +88,7 @@ async function registerForPushNotificationsAsync() {
   if (Device.isDevice) {
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
+
     if (existingStatus !== 'granted') {
       const { status } = await Notifications.requestPermissionsAsync();
       finalStatus = status;
@@ -97,7 +98,7 @@ async function registerForPushNotificationsAsync() {
       return;
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token);
+    console.log("token",token);
   } else {
     alert('Must use physical device for Push Notifications');
   }

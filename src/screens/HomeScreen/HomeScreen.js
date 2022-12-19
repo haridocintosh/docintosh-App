@@ -19,8 +19,6 @@ import moment from "moment";
 import { useIsFocused } from '@react-navigation/native';
 import OptionModal from './optionModal';
 import { getLocalData } from '../../apis/GetLocalData';
-import { getBlockedUsersApi } from '../../../redux/reducers/SettingsSlice';
-
 
 
 const HomeScreen = ({navigation})=> {
@@ -87,6 +85,8 @@ const handleOption = (post_id) => {
     });
   };
 
+  
+
   useEffect(()=>{
     if(isFocused){
       asyncFetchDailyData();
@@ -96,7 +96,7 @@ const handleOption = (post_id) => {
 
   const asyncFetchDailyData = async () => {
     getLocalData('USER_INFO').then(async (res) =>{
-      const reData = res?.data
+      const reData = res?.data;
       setuserdata({
         profile:reData?.profileimage,
         user_id:reData?.id,
@@ -113,8 +113,19 @@ const handleOption = (post_id) => {
   const handlePost = (singleItem) => {
     navigation.navigate('PostsScreen', {singleItem})
   }
+
+  const deletePostID = (postId) =>{
+    console.log("deletePost",postId);
+    const deletePost = allPost.filter(pId => pId.post_id != postId);
+    setallPost(deletePost);
+  }
+  const BlockId = (id) =>{
+    console.log("BlockId",id);
+    const BlockId = allPost.filter(Uid => Uid.id != id);
+    setallPost(BlockId);
+  }
+
     const renderItem = ({item}) => {
-      // console.log('profilePic',item);
       return(
         <Card style={styles.cardOfPosts} >
           <View style={styles.userInfo}>
@@ -154,14 +165,16 @@ const handleOption = (post_id) => {
                 modalVisible={modalVisible} 
                 id={item?.id} 
                 postId={item?.post_id} 
-                setSucc={setSucc} 
                 setModalVisible={setModalVisible}
+                deletePostID={deletePostID}
+                BlockId={BlockId} 
+                saveStatus={item.saved_status}
               />}
             </View>
           </View>
           <View style={item?.description &&{ flexDirection:'row',paddingBottom:10}}>
             <Text style={{color:'#51668A',fontFamily:"Inter-Regular" }}>
-              {item.description.replace(/<[^>]+>/g, "")}
+              {/* {item.description.replace(/<[^>]+>/g, "")} */}
             </Text>
           </View>
           {/* onPress={() => handlePost(item)} */}
