@@ -52,7 +52,26 @@ export const PickImageAll = async () => {
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: false,
             // aspect: [1, 1],
-            quality: 0.9,
+            quality: 0.7,
+            });
+            if (!library.cancelled) {
+                  return library;
+            }
+      } else {
+            const denied = 'Camera permission denied';
+            // alert("You've refused to allow this app to access your camera!");
+            return denied;
+      }
+}
+
+export const PickVideos = async () => {
+   const { granted } = await ImagePicker.requestCameraPermissionsAsync();
+      if (granted === true) {
+            var library = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+            allowsEditing: false,
+            // aspect: [1, 1],
+            quality: 0.7,
             });
             if (!library.cancelled) {
                   return library;

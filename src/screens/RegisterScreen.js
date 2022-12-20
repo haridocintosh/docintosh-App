@@ -247,8 +247,6 @@ const form_submit = async() =>{
       })
       }
     }
-
-
   
   if(loader){
     return(

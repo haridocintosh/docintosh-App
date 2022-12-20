@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
-import { Camera, CameraType } from 'expo-camera';
 import {StyleSheet, Text, TouchableOpacity, View, Image, ActivityIndicator} from "react-native";
 import {BottomSheetModal, BottomSheetModalProvider,BottomSheetScrollView} from "@gorhom/bottom-sheet";
 import * as ImagePicker from 'expo-image-picker';
@@ -18,7 +17,8 @@ import { getMycircle } from "../../../../redux/reducers/postData";
 import { mainApi } from "../../../apis/constant";
 import { getLocalData } from "../../../apis/GetLocalData";
 import { coinTransfer } from "../../../../redux/reducers/coinSlice";
-import { PickImageAll } from "../../../navigation/ReuseLogics";
+import { PickImageAll, PickVideos } from "../../../navigation/ReuseLogics";
+import { Audio } from 'expo-av'
 
 
 const  Sharepost = () => {
@@ -26,10 +26,10 @@ const  Sharepost = () => {
   const navigation  = useNavigation();
   const [loader, setloader] = useState(false);
   const [expanded, setExpanded] = useState(true);
-  const [images, setImages]   = useState(null);
-  const [video, setVideo]   = useState(null);
-  const [audio, setAudio]   = useState(null);
-  const [document, setDocument] = useState(null);
+  const [pickedData, setData]   = useState(null);
+  // const [video, setVideo]   = useState(null);
+  // const [audio, setAudio]   = useState(null);
+  // const [document, setDocument] = useState(null);
   const [err,seterr] =useState();
   const [circlespeciality, setSpl] = useState([]);
 
@@ -40,7 +40,7 @@ const  Sharepost = () => {
       broadcast_to:"",
       postType:"",
       postImage:"",
-      type:"i",
+      type:"",
       custspeciality:""
   });
 
@@ -79,10 +79,12 @@ const  Sharepost = () => {
     }, 100);
   }
 
+
+
   const pickImage =  () => {
     PickImageAll().then(async (res) =>{
       let localUri = res?.uri;
-      setImages(localUri)
+      setData(localUri)
       let filename = localUri.split('/').pop();
       let uriParts = localUri.split('.');
       let fileType = uriParts[uriParts.length - 1];
@@ -90,7 +92,7 @@ const  Sharepost = () => {
       const imageData = {
         uri : localUri,
         name: filename,
-        type: `image/${fileType}`,
+        type: `video/${fileType}`,
       }
       formData.append('postImage', imageData);
       formData.append('post_id', '3032');
@@ -104,8 +106,45 @@ const  Sharepost = () => {
     const result1=  await responce.json();
       setPost({...post, 
         postImage: result1.postImage,
+        type:'i'
+
       });
     })
+  };
+
+  const pickVideo =  () => {
+    PickVideos().then(async (res) =>{
+      let localUri = res?.uri;
+      setData(localUri)
+      let filename = localUri.split('/').pop();
+      let uriParts = localUri.split('.');
+      let fileType = uriParts[uriParts.length - 1];
+      let formData = new FormData();
+      const imageData = {
+        uri : localUri,
+        name: filename,
+        type: `image/${fileType}`,
+      }
+     // console.log(imageData);
+      formData.append('postImage', imageData);
+      formData.append('post_id', '3032');
+      //console.log("formData",formData);
+      const responce = await fetch(`${mainApi.baseUrl}/ApiController/postuploadDocsReact`, {
+        method : 'POST',
+        headers:{
+            'Content-Type': 'multipart/form-data'
+        },
+        body :formData
+     });
+    const result1=  await responce.json();
+    console.log(result1);
+      setPost({...post, 
+        postImage: result1.postImage,
+        type:'v'
+      });
+    })
+
+
   };
 
 
@@ -147,6 +186,7 @@ const publishCheck1 = (e, text)=>{
 
 
   const handleStudentSubmit = async() =>{
+    console.log("postDAta",post);
     if(post.publishto ==''){
       Toast.show('Please Select Publish to');
       bottomSheetModalRefSecond.current?.present();
@@ -175,7 +215,7 @@ const publishCheck1 = (e, text)=>{
 
   const uploadPostImage = async (post_id) => {
     console.log(post_id);
-    let localUri = {images};
+    let localUri = {pickedData};
     console.log(localUri);
     let filename = localUri.split('/').pop();
     log(filename);
@@ -211,7 +251,7 @@ const publishCheck1 = (e, text)=>{
     
 
   useEffect(() => {
-    navigation.setOptions({ title: 'Create post'});
+    navigation.setOptions({ title: 'Create Post'});
     getLocalData('USER_INFO').then((res) => {
       const reData = res?.data;
       setuserdata({...userdata, 
@@ -310,9 +350,9 @@ setSpecialNames(specialityName)
           autoCapitalize="none"
           onChangeText={(e)=>{postDesc(e)}}
         />
-        {images && <View style={{position:'relative',width: 100, height: 100}}>
-           <Image source={{ uri: images }} style={{ width: 100, height: 100 ,borderRadius:5}} />
-          <TouchableOpacity style={styles.removeImg} onPress={() =>setImages()}>
+        {pickedData && <View style={{position:'relative',width: 100, height: 100}}>
+           <Image source={{ uri: pickedData }} style={{ width: 100, height: 100 ,borderRadius:5}} />
+          <TouchableOpacity style={styles.removeImg} onPress={() =>setData()}>
           <AntDesign name="close" size={15}/>
           </TouchableOpacity>
         </View>}
@@ -328,7 +368,7 @@ setSpecialNames(specialityName)
           <TouchableOpacity  onPress={pickImage}>
             <FontAwesome5 name="image" size={24} color="#51668A" />
           </TouchableOpacity>
-          <TouchableOpacity >
+          <TouchableOpacity onPress={pickVideo}>
             <FontAwesome5 name="video" size={24} color="#51668A" />
           </TouchableOpacity>
           <TouchableOpacity>
