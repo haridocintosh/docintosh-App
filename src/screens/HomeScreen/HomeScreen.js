@@ -19,19 +19,23 @@ import moment from "moment";
 import { useIsFocused } from '@react-navigation/native';
 import OptionModal from './optionModal';
 import { getLocalData } from '../../apis/GetLocalData';
+import { Audio, Video } from 'expo-av';
 
 
 const HomeScreen = ({navigation})=> {
   const [userdata, setuserdata]     = useState({profile:'',user_id:'',role:''});
-  const [allPost, setallPost]  = useState([]);
+  const [allPost, setallPost]  = useState();
+  const [page, setPage]  = useState(1);
   const dispatch = useDispatch();
   const [postId, setPostId] = useState();
-  const [savedPostId, setSavedPostId] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const [allcoins, setAllcoins] = useState(0);
-  const [succ, setSucc] = useState(false);
   const isFocused = useIsFocused();
 
+  const video = useRef(null);
+
+
+  const ITEMS_PER_PAGE = 5;
   //---------------- header Animation------------------
   const scrollPosition = useRef(new Animated.Value(0)).current;
   const minHeaderHeight = 100
@@ -70,6 +74,8 @@ const HomeScreen = ({navigation})=> {
 //  };
 
 const handleOption = (post_id) => {
+  console.log("hfjhjgj",post_id);
+  return;
   setPostId(post_id);
   if(postId == post_id){
     setModalVisible(!modalVisible);
@@ -92,7 +98,7 @@ const handleOption = (post_id) => {
       asyncFetchDailyData();
       getStorageData();
     }
-  },[isFocused,succ]);
+  },[isFocused]);
 
   const asyncFetchDailyData = async () => {
     getLocalData('USER_INFO').then(async (res) =>{
@@ -125,6 +131,7 @@ const handleOption = (post_id) => {
     setallPost(BlockId);
   }
 
+
     const renderItem = ({item}) => {
       return(
         <Card style={styles.cardOfPosts}>
@@ -156,7 +163,7 @@ const handleOption = (post_id) => {
               </View> 
             </View>
             <View>
-            <TouchableOpacity onPress={() => handleOption(item?.post_id)} style={{padding:10,right:-10,top:-10}}>
+            <TouchableOpacity onPress={() => handleOption(item?.imgPath)} style={{padding:10,right:-10,top:-10}}>
               <Svg width="7" height="20" viewBox="0 0 4 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <Path d="M3.5 1.55552C3.5 0.696472 2.82839 0 2 0C1.17161 0 0.5 0.696472 0.5 1.55552C0.5 2.41458 1.17161 3.11105 2 3.11105C2.82839 3.11105 3.5 2.41458 3.5 1.55552ZM3.5 8C3.5 7.14095 2.82839 6.44448 2 6.44448C1.17161 6.44448 0.5 7.14095 0.5 8C0.5 8.85905 1.17161 9.55552 2 9.55552C2.82839 9.55552 3.5 8.85905 3.5 8ZM3.5 14.4445C3.5 13.5854 2.82839 12.889 2 12.889C1.17161 12.889 0.5 13.5854 0.5 14.4445C0.5 15.3035 1.17161 16 2 16C2.82839 16 3.5 15.3035 3.5 14.4445Z" fill="#51668A"/>
               </Svg>
@@ -178,15 +185,47 @@ const handleOption = (post_id) => {
             </Text>
           </View>
           {/* onPress={() => handlePost(item)} */}
+         
           <View style={{justifyContent:'center',alignItems:'center'}}  >
-            <Image source={item.imgPath?{uri:item.imgPath}:''} 
-            style={{flex: 1, 
-              width: Dimensions.get("window").width, 
-              height:300}} resizeMode={'contain'}/>
+          {item?.imgPath.includes("mp4") ?
+          <Video
+            ref={video}
+            resizeMode={'cover'}
+            source={{ uri: item?.padelgram_image }}
+            useNativeControls
+            // shouldPlay={!videoPlayPause ? videoPlayPause : status[item.id]}
+            isLooping={true}
+            style={{
+              borderRadius: 10,
+              aspectRatio: 0.8,
+            }}
+          />
+          :
+          <Image source={item.imgPath?{uri:item.imgPath}:''} 
+            style={{ 
+            width: Dimensions.get("window").width, 
+            height:300
+          }} 
+            resizeMode={'contain'}/>
+          }
+            
           </View>
             <PublicReactions item={item} getStorageData={getStorageData}/>
         </Card>
       )
+    }
+
+    const loadMore = () => {
+      // console.log("load more 10",allPost.length);
+
+      // const start = page*ITEMS_PER_PAGE;
+      // console.log(start);
+      // const end = (page+1)*ITEMS_PER_PAGE-1;
+      // console.log(end);
+
+      // const newData = allPost.slice(start, end); // here, we will receive next batch of the items
+      // console.log('newData',newData.length);
+      // setallPost({...allPost, ...newData});
     }
 
   return (
@@ -252,7 +291,7 @@ const handleOption = (post_id) => {
               data={allPost}
               renderItem={renderItem}
               keyExtractor={(item,index) => index}
-              // onEndReached={loadMore}
+              onEndReached={loadMore}
               showsVerticalScrollIndicator={false}
           />
           </View>
