@@ -9,7 +9,11 @@ import {  View,
   import { useDispatch } from "react-redux";
   import { addCircle, getInterestSpl } from '../../redux/reducers/circleSlice';
   import Toast from 'react-native-simple-toast';
+  import { getMycircle } from '../../redux/reducers/postData';
+  import { getLocalData } from '../apis/GetLocalData';
   
+
+
   
   const SelectInterestInnerScreen = ({navigation}) => {
     const dispatch = useDispatch();
@@ -18,6 +22,7 @@ import {  View,
     const [filteredDataSource, setFilteredDataSource] = useState([]);
     const [masterDataSource, setMasterDataSource] = useState([]);
     const [selectitem,setselectitem]=useState('');
+    const [getspclist,setgetspclist]=useState('');
     const [loader, setLoader] = useState(true);
   
     const getItem = (item) => {
@@ -49,7 +54,6 @@ import {  View,
     //,id:user_id
    }
   
-  
    const getInterestSplData = async () => {
     // const postDetails = {speciality_id:specialityId}
     const result = await dispatch(getInterestSpl());
@@ -57,12 +61,23 @@ import {  View,
     setMasterDataSource(result?.payload);
     setLoader(false)
    }
+
+   const fetchSpecialities = async (id)=>{
+    const postDetails = {user_id : id}
+    const result = await dispatch(getMycircle(postDetails));
+    console.log("getSpecialityList", result.payload);
+    setgetspclist(result.payload);
+   }
   
     useEffect(() => {
       getInterestSplData()
       navigation.setOptions({title:'Select Interest'})
+      getLocalData('USER_INFO').then((res) => {
+        const reData = res?.data;
+        fetchSpecialities(reData?.id);
+      });
     }, []);
-  
+
     const searchFilterFunction = (text) => {
       // Check if searched text is not blank
       if (text) {
@@ -147,10 +162,9 @@ import {  View,
             keyExtractor={(item, index) => index.toString()}
             ItemSeparatorComponent={ItemSeparatorView}
             renderItem={ItemView}
-
-           // contentContainerStyle={{ flexDirection: 'column',height:"100%" , width:"100%" }}
+           //contentContainerStyle={{ flexDirection: 'column',height:"100%" , width:"100%" }}
            numColumns={2}
-          // nestedScrollEnabled={false}
+          //nestedScrollEnabled={false}
           />
         </View>
   

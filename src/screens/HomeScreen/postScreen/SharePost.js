@@ -187,6 +187,7 @@ const publishCheck1 = (e, text)=>{
 
   const handleStudentSubmit = async() =>{
     console.log("postDAta",post);
+    console.log("userData",userdata);
     if(post.publishto ==''){
       Toast.show('Please Select Publish to');
       bottomSheetModalRefSecond.current?.present();
