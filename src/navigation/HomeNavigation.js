@@ -40,6 +40,7 @@ import Settings from '../screens/Settings/Settings';
 import SavedPost from '../screens/Settings/SavedPost/SavedPost';
 import BlockList from '../screens/Settings/BlockList/BlockList';
 import SelectInterestInnerScreen from '../screens/SelectInterestInnerScreen';
+import AudioScreen from '../screens/HomeScreen/postScreen/AudioScreen';
 
 
 
@@ -90,6 +91,7 @@ const HomeNavigation = () => {
         <Stack.Screen name="ThankYouPage" component={ThankYouPage} options={showHeaderItemBackless}/>
         <Stack.Screen name="SavedPost" component={SavedPost} options={showHeaderItem} />
         <Stack.Screen name="BlockList" component={BlockList} options={showHeaderItem} />
+        <Stack.Screen name="AudioScreen" component={AudioScreen} options={showHeaderItem} />
         
 
         {/* <Stack.Screen name="MultipleImagesUpload" component={MultipleImagesUpload}/>

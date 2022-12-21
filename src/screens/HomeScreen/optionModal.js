@@ -14,7 +14,6 @@ import { getSavedPostsApi } from '../../../redux/reducers/SettingsSlice';
 const OptionModal = ({modalVisible,id,postId,deletePostID,BlockId,setModalVisible,saveStatus}) => {
   const [userData, setUserData] = useState();
   const [savedPost, setSavedPost] = useState(saveStatus);
-  console.log("saveStatus",savedPost);
   const dispatch    = useDispatch();
   const navigation  = useNavigation();
   const getId = async () => {
