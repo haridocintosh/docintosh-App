@@ -21,18 +21,17 @@ import { PickImageAll, PickVideos } from "../../../navigation/ReuseLogics";
 import { Audio } from 'expo-av'
 
 
+
+let recording = new Audio.Recording();
+
 const  Sharepost = () => {
   const dispatch    = useDispatch();
   const navigation  = useNavigation();
   const [loader, setloader] = useState(false);
   const [expanded, setExpanded] = useState(true);
   const [pickedData, setData]   = useState(null);
-  // const [video, setVideo]   = useState(null);
-  // const [audio, setAudio]   = useState(null);
-  // const [document, setDocument] = useState(null);
   const [err,seterr] =useState();
   const [circlespeciality, setSpl] = useState([]);
-
   const [post ,setPost] = useState({
       publishto:"",
       description :"",
@@ -43,7 +42,6 @@ const  Sharepost = () => {
       type:"",
       custspeciality:""
   });
-
   const handlePress = () => setExpanded(!expanded);
   const [isOpen, setIsOpen]     = useState(false);
   const [checked, setChecked]   = useState(false);
@@ -60,6 +58,7 @@ const  Sharepost = () => {
     circle_type:'',
     city_id:''
   })
+  const [recording, setRecording] = useState()
   const bottomSheetModalRef       = useRef(null);
   const bottomSheetModalRefSecond = useRef(null);
   const snapPointsOne = ["1%","48%"];
@@ -312,11 +311,42 @@ setSpecialNames(specialityName)
     </View>)
   }
 
+
+  //  const startRecording = async () => {
+  //   try {
+  //     console.log('Requesting permissions..');
+  //     await Audio.requestPermissionsAsync();
+  //     await Audio.setAudioModeAsync({
+  //       allowsRecordingIOS: true,
+  //       playsInSilentModeIOS: true,
+  //     });
+
+  //     console.log('Starting recording..');
+  //     const { recording } = await Audio.Recording.createAsync( Audio.RecordingOptionsPresets.HIGH_QUALITY
+  //     );
+  //     setRecording(recording);
+  //     console.log('Recording started');
+  //   } catch (err) {
+  //     console.error('Failed to start recording', err);
+  //   }
+  // }
+
+
+  // const stopRecording = async () =>{
+  //   console.log('Stopping recording..');
+  //   setRecording(undefined);
+  //   await recording.stopAndUnloadAsync();
+  //   await Audio.setAudioModeAsync({
+  //     allowsRecordingIOS: false,
+  //   });
+  //   const uri = recording.getURI();
+  //   console.log('Recording stopped and stored at', uri);
+  // }
   return (
     <BottomSheetModalProvider>
       <View style={styles.PostContainer}>
         <View  style={{flexDirection:'row'}}>
-          <Image source={{uri:userdata.profile}} style={styles.imageProfile}/>
+          <Image source={userdata.profile? {uri:userdata.profile}: null} style={styles.imageProfile}/>
           <View style={{justifyContent:'center'}}>
             <Text style={styles.userName}>{userdata?((userdata.role<='4')?'Dr.':''):''} {userdata?.fullname} <MaterialCommunityIcons name="check-decagram" size={12} color="#0F9C69" /></Text>
             <View style={{marginTop:5,}} >
@@ -351,7 +381,7 @@ setSpecialNames(specialityName)
           onChangeText={(e)=>{postDesc(e)}}
         />
         {pickedData && <View style={{position:'relative',width: 100, height: 100}}>
-           <Image source={{ uri: pickedData }} style={{ width: 100, height: 100 ,borderRadius:5}} />
+           <Image source={pickedData? { uri: pickedData }: null} style={{ width: 100, height: 100 ,borderRadius:5}} />
           <TouchableOpacity style={styles.removeImg} onPress={() =>setData()}>
           <AntDesign name="close" size={15}/>
           </TouchableOpacity>
@@ -371,7 +401,7 @@ setSpecialNames(specialityName)
           <TouchableOpacity onPress={pickVideo}>
             <FontAwesome5 name="video" size={24} color="#51668A" />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("AudioScreen")}>
             <MaterialIcons name="keyboard-voice" size={24} color="#51668A" />
           </TouchableOpacity>
           <TouchableOpacity>
