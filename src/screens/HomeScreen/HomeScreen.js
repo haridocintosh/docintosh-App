@@ -112,6 +112,7 @@ const handleOption = (post_id) => {
       setModalVisible(false);
       const postDetails = {role:reData?.role,city_id:reData?.city_id,assoc_id:reData?.assoc_id,profileimage:reData?.profileimage,userId:reData?.id,circle_type:reData?.role == 5 ? 3 : 1};
       const result = await dispatch(userPostData(postDetails));
+     // console.log("postDESC",result.payload);
       const allPostData = result?.payload.filter(Post => Post.user_role != 5);
       setallPost(allPostData);
     })
@@ -183,7 +184,7 @@ const handleOption = (post_id) => {
           </View>
           <View style={item?.description &&{ flexDirection:'row',paddingBottom:10}}>
             <Text style={{color:'#51668A',fontFamily:"Inter-Regular" }}>
-              {item?.description.replace(/<[^>]+>s/g, "")}
+              {item?.description.replace(/(<([^>]+)>)/gi, "")}
             </Text>
           </View>
          <TouchableOpacity onPress={() => handlePost(item.imgPath)}>

@@ -14,7 +14,7 @@ export const userPostData = createAsyncThunk("getAllPost", async (postDetails)=>
                 circle_type:postDetails.circle_type,
                 city_id:postDetails.city_id,
                 assoc_id:postDetails.assoc_id,
-                pageCounter:600,
+                pageCounter:1,
                 id:postDetails.userId,
                 profile:postDetails.profileimage,
             })
