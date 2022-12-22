@@ -6,9 +6,7 @@ import KnowledgeScreen from '../screens/KnowledgeScreen';
 import HomeNavigation from './HomeNavigation';
 import EngageNavigation from './EngageNavigation';
 
-
 const Tab = createBottomTabNavigator();
-
 const TabNavigator = () => {
   return (
     <Tab.Navigator
