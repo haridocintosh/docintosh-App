@@ -68,8 +68,9 @@ const handleMessage = () => {
 }
 
   return (<>
-    <HandleBack/>
     {statusKeyLoaded && 
+    <>
+      <HandleBack/>
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={defaultRoute}>
             {/* <Stack.Screen name="RegisterStudentScreen" component={RegisterStudentScreen}  options={{ title: 'Register', headerShown: true}} /> */}
             {/* <Stack.Screen name="PracticeScreen" component={PracticeScreen} /> */}
@@ -100,6 +101,7 @@ const handleMessage = () => {
             <Stack.Screen name="QuizLevels" component={QuizLevels} />
             <Stack.Screen name="HomeScreen" component={AppStack} options={{headerShown: false}} />
       </Stack.Navigator>
+    </>
   }
   </>
   );

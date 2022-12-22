@@ -1,9 +1,9 @@
-import { View, Text,Image,StyleSheet, SafeAreaView, TouchableOpacity, Modal,Dimensions } from 'react-native';
+import { View, Text,Image,StyleSheet, SafeAreaView, TouchableOpacity, Modal,Dimensions,ImageBackground } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import * as MediaLibrary from 'expo-media-library';
 import * as Permissions from 'expo-permissions';
 import { Audio } from 'expo-av'
-import { Ionicons,AntDesign  } from '@expo/vector-icons';
+import { Ionicons,AntDesign,MaterialCommunityIcons   } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 
 const AudioScreen = ({navigation}) => {
@@ -11,7 +11,7 @@ const AudioScreen = ({navigation}) => {
   const [contactError, setContactError] = useState(false);
   const [soundObj, setSoundObj] = useState(null);
   const [currentAudio, setCurrentAudio] = useState();
-  const [shouldPlay, setShouldPlay] = useState([]);
+  const [shouldPlay, setShouldPlay] = useState();
   const [toggle, setToggle] = useState(false);
   const [audioData, setAudioData] = useState(false);
   const [barDuration, setBarDuration] = useState(null);
@@ -94,7 +94,8 @@ const AudioScreen = ({navigation}) => {
     };
     const selectAudio = async (audioId) => {
       console.log(audioId);
-      setShouldPlay({...shouldPlay, audioId})
+    
+      // setShouldPlay({...shouldPlay, audioId});
 
       // let temp = contactData?.map((data) => {
       //   if (audioId === data.id) {
@@ -102,7 +103,7 @@ const AudioScreen = ({navigation}) => {
       //   }
       //   return data;
       // });
-      // console.log(temp);
+      // //console.log(temp);
       // setContactData(temp);
     }
 
@@ -145,7 +146,11 @@ const AudioScreen = ({navigation}) => {
         return(
           <TouchableOpacity style={styles.audioContainer} key={i} onPress={() => selectAudio(d.id)}>
             <View style={styles.audioImage}>
-              <Image source={require('../../../assets/images/AudioIcon.png')} style={styles.audioImageIcon}/>
+              <ImageBackground source={require('../../../assets/images/AudioIcon.png')} style={styles.audioImageIcon}>
+                 <View style={styles.SelectedTickContainer}>
+                  <Ionicons name="checkmark-circle" size={15} color="#0F9C69" style={styles.SelectedTick}/>
+                </View>
+              </ImageBackground>
               <View>
                 <Text style={styles.audioText}>
                   {d.filename.split("_")[0]}
@@ -179,7 +184,6 @@ const AudioScreen = ({navigation}) => {
                 {/* <Text style={styles.textNormal}>Are you sure you want to exit app?</Text> */}
                 
                 <View style={styles.buttonsContainer}>
-                  
                   <Slider
                     style={{width: 250, height: 40}}
                     minimumValue={0}
@@ -201,6 +205,12 @@ const AudioScreen = ({navigation}) => {
               </View>
             </View>
         </Modal>
+
+        <TouchableOpacity style={styles.sendIcon}>
+           <MaterialCommunityIcons name="send-circle" size={64} color="#2C8892" />
+        </TouchableOpacity>
+
+        
     </SafeAreaView>
   )
 }
@@ -305,5 +315,22 @@ const styles = StyleSheet.create({
       flexDirection:'row',
       width:Dimensions.get('screen').width/1.6,
       justifyContent:'space-between'
+    },
+    SelectedTick:{
+      backgroundColor:'#fff',
+      borderRadius:50
+    },
+    SelectedTickContainer:{
+      position:'absolute',
+      right:0,
+      bottom:0,
+      
+    },
+    sendIcon:{
+      position:'absolute',
+      backgroundColor:'#fff',
+      bottom:20,
+      right:15,
+      borderRadius:50
     }
 })

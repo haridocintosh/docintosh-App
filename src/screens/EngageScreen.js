@@ -30,12 +30,8 @@ useEffect(() => {
   }
   //   QuizLevels
   return (
-    <SafeAreaView style={{flex: 1,}}>
-    <ScrollView
-        showsVerticalScrollIndicator={false}
-        nestedScrollEnable={true}
-        style={{}}>
-
+    <SafeAreaView style={{flex: 1,backgroundColor: '#F2FAFA'}}>
+    <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true} >
         <View style={styles.container}>
             <View style={styles.titleDtails}>
                 <View>
@@ -86,7 +82,6 @@ useEffect(() => {
 
    </ScrollView>
   </SafeAreaView>
-
   )
 }
 
