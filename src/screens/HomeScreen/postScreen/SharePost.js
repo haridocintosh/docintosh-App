@@ -20,8 +20,6 @@ import { coinTransfer } from "../../../../redux/reducers/coinSlice";
 import { PickImageAll, PickVideos } from "../../../navigation/ReuseLogics";
 import { Audio } from 'expo-av'
 
-
-
 let recording = new Audio.Recording();
 
 const  Sharepost = () => {
@@ -431,23 +429,22 @@ setSpecialNames(specialityName)
           
           <View style={{marginTop:20}}></View>
           <TouchableOpacity  onPress={() => { postCheck(9)}}>
-          <View style={{flexDirection:'row',}} >
+          <View style={{flexDirection:'row',}}>
           <FontAwesome name="bullhorn" size={20} color="#45B5C0" />
           <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}}>Announce Your Clinic</Text>
           </View></TouchableOpacity>
-
           <View style={{marginTop:20}}></View>
           <TouchableOpacity  onPress={() => { postCheck(3) }}>
-          <View style={{flexDirection:'row',}}>
+          <View style={{flexDirection:'row'}}>
           <Feather name="send" size={20} color="#45B5C0" />
-          <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}} >Publish a Study</Text>
-          </View></TouchableOpacity>
-
+          <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}}>Publish a Study</Text>
+          </View>
+          </TouchableOpacity>
           <View style={{marginTop:20}}></View>
           <TouchableOpacity  onPress={() => { postCheck(8) }}>
           <View style={{flexDirection:'row'}}>
           <MaterialCommunityIcons name="share" size={20} color="#45B5C0" />
-          <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}} >Share A Procedure</Text>
+          <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}}>Share A Procedure</Text>
           </View></TouchableOpacity>
 
           <View style={{marginTop:20}}></View>

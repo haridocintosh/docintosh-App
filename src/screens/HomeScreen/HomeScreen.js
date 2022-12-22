@@ -195,7 +195,7 @@ const handleOption = (post_id) => {
               source={{uri:item?.imgPath}} 
               useNativeControls
               // shouldPlay={!videoPlayPause ? videoPlayPause : status[item.id]}
-              isLooping={true}
+              isLooping={false}
               style={{width: width, height:300}} 
             />
             </View>
@@ -214,12 +214,10 @@ const handleOption = (post_id) => {
 
     const loadMore = () => {
       // console.log("load more 10",allPost.length);
-
       // const start = page*ITEMS_PER_PAGE;
       // console.log(start);
       // const end = (page+1)*ITEMS_PER_PAGE-1;
       // console.log(end);
-
       // const newData = allPost.slice(start, end); // here, we will receive next batch of the items
       // console.log('newData',newData.length);
       // setallPost({...allPost, ...newData});
