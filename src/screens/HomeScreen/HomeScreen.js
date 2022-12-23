@@ -31,11 +31,13 @@ const HomeScreen = ({navigation})=> {
   const [postId, setPostId] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const [allcoins, setAllcoins] = useState(0);
+  const [autoHeight, setAutoHeight] = useState(300);
+
   const isFocused = useIsFocused();
 
   const video = useRef(null);
 
-  const { width } = Dimensions.get('window')
+  const { width,height } = Dimensions.get('window')
 
 
   const ITEMS_PER_PAGE = 5;
@@ -133,6 +135,11 @@ const handleOption = (post_id) => {
     setallPost(BlockId);
   }
 
+  const ImageAutoHeight = (imag) => {
+    Image.getSize(imag, (widt, height) => {});
+    return 
+  }
+
 
     const renderItem = ({item}) => {
       return(
@@ -191,20 +198,20 @@ const handleOption = (post_id) => {
             <View style={{justifyContent:'center',alignItems:'center'}}  >
             <Video
               ref={video}
-              resizeMode="contain"
+              resizeMode={"contain"}
               source={{uri:item?.imgPath}} 
               useNativeControls
               // shouldPlay={!videoPlayPause ? videoPlayPause : status[item.id]}
               isLooping={false}
-              style={{width: width, height:300}} 
+              style={{width: width, height:300,marginHorizontal:10}} 
             />
             </View>
             :
-            <View style={{justifyContent:'center',alignItems:'center'}}>
-              <Image source={item.imgPath?{uri:item.imgPath}:''} 
-                style={{width: width, height:300}} 
-                resizeMode={'cover'}/>
-              </View>
+            <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
+                <Image source={item.imgPath?{uri:item.imgPath}:''} 
+                  style={{width:width, height:350,marginHorizontal:10}} 
+                  resizeMode={'contain'}/>
+            </View>
             }
             </TouchableOpacity>
             <PublicReactions item={item} getStorageData={getStorageData}/>

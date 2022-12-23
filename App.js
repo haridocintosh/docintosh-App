@@ -61,7 +61,6 @@ if (!fontsLoaded) return null;
 
 export default App;
 
-
 // async function schedulePushNotification() {
 //   await Notifications.scheduleNotificationAsync({
 //     content: {
