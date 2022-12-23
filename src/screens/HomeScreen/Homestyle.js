@@ -192,6 +192,12 @@ darkBlueOnWhatsNew: {
   position:'absolute',
 },
 
+loaderStyle: {
+  marginVertical: 16,
+  alignItems: "center",
+  // borderWidth:10
+},
+
 // ---------------------------postsScreen-----------------------------------
 PostContainer:{
   padding:10,

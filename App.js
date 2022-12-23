@@ -8,6 +8,8 @@ import { navigationRef } from './src/navigation/RootNavigation';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { Platform ,LogBox} from 'react-native';
+import OneSignal from 'react-native-onesignal';
+import Constants from "expo-constants";
 
 
 Notifications.setNotificationHandler({
@@ -23,6 +25,8 @@ const App = () => {
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
+  console.log("onesignal",Constants.manifest.extra.oneSignalAppId);
+  OneSignal.setAppId(Constants.manifest.extra.oneSignalAppId);
 
   useEffect(() => {
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
