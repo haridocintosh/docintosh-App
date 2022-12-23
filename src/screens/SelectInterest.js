@@ -4,7 +4,6 @@ import {  View,
   FlatList,
   TextInput } from 'react-native'
 import React, {useState, useEffect, useRef } from 'react'
-import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CustomButton from '../components/CustomButton';
 import { mainApi } from '../apis/constant';
@@ -13,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { addCircle, getInterestSpl } from '../../redux/reducers/circleSlice';
 const styelcss = require('../assets/css/style');
 import Toast from 'react-native-simple-toast';
-import { useFonts } from 'expo-font';
+
 
 
 

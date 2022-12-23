@@ -183,7 +183,8 @@ const publishCheck1 = (e, text)=>{
 
 
   const handleStudentSubmit = async() =>{
-    console.log("postDAta",post);
+    // console.log("postDAta",post);
+    // console.log("userData",userdata);
     if(post.publishto ==''){
       Toast.show('Please Select Publish to');
       bottomSheetModalRefSecond.current?.present();
@@ -274,7 +275,6 @@ const publishCheck1 = (e, text)=>{
    }
 
    const handleChange = (speciality_id) => {
-   
     let temp = circlespeciality.map((data) => {
       if (speciality_id === data.speciality_id) {
         return { ...data, checked: !data.checked };
@@ -303,8 +303,7 @@ setSpecialNames(specialityName)
   };
 
   if(loader){
-    return(
-    <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+    return(<View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
         <ActivityIndicator size={'large'} color={"#2C8892"}/>
     </View>)
   }

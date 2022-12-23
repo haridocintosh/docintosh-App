@@ -6,7 +6,7 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
-  Animated,
+  Animated,ActivityIndicator,
 } from 'react-native';
 import { Card } from 'react-native-paper';
 import { useDispatch } from "react-redux";
@@ -33,14 +33,14 @@ const HomeScreen = ({navigation})=> {
   const [allcoins, setAllcoins] = useState(0);
   const [autoHeight, setAutoHeight] = useState(300);
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
   const isFocused = useIsFocused();
 
   const video = useRef(null);
 
   const { width,height } = Dimensions.get('window')
 
-
-  const ITEMS_PER_PAGE = 5;
   //---------------- header Animation------------------
   const scrollPosition = useRef(new Animated.Value(0)).current;
   const minHeaderHeight = 100
@@ -87,21 +87,32 @@ const handleOption = (post_id) => {
   setModalVisible(true);
 }
   const getStorageData =  () => {
-    getLocalData('USER_INFO').then( async (res) =>{
+    getLocalData('USER_INFO').then(async (res) =>{
       const allCoins = { user_id:res.data.id};
       const allCoinsResult = await dispatch(getAllCoins(allCoins));
       setAllcoins(allCoinsResult.payload.coins);
     });
   };
+  const renderLoader = () => {
+    return (
+      isLoading ?
+        <View style={styles.loaderStyle}>
+          <ActivityIndicator size="large" color="#aaa" />
+        </View> : null
+    );
+  };
 
-  
+  const loadMoreItem = () => {
+    console.log("currentPage",currentPage);
+     setCurrentPage(currentPage + 1);
+  };
 
   useEffect(()=>{
     if(isFocused){
       asyncFetchDailyData();
       getStorageData();
     }
-  },[isFocused]);
+  },[isFocused,currentPage]);
 
   const asyncFetchDailyData = async () => {
     getLocalData('USER_INFO').then(async (res) =>{
@@ -112,8 +123,11 @@ const handleOption = (post_id) => {
         role:reData?.role,
       });
       setModalVisible(false);
-      const postDetails = {role:reData?.role,city_id:reData?.city_id,assoc_id:reData?.assoc_id,profileimage:reData?.profileimage,userId:reData?.id,circle_type:reData?.role == 5 ? 3 : 1};
+      setIsLoading(true);
+      const postDetails = {role:reData?.role,city_id:reData?.city_id,assoc_id:reData?.assoc_id,profileimage:reData?.profileimage, pageCounter:currentPage, userId:reData?.id,circle_type:reData?.role == 5 ? 3 : 1};
+      console.log(postDetails);
       const result = await dispatch(userPostData(postDetails));
+      setIsLoading(false);
       const allPostData = result?.payload.filter(Post => Post.user_role != 5);
       setallPost(allPostData);
     })
@@ -190,7 +204,7 @@ const handleOption = (post_id) => {
           </View>
           <View style={item?.description &&{ flexDirection:'row',paddingBottom:10}}>
             <Text style={{color:'#51668A',fontFamily:"Inter-Regular" }}>
-              {item?.description.replace(/<[^>]+>s/g, "")}
+              {item?.description.replace(/(<([^>]+)>)/gi, "")}
             </Text>
           </View>
          <TouchableOpacity onPress={() => handlePost(item.imgPath)}>
@@ -293,7 +307,9 @@ const handleOption = (post_id) => {
               data={allPost}
               renderItem={renderItem}
               keyExtractor={(item,index) => index}
-              onEndReached={loadMore}
+              ListFooterComponent={renderLoader}
+              onEndReached={loadMoreItem}
+              onEndReachedThreshold={0}
               showsVerticalScrollIndicator={false}
           />
           </View>

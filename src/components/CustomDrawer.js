@@ -13,7 +13,7 @@ import {
 } from '@react-navigation/drawer';
 import docintoshlogo from '../assets/dr-icon/docintoshlogo.png';
 import profilePicture from '../assets/images/profilePicture.png';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import {AntDesign} from 'react-native-vector-icons';
 import { MaterialIcons,MaterialCommunityIcons,Ionicons,Entypo } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
 import { Feather } from '@expo/vector-icons';
@@ -99,6 +99,10 @@ const CustomDrawer = (props) => {
             <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("insideContactPermission")}}>
               <MaterialIcons name="person-add-alt-1" size={25} color="white" />
               <Text style={styles.sideDrawerName}>Invite</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("SelectInterestInnerScreen")}}>
+              <AntDesign name="select1" size={25} color="white" />
+              <Text style={styles.sideDrawerName}>Select Interest</Text>
             </TouchableOpacity >
             <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
               <MaterialCommunityIcons name="gift" size={25} color="white"/>
