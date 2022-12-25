@@ -475,7 +475,6 @@ backgroundColor:"#606060",
       // borderBottomWidth:2
     },
     headerContainer:{
-      marginTop:28,
       backgroundColor:'#071B36',
       height:57,
       flexDirection:'row',

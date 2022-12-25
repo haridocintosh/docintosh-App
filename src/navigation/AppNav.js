@@ -24,6 +24,7 @@ import QuizLevels from '../screens/QuizLevels/QuizLevels';
 import TermsAndCondition from '../screens/commonpage/TermsAndCondition';
 import ContactScreen from '../screens/commonpage/ContactScreen';
 import HandleBack from './HandleBack';
+import MultipleImagesUpload from '../screens/MiltipleImageUpload/MultipleImagesUpload';
 
 
 export default function AppNav() {
@@ -49,6 +50,7 @@ if(loader){
       }else{
       setDefaultRoute("Intro");
      // setDefaultRoute("ContactPermission");
+    //  setDefaultRoute("MultipleImagesUpload");
       }
       setStatusKeyLoaded(true);
     } catch(e) {
@@ -77,6 +79,7 @@ const handleMessage = () => {
             <Stack.Screen name="Intro" component={IntroStack} />
             <Stack.Screen name="InvitePeers" component={InvitePeers} options={{ title: 'Invite Peers', headerShown: true, headerRight: () => (<Text onPress={() => navigation.navigate('Login')} style={{color:"#2376E5"}}>Skip</Text>)}}  />
             <Stack.Screen name="MobileScreen" component={MobileScreen} />
+            <Stack.Screen name="MultipleImagesUpload" component={MultipleImagesUpload} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Register" component={RegisterScreen}  options={{ title: 'Register', headerShown: true}}/>
             <Stack.Screen name="OtpVerification" component={OtpVerification} options={{ title: 'Verification OTP', headerShown: true}} />

@@ -23,7 +23,9 @@
       "infoPlist": {
         "UIBackgroundModes": [
           "audio"
-        ]
+        ],
+        "NSPhotoLibraryUsageDescription": "Allow $(PRODUCT_NAME) to access your photos.",
+        "NSPhotoLibraryAddUsageDescription": "Allow $(PRODUCT_NAME) to save photos."
       }
     },
     "android": {
@@ -41,7 +43,10 @@
         "ACCESS_FINE_LOCATION",
         "CAMERA_ROLL",
         "NOTIFICATIONS",
-        "READ_CONTACTS"
+        "READ_CONTACTS",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.ACCESS_MEDIA_LOCATION"
       ]
     },
     "plugins": [
@@ -89,11 +94,28 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-      "eas": {
-        "projectId": "49ae4f85-f2ca-4e4f-a0dd-f3c561c211db"
-      },
       "extra": {
         "oneSignalAppId": "33db6c28-a3c3-4c1b-bbb0-e7442543f32d"
+      },
+      "eas": {
+        "build": {
+          "experimental": {
+            "ios": {
+              "appExtensions": [
+                {
+                  "targetName": "OneSignalNotificationServiceExtension",
+                  "bundleIdentifier": "com.docintosh.tech.OneSignalNotificationServiceExtension",
+                  "entitlements": {
+                    "com.apple.security.application-groups": [
+                      "group.com.docintosh.tech.onesignal"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "projectId": "c6727096-23cb-461a-af8c-5c31f3bb8c7a"
       }
     }
   }

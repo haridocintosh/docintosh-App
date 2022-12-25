@@ -1,70 +1,29 @@
 import { View, Text , StyleSheet, TouchableOpacity, FlatList, Image, Platform, PermissionsAndroid} from 'react-native'
 import React, {useEffect, useState} from 'react'
-// import ImagePicker from 'react-native-image-crop-picker';
+import * as ImagePicker from 'expo-image-picker';
 
 const MultipleImagesUpload = () => {
     const [images, setImages] = useState([]);
 
-    const requestExternalWritePermission = async () => {
-      if (Platform.OS === 'android'){
-        try {
-          const granted = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.CAMERA,
-            {
-              title: 'Access to photos',
-              message: 'Our App would like to access your photos on your device',
-              buttonNegative: 'Deny',
-              buttonPositive: 'Allow',
-            },
-          );
-          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            return granted;
-          } else {
-            console.log('Camera permission denied');
-          }
-        } catch (err) {
-          console.warn(err);
-        }
-      } else {
-        return true;
+    const pickImage = async () => {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        //aspect: [4, 3],
+        quality: 1,
+        allowsMultipleSelection:true
+      });
+  
+      console.log(result);
+  
+      if (!result.cancelled) {
+        setImages(result.uri);
       }
-    };
-
-
-    const openImageLibrary = async () => {
-      let isStoragePermitted = await requestExternalWritePermission();
-      if (isStoragePermitted) {
-        await openPicker({
-          multiple: true,
-          mediaType: 'photo',
-          maxFiles: `4`,
-          showsSelectedCount: true,
-        }).then(imgs => {
-          if (imgs.length <= 4) {
-            setImages([...images, ...imgs]);
-          } else {
-            setImages([...images]);
-            // ToastAndroid.show("Maximum of 4 images allowed", ToastAndroid.SHORT);
-          }
-        });
-      }
-    };
+  }
 
   return (
     <View>
-      <Text>MultipleImagesUplad</Text>
-      {/* <FlatList
-        data={image}
-        horizontal
-        renderItem={({item}) =>(
-            <Image 
-              source={{ uri: item.uri }} 
-              style={{ width: 70, height: 70, margin:10 }} 
-            />
-        )}
-        keyExtractor={(item) => item.url}
-    /> */}
-        <TouchableOpacity onPress={() => openImageLibrary()} style={styles.flatlist}>
+        <TouchableOpacity onPress={() => pickImage()} style={styles.flatlist}>
           <Text style={styles.selectPhoto}>Select Photos</Text>
         </TouchableOpacity>
     </View>
@@ -80,7 +39,7 @@ const styles = StyleSheet.create({
         height:50,
         justifyContent:'center',
         alignItems:'center',
-        marginBottom:15
+        marginTop:100
     },
     selectPhoto:{
         color: '#fff',

@@ -51,6 +51,7 @@ export const PickImageAll = async () => {
             var library = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: false,
+            allowsMultipleSelection: true,
             // aspect: [1, 1],
             quality: 0.7,
             });

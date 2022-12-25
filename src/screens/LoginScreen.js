@@ -160,7 +160,6 @@ const LoginScreen = () => {
           inputType="password"
           placeholderTextColor='#51668A'
           hideShow={showeye}
-          fieldButtonFunction={() => {}}
           defaultValue={datarm?.data.password}
           blurOnSubmit={true}
         />
@@ -214,8 +213,8 @@ const styles = StyleSheet.create({
     zIndex:1, 
     alignSelf:'flex-end', 
     marginTop:-50,
-     marginRight:30,
-     marginBottom:30
+    marginRight:30,
+    marginBottom:30
 },
 red: {
   backgroundColor: 'red',
