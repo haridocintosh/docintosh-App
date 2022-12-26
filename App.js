@@ -8,9 +8,7 @@ import { navigationRef } from './src/navigation/RootNavigation';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { Platform ,LogBox} from 'react-native';
-import OneSignal from 'react-native-onesignal';
-import Constants from "expo-constants";
-
+// import OneSignal from 'react-native-onesignal';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -25,8 +23,10 @@ const App = () => {
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
-  console.log("onesignal",Constants.manifest.extra.oneSignalAppId);
-  OneSignal.setAppId(Constants.manifest.extra.oneSignalAppId);
+  // OneSignal Initialization
+
+
+
 
   useEffect(() => {
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
@@ -40,7 +40,14 @@ const App = () => {
       Notifications.removeNotificationSubscription(notificationListener.current);
       Notifications.removeNotificationSubscription(responseListener.current);
     };
+    
   }, []);
+
+  // const notificationSetup= async()=>{
+  //   const deviceState = await OneSignal.getDeviceState();
+  //   console.log("deviceState",deviceState);
+  
+  // }
 
   LogBox.ignoreLogs(['Warning: ...']); 
   LogBox.ignoreAllLogs();
@@ -53,6 +60,25 @@ const [fontsLoaded] = useFonts({
 });
 
 if (!fontsLoaded) return null;
+
+  // OneSignal.promptForPushNotificationsWithUserResponse();
+  // //Method for handling notifications received while app in foreground
+  // OneSignal.setNotificationWillShowInForegroundHandler(notificationReceivedEvent => {
+  //   console.log("OneSignal: notification will show in foreground:", notificationReceivedEvent);
+  //   let notification = notificationReceivedEvent.getNotification();
+  //   console.log("notification: ", notification);
+  //   const data = notification.additionalData
+  //   console.log("additionalData: ", data);
+  //   // Complete with null means don't show a notification.
+  //   notificationReceivedEvent.complete(notification);
+  // });
+
+
+  // //Method for handling notifications opened
+  // OneSignal.setNotificationOpenedHandler(notification => {
+  //   console.log("OneSignal: notification opened:", notification);
+  // });
+
 
   return (
     <Provider store={store}>
