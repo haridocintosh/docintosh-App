@@ -204,7 +204,7 @@ const handleOption = (post_id) => {
               {item?.description.replace(/(<([^>]+)>)/gi, "")}
             </Text>
           </View>
-         <TouchableOpacity onPress={() => handlePost(item.imgPath)} style={{borderWidth:1,height:1200,backgroundColor:'#ccc'}}>
+         <TouchableOpacity onPress={() => handlePost(item.imgPath)} style={{}}>
           {item?.imgPath.includes("mp4") ?
             <View style={{justifyContent:'center',alignItems:'center'}}  >
             <Video

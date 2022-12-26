@@ -58,19 +58,20 @@ const AudioScreen = ({navigation}) => {
     }
 
 
-
-
     const getAudioFiles = async () => {
       let media = await MediaLibrary.getAssetsAsync({
         mediaType: 'audio',
       });
-      
       media = await MediaLibrary.getAssetsAsync({
         mediaType: 'audio',
         first: media.totalCount,
       });
-      // console.log("media",media?.assets);
-      setContactData(media?.assets)
+       const insert =  media?.assets.map((data) => {
+         return {...data, isSelected:false}
+      });
+      console.log(insert);
+
+      setContactData(insert)
     };
 
     const convertTime = (minutes) => {
@@ -97,14 +98,14 @@ const AudioScreen = ({navigation}) => {
     
       // setShouldPlay({...shouldPlay, audioId});
 
-      // let temp = contactData?.map((data) => {
-      //   if (audioId === data.id) {
-      //     return { ...data, isSelected: !data.isSelected };
-      //   }
-      //   return data;
-      // });
-      // //console.log(temp);
-      // setContactData(temp);
+      let temp = contactData?.map((data) => {
+        if (audioId === data.id) {
+          return { ...data, isSelected: !data.isSelected };
+        }
+        return data;
+      });
+      console.log(temp);
+      setContactData(temp);
     }
 
     const getData = async (audio) => {
@@ -142,7 +143,6 @@ const AudioScreen = ({navigation}) => {
     <SafeAreaView style={styles.SafeAreaView}>
       {contactError && <Text>You don't have a Permission to access data.</Text>}
       {contactData?.map((d, i) => {
-        d.isSelected = false;
         return(
           <TouchableOpacity style={styles.audioContainer} key={i} onPress={() => selectAudio(d.id)}>
             <View style={styles.audioImage}>
