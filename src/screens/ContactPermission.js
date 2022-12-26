@@ -8,12 +8,10 @@ const styelcss = require('../assets/css/style');
 export default function ContactPermission({navigation}) {
   const [contactList, setContact]= useState([]);
   const [isChecked, setisChecked] = useState(false);
-  // const [contactData, setcontactData] = useState('');
-  // const [contactData1, setcontactData1] = useState(contactList);
   const [selectedList, setSelectedList] = useState();
   const [loading, setLoading]  = useState(false);
+  const [sliceData, setSliceData] = useState(10);
  
-
   const handleChange = (phoneNumbers) => {
     let temp = contactList.map((data) => {
       if (phoneNumbers === data.id) {
@@ -21,7 +19,6 @@ export default function ContactPermission({navigation}) {
       }
       return data;
     });
-
     setContact(temp);
     const trueVal = temp
       .filter((val) => val.isSelected == true)
@@ -77,10 +74,14 @@ export default function ContactPermission({navigation}) {
   
   const handleSubmit = async()=>{
     navigation.navigate('InvitePeers',{
-      alluserContact :contactList,
-  }) 
+        alluserContact :contactList,
+    }) 
+  };
+  
+  const handleAlldata = () => {
+    setSliceData();
+  };
 
- };
 
  if(loading){
   return(
@@ -103,7 +104,7 @@ console.log(contactList.length);
               isChecked={isChecked} 
             />
         </View>
-       {contactList?.length > 0 ? contactList.map((element, index)=>{
+       {contactList?.length > 0 ? contactList?.slice(0, sliceData).map((element, index)=>{
           return ( 
             <View style={styelcss.peersmaniListArea} key={index} >
                 <View style={styelcss.peersSubiListArea}>
@@ -117,6 +118,7 @@ console.log(contactList.length);
                       </Text>
                     </View>
                 </View>
+              
                 <TouchableOpacity>
                   <CheckBox
                       onClick={() => handleChange(element.id)}
@@ -126,18 +128,21 @@ console.log(contactList.length);
                 </TouchableOpacity>
             </View>
             )
-          
-        }) 
+        })
       :
       <Text>You Don't have any contact's</Text>
       }
-    
+ <View>
+ 
+    <TouchableOpacity onPress={() => handleAlldata()}>
+    {contactList?.length > 10 && <Text style={styles.ViewAllText}>View All</Text>}
+    </TouchableOpacity>
    
-        
-              
-    </ScrollView>
+
+    </View>
+  </ScrollView>
     <View style={{marginTop:10,zIndex:1,width:"100%",bottom:0,backgroundColor:"#f1f1f1",paddingTop:6}}>
-            <CustomButton label={'Continue'} onPress={() => sentInvite()} />
+        <CustomButton label={'Continue'} onPress={() => sentInvite()} />
             {/* <Text style={{textAlign:"center",fontSize:14,fontWeight:"700",color:"#2376E5",marginBottom:10,marginTop:-15}}>Select Manually</Text> */}
     </View>
 </View>
@@ -152,5 +157,12 @@ const styles = StyleSheet.create({
     position:"relative",
     width:"100%"
 
+  },
+  ViewAllText: {
+    color: "#2376E5",
+    alignSelf: "center",
+    fontWeight: "600",
+    marginTop: 10,
+    fontFamily: "PlusJakartaSans-Bold",
   }
 })
