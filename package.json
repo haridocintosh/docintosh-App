@@ -57,7 +57,6 @@
     "react-native-gesture-handler": "~2.2.1",
     "react-native-image-header-scroll-view": "^1.0.0",
     "react-native-modal": "^13.0.1",
-    "react-native-onesignal": "^4.5.0",
     "react-native-otp-textinput": "^0.0.9",
     "react-native-paper": "^4.12.4",
     "react-native-popup-menu": "^0.15.13",
