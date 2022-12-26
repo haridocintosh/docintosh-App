@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
-import {StyleSheet, Text, TouchableOpacity, View, Image, ActivityIndicator} from "react-native";
+import {StyleSheet, Text, TouchableOpacity, View, Image, ActivityIndicator, ImageBackground} from "react-native";
 import {BottomSheetModal, BottomSheetModalProvider,BottomSheetScrollView} from "@gorhom/bottom-sheet";
 import * as ImagePicker from 'expo-image-picker';
 import {Entypo, Ionicons, MaterialIcons, Fontisto,MaterialCommunityIcons, AntDesign, FontAwesome5,FontAwesome, Feather} from "@expo/vector-icons";
@@ -80,8 +80,12 @@ const  Sharepost = () => {
 
   const pickImage =  () => {
     PickImageAll().then(async (res) =>{
+      console.log("res",res);
+      setData(res);
+      return;
       let localUri = res?.uri;
-      setData(localUri)
+      console.log("localUri",localUri);
+      
       let filename = localUri.split('/').pop();
       let uriParts = localUri.split('.');
       let fileType = uriParts[uriParts.length - 1];
@@ -108,6 +112,9 @@ const  Sharepost = () => {
       });
     })
   };
+
+  const asda = pickedData?.map(data => data.uri)
+  console.log("asda",asda);
 
   const pickVideo =  () => {
     PickVideos().then(async (res) =>{
@@ -140,8 +147,6 @@ const  Sharepost = () => {
         type:'v'
       });
     })
-
-
   };
 
 
@@ -283,7 +288,6 @@ const publishCheck1 = (e, text)=>{
     });
 
     setSpl(temp);
-
     const specialityId = temp
       .filter((val) => val.checked == true)
       .map((temp) => temp.speciality_id);
@@ -293,7 +297,6 @@ const publishCheck1 = (e, text)=>{
       .map((temp) => temp.speciality);
 
 setSpecialNames(specialityName)
-
     setPost({ ...post, 
       publishto:3,
       custspeciality:specialityId
@@ -339,6 +342,12 @@ setSpecialNames(specialityName)
   //   const uri = recording.getURI();
   //   console.log('Recording stopped and stored at', uri);
   // }
+  const removeImg = (id) => {
+    console.log("id",id);
+    const removed = pickedData?.filter(data => data.assetId != id); 
+    console.log("removed",removed);
+    setData(removed);
+  }
   return (
     <BottomSheetModalProvider>
       <View style={styles.PostContainer}>
@@ -377,13 +386,19 @@ setSpecialNames(specialityName)
           autoCapitalize="none"
           onChangeText={(e)=>{postDesc(e)}}
         />
-        {pickedData && <View style={{position:'relative',width: 100, height: 100}}>
-           <Image source={pickedData? { uri: pickedData }: null} style={{ width: 100, height: 100 ,borderRadius:5}} />
-          <TouchableOpacity style={styles.removeImg} onPress={() =>setData()}>
-          <AntDesign name="close" size={15}/>
-          </TouchableOpacity>
-        </View>}
-        
+        <View style={{flexDirection:'row',borderRadius:5,flexWrap:'wrap'}}>
+        {pickedData?.map((data) => {
+          return(
+            <>
+              <ImageBackground source={{uri: data.uri}} style={{ width: 100, height: 100 ,borderRadius:5,margin:7}} >
+                <TouchableOpacity style={styles.removeImg} onPress={() => removeImg(data.assetId)}>
+                <AntDesign name="close" size={15}/>
+                </TouchableOpacity>
+              </ImageBackground>
+            </>
+          )
+        })}
+        </View>
         <View style={styles.line}/>
       </View>
 

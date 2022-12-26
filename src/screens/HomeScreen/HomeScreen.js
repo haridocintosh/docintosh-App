@@ -20,6 +20,8 @@ import { useIsFocused } from '@react-navigation/native';
 import OptionModal from './optionModal';
 import { getLocalData } from '../../apis/GetLocalData';
 import { Audio, Video } from 'expo-av';
+import AutoHeightImage from './AutoHeightImage';
+
 
 
 
@@ -125,7 +127,7 @@ const handleOption = (post_id) => {
       setModalVisible(false);
       setIsLoading(true);
       const postDetails = {role:reData?.role,city_id:reData?.city_id,assoc_id:reData?.assoc_id,profileimage:reData?.profileimage, pageCounter:currentPage, userId:reData?.id,circle_type:reData?.role == 5 ? 3 : 1};
-      console.log(postDetails);
+      // console.log(postDetails);
       const result = await dispatch(userPostData(postDetails));
       setIsLoading(false);
       const allPostData = result?.payload.filter(Post => Post.user_role != 5);
@@ -134,7 +136,7 @@ const handleOption = (post_id) => {
   }
   
   const handlePost = (singleItem) => {
-    console.log("singleItem",singleItem);
+    // console.log("singleItem",singleItem);
     // navigation.navigate('PostsScreen', {singleItem})
   }
 
@@ -147,11 +149,6 @@ const handleOption = (post_id) => {
     console.log("BlockId",id);
     const BlockId = allPost.filter(Uid => Uid.id != id);
     setallPost(BlockId);
-  }
-
-  const ImageAutoHeight = (imag) => {
-    Image.getSize(imag, (widt, height) => {});
-    return 
   }
 
 
@@ -207,7 +204,7 @@ const handleOption = (post_id) => {
               {item?.description.replace(/(<([^>]+)>)/gi, "")}
             </Text>
           </View>
-         <TouchableOpacity onPress={() => handlePost(item.imgPath)}>
+         <TouchableOpacity onPress={() => handlePost(item.imgPath)} style={{}}>
           {item?.imgPath.includes("mp4") ?
             <View style={{justifyContent:'center',alignItems:'center'}}  >
             <Video
@@ -221,11 +218,7 @@ const handleOption = (post_id) => {
             />
             </View>
             :
-            <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
-                <Image source={item.imgPath?{uri:item.imgPath}:''} 
-                  style={{width:width, height:350,marginHorizontal:10}} 
-                  resizeMode={'contain'}/>
-            </View>
+            <AutoHeightImage autoHeightImg={item.imgPath} width={width}/>
             }
             </TouchableOpacity>
             <PublicReactions item={item} getStorageData={getStorageData}/>

@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react'
-import{ View, Text ,useWindowDimensions,Image,TextInput,Animated,Alert, Button,TouchableOpacity}from 'react-native'
+import{ View, Text ,useWindowDimensions,Image,TextInput,Animated,Alert, Button,TouchableOpacity, SafeAreaView}from 'react-native'
 import { TabView, SceneMap } from 'react-native-tab-view'; 
 import { useNavigation } from '@react-navigation/native';
 import Doctor from './Doctor';
@@ -17,7 +17,6 @@ const CommonSearchScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch(); 
   const refInput = React.useRef(null);
-  
   const layout = useWindowDimensions();
   const [inputText,setInputText] = useState(null);
   const [index, setIndex] = React.useState(0);
@@ -138,7 +137,7 @@ const CommonSearchScreen = () => {
   }
 
 return (
-  <>
+  <SafeAreaView>
     <View style={styelcss.headerContainer}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
          <Ionicons name="arrow-back" size={25} color={"#fff"}/>
@@ -166,7 +165,7 @@ return (
       swipeEnabled={true}
       renderTabBar={renderTabBar}
     />
-  </>
+  </SafeAreaView>
 )
 }
 export default CommonSearchScreen

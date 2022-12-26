@@ -8,6 +8,7 @@ import { navigationRef } from './src/navigation/RootNavigation';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { Platform ,LogBox} from 'react-native';
+import { ViewPropTypes } from 'deprecated-react-native-prop-types';
 // import OneSignal from 'react-native-onesignal';
 
 Notifications.setNotificationHandler({
@@ -24,9 +25,6 @@ const App = () => {
   const notificationListener = useRef();
   const responseListener = useRef();
   // OneSignal Initialization
-
-
-
 
   useEffect(() => {
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token));

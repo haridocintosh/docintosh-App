@@ -10,10 +10,10 @@ const Settings = ({navigation}) => {
             <Fontisto name="locked" size={20} color={'#51668A'} style={{marginLeft:3}}/>
             <Text style={styles.SettingText}>Profile & Privacy Settings</Text>
         </TouchableOpacity> */}
-        {/* <TouchableOpacity style={styles.singleSettingBox}>
+        <TouchableOpacity style={styles.singleSettingBox} onPress={() => navigation.navigate('AccountSettings')}>
             <MaterialCommunityIcons name="account" size={22} color={'#51668A'}/>
             <Text style={styles.SettingText}>Account Settings</Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
         <TouchableOpacity style={styles.singleSettingBox} onPress={() => navigation.navigate('SavedPost')}>
             <Ionicons name="bookmark" size={22} color={'#51668A'}/>
             <Text style={styles.SettingText}>Saved Post</Text>

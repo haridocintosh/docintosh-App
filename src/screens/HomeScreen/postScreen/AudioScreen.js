@@ -58,19 +58,19 @@ const AudioScreen = ({navigation}) => {
     }
 
 
-
-
     const getAudioFiles = async () => {
       let media = await MediaLibrary.getAssetsAsync({
         mediaType: 'audio',
       });
-      
       media = await MediaLibrary.getAssetsAsync({
         mediaType: 'audio',
         first: media.totalCount,
       });
-      // console.log("media",media?.assets);
-      setContactData(media?.assets)
+       const insert =  media?.assets.map((data) => {
+         return {...data, isSelected:false}
+      });
+      console.log(insert);
+      setContactData(insert)
     };
 
     const convertTime = (minutes) => {
@@ -79,7 +79,6 @@ const AudioScreen = ({navigation}) => {
         const minute = hrs.toString().split('.')[0];
         const percent = parseInt(hrs.toString().split('.')[1].slice(0, 2));
         const sec = Math.ceil((60 * percent) / 100);
-    
         if (parseInt(minute) < 10 && sec < 10) {
           return `0${minute}:0${sec}`;
         }
@@ -94,17 +93,15 @@ const AudioScreen = ({navigation}) => {
     };
     const selectAudio = async (audioId) => {
       console.log(audioId);
-    
       // setShouldPlay({...shouldPlay, audioId});
-
-      // let temp = contactData?.map((data) => {
-      //   if (audioId === data.id) {
-      //     return { ...data, isSelected: !data.isSelected };
-      //   }
-      //   return data;
-      // });
-      // //console.log(temp);
-      // setContactData(temp);
+      let temp = contactData?.map((data) => {
+        if (audioId === data.id) {
+          return { ...data, isSelected: !data.isSelected };
+        }
+        return data;
+      });
+      console.log(temp);
+      setContactData(temp);
     }
 
     const getData = async (audio) => {
@@ -142,20 +139,21 @@ const AudioScreen = ({navigation}) => {
     <SafeAreaView style={styles.SafeAreaView}>
       {contactError && <Text>You don't have a Permission to access data.</Text>}
       {contactData?.map((d, i) => {
-        d.isSelected = false;
         return(
           <TouchableOpacity style={styles.audioContainer} key={i} onPress={() => selectAudio(d.id)}>
             <View style={styles.audioImage}>
-              <ImageBackground source={require('../../../assets/images/AudioIcon.png')} style={styles.audioImageIcon}>
-                 <View style={styles.SelectedTickContainer}>
+              <View>
+              <Image source={require('../../../assets/images/AudioIcon.png')} style={styles.audioImageIcon}/>
+              {d.isSelected && <View style={styles.SelectedTickContainer}>
                   <Ionicons name="checkmark-circle" size={15} color="#0F9C69" style={styles.SelectedTick}/>
-                </View>
-              </ImageBackground>
+                </View>}
+              </View>
               <View>
                 <Text style={styles.audioText}>
                   {d.filename.split("_")[0]}
                 </Text>
                 <Text style={styles.audioDownText}>
+                  
                   {convertTime(d.duration)} 
                   {/* . 3.4mb */}
                 </Text>
