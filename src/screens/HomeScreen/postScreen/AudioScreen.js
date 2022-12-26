@@ -79,7 +79,6 @@ const AudioScreen = ({navigation}) => {
         const minute = hrs.toString().split('.')[0];
         const percent = parseInt(hrs.toString().split('.')[1].slice(0, 2));
         const sec = Math.ceil((60 * percent) / 100);
-    
         if (parseInt(minute) < 10 && sec < 10) {
           return `0${minute}:0${sec}`;
         }
@@ -94,9 +93,7 @@ const AudioScreen = ({navigation}) => {
     };
     const selectAudio = async (audioId) => {
       console.log(audioId);
-    
       // setShouldPlay({...shouldPlay, audioId});
-
       let temp = contactData?.map((data) => {
         if (audioId === data.id) {
           return { ...data, isSelected: !data.isSelected };
