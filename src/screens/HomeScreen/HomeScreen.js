@@ -136,7 +136,7 @@ const handleOption = (post_id) => {
   }
   
   const handlePost = (singleItem) => {
-    console.log("singleItem",singleItem);
+    // console.log("singleItem",singleItem);
     // navigation.navigate('PostsScreen', {singleItem})
   }
 

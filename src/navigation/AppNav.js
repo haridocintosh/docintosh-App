@@ -25,6 +25,7 @@ import TermsAndCondition from '../screens/commonpage/TermsAndCondition';
 import ContactScreen from '../screens/commonpage/ContactScreen';
 import HandleBack from './HandleBack';
 import MultipleImagesUpload from '../screens/MiltipleImageUpload/MultipleImagesUpload';
+import { ViewPropTypes } from 'deprecated-react-native-prop-types';
 
 
 export default function AppNav() {

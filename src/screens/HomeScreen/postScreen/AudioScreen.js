@@ -70,7 +70,6 @@ const AudioScreen = ({navigation}) => {
          return {...data, isSelected:false}
       });
       console.log(insert);
-
       setContactData(insert)
     };
 
@@ -146,16 +145,18 @@ const AudioScreen = ({navigation}) => {
         return(
           <TouchableOpacity style={styles.audioContainer} key={i} onPress={() => selectAudio(d.id)}>
             <View style={styles.audioImage}>
-              <ImageBackground source={require('../../../assets/images/AudioIcon.png')} style={styles.audioImageIcon}>
-                 <View style={styles.SelectedTickContainer}>
+              <View>
+              <Image source={require('../../../assets/images/AudioIcon.png')} style={styles.audioImageIcon}/>
+              {d.isSelected && <View style={styles.SelectedTickContainer}>
                   <Ionicons name="checkmark-circle" size={15} color="#0F9C69" style={styles.SelectedTick}/>
-                </View>
-              </ImageBackground>
+                </View>}
+              </View>
               <View>
                 <Text style={styles.audioText}>
                   {d.filename.split("_")[0]}
                 </Text>
                 <Text style={styles.audioDownText}>
+                  
                   {convertTime(d.duration)} 
                   {/* . 3.4mb */}
                 </Text>
