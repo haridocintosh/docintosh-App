@@ -11,11 +11,10 @@ const AudioScreen = ({navigation}) => {
   const [contactError, setContactError] = useState(false);
   const [soundObj, setSoundObj] = useState(null);
   const [currentAudio, setCurrentAudio] = useState();
-  const [shouldPlay, setShouldPlay] = useState();
   const [toggle, setToggle] = useState(false);
   const [audioData, setAudioData] = useState(false);
   const [barDuration, setBarDuration] = useState(null);
-  const [currentPosition, setCurrentPosition] = useState(0);
+  const [send, setSend] = useState(false);
 
   const playBack = new Audio.Sound();
 
@@ -34,15 +33,11 @@ const AudioScreen = ({navigation}) => {
 
     const getPermission = async () => {
       const permission = await Permissions.getAsync(Permissions.MEDIA_LIBRARY);
-        if (permission.granted){
-           console.log("done");
-            getAudioFiles();
-        }
-        if (!permission.canAskAgain && !permission.granted) {
+        if(permission.granted){getAudioFiles()}
+        if(!permission.canAskAgain && !permission.granted){
           setContactError(true);
         }
         if(!permission.granted && permission.canAskAgain){
-
           const { status, canAskAgain } =
           await MediaLibrary.requestPermissionsAsync();
             if (status === 'denied' && canAskAgain) {
@@ -56,7 +51,6 @@ const AudioScreen = ({navigation}) => {
             }
         }
     }
-
 
     const getAudioFiles = async () => {
       let media = await MediaLibrary.getAssetsAsync({
@@ -91,6 +85,7 @@ const AudioScreen = ({navigation}) => {
         return `${minute}:${sec}`;
       }
     };
+
     const selectAudio = async (audioId) => {
       console.log(audioId);
       // setShouldPlay({...shouldPlay, audioId});
@@ -102,6 +97,7 @@ const AudioScreen = ({navigation}) => {
       });
       console.log(temp);
       setContactData(temp);
+      // setSend(true)
     }
 
     const getData = async (audio) => {
@@ -180,7 +176,6 @@ const AudioScreen = ({navigation}) => {
               
                 <Text style={styles.textBold}>{audioData?.filename?.split("_")[0]}</Text>
                 {/* <Text style={styles.textNormal}>Are you sure you want to exit app?</Text> */}
-                
                 <View style={styles.buttonsContainer}>
                   <Slider
                     style={{width: 250, height: 40}}
@@ -189,11 +184,6 @@ const AudioScreen = ({navigation}) => {
                     value={calculateSeekBar()}
                     minimumTrackTintColor="rgba(0,0,0,0.5)"
                     maximumTrackTintColor="rgba(0,0,0,0.4)"
-                    onValueChange={(value) => {
-                      setCurrentPosition(
-                        convertTime(value * audioData.duration)
-                      );
-                    }}
                   />
                   {/* <View style={styles.barTimeSec}>
                   <Text>{convertTime(audioData.duration)}</Text>
@@ -204,9 +194,12 @@ const AudioScreen = ({navigation}) => {
             </View>
         </Modal>
 
+      {/* {send && */}
         <TouchableOpacity style={styles.sendIcon}>
            <MaterialCommunityIcons name="send-circle" size={64} color="#2C8892" />
         </TouchableOpacity>
+      {/* } */}
+        
 
         
     </SafeAreaView>

@@ -27,7 +27,6 @@ export const PickImage = async (arg) => {
                   if (!camera.cancelled) {
                         return camera;
                   }
-                  
             }else{
                   var library = await ImagePicker.launchImageLibraryAsync({
                   mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -52,7 +51,7 @@ export const PickImageAll = async () => {
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: false,
             allowsMultipleSelection: true,
-            // aspect: [1, 1],
+            aspect: [1, 1],
             quality: 0.7,
             });
             if (!library.cancelled) {
@@ -76,7 +75,7 @@ export const PickVideos = async () => {
             quality: 0.7,
             });
             if (!library.cancelled) {
-                  return library;
+                  return [library];
             }
       } else {
             const denied = 'Camera permission denied';

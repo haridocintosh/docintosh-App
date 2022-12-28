@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState,useId } from "react";
 import "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
 import {StyleSheet, Text, TouchableOpacity, View, Image, ActivityIndicator, ImageBackground} from "react-native";
@@ -18,9 +18,12 @@ import { mainApi } from "../../../apis/constant";
 import { getLocalData } from "../../../apis/GetLocalData";
 import { coinTransfer } from "../../../../redux/reducers/coinSlice";
 import { PickImageAll, PickVideos } from "../../../navigation/ReuseLogics";
-import { Audio } from 'expo-av'
+import { Audio } from 'expo-av';
+import * as DocumentPicker from 'expo-document-picker';
+import data from "../../../model/data";
 
 let recording = new Audio.Recording();
+
 
 const  Sharepost = () => {
   const dispatch    = useDispatch();
@@ -28,6 +31,7 @@ const  Sharepost = () => {
   const [loader, setloader] = useState(false);
   const [expanded, setExpanded] = useState(true);
   const [pickedData, setData]   = useState(null);
+  const [document, setDocument]   = useState(null);
   const [err,seterr] =useState();
   const [circlespeciality, setSpl] = useState([]);
   const [post ,setPost] = useState({
@@ -45,6 +49,7 @@ const  Sharepost = () => {
   const [checked, setChecked]   = useState(false);
   const [specialNames, setSpecialNames]   = useState();
   const [whoCanSee, setWhoCanSee]   = useState();
+  const [iconColor, setIconColor]   = useState(null);
   const [userdata, setuserdata] = useState({
     fullname:'',
     profile:'',
@@ -59,6 +64,7 @@ const  Sharepost = () => {
   const [recording, setRecording] = useState()
   const bottomSheetModalRef       = useRef(null);
   const bottomSheetModalRefSecond = useRef(null);
+  const uniqueId = useId();
   const snapPointsOne = ["1%","48%"];
   const snapPoints = ["60%","60%"];
 
@@ -76,12 +82,14 @@ const  Sharepost = () => {
     }, 100);
   }
 
-
-
+  // console.log("useId ","useId ",uniqueId);
   const pickImage =  () => {
+    setDocument(null);
     PickImageAll().then(async (res) =>{
-      console.log("res",res);
-      setData(res);
+      const resId = res.map((data,i) => {
+        return {...data, uid:i}
+      })
+      setData(resId);
       return;
       let localUri = res?.uri;
       console.log("localUri",localUri);
@@ -108,18 +116,15 @@ const  Sharepost = () => {
       setPost({...post, 
         postImage: result1.postImage,
         type:'i'
-
       });
     })
   };
 
-  const asda = pickedData?.map(data => data.uri)
-  console.log("asda",asda);
-
   const pickVideo =  () => {
+    setDocument(null);
     PickVideos().then(async (res) =>{
-      let localUri = res?.uri;
-      setData(localUri)
+      console.log("localUri",res);
+      setData(res);
       let filename = localUri.split('/').pop();
       let uriParts = localUri.split('.');
       let fileType = uriParts[uriParts.length - 1];
@@ -129,10 +134,8 @@ const  Sharepost = () => {
         name: filename,
         type: `image/${fileType}`,
       }
-     // console.log(imageData);
       formData.append('postImage', imageData);
       formData.append('post_id', '3032');
-      //console.log("formData",formData);
       const responce = await fetch(`${mainApi.baseUrl}/ApiController/postuploadDocsReact`, {
         method : 'POST',
         headers:{
@@ -141,7 +144,6 @@ const  Sharepost = () => {
         body :formData
      });
     const result1=  await responce.json();
-    console.log(result1);
       setPost({...post, 
         postImage: result1.postImage,
         type:'v'
@@ -149,6 +151,14 @@ const  Sharepost = () => {
     })
   };
 
+  const handleDocPicker = async () => {
+    let result = await DocumentPicker.getDocumentAsync({ 
+      type: "application/*",
+      copyToCacheDirectory: false, 
+    });
+    console.log(result);
+    setDocument(result)
+  }
 
   const postCheck= (e)=>{
     const name = e;
@@ -170,7 +180,6 @@ const publishCheck = (e)=>{
   }else{
     setWhoCanSee("My Speciality"); 
   }
-    
     setSpecialNames();
     setPost({...post,
       publishto:e,
@@ -188,8 +197,6 @@ const publishCheck1 = (e, text)=>{
 
 
   const handleStudentSubmit = async() =>{
-    // console.log("postDAta",post);
-    // console.log("userData",userdata);
     if(post.publishto ==''){
       Toast.show('Please Select Publish to');
       bottomSheetModalRefSecond.current?.present();
@@ -217,16 +224,12 @@ const publishCheck1 = (e, text)=>{
     }
 
   const uploadPostImage = async (post_id) => {
-    console.log(post_id);
     let localUri = {pickedData};
-    console.log(localUri);
     let filename = localUri.split('/').pop();
     log(filename);
     // Infer the type of the image
     let uriParts = localUri.split('.');
-    console.log('uri', uriParts);
     let fileType = uriParts[uriParts.length - 1];
-    console.log("fileType",fileType );
     let formData = new FormData();
     const imageData = {
       uri : localUri,
@@ -243,7 +246,6 @@ const publishCheck1 = (e, text)=>{
       body :formData
    });
   const result1 = await responce.json();
-  console.log(result1);
 
   Toast.show(result1.payload.message);
   setPost('');
@@ -301,8 +303,6 @@ setSpecialNames(specialityName)
       publishto:3,
       custspeciality:specialityId
     });
-      
-     
   };
 
   if(loader){
@@ -311,43 +311,52 @@ setSpecialNames(specialityName)
     </View>)
   }
 
-
   //  const startRecording = async () => {
   //   try {
-  //     console.log('Requesting permissions..');
   //     await Audio.requestPermissionsAsync();
   //     await Audio.setAudioModeAsync({
   //       allowsRecordingIOS: true,
   //       playsInSilentModeIOS: true,
   //     });
 
-  //     console.log('Starting recording..');
   //     const { recording } = await Audio.Recording.createAsync( Audio.RecordingOptionsPresets.HIGH_QUALITY
   //     );
   //     setRecording(recording);
-  //     console.log('Recording started');
   //   } catch (err) {
   //     console.error('Failed to start recording', err);
   //   }
   // }
 
-
   // const stopRecording = async () =>{
-  //   console.log('Stopping recording..');
   //   setRecording(undefined);
   //   await recording.stopAndUnloadAsync();
   //   await Audio.setAudioModeAsync({
   //     allowsRecordingIOS: false,
   //   });
   //   const uri = recording.getURI();
-  //   console.log('Recording stopped and stored at', uri);
   // }
+
   const removeImg = (id) => {
-    console.log("id",id);
-    const removed = pickedData?.filter(data => data.assetId != id); 
-    console.log("removed",removed);
+    console.log(id);
+    const removed = pickedData?.filter(data => data.uid != id); 
+    console.log(removed);
     setData(removed);
   }
+
+  const handleDocType = (type) => {
+    if(type?.includes(".pdf")){
+      return "pdffile1";
+    }else if(type?.includes(".xls")){
+      return "exclefile1";
+    }else if(type?.includes(".pptx")){
+      return "pptfile1";
+    }else if(type?.includes(".docx")){
+      return "wordfile1";
+    }else{
+      return "unknowfile1";
+    }
+  }
+
   return (
     <BottomSheetModalProvider>
       <View style={styles.PostContainer}>
@@ -390,14 +399,22 @@ setSpecialNames(specialityName)
         {pickedData?.map((data) => {
           return(
             <>
-              <ImageBackground source={{uri: data.uri}} style={{ width: 100, height: 100 ,borderRadius:5,margin:7}} >
-                <TouchableOpacity style={styles.removeImg} onPress={() => removeImg(data.assetId)}>
+              <ImageBackground source={{uri: data.uri}} style={{ width: 100, height: 100 ,borderRadius:5,margin:7}}>
+                <TouchableOpacity style={styles.removeImg} onPress={() => removeImg(data.uid)}>
                 <AntDesign name="close" size={15}/>
                 </TouchableOpacity>
               </ImageBackground>
             </>
           )
         })}
+        {document &&
+        <View style={styles.pdfUploadContainer}>
+           <AntDesign name={handleDocType(document?.uri)} size={24} color={"black"} />
+           <Text style={styles.pdfFileName}>{document?.name}</Text>
+           <TouchableOpacity style={styles.pdfFileClose} onPress={() => setDocument(null)}>
+             <AntDesign name="closecircle" size={15} color="#45B5C0" />
+           </TouchableOpacity>
+        </View>}
         </View>
         <View style={styles.line}/>
       </View>
@@ -413,10 +430,10 @@ setSpecialNames(specialityName)
           <TouchableOpacity onPress={pickVideo}>
             <FontAwesome5 name="video" size={24} color="#51668A" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("AudioScreen")}>
+          {/* <TouchableOpacity onPress={() => navigation.navigate("AudioScreen")}>
             <MaterialIcons name="keyboard-voice" size={24} color="#51668A" />
-          </TouchableOpacity>
-          <TouchableOpacity>
+          </TouchableOpacity> */}
+          <TouchableOpacity onPress={handleDocPicker}>
             <MaterialCommunityIcons name="file-document-multiple" size={24} color="#51668A" />
           </TouchableOpacity>
           <TouchableOpacity >
@@ -622,6 +639,26 @@ const styles = StyleSheet.create({
     right:0,
     borderRadius:50,
     margin:5
+  },
+  pdfUploadContainer:{
+    // borderWidth:1,
+    padding:13,
+    borderRadius:5,
+    backgroundColor:'#fff',
+    flexDirection:'row',
+    alignItems:'center',
+    shadowColor: '#171717',
+    fontSize:14,
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
+  },
+  pdfFileName:{
+    marginLeft:10
+  },
+  pdfFileClose:{
+    marginLeft:10
   }
 
 });

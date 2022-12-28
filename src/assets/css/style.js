@@ -315,6 +315,8 @@ backgroundColor:"#606060",
         color:"#071B36",
         fontWeight:"600",
         fontSize:16,
+        fontFamily:"PlusJakartaSans-Bold",
+        marginRight:10
       },
       PeersHeadlistTxt:{
         color:"#071B36",
@@ -350,12 +352,29 @@ backgroundColor:"#606060",
         fontSize:14, 
         lineHeight:18
       },
-      selectAllList:{
-        display:"flex",
+      selectAllListContainer:{
         flexDirection:"row",
         justifyContent:"space-between",
         alignItems:"center",
-        marginTop:16,
+        marginBottom:15,
+      },
+      searchContactContainer:{
+        flexDirection:"row",
+        justifyContent:"space-between",
+        alignItems:"center",
+        flex:1
+      },
+      searchTextInput:{
+        flex:1,
+        paddingLeft:10,
+        fontSize:18,
+        fontFamily:"PlusJakartaSans-Regular",
+        color:'#141414'
+      },
+      selectAllList:{
+        flexDirection:"row",
+        justifyContent:"space-between",
+        alignItems:"center",
       },
     
       imageBannerc:{
