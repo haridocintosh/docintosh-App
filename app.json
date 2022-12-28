@@ -88,6 +88,12 @@
         {
           "mode": "development"
         }
+      ],
+      [
+        "expo-document-picker",
+        {
+          "iCloudContainerEnvironment": "Production"
+        }
       ]
     ],
     "web": {

@@ -4,8 +4,6 @@ export const styles = StyleSheet.create({
     singleSettingBox:{
         flexDirection:'row',
         alignItems:'center',
-        // borderBottomWidth:1,
-        // borderColor:'#D5DEED',
         paddingVertical:15,
         justifyContent:'space-between'
     },
@@ -17,8 +15,7 @@ export const styles = StyleSheet.create({
         color:'#071B36',
     },
 
-    // ---------------------Reset Password-------------------
-
+    // ------------------------------Reset Password-------------------------
     customInputVerifyFullMobile: {
         fontSize: 16,
         color: "#687690",
@@ -30,11 +27,11 @@ export const styles = StyleSheet.create({
         marginVertical: 12,
         paddingLeft: 8,
         fontFamily:'PlusJakartaSans-Regular'
-      },
+    },
     eyeIcon:{
         position:'absolute',
         right:20,
-        top:25
+        top:25,
     },
     resetPasswdBtn:{
         backgroundColor:'#2C8892',
@@ -43,11 +40,12 @@ export const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center',
         marginTop:25
-
     },
     resetPasswdBtnText:{
         color: "#fff",
         fontFamily:'PlusJakartaSans-Bold'
-
     },
+    error:{
+        color:'red'
+    }
 })
