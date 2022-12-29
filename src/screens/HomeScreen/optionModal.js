@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react';
-import {MaterialCommunityIcons} from '@expo/vector-icons';
+import {MaterialCommunityIcons,Feather,Entypo,MaterialIcons } from '@expo/vector-icons';
 import {useNavigation} from '@react-navigation/native';
 import { getLocalData } from '../../apis/GetLocalData';
 import { deletePost } from '../../../redux/reducers/postAction';
@@ -12,12 +12,12 @@ import { getSavedPostsApi } from '../../../redux/reducers/SettingsSlice';
 
 
 
-const OptionModal = ({modalVisible,id,postId,deletePostID,BlockId,setModalVisible,saveStatus}) => {
+const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible}) => {
   const [userData, setUserData] = useState();
-  const [savedPost, setSavedPost] = useState(saveStatus);
+  const [savedPost, setSavedPost] = useState(item.saved_status);
+  const [follow, setFollow] = useState(item?.follow_status);
   const dispatch    = useDispatch();
   const navigation  = useNavigation();
-
 
   const getId = async () => {
     getLocalData('USER_INFO').then( async (res) => {
@@ -32,20 +32,19 @@ const OptionModal = ({modalVisible,id,postId,deletePostID,BlockId,setModalVisibl
   },[])
 
   const handleDeletePost = async ()=>{
-    const postDetails = {post_id:postId}
+    const postDetails = {post_id:item.post_id}
     const result      = await dispatch(deletePost(postDetails));
       if(result.payload.status  == 'Success'){
-        const coinDetails = {task:15, receiverId:0, senderId:id} 
+        const coinDetails = {task:15, receiverId:0, senderId:item.id} 
         const coinResult  = await dispatch(coinTransfer(coinDetails));
         if(coinResult.payload.status  == 'Success'){
-          deletePostID(postId);
+          deletePostID(item.post_id);
         }
       }
     }
 
   const SavedPostHandle = async () => {
-    const postDetails = {user_id:userData?.id, post_id:postId};
-    console.log(postDetails);
+    const postDetails = {user_id:userData?.id, post_id:item.post_id};
     const savedPostResult = await dispatch(SavePostApi(postDetails));
     // console.log("savedPostResult",savedPostResult.payload);
     if(savedPostResult.payload.status == "Saved"){
@@ -58,31 +57,35 @@ const OptionModal = ({modalVisible,id,postId,deletePostID,BlockId,setModalVisibl
   const handleReport = () => {
     setModalVisible(false);
     navigation.navigate('ReportPost', {
-      postId, id})
+      postId: item.post_id, id: item.id})
   }
 
 
   const handleUnfollow = async () => {
-    const postDetails = {follow_from:userData?.id, follow_to:id};
+    const postDetails = {follow_from:userData?.id, follow_to:item.id};
     const followResult  = await dispatch(followApi(postDetails));
-    console.log("followApi",followResult);
-  }
-
-  const BlockPostHandle = async () => {
-    const postDetails = {fromuserid:userData?.id,touserid:id};
-    const blockPostResult  = await dispatch(BlockUserApi(postDetails));
-    if(blockPostResult?.payload?.status == "Success"){
-      setModalVisible(false);
-      BlockId(id);
+    console.log("followApi",followResult.payload);
+    if(followResult.payload.status){
+      setFollow(true);
+    }else{
+      setFollow(false);
     }
   }
 
+  const BlockPostHandle = async () => {
+    const postDetails = {fromuserid:userData?.id,touserid:item.id};
+    const blockPostResult  = await dispatch(BlockUserApi(postDetails));
+    if(blockPostResult?.payload?.status == "Success"){
+      setModalVisible(false);
+      BlockId(item.id);
+    }
+  }
 
   return (
     <>
     {modalVisible &&
     <View style={styles.optionModal}>
-      {userData?.id === id ?
+      {userData?.id === item.id ?
       <TouchableOpacity style={styles.optionList} onPress={() =>{handleDeletePost()}}>
         <MaterialCommunityIcons name='delete-outline' size={23} color={'#45B5C0'}/>
         <Text style={styles.optionListText}>delete</Text>
@@ -90,28 +93,29 @@ const OptionModal = ({modalVisible,id,postId,deletePostID,BlockId,setModalVisibl
       :
       <>
         <TouchableOpacity style={styles.optionList} onPress={() => SavedPostHandle()}>
-        <Ionicons name={ savedPost ? 'bookmark':'bookmark-outline'} size={25} color={"#45B5C0"}/>
+        <Ionicons name={ savedPost ? 'bookmark':'bookmark-outline'} size={24} color={"#45B5C0"} style={styles.optionListIcon}/>
             <Text style={styles.optionListText}>
               {savedPost ? "Saved": "Save Post"}
             </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.optionList} onPress={()=> handleReport()}>
-            <Image source={require('../../assets/dr-icon/reportPost.png')} style={styles.optionList2}/>
+            <MaterialIcons name="report-problem" size={24} color="#45B5C0" style={styles.optionListIcon}/>
             <Text style={styles.optionListText}>Report Post</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.optionList} onPress={()=> handleUnfollow()}>
-        <Image source={require('../../assets/dr-icon/unfollow.png')} style={styles.optionList3}/>
-            <Text style={styles.optionListText}>Unfollow</Text>
+        <Feather name={follow ? "user-minus": "user-plus"} size={24} color="#45B5C0" style={styles.optionListIcon} />
+            <Text style={styles.optionListText}>
+              {follow ? "Unfollow": "Follow"}
+            </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.optionList} onPress={() => BlockPostHandle()}>
-        <Image source={require('../../assets/dr-icon/blockUser.png')} style={styles.optionList4}/>
+        <Entypo name="block" size={24} color="#45B5C0" style={styles.optionListIcon}/>
             <Text style={styles.optionListText}>Block User</Text>
         </TouchableOpacity>
-        </>
+      </>
     }
     </View>
   }
-    
   </>
   )
 }
@@ -152,19 +156,7 @@ optionModal:{
     height:20.7,
     marginRight:7
   },
-  optionList2:{
-    width:21,
-    height:16,
-    marginRight:7
-  },
-  optionList3:{
-    width:18,
-    height:13,
-    marginRight:7
-  },
-  optionList4:{
-    width:18,
-    height:18,
+  optionListIcon:{
     marginRight:7
   },
   });

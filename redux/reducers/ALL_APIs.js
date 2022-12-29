@@ -35,7 +35,7 @@ export const BlockUserApi = createAsyncThunk("blockUserApi", async (data)=>{
      }
 })
 
-export const followApi = createAsyncThunk( async (data)=>{
+export const followApi = createAsyncThunk("follow", async (data)=>{
     try{
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/change_follow_status`, {
             method : 'POST',

@@ -191,12 +191,10 @@ const handleOption = (post_id) => {
             </TouchableOpacity>
               {item?.post_id == postId && <OptionModal 
                 modalVisible={modalVisible} 
-                id={item?.id} 
-                postId={item?.post_id} 
+                item={item} 
                 setModalVisible={setModalVisible}
                 deletePostID={deletePostID}
                 BlockId={BlockId} 
-                saveStatus={item?.saved_status}
               />}
             </View>
           </View>
@@ -205,7 +203,7 @@ const handleOption = (post_id) => {
               {item?.description.replace(/(<([^>]+)>)/gi, "")}
             </Text>
           </View>
-            <AutoHeightImage attachArray={item?.attach_array} width={width}/>
+            <AutoHeightImage item={item} width={width}/>
             <PublicReactions item={item} getStorageData={getStorageData}/>
         </Card>
       )

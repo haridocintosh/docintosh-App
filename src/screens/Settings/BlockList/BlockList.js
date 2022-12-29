@@ -20,7 +20,7 @@ const BlockList = ({navigation}) => {
         getLocalData("USER_INFO").then( async (res) => {
             setUserData(res?.data)
             const blockedUsers = await dispatch(getBlockedUsersApi({user_id:res?.data?.id}));
-            setItem(blockedUsers.payload)
+            setItem(blockedUsers?.payload);
         });
     }
 
