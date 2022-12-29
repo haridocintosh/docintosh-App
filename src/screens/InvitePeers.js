@@ -42,7 +42,6 @@ const InvitePeers = ({route}) => {
          }
 
     const onAllChecked=()=>{
-       
         const newItem = contactData1.map((val)=>{
             let copy=[...contactData];
             copy =[...copy,val.phoneNumbers[0].number]

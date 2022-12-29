@@ -155,7 +155,6 @@ const renderItem = (item) => {
           </View>
         </View>
       <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true} keyboardShouldPersistTaps='handled'>
-       
       <FlatList
         data={contactList}
         // extraData={contactList.isSelected}
@@ -163,12 +162,6 @@ const renderItem = (item) => {
         keyExtractor={(item,i) => i}
         // ItemSeparatorComponent={this.renderSeparator}
       />
-       
-       
-       {/* {contactList?.length > 0 ? contactList.map((element, index)=>{
-          return ()}):
-      <Text>You Don't have any contact's</Text>
-      } */}
     </ScrollView>
     <View style={{marginTop:10,zIndex:1,width:"100%",bottom:0,backgroundColor:"#f1f1f1",paddingTop:6}}>
           <CustomButton label={'Continue'} onPress={() => sentInvite()} />
