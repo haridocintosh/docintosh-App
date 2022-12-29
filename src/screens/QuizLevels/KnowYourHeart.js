@@ -33,8 +33,7 @@ const KnowYourHeart = ({ route,navigation }) => {
 
   const getLeaderboardData = () => {
     navigation.setOptions({ title: 'Know Your Heart' });
-    axios
-      .get(`${mainApi.baseUrl}/ApiController/global_leaderboard`)
+    axios.get(`${mainApi.baseUrl}/ApiController/global_leaderboard`)
       .then((res) => {
         setUserData(res.data);
         setLoader(false);

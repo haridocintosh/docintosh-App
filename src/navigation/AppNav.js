@@ -49,9 +49,8 @@ if(loader){
       if(logData?.login){
         setDefaultRoute("HomeScreen");
       }else{
-      setDefaultRoute("Intro");
-     // setDefaultRoute("ContactPermission");
-    //  setDefaultRoute("MultipleImagesUpload");
+        setDefaultRoute("Intro");
+      // setDefaultRoute("ContactPermission");
       }
       setStatusKeyLoaded(true);
     } catch(e) {

@@ -40,7 +40,7 @@ const  Sharepost = () => {
       status:"1",
       broadcast_to:"",
       postType:"",
-      postImage:"",
+      postImage:[],
       type:"",
       custspeciality:""
   });
@@ -60,7 +60,8 @@ const  Sharepost = () => {
     id:'',
     circle_type:'',
     city_id:''
-  })
+  });
+  const [uploadImage, setuploadImage]   = useState({pimage:[]});
   const [recording, setRecording] = useState()
   const bottomSheetModalRef       = useRef(null);
   const bottomSheetModalRefSecond = useRef(null);
@@ -86,37 +87,46 @@ const  Sharepost = () => {
   const pickImage =  () => {
     setDocument(null);
     PickImageAll().then(async (res) =>{
-      const resId = res.map((data,i) => {
-        return {...data, uid:i}
-      })
-      setData(resId);
-      return;
-      let localUri = res?.uri;
-      console.log("localUri",localUri);
-      
-      let filename = localUri.split('/').pop();
-      let uriParts = localUri.split('.');
-      let fileType = uriParts[uriParts.length - 1];
-      let formData = new FormData();
-      const imageData = {
-        uri : localUri,
-        name: filename,
-        type: `video/${fileType}`,
-      }
-      formData.append('postImage', imageData);
-      formData.append('post_id', '3032');
-      const responce = await fetch(`${mainApi.baseUrl}/ApiController/postuploadDocsReact`, {
-        method : 'POST',
-        headers:{
-            'Content-Type': 'multipart/form-data'
-        },
-        body :formData
-     });
-    const result1=  await responce.json();
-      setPost({...post, 
-        postImage: result1.postImage,
-        type:'i'
+      console.log("resImage",res);
+      setData(res);
+      var arrayLength = res.length
+      console.log("countData",arrayLength);
+      setloader(true);
+      res.map(async(data) => {
+        // console.log("returnURI",data.uri);
+        let localUri = data.uri
+        // console.log("localUri",localUri);
+        let filename = localUri.split('/').pop();
+        let uriParts = localUri.split('.');
+        let fileType = uriParts[uriParts.length - 1];
+        let formData = new FormData();
+        const imageData = {
+          uri : localUri,
+          name: filename,
+          type: `image/${fileType}`,
+        }
+        formData.append('postImage', imageData);
+        formData.append('post_id', '3032');
+        console.log("formData",formData);
+        // return 
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/postuploadDocsReact`, {
+          method : 'POST',
+          headers:{
+              'Content-Type': 'multipart/form-data'
+          },
+          body :formData
+       });
+       const result1=  await responce.json();
+     //  console.log("result1",result1);
+        setuploadImage({...uploadImage,
+          uploadImage:uploadImage.pimage.push(result1.postImage)
+        })
+        setPost({...post, 
+          type:'i'
+        });
+      //console.log("postdataShow", uploadImage);
       });
+      setloader(false);
     })
   };
 
@@ -132,7 +142,7 @@ const  Sharepost = () => {
       const imageData = {
         uri : localUri,
         name: filename,
-        type: `image/${fileType}`,
+        type: `video/${fileType}`,
       }
       formData.append('postImage', imageData);
       formData.append('post_id', '3032');
@@ -197,6 +207,8 @@ const publishCheck1 = (e, text)=>{
 
 
   const handleStudentSubmit = async() =>{
+    console.log("postDAta",post);
+    console.log("uploadImage",uploadImage);
     if(post.publishto ==''){
       Toast.show('Please Select Publish to');
       bottomSheetModalRefSecond.current?.present();
@@ -206,7 +218,7 @@ const publishCheck1 = (e, text)=>{
       Toast.show("Please Select PostType");
       bottomSheetModalRef.current?.present();
     }else{
-      const uploadData = {userdata,post};
+      const uploadData = {userdata,post,uploadImage};
       setloader(true);
       const result = await dispatch(postCreate(uploadData));
         if(result.payload.status == 'Success'){
@@ -224,12 +236,16 @@ const publishCheck1 = (e, text)=>{
     }
 
   const uploadPostImage = async (post_id) => {
+    //console.log(post_id);
     let localUri = {pickedData};
+    //console.log(localUri);
     let filename = localUri.split('/').pop();
     log(filename);
     // Infer the type of the image
     let uriParts = localUri.split('.');
+    //console.log('uri', uriParts);
     let fileType = uriParts[uriParts.length - 1];
+    //console.log("fileType",fileType );
     let formData = new FormData();
     const imageData = {
       uri : localUri,
@@ -246,6 +262,7 @@ const publishCheck1 = (e, text)=>{
       body :formData
    });
   const result1 = await responce.json();
+ // console.log(result1);
 
   Toast.show(result1.payload.message);
   setPost('');
