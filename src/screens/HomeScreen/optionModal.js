@@ -6,9 +6,10 @@ import { getLocalData } from '../../apis/GetLocalData';
 import { deletePost } from '../../../redux/reducers/postAction';
 import { useDispatch } from 'react-redux';
 import { coinTransfer } from '../../../redux/reducers/coinSlice';
-import { BlockUserApi, SavePostApi } from '../../../redux/reducers/ALL_APIs';
+import { BlockUserApi, followApi, SavePostApi } from '../../../redux/reducers/ALL_APIs';
 import {Ionicons} from '@expo/vector-icons';
 import { getSavedPostsApi } from '../../../redux/reducers/SettingsSlice';
+
 
 
 const OptionModal = ({modalVisible,id,postId,deletePostID,BlockId,setModalVisible,saveStatus}) => {
@@ -16,11 +17,12 @@ const OptionModal = ({modalVisible,id,postId,deletePostID,BlockId,setModalVisibl
   const [savedPost, setSavedPost] = useState(saveStatus);
   const dispatch    = useDispatch();
   const navigation  = useNavigation();
+
+
   const getId = async () => {
     getLocalData('USER_INFO').then( async (res) => {
       const reData = res?.data;
       const savedResult = await dispatch(getSavedPostsApi({user_id:res?.data?.id}))
-      // const saved = savedResult.payload.map(d => d.post_id == postId);
       setUserData(reData);
     });
   }
@@ -60,14 +62,15 @@ const OptionModal = ({modalVisible,id,postId,deletePostID,BlockId,setModalVisibl
   }
 
 
-  const handleUnfollow = () => {
-
+  const handleUnfollow = async () => {
+    const postDetails = {follow_from:userData?.id, follow_to:id};
+    const followResult  = await dispatch(followApi(postDetails));
+    console.log("followApi",followResult);
   }
 
   const BlockPostHandle = async () => {
     const postDetails = {fromuserid:userData?.id,touserid:id};
     const blockPostResult  = await dispatch(BlockUserApi(postDetails));
-    console.log("blockPostResult",blockPostResult.payload);
     if(blockPostResult?.payload?.status == "Success"){
       setModalVisible(false);
       BlockId(id);
