@@ -1,6 +1,7 @@
 'use strict';
 import {
-  StyleSheet
+  StyleSheet,
+  StatusBar
 } from 'react-native';
 
 module.exports = StyleSheet.create({
@@ -164,17 +165,16 @@ module.exports = StyleSheet.create({
     paddingLeft: 60,
     paddingRight: 80
   },
-  maindDivBannermcq:{
+  searchContainer:{
     paddingHorizontal: 20,
-    marginTop: 35,
-      
+    backgroundColor: "#ecf2f6",
+    flex:1,
   },
   ciculemcq: {
     backgroundColor: "#606060",
     height: 75,
     width: 75,
     borderRadius: 50,
-
   },
   ciculemcqLight: {
     backgroundColor: "#D9D9D9",
@@ -315,6 +315,8 @@ backgroundColor:"#606060",
         color:"#071B36",
         fontWeight:"600",
         fontSize:16,
+        fontFamily:"PlusJakartaSans-Bold",
+        marginRight:10
       },
       PeersHeadlistTxt:{
         color:"#071B36",
@@ -350,12 +352,29 @@ backgroundColor:"#606060",
         fontSize:14, 
         lineHeight:18
       },
-      selectAllList:{
-        display:"flex",
+      selectAllListContainer:{
         flexDirection:"row",
         justifyContent:"space-between",
         alignItems:"center",
-        marginTop:16,
+        marginBottom:15,
+      },
+      searchContactContainer:{
+        flexDirection:"row",
+        justifyContent:"space-between",
+        alignItems:"center",
+        flex:1
+      },
+      searchTextInput:{
+        flex:1,
+        paddingLeft:10,
+        fontSize:18,
+        fontFamily:"PlusJakartaSans-Regular",
+        color:'#141414'
+      },
+      selectAllList:{
+        flexDirection:"row",
+        justifyContent:"space-between",
+        alignItems:"center",
       },
     
       imageBannerc:{
@@ -458,10 +477,41 @@ backgroundColor:"#606060",
       height: 98,
       backgroundColor:"grey"
     },
-
     tinyLogo:{
       width:30,
       height:30
-    }
+    },
+    tabBar: {
+      flexDirection: 'row',
+      // paddingVertical:0,
+      // borderWidth:1,
+      backgroundColor:'#F2FAFA'
+    },
+    tabItem: {
+      flex: 1,
+      alignItems: 'center',
+      paddingVertical:20,
+      // borderBottomWidth:2
+    },
+    headerContainer:{
+      backgroundColor:'#071B36',
+      height:57,
+      flexDirection:'row',
+      alignItems:'center',
+      justifyContent:'space-between',
+      paddingHorizontal:15
+    },
+    communitySubDiv:{
+      marginTop:15,
+      flexDirection:'row',justifyContent:'space-between',alignItems:'center'
+    },
+    doctorListContent:{
+      marginLeft:5
+    },
+    communittysubtxt:{
+      marginTop:3,
+      color:'#51668A',
+      fontSize:12
+    },
 
 });

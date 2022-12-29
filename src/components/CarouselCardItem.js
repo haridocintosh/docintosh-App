@@ -1,8 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet, Dimensions, Image } from "react-native"
 
-import slider from '../assets/images/slider1.png'
-
 export const SLIDER_WIDTH = Dimensions.get('window').width + 10
 export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.6)
 
@@ -10,7 +8,7 @@ const CarouselCardItem = ({ item, index }) => {
   return (
     <View style={styles.container} key={index}>
       <Image
-        source={slider}
+        source={require('../assets/images/slider1.png')}
         style={styles.image}
       />    
     </View>

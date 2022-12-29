@@ -1,17 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   View,
   Text,
-  StyleSheet,
-  Dimensions,
   SafeAreaView,
   ScrollView,
   TextInput,
 } from "react-native";
-import { useFonts } from "expo-font";
 import { styles } from "./SurvayStyle";
+import { Ionicons } from '@expo/vector-icons';
 
-const TypoMcq = ({ setLiftUpData, currentIndex, allMCQs, length }) => {
+const TypoMcq = ({ setLiftUpData, error, allMCQs, length }) => {
   return (
     <SafeAreaView style={{ backgroundColor: "#ecf2f6", flex: 1 }}>
       <ScrollView
@@ -35,6 +33,9 @@ const TypoMcq = ({ setLiftUpData, currentIndex, allMCQs, length }) => {
               </Text>
             </View>
           </View>
+          <Text style={styles.error}>
+            {error && <><Ionicons name="warning" size={15} color="#D01212"/> {error}</>}
+          </Text>
         </View>
       </ScrollView>
     </SafeAreaView>

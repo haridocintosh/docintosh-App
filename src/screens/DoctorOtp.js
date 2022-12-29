@@ -11,12 +11,10 @@ import { View,
   import React, { useState, useEffect } from 'react';
   import { useNavigation } from '@react-navigation/native';
   import CustomButton from '../components/CustomButton';
-  import Icon from 'react-native-vector-icons/FontAwesome';
   import {AntDesign,Ionicons,FontAwesome} from 'react-native-vector-icons';
   import OTPTextView from 'react-native-otp-textinput';
   import { useDispatch } from 'react-redux';
   import Toast from 'react-native-simple-toast';
-  import { useFonts } from 'expo-font';
   import { doctorOtp } from '../../redux/reducers/otpSlice';
   import { resendOTP } from '../../redux/reducers/loginAuth';
   import { userIdupdate } from '../../redux/reducers/otpSlice';
@@ -24,12 +22,14 @@ import { View,
  
  const DoctorOtp = ({route}) => {
    const dispatch = useDispatch(); 
+  //  console.log("routedata",route);
   //  const mobile_no = '9029634011';
   //  const email ='tara@docintosh.com';
   //  const user_id = '228737';
   //  const role = '4'
 
-  const {mobile_no, email, user_id, role} = route.params;
+  const {mobile_no, email, user_id, role, speciality} = route.params;
+
    const [phone ,setPhone] =useState("");
    const navigation = useNavigation();
    const [counter, setCounter] = useState(30);
@@ -41,24 +41,19 @@ import { View,
      const resendUserOtp = async() =>{ 
        setCounter(30);
         const result = await dispatch(resendOTP({email:email, mobile_no:mobile_no}));
-        console.log('resendOtp',result.payload);
         Toast.show(result.payload.message);
-        // setLoader(false);
      }
- 
  
      const submitOtp = async()=>{
        if(otpInput !== ""){
-         console.log(otpInput);
-         console.log(user_id);
          const result = await dispatch(doctorOtp({user_id:user_id, otp:otpInput, user_role:role}));
-         console.log('doctorOtp',result);
          Toast.show(result.payload.message);
          if((result.payload.role == '4') && (result.payload.status == 'Success')){
             navigation.navigate('RegisterTwoScreen', {
-                user_id   : result.payload.user_id,
-                fullname  : result.payload.fullname,
-                role      : result.payload.role,
+                user_id     : result.payload.user_id,
+                fullname    : result.payload.fullname,
+                role        : result.payload.role,
+                specialityId: speciality,
             })
         }else{
           if(result.payload.status == 'Success'){
@@ -68,9 +63,7 @@ import { View,
               role      : result.payload.role,
           }) 
          }
-         
         }
-         
        }else{
            setmessage('Please Enter Otp');
        }
@@ -94,7 +87,6 @@ import { View,
         id:user_id
       }))
       Toast.show(token.payload.message);
-      console.log(token.payload.status);
       if(token.payload.status == 'Success'){
         navigation.navigate('DoctorOtp',{
           mobile_no: token.payload.userdetails,

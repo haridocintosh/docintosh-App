@@ -26,7 +26,6 @@
    const [counter, setCounter] = useState(30);
    const [otpInput, setotpInput ] = useState('');
    const [message , setmessage] = useState();
-
    const [editNumber , setEditNumber] = useState(false);
    const [loader, setLoader] = useState(false);
     
@@ -52,9 +51,7 @@
       // setLoader(true);
       setCounter(30)
       const result = await dispatch(resendOTP({email:email, mobile_no:mobile_no}));
-      console.log('resendOtp',result.payload);
       Toast.show(result.payload.message);
-      // setLoader(false);
    }
 
 
@@ -75,7 +72,6 @@
         email:phone
       }))
       Toast.show(token.payload.message);
-      console.log(token.payload.status);
       if(token.payload.status == 'Success'){
         navigation.navigate('ForgotPasswordOTP',{
           mobile_no: phone,

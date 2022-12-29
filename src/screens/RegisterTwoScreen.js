@@ -11,7 +11,6 @@ import {
 import React, {useEffect, useState, useRef, useCallback} from 'react'
 import { useDispatch } from 'react-redux';
 import { Camera, CameraType } from 'expo-camera';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {Ionicons,Entypo, FontAwesome} from 'react-native-vector-icons';
 import Modal from "react-native-modal";
 import CustomButton from '../components/CustomButton';
@@ -22,19 +21,18 @@ import { getAllState } from '../../redux/reducers/getSpeciality';
 import { userRegisterSecond } from '../../redux/reducers/loginAuth';
 import { coinTransfer } from '../../redux/reducers/coinSlice';
 import Toast from 'react-native-simple-toast';
-import successic from '../assets/dr-icon/Ic_Success.png';
 import Lottie from 'lottie-react-native';
-import { useFonts } from 'expo-font';
 import { BottomSheetModal,BottomSheetModalProvider} from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { PickImage } from '../navigation/ReuseLogics';
+
 
 const RegisterTwoScreen = ({route}) => {
 const navigation  = useNavigation();
 
 const dispatch    = useDispatch();
-  //console.log(route.params);
-  const {user_id,fullname,role} = route.params;
-  //const fullname="gagan";
+  // const fullname = 'asj'
+  const {user_id,fullname,role,specialityId} = route.params;
   const [isOpen, setIsOpen]     = useState(false);
   const bottomSheetModalRef       = useRef(null);
   const bottomSheetModalRefSecond = useRef(null);
@@ -55,14 +53,13 @@ const dispatch    = useDispatch();
     }, 100);
   }
   const [modalVisible, setModalVisible] = useState(false);
+  const [fromWhere, setFromWhere] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);  
-  const [isModalShow, setisModalShow] = useState(false);  
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [openState, setOpenState] = useState(false);
   const [valueState, setValueState] = useState(null);
   const [err,seterr] = useState();
-  const [resourcePath,setResourcePath] = useState({});
   const [showeye, setshoweye] = useState(true);
   const [pincodeerr,setPincode] = useState();
   const [mrnId,setmrnId] = useState();
@@ -71,11 +68,7 @@ const dispatch    = useDispatch();
   const [profilErr,setprofilErr] = useState();
   const [mrnproofErr,setmrnproofErr] = useState();
   const [passworderr,setPasswordErr] = useState();
-  function toggleCameraType() {
-    setType((current) => (
-      current === CameraType.back ? CameraType.front : CameraType.back
-    ));
-  }
+
   const [items, setItems] = useState([
     {label: '1970', value: '1970'}
   ]);
@@ -105,10 +98,11 @@ const dispatch    = useDispatch();
     password:"",
     profile_pic:"",
     mrnproof:"",
+    // role:4,
+    // user_id:23334
     role:role,
     user_id:user_id
   });
-
  
   const Pincode= (e) =>{
     const isValidnameRegex = /^(\[0-9]?)?\d{6}$/;;
@@ -155,109 +149,54 @@ const showcong = ()=>{
   setIsModalVisible(!isModalVisible);
 }
 
-const pickImage = async (arg) => {
-  if(arg==1){
-    var result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
-      aspect: [4, 3],
-      quality: 1,
-    });
-  }else{
-    var result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
-      aspect: [4, 3],
-      quality: 1,
-    });
-  }
 
-  let localUri = result.uri;
+const pickupImage = (arg) => {
+  console.log("fromWhere",fromWhere);
   bottomSheetModalRefSecond.current?.close();
-  setimgurl(localUri)
-      let filename = localUri.split('/').pop();
-      // Infer the type of the image
-      let match = /\.(\w+)$/.exec(filename);
-      let type = match ? `image/${match[1]}` : `image`;
-     
-      let uriParts = localUri.split('.');
-      let fileType = uriParts[uriParts.length - 1];
-      let formData = new FormData();
-      const imageData = {
-        uri : localUri,
-        name: filename,
-        type: `image/${fileType}`,
-      }
-   
-      formData.append('mrnproof', imageData);
-      const responce = await fetch(`https://docintosh.com/ApiController/image_upload`, {
-        method : 'POST',
-        headers:{
-            'Content-Type': 'multipart/form-data'
-        },
-        body :formData
-     });
-
-    const result1=  await responce.json();
-
-    setregister({ ...register,
-      mrnproof: result1,
-    });
-    setmrnproofErr('');
-};
-
-
-const pickprofile = async (arg) => {
-  // No permissions request is necessary for launching the image library
-
-  if(arg==1){
-    var result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
-      aspect: [2, 2],
-      quality: 1,
-    });
-   
-  }else{
-    var result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
-      aspect: [2, 2],
-      quality: 1,
-    });
-    
-  }
- 
-  let localUri = result.uri;
   bottomSheetModalRef.current?.close();
-  setprofileurl(localUri)
- 
-      let filename = localUri.split('/').pop();
-      // Infer the type of the image
-      let match = /\.(\w+)$/.exec(filename);
-      let type = match ? `image/${match[1]}` : `image`;
-      let uriParts = localUri.split('.');
-      let fileType = uriParts[uriParts.length - 1];
-      let formData = new FormData();
-      const imageData = {
-        uri : localUri,
-        name: filename,
-        type: `image/${fileType}`,
-      }
-      formData.append('profile_pic', imageData);
-      const responce = await fetch(`https://docintosh.com/ApiController/image_upload`, {
-        method : 'POST',
-        headers:{
-            'Content-Type': 'multipart/form-data'
-        },
-        body :formData
-     });
+    PickImage(arg).then(async (res) => {
+      let localUri = res?.uri;
 
-    const result1=  await responce.json();
-    setregister({ ...register,
-      profile_pic: result1,
+          let filename = localUri.split('/').pop();
+          // Infer the type of the image
+          // let match = /\.(\w+)$/.exec(filename);
+          // let type = match ? `image/${match[1]}` : `image`;
+          let uriParts = localUri.split('.');
+          let fileType = uriParts[uriParts.length - 1];
+          let formData = new FormData();
+          const imageData = {
+            uri : localUri,
+            name: filename,
+            type: `image/${fileType}`,
+          }
+          if(fromWhere == 'document'){
+            setimgurl(localUri);
+            formData.append('mrnproof', imageData);
+          }else{
+            setprofileurl(localUri);
+            formData.append('profile_pic', imageData);
+          }
+          const responce = await fetch(`https://docintosh.com/ApiController/image_upload`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'multipart/form-data'
+            },
+            body :formData
+         });
+        const result=  await responce.json();
+
+        if(fromWhere == 'document'){
+          setregister({ ...register,
+            mrnproof: result,
+          });
+        }else{
+          setregister({ ...register,
+            profile_pic: result,
+          });
+        }
+        setprofilErr('');
+        setmrnproofErr('');
     });
-    setprofilErr('')
 };
  
  
@@ -265,15 +204,12 @@ useEffect(()=>{
   const year = 1972;
   const currentYear =(new Date()).getFullYear();
   const years = Array.from(new Array(51),(val, index) => index + year);
-
   const years_list = years.filter((e)=>{
     return e <= currentYear;
     }).map((ele, index)=>{
     return {label: ele, value: ele};
   });
-
     setItems(years_list);
-
     async function fetchState(){
       const allState = await dispatch(getAllState());
       setState(allState.payload.map((ele,index)=>{
@@ -283,9 +219,7 @@ useEffect(()=>{
     fetchState();
   },[]);
 
-//||checked === 4 ?!value:''
   const form_submit = async() =>{
-   
     if(!register.pincode){
       setPincode("Please enter a valid pincode");
     }else if(!register.mrn){
@@ -304,43 +238,37 @@ useEffect(()=>{
       setsubmitbtn(true);
       setloader(true);
       const result = await dispatch(userRegisterSecond(register));
-      console.log('Registertkn',result);
       Toast.show(result.payload.message);
         if(result.payload.status == 'Success'){
           setloader(false);
-          console.log(result.payload);
           const coinDetails = {task : 1, receiverId:result.payload.user_id } 
-          const coinResult = await dispatch(coinTransfer(coinDetails));
-        //  console.log(coinResult.payload)
-          if(result.payload.status == 'Success'){
+          const coinResult  = await dispatch(coinTransfer(coinDetails));
+          if(coinResult.payload.status == 'Success'){
             setIsModalVisible(true);
             setTimeout(() => {
             setIsModalVisible(false);
             navigation.navigate('SelectInterest',{
               user_id : user_id,
+              specialityId:specialityId
             })
             },3000);
           }
         }
       }
     }
-
-  const [fontsLoaded] = useFonts({
-    'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),
-    'Inter-SemiBold':require('../assets/fonts/Inter-SemiBold.ttf'),
-    'PlusJakartaSans-Regular': require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
-    'PlusJakartaSans-Bold':require('../assets/fonts/PlusJakartaSans-Bold.ttf')
-  });
-  if(!fontsLoaded) {
-    return null;
-  }
-
 if(loader){
   return(
   <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
       <ActivityIndicator size={'large'} color={"#2C8892"}/>
   </View>)
 }
+
+const handlePickupModal = (val) => {
+  // console.log("val",val);
+  setFromWhere(val)
+  setModalVisible(true);
+}
+
 
 return (
   <GestureHandlerRootView>
@@ -352,7 +280,7 @@ return (
     showsVerticalScrollIndicator={true}
     nestedScrollEnable={true}>
     <View style={styles.suceesheadBox}>
-    <Pressable onPress={() =>handlePresentModal()}>
+    <Pressable onPress={() => handlePickupModal('Profile')}>
      <View style={styles.registermainText}>
           <Image style={{width:56,height:56,borderRadius:50}} source={profileurl?{ uri: profileurl }:require('../assets/images/p2.png')}/>
           <View style={styles.headtopInner}>
@@ -425,9 +353,6 @@ return (
         searchContainerStyle={{
           borderBottomColor: "#687690"
         }}
-
-      
-       
       />
      
       </View>
@@ -505,7 +430,7 @@ return (
    
     <Text style={[styles.headTexts,{fontFamily:"Inter-SemiBold"}]}>Upload a JPG for MRN Document</Text>
   <View>
-    <TouchableOpacity  onPress={() => handlePresentModalSecond()}>
+    <TouchableOpacity  onPress={() => handlePickupModal("document")}>
       <View style={{borderColor:"#D5DEED",borderRadius:4,borderStyle: 'dashed',borderWidth:1.4,width:"100%",height:102,justifyContent:"center",alignItems:"center"}}>
       <Image source={require('../assets/icons/upload-img.png')} style={{alignSelf:"center"}}  />
      
@@ -540,6 +465,8 @@ return (
 
 {/* 
    <Modal isVisible={isModalVisible} width={320} height={200} style={{alignSelf:'center', borderWidth:0,  borderRadius:30/2, width:320,maxHeight:320, backgroundColor:'#ffff', bottom:'-50%',}}>
+
+   <Modal isVisible={isModalVisible} width={340} height={200} style={{alignSelf:'center', borderWidth:0,  borderRadius:30/2, width:320,maxHeight:320, backgroundColor:'#ffff', bottom:'-50%',}}>
         <View>
         <Lottie style={{position:"absolute",top:-65,height:180,width:180,alignSelf:'center',}}
         source={require('../assets/dr-icon/congratulation.json')} autoPlay={true} loop={true}/>
@@ -550,7 +477,7 @@ return (
   </Modal> */}
 
   
-      <Modal isVisible={isModalVisible} width={"100%"} height={"100%"} style={{alignItems:'center', justifyContent:"center", borderWidth:0, borderRadius:30/2, width:320,maxHeight:230, backgroundColor:'#fff', bottom:'-60%',}}>
+      <Modal isVisible={isModalVisible}  height={"100%"} style={{alignItems:'center', justifyContent:"center", borderWidth:0, borderRadius:30/2, width:320,maxHeight:230, backgroundColor:'#fff', bottom:'-65%',}}>
       <View style={{display:"flex",alignItems:'center', justifyContent:"center",}}>
         <Lottie style={{position:"absolute",top:-26,height:"100%",width:80,alignSelf:'center',}}
         source={require('../assets/dr-icon/congratulation.json')} autoPlay={true} loop={false}/>
@@ -560,60 +487,44 @@ return (
     </Modal>
 
   
-
-    <BottomSheetModal
-          ref={bottomSheetModalRef}
-          index={1}
-          snapPoints={snapPoints}
-          backgroundStyle={{ borderRadius: 30 }}
-          onDismiss={() => setIsOpen(false)}>
-        <View>
-          <View style={{margin:10, alignSelf:'flex-start'}}>
-            <TouchableOpacity  onPress={() => { pickprofile(1); 
-              setModalVisible(false);}}>
-              <View style={{flexDirection:'row'}}>
-                <Entypo name="camera" size={24} color="#45B5C0" />
-                <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}} >Camera</Text>
-              </View>
-            </TouchableOpacity>
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={() => {
+        Alert.alert("Modal has been closed.");
+        setModalVisible(!modalVisible);
+      }}
+    >
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+        <TouchableOpacity
+          style={styles.chooseBtn}
+          onPress={() => {
+            pickupImage(1);
+            setModalVisible(false);
+          }}>
+        <Text style={styles.chooseTxt}>Take Photo</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.chooseBtn}
+          onPress={() => {
+            pickupImage(2);
+            setModalVisible(false);
+          }}>
+        <Text style={styles.chooseTxt}>Choose from Gallery</Text>
          
-            <View style={{marginTop:20}}></View>
-              <TouchableOpacity   onPress={() => {pickprofile(2); setModalVisible(false);}}>
-                <View style={{flexDirection:'row',}} >
-                <FontAwesome name="photo" size={24} color="#45B5C0" />
-                <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}}>Choose Your Gallary</Text>
-                </View>
-              </TouchableOpacity>
-            </View>        
+        </TouchableOpacity>
+          <Pressable
+            style={[styles.button, styles.buttonClose]}
+            onPress={() => setModalVisible(!modalVisible)}
+          >
+            <Text style={styles.textStyleb}>close</Text>
+          </Pressable>
         </View>
-    </BottomSheetModal>
+      </View>
+    </Modal>
 
-
-        <BottomSheetModal
-          ref={bottomSheetModalRefSecond}
-          index={1}
-          snapPoints={snapPoints}
-          backgroundStyle={{ borderRadius: 30 }}
-          onDismiss={() => setIsOpen(false)}>
-         <View>
-          <View style={{margin:10, alignSelf:'flex-start'}}>
-            <TouchableOpacity  onPress={() => {pickImage(1);setIsOpen(false);}}>
-              <View style={{flexDirection:'row',}}>
-                <Entypo name="camera" size={24} color="#45B5C0" />
-                <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}} >Camera</Text>
-              </View>
-            </TouchableOpacity>
-         
-            <View style={{marginTop:20}}></View>
-              <TouchableOpacity  onPress={() => {pickImage(2);setIsOpen(false);}}>
-                <View style={{flexDirection:'row',}} >
-                <FontAwesome name="photo" size={24} color="#45B5C0" />
-                <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}}>Choose Your Gallary</Text>
-                </View>
-              </TouchableOpacity>
-            </View>        
-        </View>
-        </BottomSheetModal>
 
         </View>
       </ScrollView>

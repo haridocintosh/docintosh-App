@@ -13,9 +13,9 @@ const store = configureStore({
         myallUsers : allUsersData,
         mylogin: userresult,
         myspeciality : allSpeciality,
-        myotp: otpSlice,
         forgotpass:result,
         surveyGetList : surveyDatalist,
+        myOtp: otpSlice,
     }
 })
 

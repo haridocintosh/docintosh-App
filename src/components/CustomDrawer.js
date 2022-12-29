@@ -13,22 +13,19 @@ import {
 } from '@react-navigation/drawer';
 import docintoshlogo from '../assets/dr-icon/docintoshlogo.png';
 import profilePicture from '../assets/images/profilePicture.png';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import {AntDesign} from 'react-native-vector-icons';
 import { MaterialIcons,MaterialCommunityIcons,Ionicons,Entypo } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
 import { Feather } from '@expo/vector-icons';
-import { useNavigation,DrawerActions } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation,DrawerActions, useIsFocused } from '@react-navigation/native';
 import { storeData } from '../apis/Apicall';
 import { useDispatch } from 'react-redux';
 import { useDrawerStatus } from '@react-navigation/drawer';
 import {createDrawerNavigator,DrawerItem} from '@react-navigation/drawer';
-import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
-import { navigationRef } from '../navigation/RootNavigation';
+import { getLocalData } from '../apis/GetLocalData';
 
 
-
-const CustomDrawer = props => { 
+const CustomDrawer = (props) => { 
   const navigation = useNavigation();
   const [logoutdata,setlogoutdata]=useState();
   const dispatch = useDispatch();
@@ -40,24 +37,26 @@ const CustomDrawer = props => {
     profile:"",
     speciality:"",
   });
+  const isFocused = useIsFocused();
   const Drawer = createDrawerNavigator();
-  useEffect(() => {
-    const asyncFetchDailyData = async () => {
-    const jsonValue = await AsyncStorage.getItem('USER_INFO');
-      const data=await JSON.parse(jsonValue);
-      console.log(JSON.parse(data)['data'])
-      setlogoutdata(JSON.parse(data)['data'])
-      const result=JSON.parse(data)['data'];
-      // setuserdata(JSON.parse(data)['data']['first_name']+" "+JSON.parse(data)['data']['last_name'])
+
+  const asyncFetchDailyData = async () => {
+    getLocalData('USER_INFO').then((res) => {
+      const reData = res?.data;
+      setlogoutdata(reData);
       setuserdata({ ...userdata, 
-        fullname: `${result['first_name']} ${result['last_name']}`,
-        speciality: `${result['speciality']}`,
-        profile: `${result['profileimage']}`,
-        role:`${result['role']}`
+        fullname: `${reData?.first_name} ${reData?.last_name}`,
+        speciality: `${reData?.speciality}`,
+        profile: `${reData?.profileimage}`,
+        role:`${reData?.role}`
       });
+    });
+  }
+  useEffect(() => {
+    if(isFocused){
+      asyncFetchDailyData();
     }
-    asyncFetchDailyData();
-  }, [])
+  }, [isFocused])
   
   const removeData = async () => {
     setLoader(true)
@@ -66,11 +65,10 @@ const CustomDrawer = props => {
         login:false,
         data:logoutdata
       }))
-      setTimeout(()=>{
-        console.log('logout');
+      // setTimeout(()=>{
         navigation.dispatch(DrawerActions.closeDrawer());
         navigation.navigate('Login')
-      },1000)
+      // },1000)
     }catch(e) {
     }
     setLoader(false)
@@ -87,7 +85,7 @@ const CustomDrawer = props => {
 
         <View style={styles.profoleDetailsContainer}>
           <View style={styles.profoleDetails}>
-            <TouchableOpacity  onPress={() => navigation.navigate('EditProfileScreen')}>
+            <TouchableOpacity  onPress={() => navigation.navigate('ProfileScreen')}>
               <MaterialIcons name="arrow-forward-ios" size={16} color="white" style={styles.forwardIcon}/>
             </TouchableOpacity>
             <Image source={userdata.profile ? {uri:userdata.profile}:profilePicture} style={styles.profilePic}/>
@@ -98,15 +96,19 @@ const CustomDrawer = props => {
         <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor: '#071B36',}}>
           <View style={styles.drowerChilds}>
             <DrawerItemList {...props} />
-            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
+            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("insideContactPermission")}}>
               <MaterialIcons name="person-add-alt-1" size={25} color="white" />
               <Text style={styles.sideDrawerName}>Invite</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("SelectInterestInnerScreen")}}>
+              <AntDesign name="select1" size={25} color="white" />
+              <Text style={styles.sideDrawerName}>Select Interest</Text>
             </TouchableOpacity >
             <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
               <MaterialCommunityIcons name="gift" size={25} color="white"/>
               <Text style={styles.sideDrawerName}>Gift DocCoins</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
+            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("WhatsNew")}}>
               <Ionicons name="md-newspaper" size={25} color="white"/>
               <Text style={styles.sideDrawerName}>What’s New</Text>
             </TouchableOpacity>
@@ -118,7 +120,7 @@ const CustomDrawer = props => {
               <Entypo name="text-document-inverted" size={25} color="white"/>
               <Text style={styles.sideDrawerName}>Business Page</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
+            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("Settings")}}>
               <Ionicons name="settings-sharp" size={25} color="white"/>
               <Text style={styles.sideDrawerName}>Settings</Text>
             </TouchableOpacity>
@@ -126,7 +128,6 @@ const CustomDrawer = props => {
         </DrawerContentScrollView>
 
         <View style={styles.deviderLine}/>
-        
         <View style={{paddingHorizontal: 20,}}>
           <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15 }}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -144,18 +145,6 @@ const CustomDrawer = props => {
             </View>
           </TouchableOpacity>
             <View style={{marginVertical:15}}>
-
-            {/* <DrawerItem 
-              label="Log out"
-              color={'#fff'}
-              onPress={()=>{
-                AsyncStorage.clear();
-                navigation.navigate("Login");
-              }}
-              style={{borderWidth:1,borderColor:'#fff',borderRadius:15/2}}
-            />
-            <DrawerItem label="Logout" onPress={() => props.navigation.navigate("LoginScreen")}  */}
-            {/* style={{borderWidth:1,borderColor:'#fff',borderRadius:15/2}}/> */}
             <Button
               onPress={() => removeData()}
                 title={"Logout"}
@@ -179,7 +168,8 @@ const styles = StyleSheet.create({
   DrowerContainer:{
     flex: 1,  
     width:325,
-    position:'relative'
+    position:'relative',
+    marginTop:28
   },
   DocLogo:{
     flexDirection:'row',
@@ -221,15 +211,13 @@ const styles = StyleSheet.create({
   drowerChilds:{
     flex: 1, 
     backgroundColor: '#071B36', 
-    paddingTop: 10
   },
   sideDrawerComp:{
-    // borderWidth:1,
     borderColor:'#ccc',
     height:45,
-    margin:10,
+    marginHorizontal:10,
+    marginVertical:5,
     borderRadius:5,
-    // backgroundColor:"#45B5C0",
     flexDirection:'row',
     alignItems:'center',
     padding:10

@@ -1,10 +1,7 @@
 import { StyleSheet, Dimensions } from "react-native";
-import { COLORS } from "../../components/constant";
-import TypoMcq from "./TypoMcq";
 
 export const styles = StyleSheet.create({
   // --------------------------------------Survay Page-------------------------------------------
-
   line: {
     borderWidth: 1,
     borderColor: "#D5DEED",
@@ -262,7 +259,17 @@ export const styles = StyleSheet.create({
   termsCondText: {
     color: "#2376E5",
     fontFamily: "Inter-SemiBold",
-    fontWeight:'600'
+    fontWeight:'600',
+    padding:10
+  },
+  requireSteps: {
+    fontFamily: "Inter-Regular",
+    fontWeight:'600',
+  },
+  requireStepsTitle: {
+    fontFamily: "Inter-SemiBold",
+    fontWeight:'600',
+    fontSize:16
   },
   TermsAndCondContainer: {
     flexDirection: "row",
@@ -560,4 +567,8 @@ export const styles = StyleSheet.create({
     color: "#51668A",
     fontFamily: "Inter-Regular",
   },
+  error:{
+    fontFamily: "Inter-SemiBold",
+    color:"#D01212",
+  }
 });

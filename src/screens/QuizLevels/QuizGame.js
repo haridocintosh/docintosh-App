@@ -35,10 +35,10 @@ const QuizGame = ({route}) => {
     }
 
     const Mcqs = async() => {
+      navigation.setOptions({ title: 'Quize Game' });
       const result = await dispatch(GetQuizQuestions({basic_id : basicId}));
       setMcqQue(result.payload.questions);
     };
-// console.log("loader",loader);
   useEffect(() => {
       Mcqs();
       startAnimation(isTop && 1);

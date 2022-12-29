@@ -1,19 +1,11 @@
-import React, {useState} from 'react'
-import Feather from 'react-native-vector-icons/Feather';
+import React, {useState,useEffect} from 'react'
 import DropDownPicker from 'react-native-dropdown-picker';
 import { View, Text,Image,
-  SafeAreaView,ScrollView,TouchableOpacity,ImageBackground,TextInput,StyleSheet } from 'react-native'
-import {  Card } from 'react-native-paper';
+  SafeAreaView,ScrollView,StyleSheet } from 'react-native'
  import {Button, Input  } from 'react-native-elements';
-import { useNavigation } from '@react-navigation/native';
-import { FontAwesome5 , MaterialCommunityIcons,AntDesign} from '@expo/vector-icons';
-import docintoshlgblk from '../assets/dr-icon/doclg1.png'
-import d from '../assets/dr-icon/d.png';
 
-import OBJECTS from '../assets/dr-icon/OBJECTS.png';
 
-const SentimentixScreen = () => {
-    const navigation = useNavigation();
+const SentimentixScreen = ({navigation}) => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(['italy', 'spain', 'barcelona', 'finland']);
     const [items, setItems] = useState([
@@ -27,6 +19,10 @@ const SentimentixScreen = () => {
       {label: 'Finland', value: 'finland'}
     ]);
 
+    useEffect(() => {
+      navigation.setOptions({ title: 'Sentimetrix'});
+    },[])
+
   return (
     <SafeAreaView style={{flex: 1,}}>
     <ScrollView
@@ -35,7 +31,7 @@ const SentimentixScreen = () => {
     style={{}}>
 <View style={{padding:10}}>
 <View style={{ alignSelf:'center', marginTop:80, marginBottom:'10%'}}>
-    <Image source={OBJECTS}/>
+    <Image source={require('../assets/dr-icon/OBJECTS.png')}/>
 </View>
 <View>
     <Text style={{alignSelf:'center', fontSize:20, fontWeight:'600'}}>Welcome to Sentimetrix</Text>

@@ -9,16 +9,13 @@ import {Entypo} from 'react-native-vector-icons';
 import TabNavigator from './TabNavigator';
 import CustomDrawer from '../components/CustomDrawer';
 import LoginScreen from '../screens/LoginScreen';
-
 const Drawer = createDrawerNavigator();
 
 const AppStack = () => {
-
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawer {...props} /> }
       screenOptions={{
-        // headerShown: true,
         headerTintColor:'#45B5C0' ,
         drawerActiveBackgroundColor: '#45B5C0',
         drawerActiveTintColor: '#fff',      

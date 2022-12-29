@@ -8,12 +8,10 @@ import { View,
    TextInput
     } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import CustomButton from '../components/CustomButton';
 // import Otp from '../components/Otp';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Toast from 'react-native-simple-toast';
 import { quicklogin, verifyOtp } from '../apis/Apicall';
 import OTPTextView from 'react-native-otp-textinput';
 
@@ -30,20 +28,11 @@ const OtpVerification = ({route}) => {
       setCounter(30)
       quicklogin(email,mobile_no)
        .then(res => {
-        console.log(res['status']);
          if(res['status'] == 'Success'){
-          setTimeout(() => {
-            // navigation.navigate('OtpVerification', {
-            //   mobile_no : register.mobile_no,
-            //   email : register.email,
-            // })
-           }, 1000);
          }
       })
       .catch(err => {
         setmessage('Error occured!');
-        // setErrorType('server');
-        // setProcessingState('');
         console.log(err);
       });
     };
@@ -51,13 +40,8 @@ const OtpVerification = ({route}) => {
 
     const submitOtp = ()=>{
       if(otpInput !== ""){
-        console.log(otpInput);
-        console.log(user_id);
         verifyOtp(otpInput,user_id)
          .then(res => {
-          // setProcessingState('saved');
-         console.log(res['status']);
-        //  console.log(register.mobile_no);
            if(res['status'] == 'Success'){
             setTimeout(() => {
               navigation.navigate('Home')
@@ -66,8 +50,6 @@ const OtpVerification = ({route}) => {
         })
         .catch(err => {
           setmessage('Error occured!');
-          // setErrorType('server');
-          // setProcessingState('');
           console.log(err);
         });
       }else{
@@ -76,11 +58,6 @@ const OtpVerification = ({route}) => {
       };
     
 
-
-    // const submitOtp = ()=>{
-    //   console.log("submitverify");
-    //   console.log(otpInput);
-    // }
 
   useEffect(() => {
       const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);

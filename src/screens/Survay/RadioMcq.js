@@ -2,22 +2,17 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  StyleSheet,
-  Dimensions,
   SafeAreaView,
-  ScrollView,
   TouchableOpacity,
 } from "react-native";
-import { useFonts } from "expo-font";
 import { styles } from "./SurvayStyle";
+import { Ionicons } from '@expo/vector-icons';
 
-const RadioMcq = ({ setLiftUpData, currentIndex, allMCQs, nextMcq }) => {
+const RadioMcq = ({ setLiftUpData, currentIndex, allMCQs, error }) => {
   const [optId, setOptId] = useState(null);
 
-  const validateAnswer = async (ans, basic_id, qid) => {
+  const validateAnswer = async (ans) => {
     setLiftUpData(ans.opt_id);
-    //nextMcq(basic_id,qid);
-    console.log("ans.opt_id", ans.opt_id);
     setOptId(ans.opt_id);
   };
   return (
@@ -62,6 +57,9 @@ const RadioMcq = ({ setLiftUpData, currentIndex, allMCQs, nextMcq }) => {
             );
           })}
         </View>
+        <Text style={styles.error}>
+            {error && <><Ionicons name="warning" size={15} color="#D01212"/> {error}</>}
+        </Text>
       </View>
     </SafeAreaView>
   );

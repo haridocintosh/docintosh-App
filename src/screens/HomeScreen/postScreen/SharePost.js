@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState,useId } from "react";
 import "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
-import { Camera, CameraType } from 'expo-camera';
-import {StyleSheet, Text, TouchableOpacity, View, Image, ActivityIndicator} from "react-native";
+import {StyleSheet, Text, TouchableOpacity, View, Image, ActivityIndicator, ImageBackground} from "react-native";
 import {BottomSheetModal, BottomSheetModalProvider,BottomSheetScrollView} from "@gorhom/bottom-sheet";
 import * as ImagePicker from 'expo-image-picker';
 import {Entypo, Ionicons, MaterialIcons, Fontisto,MaterialCommunityIcons, AntDesign, FontAwesome5,FontAwesome, Feather} from "@expo/vector-icons";
@@ -13,23 +12,28 @@ import { useDispatch } from "react-redux";
 // import { getAllSpeciality } from "../../redux/reducers/getSpeciality";
 import Toast from 'react-native-simple-toast';
 import { postCreate } from "../../../../redux/reducers/postData";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { getMycircle } from "../../../../redux/reducers/postData";
 import { mainApi } from "../../../apis/constant";
+import { getLocalData } from "../../../apis/GetLocalData";
+import { coinTransfer } from "../../../../redux/reducers/coinSlice";
+import { PickImageAll, PickVideos } from "../../../navigation/ReuseLogics";
+import { Audio } from 'expo-av';
+import * as DocumentPicker from 'expo-document-picker';
+import data from "../../../model/data";
+
+let recording = new Audio.Recording();
+
 
 const  Sharepost = () => {
   const dispatch    = useDispatch();
   const navigation  = useNavigation();
   const [loader, setloader] = useState(false);
   const [expanded, setExpanded] = useState(true);
-  const [images, setImages]   = useState(null);
-  const [video, setVideo]   = useState(null);
-  const [audio, setAudio]   = useState(null);
-  const [document, setDocument] = useState(null);
+  const [pickedData, setData]   = useState(null);
+  const [document, setDocument]   = useState(null);
   const [err,seterr] =useState();
   const [circlespeciality, setSpl] = useState([]);
-
   const [post ,setPost] = useState({
       publishto:"",
       description :"",
@@ -37,13 +41,15 @@ const  Sharepost = () => {
       broadcast_to:"",
       postType:"",
       postImage:"",
-      type:"i",
+      type:"",
       custspeciality:""
   });
-
   const handlePress = () => setExpanded(!expanded);
   const [isOpen, setIsOpen]     = useState(false);
   const [checked, setChecked]   = useState(false);
+  const [specialNames, setSpecialNames]   = useState();
+  const [whoCanSee, setWhoCanSee]   = useState();
+  const [iconColor, setIconColor]   = useState(null);
   const [userdata, setuserdata] = useState({
     fullname:'',
     profile:'',
@@ -55,8 +61,10 @@ const  Sharepost = () => {
     circle_type:'',
     city_id:''
   })
+  const [recording, setRecording] = useState()
   const bottomSheetModalRef       = useRef(null);
   const bottomSheetModalRefSecond = useRef(null);
+  const uniqueId = useId();
   const snapPointsOne = ["1%","48%"];
   const snapPoints = ["60%","60%"];
 
@@ -74,22 +82,50 @@ const  Sharepost = () => {
     }, 100);
   }
 
-
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing:true,
-      aspect: [1, 1],
-      quality: 1,
-    });
-    if (!result.cancelled) {
-      setImages(result.uri ? result.uri : result.selected);
-    }
-    let localUri = result.uri;
+  // console.log("useId ","useId ",uniqueId);
+  const pickImage =  () => {
+    setDocument(null);
+    PickImageAll().then(async (res) =>{
+      const resId = res.map((data,i) => {
+        return {...data, uid:i}
+      })
+      setData(resId);
+      return;
+      let localUri = res?.uri;
+      console.log("localUri",localUri);
+      
       let filename = localUri.split('/').pop();
-      // Infer the type of the image
-      let match = /\.(\w+)$/.exec(filename);
-      let type = match ? `image/${match[1]}` : `image`;
+      let uriParts = localUri.split('.');
+      let fileType = uriParts[uriParts.length - 1];
+      let formData = new FormData();
+      const imageData = {
+        uri : localUri,
+        name: filename,
+        type: `video/${fileType}`,
+      }
+      formData.append('postImage', imageData);
+      formData.append('post_id', '3032');
+      const responce = await fetch(`${mainApi.baseUrl}/ApiController/postuploadDocsReact`, {
+        method : 'POST',
+        headers:{
+            'Content-Type': 'multipart/form-data'
+        },
+        body :formData
+     });
+    const result1=  await responce.json();
+      setPost({...post, 
+        postImage: result1.postImage,
+        type:'i'
+      });
+    })
+  };
+
+  const pickVideo =  () => {
+    setDocument(null);
+    PickVideos().then(async (res) =>{
+      console.log("localUri",res);
+      setData(res);
+      let filename = localUri.split('/').pop();
       let uriParts = localUri.split('.');
       let fileType = uriParts[uriParts.length - 1];
       let formData = new FormData();
@@ -98,10 +134,9 @@ const  Sharepost = () => {
         name: filename,
         type: `image/${fileType}`,
       }
-    
       formData.append('postImage', imageData);
       formData.append('post_id', '3032');
-      const responce = await fetch(`https://docintosh.com/ApiController/postuploadDocsReact`, {
+      const responce = await fetch(`${mainApi.baseUrl}/ApiController/postuploadDocsReact`, {
         method : 'POST',
         headers:{
             'Content-Type': 'multipart/form-data'
@@ -109,59 +144,23 @@ const  Sharepost = () => {
         body :formData
      });
     const result1=  await responce.json();
-    console.log("postcheck",result1);
       setPost({...post, 
         postImage: result1.postImage,
+        type:'v'
       });
+    })
   };
 
-  const pickVideo = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Videos,
-      allowsEditing: false,
-      allowsMultipleSelection: true,
-      aspect: [4, 3],
-      quality: 1,
+  const handleDocPicker = async () => {
+    let result = await DocumentPicker.getDocumentAsync({ 
+      type: "application/*",
+      copyToCacheDirectory: false, 
     });
-  //  console.log(result);
-    if (!result.cancelled) {
-      setVideo(result.uri ? result.uri : result.selected);
-    }
-  };
-
-  const pickAudio = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
-      allowsMultipleSelection: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
- //   console.log(result);
-    if (!result.cancelled) {
-      setAudio(result.uri ? result.uri : result.selected);
-    }
-  };
-
-  const pickDocument = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      allowsMultipleSelection: true,
-      aspect: [1, 1],
-      quality: 0.1,
-    });
-   // console.log(result);
-    if (!result.cancelled) {
-      setDocument(result.uri ? result.uri : result.selected);
-    }
-  };
+    console.log(result);
+    setDocument(result)
+  }
 
   const postCheck= (e)=>{
-    console.log(e);
     const name = e;
     setPost({ ...post, 
       postType:name,
@@ -170,14 +169,18 @@ const  Sharepost = () => {
   }
 
 const postDesc= (e)=>{
-  //console.log(e);
   setPost({ ...post, 
     description:e,
   });
 }
 
 const publishCheck = (e)=>{
-  // console.log(e);
+  if(e == 8){
+    setWhoCanSee("Public");
+  }else{
+    setWhoCanSee("My Speciality"); 
+  }
+    setSpecialNames();
     setPost({...post,
       publishto:e,
     })
@@ -185,54 +188,48 @@ const publishCheck = (e)=>{
 }
 
 
-const publishCheck1 = (e)=>{
-  // console.log(e);
+const publishCheck1 = (e, text)=>{
     setPost({...post,
       publishto:e,
-    })
-  //  bottomSheetModalRefSecond.current?.close();
+    });
+    setWhoCanSee(text)
 }
 
 
-
-
   const handleStudentSubmit = async() =>{
-  // console.log("post",post);
     if(post.publishto ==''){
-      Toast.show('Please select Publishto');
+      Toast.show('Please Select Publish to');
+      bottomSheetModalRefSecond.current?.present();
     }else if(!post.description){
-        Toast.show("Please Write Something About Your Post!!!!!!!");
+      Toast.show("Please Write Something About Your Post!!!!!!!");
     }else if(!post.postType){
-      Toast.show("Please select PostType");
+      Toast.show("Please Select PostType");
+      bottomSheetModalRef.current?.present();
     }else{
       const uploadData = {userdata,post};
-    
-      console.log("uploadData",uploadData);
-    
       setloader(true);
-     const result = await dispatch(postCreate(uploadData));
-     console.log("result",result);
-         if(result.payload.status == 'Success'){
+      const result = await dispatch(postCreate(uploadData));
+        if(result.payload.status == 'Success'){
           setloader(false);
-           Toast.show(result.payload.message);
-           navigation.navigate('HomeScreen')
-          // setPost('');
+          Toast.show(result.payload.message);
+          const coinDetails = {task : 4, receiverId:userdata.id } 
+          const coinResult  = await dispatch(coinTransfer(coinDetails));
+          if(coinResult.payload.status == 'Success')
+          {
+              navigation.navigate('HomeScreen');
+          }
         }
         setloader(false);
       }
     }
 
   const uploadPostImage = async (post_id) => {
-    console.log(post_id);
-    let localUri = {images};
-    console.log(localUri);
+    let localUri = {pickedData};
     let filename = localUri.split('/').pop();
     log(filename);
     // Infer the type of the image
     let uriParts = localUri.split('.');
-    console.log('uri', uriParts);
     let fileType = uriParts[uriParts.length - 1];
-    console.log("fileType",fileType );
     let formData = new FormData();
     const imageData = {
       uri : localUri,
@@ -249,7 +246,6 @@ const publishCheck1 = (e)=>{
       body :formData
    });
   const result1 = await responce.json();
-  console.log(result1);
 
   Toast.show(result1.payload.message);
   setPost('');
@@ -260,40 +256,32 @@ const publishCheck1 = (e)=>{
     
 
   useEffect(() => {
-    const asyncFetchDailyData = async () => {
-   // setloader(true);
-    const jsonValue = await AsyncStorage.getItem('USER_INFO');
-      const data=await JSON.parse(jsonValue);
-      //setloader(false);
-      const result=JSON.parse(data)['data'];
+    navigation.setOptions({ title: 'Create Post'});
+    getLocalData('USER_INFO').then((res) => {
+      const reData = res?.data;
       setuserdata({...userdata, 
-        fullname: `${result['first_name']} ${result['last_name']}`,
-        profile: result['profileimage'],
-        role:result['role'],
-        speciality:result['speciality'],
-        speciality_id:result['speciality_id'],
-        city_id:result['city_id'],
-        assoc_id:result['assoc_id'],
-        id:result['id'],
-        circle_type:result['role'] == 5 ? 3 : 1
+        fullname: `${reData?.first_name} ${reData?.last_name}`,
+        profile: reData?.profileimage,
+        role:reData?.role,
+        speciality:reData?.speciality,
+        speciality_id:reData?.speciality_id,
+        city_id:reData?.city_id,
+        assoc_id:reData?.assoc_id,
+        id:reData?.id,
+        circle_type:reData?.role == 5 ? 3 : 1
       });
-      fetchSpecialities(result['id']);
-    }
+      fetchSpecialities(reData?.id);
+    });
     bottomSheetModalRef.current?.present();
-
-    asyncFetchDailyData();
-   // fetchSpecialities();
   }, [])
 
   const fetchSpecialities = async (id)=>{
     const postDetails = {user_id : id}
     const result = await dispatch(getMycircle(postDetails));
     setSpl(result.payload);
-    // setTodos(value ? JSON.parse(value) : [])
    }
 
    const handleChange = (speciality_id) => {
-   
     let temp = circlespeciality.map((data) => {
       if (speciality_id === data.speciality_id) {
         return { ...data, checked: !data.checked };
@@ -301,39 +289,90 @@ const publishCheck1 = (e)=>{
       return data;
     });
 
-    //console.log("temp",temp );
     setSpl(temp);
     const specialityId = temp
       .filter((val) => val.checked == true)
       .map((temp) => temp.speciality_id);
-//console.log("specialityId",specialityId);
+
+    const specialityName = temp
+      .filter((val) => val.checked == true)
+      .map((temp) => temp.speciality);
+
+setSpecialNames(specialityName)
     setPost({ ...post, 
       publishto:3,
       custspeciality:specialityId
     });
-      
-     
   };
 
   if(loader){
-    return(
-    <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+    return(<View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
         <ActivityIndicator size={'large'} color={"#2C8892"}/>
     </View>)
+  }
+
+  //  const startRecording = async () => {
+  //   try {
+  //     await Audio.requestPermissionsAsync();
+  //     await Audio.setAudioModeAsync({
+  //       allowsRecordingIOS: true,
+  //       playsInSilentModeIOS: true,
+  //     });
+
+  //     const { recording } = await Audio.Recording.createAsync( Audio.RecordingOptionsPresets.HIGH_QUALITY
+  //     );
+  //     setRecording(recording);
+  //   } catch (err) {
+  //     console.error('Failed to start recording', err);
+  //   }
+  // }
+
+  // const stopRecording = async () =>{
+  //   setRecording(undefined);
+  //   await recording.stopAndUnloadAsync();
+  //   await Audio.setAudioModeAsync({
+  //     allowsRecordingIOS: false,
+  //   });
+  //   const uri = recording.getURI();
+  // }
+
+  const removeImg = (id) => {
+    console.log(id);
+    const removed = pickedData?.filter(data => data.uid != id); 
+    console.log(removed);
+    setData(removed);
+  }
+
+  const handleDocType = (type) => {
+    if(type?.includes(".pdf")){
+      return "pdffile1";
+    }else if(type?.includes(".xls")){
+      return "exclefile1";
+    }else if(type?.includes(".pptx")){
+      return "pptfile1";
+    }else if(type?.includes(".docx")){
+      return "wordfile1";
+    }else{
+      return "unknowfile1";
+    }
   }
 
   return (
     <BottomSheetModalProvider>
       <View style={styles.PostContainer}>
         <View  style={{flexDirection:'row'}}>
-          <Image source={{uri:userdata.profile}} style={styles.imageProfile}/>
+          <Image source={userdata.profile? {uri:userdata.profile}: null} style={styles.imageProfile}/>
           <View style={{justifyContent:'center'}}>
-            <Text style={styles.userName}>{userdata?((userdata.role<='4')?'Dr.':''):''} {userdata['fullname']} <MaterialCommunityIcons name="check-decagram" size={12} color="#0F9C69" /></Text>
+            <Text style={styles.userName}>{userdata?((userdata.role<='4')?'Dr.':''):''} {userdata?.fullname} <MaterialCommunityIcons name="check-decagram" size={12} color="#0F9C69" /></Text>
             <View style={{marginTop:5,}} >
               <TouchableOpacity  onPress={handlePresentModalSecond} style={{flexDirection:'row',alignItems:'center'}}> 
                 <Ionicons name="md-earth" size={13} color="#45B5C0" />  
-                <Text style={styles.publicOption}>Publish</Text>
+                <Text style={styles.publicOption}>{whoCanSee? whoCanSee: "Publish"}</Text>
                 <AntDesign name="down" size={12} color="#51668A" />
+                <Text 
+                  style={[styles.publicOption,{width:120}]} numberOfLines={1} >
+                    {specialNames?.map(data => data+ " ")}
+                  </Text>
               </TouchableOpacity>
             </View>
           </View> 
@@ -356,13 +395,27 @@ const publishCheck1 = (e)=>{
           autoCapitalize="none"
           onChangeText={(e)=>{postDesc(e)}}
         />
-        {images && <View style={{position:'relative',width: 100, height: 100}}>
-           <Image source={{ uri: images }} style={{ width: 100, height: 100 ,borderRadius:5}} />
-          <TouchableOpacity style={styles.removeImg} onPress={() =>setImages()}>
-          <AntDesign name="close" size={15}/>
-          </TouchableOpacity>
+        <View style={{flexDirection:'row',borderRadius:5,flexWrap:'wrap'}}>
+        {pickedData?.map((data) => {
+          return(
+            <>
+              <ImageBackground source={{uri: data.uri}} style={{ width: 100, height: 100 ,borderRadius:5,margin:7}}>
+                <TouchableOpacity style={styles.removeImg} onPress={() => removeImg(data.uid)}>
+                <AntDesign name="close" size={15}/>
+                </TouchableOpacity>
+              </ImageBackground>
+            </>
+          )
+        })}
+        {document &&
+        <View style={styles.pdfUploadContainer}>
+           <AntDesign name={handleDocType(document?.uri)} size={24} color={"black"} />
+           <Text style={styles.pdfFileName}>{document?.name}</Text>
+           <TouchableOpacity style={styles.pdfFileClose} onPress={() => setDocument(null)}>
+             <AntDesign name="closecircle" size={15} color="#45B5C0" />
+           </TouchableOpacity>
         </View>}
-        
+        </View>
         <View style={styles.line}/>
       </View>
 
@@ -374,13 +427,13 @@ const publishCheck1 = (e)=>{
           <TouchableOpacity  onPress={pickImage}>
             <FontAwesome5 name="image" size={24} color="#51668A" />
           </TouchableOpacity>
-          <TouchableOpacity >
+          <TouchableOpacity onPress={pickVideo}>
             <FontAwesome5 name="video" size={24} color="#51668A" />
           </TouchableOpacity>
-          <TouchableOpacity>
+          {/* <TouchableOpacity onPress={() => navigation.navigate("AudioScreen")}>
             <MaterialIcons name="keyboard-voice" size={24} color="#51668A" />
-          </TouchableOpacity>
-          <TouchableOpacity>
+          </TouchableOpacity> */}
+          <TouchableOpacity onPress={handleDocPicker}>
             <MaterialCommunityIcons name="file-document-multiple" size={24} color="#51668A" />
           </TouchableOpacity>
           <TouchableOpacity >
@@ -407,23 +460,22 @@ const publishCheck1 = (e)=>{
           
           <View style={{marginTop:20}}></View>
           <TouchableOpacity  onPress={() => { postCheck(9)}}>
-          <View style={{flexDirection:'row',}} >
+          <View style={{flexDirection:'row',}}>
           <FontAwesome name="bullhorn" size={20} color="#45B5C0" />
           <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}}>Announce Your Clinic</Text>
           </View></TouchableOpacity>
-
           <View style={{marginTop:20}}></View>
           <TouchableOpacity  onPress={() => { postCheck(3) }}>
-          <View style={{flexDirection:'row',}}>
+          <View style={{flexDirection:'row'}}>
           <Feather name="send" size={20} color="#45B5C0" />
-          <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}} >Publish a Study</Text>
-          </View></TouchableOpacity>
-
+          <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}}>Publish a Study</Text>
+          </View>
+          </TouchableOpacity>
           <View style={{marginTop:20}}></View>
           <TouchableOpacity  onPress={() => { postCheck(8) }}>
           <View style={{flexDirection:'row'}}>
           <MaterialCommunityIcons name="share" size={20} color="#45B5C0" />
-          <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}} >Share A Procedure</Text>
+          <Text style={{marginLeft:15, fontSize:16, fontWeight:'600'}}>Share A Procedure</Text>
           </View></TouchableOpacity>
 
           <View style={{marginTop:20}}></View>
@@ -471,7 +523,7 @@ const publishCheck1 = (e)=>{
                 }}
                 titleStyle={{marginHorizontal:5, fontSize:16, fontFamily:'Inter-Regular'}}
                 title="My Circle"
-                onPress={() => { publishCheck1(3)}} 
+                onPress={() => { publishCheck1(3, "My Circle")}} 
                 left={props => <FontAwesome5 name="users" size={20} color="#45B5C0" />}>
                      <View style={{width:"100%",margin:10, height:1, backgroundColor:'#cecece', }}></View>
                   {circlespeciality && circlespeciality?.map((element, index)=> {
@@ -550,7 +602,7 @@ const styles = StyleSheet.create({
     backgroundColor:"#F2FAFA",
     flexDirection:'row',
     justifyContent:"space-between",
-    alignItems:'center'
+    alignItems:'center',
   },
   imageProfile:{ 
     width:50, 
@@ -587,6 +639,26 @@ const styles = StyleSheet.create({
     right:0,
     borderRadius:50,
     margin:5
+  },
+  pdfUploadContainer:{
+    // borderWidth:1,
+    padding:13,
+    borderRadius:5,
+    backgroundColor:'#fff',
+    flexDirection:'row',
+    alignItems:'center',
+    shadowColor: '#171717',
+    fontSize:14,
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
+  },
+  pdfFileName:{
+    marginLeft:10
+  },
+  pdfFileClose:{
+    marginLeft:10
   }
 
 });

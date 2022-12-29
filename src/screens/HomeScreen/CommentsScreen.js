@@ -1,35 +1,33 @@
-import { View, Text, ActivityIndicator,Image,TextInput, ScrollView ,TouchableOpacity} from 'react-native'
+import { View, Text, ActivityIndicator,Image,TextInput, ScrollView ,TouchableOpacity,Modal} from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Ionicons} from '@expo/vector-icons';
-import { commentData ,getallcomment} from '../../../redux/reducers/publicReactionSlice';
+import {Ionicons,MaterialCommunityIcons} from '@expo/vector-icons';
+import { commentData ,deleteComment,getallcomment} from '../../../redux/reducers/publicReactionSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { styles } from './Homestyle';
+import { getLocalData } from '../../apis/GetLocalData';
+import { getCointransfer } from '../../../redux/reducers/postData';
 
 
-const CommentsScreen = ({route}) => {
+const CommentsScreen = ({route,navigation}) => {
   const  {post_id, comments_list} = route.params;
     const [profile, setProfile] = useState();
     const [text, onChangeText] = useState();
     const [userId, setUserId] = useState();
     const [instData, setInstData] = useState([]);
-    const [Comments, SetComments] = useState([]);
     const [loader, setLoader] = useState(true);
-    
-
+    const [postId, setPostId] = useState();
+    const [modalVisible, setModalVisible] = useState(false);
     const dispatch = useDispatch();
-    
 
     const getData = async() => {
-        const jsonValue = await AsyncStorage.getItem('USER_INFO');
-        const data=await JSON.parse(jsonValue);
-        const result = JSON.parse(data)['data'];
-        setProfile(result.profileimage);
-        setUserId(result);
-
+      navigation.setOptions({ title: 'Comments'});
+      getLocalData('USER_INFO').then((res) => {
+        const reData = res?.data;
+        setUserId(reData);
+        setProfile(reData?.profileimage);
+      });
         const postDetails = {post_id:post_id}
         const sentResult = await dispatch(getallcomment(postDetails));
-        // console.log("sentResult-------------", sentResult.payload.getallcomment);
         setInstData(sentResult.payload.getallcomment);
         setLoader(false)
     }
@@ -37,10 +35,12 @@ const CommentsScreen = ({route}) => {
     const handleComment = async () => {
       const postDetails = {user_id:userId.id,post_id:post_id,postcomment:text}
       const sentResult = await dispatch(commentData(postDetails));
-      console.log("sentResult", sentResult.payload);
+      const likeCounter = {senderId : 0,receiverId:userId.id,task:3}
+      const getlikeCounter = await dispatch(getCointransfer(likeCounter));
       getData();
       onChangeText()
     }
+
 
     useEffect(()=>{
         getData();
@@ -53,24 +53,40 @@ const CommentsScreen = ({route}) => {
       </View>)
     }
 
-    // const handlePost = () => {
-      // console.log("instData",instData);
-    // }
-//console.log("postId",post_id);
+    const deleteCommentHandle =  (val) => {
+      setModalVisible(true)
+      setPostId(val);
+    }
+    const handleDelete = async () => {
+      const DelDetails = {comment_id:postId}
+      const deleteResult = await dispatch(deleteComment(DelDetails));
+      const likeCounter = {senderId :userId.id,receiverId:0,task:14}
+      const getlikeCounter = await dispatch(getCointransfer(likeCounter));
+      setModalVisible(false);
+      getData();
+    }
   return (
     <View style={styles.commentContainer}>
       <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true} >
-               {instData && instData.map((element, index)=>{
+               { instData.length > 0 ? instData?.map((element, index)=>{
                   return(
                     <View style={styles.usersCommentContainer} key={index}>
-                        <Image source={{uri:profile}} style={{width:40,height:40, borderRadius:50,marginRight:10}}/>
+                      <View style={styles.usersCommentPictureContainer}>
+                        <Image source={{uri: element?.profileimage}} style={{width:40,height:40, borderRadius:50,marginRight:10}}/>
                         <View>
-                            <Text style={styles.userUsername}>{"Dr. " + userId.first_name +" "+ userId.last_name}</Text>
-                            <Text style={styles.userCommentTexts}>{element.comment} </Text>
+                            <Text style={styles.userUsername}>{(element?.title == null ?"" :element?.title ) + (element?.fullname)}</Text>
+                            <Text style={styles.userCommentTexts}>{element.comment}</Text>
                         </View>
+                      </View>
+                      {element.id === userId.id &&
+                      <TouchableOpacity onPress={() => deleteCommentHandle(element?.comment_id)} style={{}}>
+                        <MaterialCommunityIcons name='delete-outline' size={30} color={'#A30000'}/>
+                      </TouchableOpacity>}
                     </View>
                   )
-                }) }
+                }): 
+                <Text style={styles.NoCommentTexts}>There are no comments</Text>
+                }
       </ScrollView>
         <View style={styles.UserComments}>
             <View style={styles.inputCont} >
@@ -85,8 +101,32 @@ const CommentsScreen = ({route}) => {
             <TouchableOpacity onPress={() => handleComment()}>
               <Ionicons name='send' size={26}/>
             </TouchableOpacity>
-
         </View>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalVisible}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.textBold}>Are You Sure?</Text>
+              <Text style={styles.textNormal}>Dou you what delete the comment?</Text>
+              <View style={styles.buttonsContainer}>
+                <TouchableOpacity 
+                  style={[styles.buttonsDesign,styles.leftButtonsDesign]} 
+                  onPress={() =>{setModalVisible(false)}}>
+                <Text style={[styles.textBold,styles.leftText]}>Cancel</Text>
+                </TouchableOpacity>
+                <Text>{"        "}</Text>
+                <TouchableOpacity 
+                  style={[styles.buttonsDesign,styles.RightButtonsDesign]}
+                  onPress={() => handleDelete()}>
+                <Text style={[styles.textBold,styles.RightText]}>Delete</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+      </Modal>
     </View>
   )
 }

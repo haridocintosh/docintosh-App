@@ -1,14 +1,8 @@
 import * as React from 'react';
 import { View, Text , StyleSheet, Image,SafeAreaView, ScrollView} from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
-import { FontAwesome5,FontAwesome,MaterialCommunityIcons,Feather,MaterialIcons,Ionicons,AntDesign ,Entypo,Fontisto} from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import sentimentrix3 from '../assets/images/sentimentrix3.png';
-import coupon from '../assets/dr-icon/coupon1.png';
-import { Card, TextInput } from 'react-native-paper';
-
-
-
+import { Card } from 'react-native-paper';
 
 const Sentimentrix3 = () => {
     const navigation = useNavigation();
@@ -19,12 +13,11 @@ const Sentimentrix3 = () => {
     showsVerticalScrollIndicator={false}
     nestedScrollEnable={true}
     style={{backgroundColor:'#ecf2f6'}}
-    
-    >
+  >
    
 <View style={{padding:10}}>
 <View style={{alignSelf:'center', marginTop:40}}>
-    <Image source={sentimentrix3}/>
+    <Image source={require('../assets/images/sentimentrix3.png')}/>
 </View>
   <View style={{marginTop:40}}>
   <View>

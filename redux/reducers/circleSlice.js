@@ -1,6 +1,24 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { mainApi } from "../../src/apis/constant"
 
+export const getInterestSpl = createAsyncThunk("user/getInterestSplt", async(data)=>{
+  try{
+     const responce = await fetch(`${mainApi.baseUrl}/ApiController/getInterestSpecialities`, {
+          method : 'POST',
+          headers:{
+              'Content-Type': 'application/json'
+          },
+          body : JSON.stringify(data)
+      });
+      const result=  await responce.json();
+    //  console.log('interestAPI',result);
+      return result
+  }
+  catch(e){
+     console.log(e);
+  }
+})
+
 export const addCircle = createAsyncThunk("user/addCircle", async(data)=>{
   try{
      const responce = await fetch(`${mainApi.baseUrl}/ApiController/addCircle`, {
@@ -48,6 +66,20 @@ export const circleSlice = createSlice({
 
     },
     extraReducers :{
+        [getInterestSpl.pending] : (state)=>
+        {
+          state.loading =  true;
+        }, 
+        [getInterestSpl.fulfilled] : (state, action)=>
+        {   
+          state.loading =  false;
+          state.users = action.payload;
+        }, 
+        [getInterestSpl.rejected] : (state)=>
+        {
+          state.loading = false;
+          state.error = true
+        },
         [addCircle.pending] : (state)=>
         {
           state.loading =  true;

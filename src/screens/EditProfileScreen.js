@@ -1,29 +1,15 @@
 import React,{useState,useEffect } from 'react';
-import { View, Text ,TextInput,Image,SafeAreaView, ScrollView, Alert, StyleSheet, Pressable, FlatList,TouchableOpacity} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-// import { SafeAreaView, ScrollView } from 'react-native-web';
-import profileimg from '../assets/images/p2.png';
-import { FontAwesome5,FontAwesome,Feather,Fontisto } from '@expo/vector-icons';
-import icon from '../assets/images/celTick.png';
+import { View, Text ,TextInput,Image,SafeAreaView, ScrollView, Alert, StyleSheet, Pressable,TouchableOpacity} from 'react-native';
+import { Feather } from '@expo/vector-icons';
 import { Card } from 'react-native-paper';
-import d from '../assets/dr-icon/d.png';
-import discount1 from '../assets/dr-icon/discount1.png';
-import { AntDesign } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
-import grid1 from '../assets/images/grid1.png';
-import grid3 from '../assets/images/grid3.png';
-import grid4 from '../assets/images/grid4.png';
-import mbbs from '../assets/images/mbbsimg.png';
-import troffe from '../assets/dr-icon/trofee.png';
-import publication from '../assets/dr-icon/publ.png';
-import p3 from '../assets/images/p3.png';
 import { Button } from 'react-native-elements';
 import Modal from "react-native-modal";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getLocalData } from '../apis/GetLocalData';
 
 
-const EditProfileScreen = () => {
+
+const EditProfileScreen = ({navigation}) => {
     // form validation start here
     const [userInfo, setUserInfo] = useState({
       email:'',
@@ -56,7 +42,6 @@ const EditProfileScreen = () => {
  
 
     const  handleOnChangeEmail = (text)=>{
-      //console.log(text);
       if(!isValidemailRegex.test(text)){
           setmessage("Please enter valid email!");
       }else{
@@ -158,15 +143,12 @@ const EditProfileScreen = () => {
   };
 
   const asyncFetchDailyData = async () => {
-    const jsonValue = await AsyncStorage.getItem('USER_INFO');
-      const data = await JSON.parse(jsonValue);
-      console.log(JSON.parse(data)['data'])
-      const result=JSON.parse(data)['data'];
-      console.log("asdasd--result", result);
-      // setuserdata(JSON.parse(data)['data']['first_name']+" "+JSON.parse(data)['data']['last_name'])
-      setuserdata(result);
-
-    }
+    navigation.setOptions({ title: 'Edit Profile'});
+    getLocalData('USER_INFO').then((res) => {
+      const reData = res?.data;
+      setuserdata(reData);
+    });
+  }
   
 
     useEffect(()=>{
@@ -181,7 +163,7 @@ const EditProfileScreen = () => {
         </View> */}
         <Image source={{uri:userdata.profileimage}} style={styles.profileimg}/>
           <View>
-              <Text style={{alignSelf:'center',fontSize:20,fontWeight:'600'}}>{userdata.first_name} {userdata.last_name} <Image source={icon}/></Text>
+              <Text style={{alignSelf:'center',fontSize:20,fontWeight:'600'}}>{userdata.first_name} {userdata.last_name} <Image source={require('../assets/images/celTick.png')}/></Text>
               <Text style={{color:'#51668A',alignSelf:'center',textAlign:'center', flexDirection:'row', width:300}}>
                  {userdata.speciality}| {userdata.city}
                  <TouchableOpacity onPress={toggleModal}>
@@ -217,12 +199,12 @@ const EditProfileScreen = () => {
             </Text>
             <Text style={{paddingLeft:10,fontSize:14,fontWeight:'400',color:'#51668A'}}>12345 | 2010</Text>
         </View>
-        <View style={{flexDirection:'row',paddingTop:16}}>
+        {/* <View style={{flexDirection:'row',paddingTop:16}}>
             <Text style={{fontSize:14,fontWeight:'500'}}>
             MRN Reg:
             </Text>
             <Text style={{paddingLeft:10,fontSize:14,fontWeight:'400',color:'#51668A'}}>Himachal Pradesh</Text>
-        </View>
+        </View> */}
         </View>
     </Card>  
 
@@ -244,8 +226,7 @@ const EditProfileScreen = () => {
         {/* <Entypo name="edit" size={20} color="black"  style={{marginRight:20,color:'#2C8892',alignSelf:'flex-end', marginBottom:-20}} onPress={qualificationModal} /> */}
         
         <View style={{flexDirection:'row', paddingLeft:20}}>
-        
-            <Image source={mbbs}></Image>
+            <Image source={require('../assets/images/mbbsimg.png')}></Image>
             <View style={{paddingLeft:10}}>
             <Text style={{fontSize:16, fontWeight:'500'}}>MBBS</Text>
             <Text style={{fontSize:14, fontWeight:'500',color:'#51668A'}}>Ramaiah Medical College</Text>
@@ -269,7 +250,7 @@ const EditProfileScreen = () => {
         
         <View style={{flexDirection:'row', paddingLeft:20}}>
         
-            <Image source={troffe}></Image>
+            <Image source={require('../assets/dr-icon/trofee.png')}></Image>
             <View style={{paddingLeft:10}}>
             <Text style={{fontSize:16, fontWeight:'500'}}>Lorem ipsum dolor sit amet</Text>
             
@@ -289,7 +270,7 @@ const EditProfileScreen = () => {
         {/* <Entypo name="edit" size={20} color="black"  style={{marginRight:20,color:'#2C8892',alignSelf:'flex-end', marginBottom:-20}} onPress={publicationModal} /> */}
         
         <View style={{flexDirection:'row', paddingLeft:20}}>
-            <Image source={publication}></Image>
+            {/* <Image source={publication}></Image> */}
             <View style={{paddingLeft:10}}>
             <Text style={{fontSize:16, fontWeight:'500'}}>Lorem ipsum dolor sit amet</Text>
             <Text style={{fontSize:12, fontWeight:'400', color:'#51668A'}}>June 2021</Text>

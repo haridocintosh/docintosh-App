@@ -7,25 +7,25 @@ import {
 } from "react-native";
 import CheckBox from "react-native-check-box";
 import { styles } from "./SurvayStyle";
+import { Ionicons } from '@expo/vector-icons';
 
-const SurvayCheckBoxMcq = ({ setLiftUpData, currentIndex, allMCQs }) => {
+
+const SurvayCheckBoxMcq = ({ setLiftUpData, currentIndex, allMCQs,error,setError }) => {
   const [allMcq, setAllMcq] = useState(allMCQs[currentIndex]);
 
   const handleChange = (opt_id) => {
+    setError(null)
     let temp = allMcq?.options.map((mcq) => {
       if (opt_id === mcq.opt_id) {
         return { ...mcq, checked: !mcq.checked };
       }
       return mcq;
     });
-    // console.log("temp",{ ...allMcq, options: temp });
     setAllMcq({ ...allMcq, options: temp });
-    
     const optId = temp
       .filter((val) => val.checked == true)
       .map((temp) => temp.opt_id);
     setLiftUpData(optId);
-    console.log("optId",optId);
   };
 
   
@@ -34,7 +34,6 @@ const SurvayCheckBoxMcq = ({ setLiftUpData, currentIndex, allMCQs }) => {
       <View style={{ paddingHorizontal: 15 }}>
         <View>
           {allMcq?.options.map((data, i) => {
-            // console.log("isChecked",data?.checked);
             return (
               <TouchableOpacity style={styles.SurvayOptions} key={i} onPress={() => handleChange(data.opt_id)}>
                 <CheckBox
@@ -48,6 +47,9 @@ const SurvayCheckBoxMcq = ({ setLiftUpData, currentIndex, allMCQs }) => {
             );
           })}
         </View>
+        <Text style={styles.error}>
+            {error && <><Ionicons name="warning" size={15} color="#D01212"/> {error}</>}
+        </Text>
       </View>
     </SafeAreaView>
   );

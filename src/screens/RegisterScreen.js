@@ -65,9 +65,6 @@ export default function RegisterScreen() {
         return {label: ele.speciality, value: ele.speciality_id};
      }))
     }
-    // DeviceInfo.getAndroidId().then((androidId) => {
-    //  console.log(androidId);
-    // });
     fetchSpecialities()
   },[]);
 
@@ -109,7 +106,6 @@ const email= async(e)=>{
   setemail('')
    const result =  await dispatch(checkEmail({email: e}))
     if(result.payload.status_code="Exists"){
-      console.log("frontend",result.payload.message)
       setemail(result.payload.message)
     }
   }
@@ -129,13 +125,9 @@ const phonenumber= async(e)=>{
     setmobile("Please enter valid mobile no.")
   }else{
     const result =  await dispatch(checkMobile({mobile: e}))
-    //console.log("frontendCheck",result.payload)
     if(result.payload.status_code="Exists"){
       setmobile(result.payload.message)
     }
-    // else{
-    //   setmobile('')
-    // }
   }
   
   setregister({
@@ -157,6 +149,7 @@ const selectedgender=(e)=>{
     ...register,
     gender: e,
    })
+   errgender('')
 }
 
 const setuserrole= (e)=>{
@@ -167,14 +160,6 @@ const setuserrole= (e)=>{
 }
 
 const form_submit = async() =>{
-  // console.log("Doctor",register.mobile);
-  // if(!register.fname || !register.lname  || !register.mobile || !register.email || !register.gender || !register.role || !register.speciality || checked === 4 ?!value:''){
-  //     seterr("Please fill the above form");
-  // }else if(emailId != ''){
-  //   setemail("This Email ID is registered with us");
-  // }else if(mobileId != ''){
-  //   setmobile("This mobile no. is registred with us");
-
   if(!register.fname){
     fnerr("Please enter First Name");
   }else if(!register.lname){
@@ -182,11 +167,11 @@ const form_submit = async() =>{
   }else if(!register.email){
     setemail("Please enter valid Email ID");
   }
-  // else if(emailIderr != ''){
-  //   setemail("This Email ID is registered with us");
-  // }else if(mobileId !=''){
-  //   setemail("This mobile no. is registred with us");
-  // }
+  else if(emailIderr != ''){
+    setemail("This Email ID is registered with us");
+  }else if(mobileId !=''){
+    setemail("This mobile no. is registred with us");
+  }
   else if(!register.mobile){
     setmobile("Pleaes enter valid mobile no.");
   }else if(!register.gender){
@@ -200,7 +185,6 @@ const form_submit = async() =>{
     setloader(true)
     const result = await dispatch(userRegisterOne(register));
     setloader(false)
-    console.log('Registertkn',result);
     Toast.show(result.payload.message);
     setregister({
       fname : "",
@@ -209,37 +193,31 @@ const form_submit = async() =>{
       mobile:"",
       gender:"",
       role:"",
+      speciality:""
    })
+  // console.log(result.payload);
     navigation.navigate('DoctorOtp', {
       mobile_no : result.payload.mobilenumber,
       email     : result.payload.email,
       user_id   : result.payload.user_id,
       role      : result.payload.role,
+      speciality: result.payload.speciality,
     })
     }
   }
 
   const handleStudentSubmit = async() =>{
-    console.log("student",register);
-    // if(!register.fname || !register.lname || !register.email || !register.mobile || !register.gender ||  !register.role || checked === 5 ?!value:''){
-    //     seterr("Please fill the above form")
-    // }else if(emailId != ''){
-    //     setemail("This Email ID is registered with us");
-    // }else if(mobileId != ''){
-    //     setmobile("This mobile no. is registred with us");
     if(!register.fname){
       fnerr("Please enter First Name");
     }else if(!register.lname){
       lnerr("Please enter Last Name");
     }else if(!register.gender){
       errgender("Please Select gender");
-    }
-    // else if(emailIderr != ''){
-    //   setemail("This Email ID is registered with us");
-    // }else if(mobileId !=''){
-    //   setemail("This mobile no. is registred with us");
-    // }
-    else if(!register.email){
+    }else if(emailIderr != ''){
+      setemail("This Email ID is registered with us");
+    }else if(mobileId !=''){
+      setemail("This mobile no. is registred with us");
+    }else if(!register.email){
       setemail("Please enter valid Email ID");
     }else if(!register.mobile){
       setmobile("Pleaes enter valid mobile no.");
@@ -269,8 +247,6 @@ const form_submit = async() =>{
       })
       }
     }
-
-
   
   if(loader){
     return(
@@ -280,139 +256,84 @@ const form_submit = async() =>{
   }
 
   return (
-    <SafeAreaView style={{ display:"flex",justifyContent: 'center'}}>
-          <ScrollView 
-          keyboardShouldPersistTaps='handled'
-            showsVerticalScrollIndicator={false}
-            nestedScrollEnable={true}
-            style={{paddingHorizontal: 20}}>
-
+    <SafeAreaView style={{ display:"flex",justifyContent: 'center',paddingHorizontal: 20}}>
+          <ScrollView keyboardShouldPersistTaps='handled'showsVerticalScrollIndicator={false}nestedScrollEnable={true} >
           <View style={{ marginTop :30}}>
-
-            <Text  style={styles.headingtext}
-            >
-              Hey There!
-            </Text>
-            <Text style={styles.headingpara}
-            >
-              Welcome to Docintosh. Let’s create your account. 
-            </Text>
-            </View>
-
-  
-            {/* <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-                marginBottom: 30,
-              }}>
-              <TouchableOpacity
-                onPress={() => {}}
-                >
-                <SvgUri width="56" height="56" uri="https://www.brandcare.net/Docintosh_Svg/google.svg" />
-          
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {}}
-               >
-
-            <SvgUri width="56" height="56" uri="https://www.brandcare.net/Docintosh_Svg/facebook%20%282%29.svg" />
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                onPress={() => {}}
-                >
-                  <SvgUri width="56" height="56" uri="https://www.brandcare.net/Docintosh_Svg/linkdin.svg" />
-              </TouchableOpacity>
-            </View>
-    
-            <Text  style={styles.headingpara2}>
-              Or
-            </Text> */}
-
+            <Text  style={styles.headingtext}>Hey There!</Text>
+            <Text style={styles.headingpara} >Welcome to Docintosh. Let’s create your account.</Text>
+          </View>
             
        <View style={{ display:"flex" ,flexDirection:"row",alignItems:'center', flexDirection:"column"}}>
 
-        <TextInput style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular',}]} placeholderTextColor='#687690' placeholder='First name'  onChangeText={(e)=>{firstName(e);}}/>
+        <TextInput 
+          style={[styelcss.customInputVerifyFullMobile,{fontFamily:'PlusJakartaSans-Regular'}]} 
+          placeholderTextColor='#687690' 
+          placeholder='First name'  
+          onChangeText={(e)=> firstName(e)}
+        />
         <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{fn}</Text>
 
-        <TextInput style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular',}]}  placeholderTextColor='#687690' placeholder='Last Name' 
-        onChangeText={(e)=>{lastName(e);}} />
+        <TextInput 
+          style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular',}]}  
+          placeholderTextColor='#687690' 
+          placeholder='Last Name' 
+          onChangeText={(e)=>{lastName(e);}} 
+        />
         <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{ln}</Text>
 
         <View style={{ display:"flex" ,flexDirection:"row",alignItems:'center',marginTop:12, marginLeft:0 ,width:"100%"}}>
           <Text style={{ fontFamily: 'Inter-Regular',fontSize:16,color:"#51668A"}}>You are :</Text>
-          <View>
-            <RadioButton 
-            value="male" status={ checkgender === 'male' ? 'checked' : 'unchecked' }
-            onPress={() => {setcheckgender('male'); selectedgender('male')}} />
-            <View  style={{marginTop:-56,zIndex:-1, alignSelf:'center',
-            alignItems:'center', paddingVertical:10,
-            flexDirection:'row',backgroundColor:'#fff', width:110, borderRadius:20/2}}>
-            <View style={{marginRight:20}}></View><Ionicons name="md-male-sharp" size={24} color="#51668A" />
-            <Text style={{color:'#51668A',fontSize:16, fontWeight:'400'}}>Male</Text></View>
+          <View style={styles.roleContainer}>
+            <TouchableOpacity style={[styles.roleTab,{borderWidth:checkgender == '1' ? 1 : 0}]} 
+            onPress={() => {setcheckgender('1'); selectedgender('1')}}>
+            <Ionicons name="md-male-sharp" size={20} color="#51668A" />
+              <Text style={styles.roleTabText}>Male</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.roleTab,{borderWidth:checkgender == '0' ? 1 : 0}]} 
+            onPress={() => {setcheckgender('0'); selectedgender('0')}}>
+            <MaterialCommunityIcons name="gender-female" size={20} color="#51668A" />
+              <Text style={styles.roleTabText}>Female</Text>
+            </TouchableOpacity>
           </View>
-  
-          <View style={{flex:0,   borderRadius:20/2, }}>
-            <RadioButton 
-              value="female"
-              status={ checkgender === 'female' ? 'checked' : 'unchecked' }
-              onPress={() => {setcheckgender('female'); selectedgender('female')}}
-            />
-
-          <View  style={{marginTop:-56,zIndex:-1,alignSelf:'center', alignItems:'center', paddingVertical:10, flexDirection:'row', backgroundColor:'#fff', width:110,height:46, borderRadius:20/2}} ><View style={{marginRight:20}}></View><MaterialCommunityIcons name="gender-female" size={24} color="#51668A" /><Text style={{color:'#51668A',fontSize:16, fontWeight:'400'}}>Female</Text></View>
-        </View>
         </View>
 
         <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{genderErr}</Text>
-        <TextInput  style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular'}]} placeholderTextColor='#687690' autoComplete='off' autoCapitalize="none" keyboardType="email-address" placeholder='Email ID' onChangeText={(e)=>{email(e)}}/>
+        <TextInput  
+          style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular'}]} 
+          placeholderTextColor='#687690' 
+          autoComplete='off' 
+          autoCapitalize="none" 
+          keyboardType="email-address" 
+          placeholder='Email ID' 
+          onChangeText={(e)=>{email(e)}}
+        />
         <Text style={{color:'red',fontFamily: 'PlusJakartaSans-Regular'}}>{emailIderr !='' && emailIderr}</Text>
-
-        <TextInput style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular',}]}  placeholderTextColor='#687690' placeholder='Mobile Number' keyboardType="numeric"  onChangeText={(e)=>{phonenumber(e)}}  maxLength={10} />
+        <TextInput 
+          style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular',}]}  
+          placeholderTextColor='#687690' 
+          placeholder='Mobile Number' 
+          keyboardType="numeric"  
+          onChangeText={(e)=>{phonenumber(e)}}  
+          maxLength={10} 
+        />
         <Text style={{color:'red',fontFamily: 'PlusJakartaSans-Regular'}}>{mobileId !='' && mobileId}</Text></View>
-
         <View style={{ display:"flex" ,flexDirection:"row",alignItems:'center',marginTop:12, marginLeft:0}}>
           <Text style={{ fontFamily: 'Inter-Regular',fontSize:16,color:"#51668A"}}>You are :</Text>
-          <View>
-            <RadioButton 
-            value="4" 
-            status={ checked === '4' ? 'checked' : 'unchecked' }
-            onPress={() => {setChecked('4'); setuserrole(4)}} />
-            <View  style={{marginTop:-56,zIndex:-1,alignSelf:'center',
-             justifyContent:'center',
-             alignItems:'center',
-             paddingVertical:10,
-             flexDirection:'row',
-             backgroundColor:'#fff', width:110, height:46, borderRadius:20/2}}>
+          <View style={styles.roleContainer}>
+            <TouchableOpacity style={[styles.roleTab,{borderWidth:checked == 4 ? 1 : 0}]} onPress={() => {setChecked('4'); setuserrole(4)}}>
             <Fontisto name="doctor" size={20} color="#51668A" />
-             <Text style={{color:'#51668A',marginLeft:5,fontSize:16, fontWeight:'400'}}>
-              Doctor
-              </Text>
-            </View>
+              <Text style={styles.roleTabText}>Doctor</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={[styles.roleTab,{borderWidth:checked == 5 ? 1 : 0}]} onPress={() => {setChecked('5'); setuserrole(5)}}>
+            <FontAwesome5 name="user-graduate" size={20} color="#51668A" />
+              <Text style={styles.roleTabText}>Student</Text>
+            </TouchableOpacity>
           </View>
-          <View>
-          <RadioButton 
-            value="5"
-            status={ checked === '5' ? 'checked' : 'unchecked' }
-            onPress={() => {setChecked('5'); setuserrole(5)}}
-          />
-            <View  style={{marginTop:-56,zIndex:-1,alignSelf:'center',
-              justifyContent:'center',
-              alignItems:'center',
-              paddingVertical:10,
-              flexDirection:'row',
-              backgroundColor:'#fff', width:110, height:46, borderRadius:20/2}}>
-              <FontAwesome5 name="user-graduate" size={20} color="#51668A" />
-              <Text style={{color:'#51668A', marginLeft:5, fontSize:16, fontWeight:'400'}}>
-                Student
-              </Text>
-            </View>
-        </View>
 
      </View>
 
      <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{userrole}</Text>
-    
     <View style={{alignSelf: 'center' }}>
     {checked === '4'? (
       <DropDownPicker style={styles.customInputVerify}
@@ -532,8 +453,32 @@ const styles = StyleSheet.create({
     borderTopWidth:0,
     borderColor:"#6C81A6",
     paddingLeft:8,
-   
-   
   },
+  roleContainer:{
+    flexDirection:'row',
+  },
+  roleTab:{
+    alignSelf:'center',
+    justifyContent:'center',
+    alignItems:'center',
+    flexDirection:'row',
+    backgroundColor:'#fff', 
+    borderRadius:10,
+    marginHorizontal:5,
+    paddingHorizontal:20,
+    paddingVertical:12,
+    borderColor:'#45B5C0',
+    shadowColor: '#ccc',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,  
+    elevation: 5
+
+  },
+  roleTabText: {color:'#51668A',
+  marginLeft:5,
+  fontSize:16, 
+  fontWeight:'400'
+},
     
 });

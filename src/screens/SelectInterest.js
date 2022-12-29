@@ -4,16 +4,16 @@ import {  View,
   FlatList,
   TextInput } from 'react-native'
 import React, {useState, useEffect, useRef } from 'react'
-import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CustomButton from '../components/CustomButton';
 import { mainApi } from '../apis/constant';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from "react-redux";
-import { addCircle } from '../../redux/reducers/circleSlice';
+import { addCircle, getInterestSpl } from '../../redux/reducers/circleSlice';
 const styelcss = require('../assets/css/style');
 import Toast from 'react-native-simple-toast';
-import { useFonts } from 'expo-font';
+
+
 
 
 const SelectInterest = ({route}) => {
@@ -26,8 +26,8 @@ const SelectInterest = ({route}) => {
   const [loader, setLoader] = useState(true);
 
   //const user_id ='229533'
-   const {user_id} = route.params;
- 
+  const {user_id, specialityId} = route.params;
+ console.log(user_id, specialityId)
   const getItem = (item) => {
    // alert(item.speciality);
     // Function for click on an item
@@ -35,16 +35,13 @@ const SelectInterest = ({route}) => {
     let copy=[...selectitem];
     copy =[...copy,spl]
    setselectitem(copy)
-   //console.log('selectarray', selectitem);
   const newItem = filteredDataSource.map((val)=>{
-    //console.log(item.speciality_id);
     if(val.speciality_id===item.speciality_id){
       return {...val, isSelected:!val.isSelected }
     }else{
       return val
     }
   })
-  //console.log("dsandsjdnk",newItem);
   setFilteredDataSource(newItem);
 
   var array = [...selectitem]; // make a separate copy of the array
@@ -52,7 +49,6 @@ const SelectInterest = ({route}) => {
     if(index !== -1) {
       array.splice(index, 1);
       setselectitem(array);
-     // console.log('deletearray',selectitem);
     }
     fetchPostData(spl)
   };
@@ -60,22 +56,19 @@ const SelectInterest = ({route}) => {
   const fetchPostData = async (speciality_id)=>{
     const postDetails = {speciality_id:speciality_id,id:user_id}
     const result = await dispatch(addCircle(postDetails));
-    console.log(result.payload);
-    //const data = await result.payload;
-    //setAllMCQs(data);
  }
-  
+
+
+ const getInterestSplData = async () => {
+  const postDetails = {speciality_id:specialityId}
+  const result = await dispatch(getInterestSpl(postDetails));
+  setFilteredDataSource(result?.payload);
+  setMasterDataSource(result?.payload);
+  setLoader(false)
+ }
+
   useEffect(() => {
-    fetch(`${mainApi.baseUrl}/ApiController/getSpecialities`)
-      .then((response) => response.json())
-      .then((responseJson) => {
-        setFilteredDataSource(responseJson);
-        setMasterDataSource(responseJson);
-        setLoader(false)
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    getInterestSplData()
   }, []);
 
   const searchFilterFunction = (text) => {
@@ -133,14 +126,6 @@ const SelectInterest = ({route}) => {
       navigation.navigate('ContactPermission'); 
     }
   }
-  const [fontsLoaded] = useFonts({
-      'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),
-      'PlusJakartaSans-Regular': require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
-      
-    });
-    if(!fontsLoaded) {
-      return null;
-    }
 
     if(loader){
       return(

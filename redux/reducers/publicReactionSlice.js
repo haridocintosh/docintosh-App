@@ -19,22 +19,6 @@ export const postLikeData = createAsyncThunk("getAllPost", async (data)=>{
      }
 })
 
-// export const getallLikes = createAsyncThunk("getAllPost", async (data)=>{
-//     try{
-//         const responce = await fetch(`${mainApi.baseUrl}/ApiController/getallLike`, {
-//             method : 'POST',
-//             headers:{
-//                 'Content-Type': 'application/json'
-//             },
-//             body :JSON.stringify(data)
-//          });
-//         const commentResults =  await responce.json();
-//         return commentResults;
-//      }
-//      catch(e){
-//         console.log(e);;
-//      }
-// })
 export const getallLikes = createAsyncThunk("getAllPost", async (data)=>{
     try{
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/allpostlike`, {
@@ -79,6 +63,23 @@ export const commentData = createAsyncThunk("getAllPost", async (data)=>{
          });
         const commentResults =  await responce.json();
         return commentResults;
+     }
+     catch(e){
+        console.log(e);;
+     }
+})
+
+export const deleteComment = createAsyncThunk("getAllPost", async (data)=>{
+    try{
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/delete_comment`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body :JSON.stringify(data)
+         });
+        const delResult =  await responce.json();
+        return delResult;
      }
      catch(e){
         console.log(e);;
@@ -161,6 +162,24 @@ export const likesData = createSlice({
                 state.gelAllLikes = action.payload;
             }, 
         [getallLikes.rejected] : (state)=>
+            {
+                state.loading = false;
+                state.error   = true
+            }, 
+  
+    },
+
+    extraReducers :{
+        [deleteComment.pending] : (state)=>
+            {
+                state.loading =  true;
+            }, 
+        [deleteComment.fulfilled] : (state, action)=>
+            {   
+                state.loading  =  false;
+                state.gelAllLikes = action.payload;
+            }, 
+        [deleteComment.rejected] : (state)=>
             {
                 state.loading = false;
                 state.error   = true

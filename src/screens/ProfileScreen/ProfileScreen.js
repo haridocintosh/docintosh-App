@@ -1,36 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text ,Image,SafeAreaView, ScrollView, TouchableOpacity, Animated ,StyleSheet} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import profileimg from '../../assets/images/p2.png';
 import icon from '../../assets/images/Vector.png';
 import { Card } from 'react-native-paper';
-import d from '../../assets/dr-icon/d.png'
-import coupon1 from '../../assets/dr-icon/coupon1.png';
 import ProfileScreenPost from './ProfileScreenPost';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { styles } from './profilestyle';
+import { getLocalData } from '../../apis/GetLocalData';
+import { getAllCoins } from '../../../redux/reducers/postData';
+import { useDispatch } from 'react-redux';
 
-const ProfileScreen = () => {
-  const navigation = useNavigation();
+
+
+
+const ProfileScreen = ({navigation}) => {
+  const [allcoins, setAllcoins] = useState(0);
   const [userdata,setuserdata]=useState({
     fullname : "",
     profile:"",
     speciality:"",
   })
+  const dispatch = useDispatch();
 
-  const asyncFetchDailyData = async () => {
-    const jsonValue = await AsyncStorage.getItem('USER_INFO');
-      const data = await JSON.parse(jsonValue);
-      console.log(JSON.parse(data)['data'])
-      const result=JSON.parse(data)['data'];
-      // setuserdata(JSON.parse(data)['data']['first_name']+" "+JSON.parse(data)['data']['last_name'])
+  const asyncFetchDailyData =  () => {
+    navigation.setOptions({ title: 'Profile'});
+    getLocalData('USER_INFO').then( async (res) => {
+      const reData = res?.data;
       setuserdata({ ...userdata, 
-        fullname: `${result['first_name']} ${result['last_name']}`,
-        speciality: `${result['speciality']}`,
-        profile: `${result['profileimage']}`,
-        role:`${result['role']}`
+        fullname: `${reData?.first_name} ${reData?.last_name}`,
+        speciality: reData?.speciality,
+        profile: reData?.profileimage,
+        role:reData?.role
       });
-    }
+      const allCoins = { user_id:reData.id};
+      const allCoinsResult = await dispatch(getAllCoins(allCoins));
+      setAllcoins(allCoinsResult.payload.coins);
+    });
+  }
 
     useEffect(()=>{
       asyncFetchDailyData();
@@ -38,10 +42,7 @@ const ProfileScreen = () => {
     
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#E6E6E6'}}>
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      nestedScrollEnable={true}
-      style={{}}>
+  
 
     <Card style={{backgroundColor:'#fff',paddingHorizontal:10,paddingVertical:15, borderRadius:10}}>
     <View style={styles.profilePicContainer}>
@@ -60,12 +61,12 @@ const ProfileScreen = () => {
 
       <View style={{flexDirection:'row', marginTop:20}}>
           <View style={styles.ScoreContainer}>
-            <Image source={d} style={styles.scoreImg}/>
-            <Text style={styles.coins}>3600</Text>
+            <Image source={require('../../assets/dr-icon/d.png')} style={styles.scoreImg}/>
+            <Text style={styles.coins}>{allcoins[0]?.coinTotal ? allcoins[0]?.coinTotal : 0}</Text>
           </View>
           <View style={styles.ScoreContainer}>
-            <Image source={coupon1} style={styles.scoreImg}/>
-            <Text style={styles.coins}>102</Text>
+            <Image source={require('../../assets/dr-icon/coupon1.png')} style={styles.scoreImg}/>
+            <Text style={styles.coins}>0</Text>
           </View>
       </View>
     </Card>
@@ -82,12 +83,9 @@ const ProfileScreen = () => {
           </TouchableOpacity>
     </View>
 
-     <ProfileScreenPost />
-     <ProfileScreenPost/>
-     <ProfileScreenPost/>
      <ProfileScreenPost/>
 
-  </ScrollView>
+
  </SafeAreaView>
   )
   }

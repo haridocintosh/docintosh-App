@@ -1,30 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
+import { StyleSheet, BackHandler, ActivityIndicator,Modal,TouchableOpacity,View,Text } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import AuthStack from './AuthStack';
 import AppStack from './AppStack';
-//import store from './redux/store';
-import { useSelector} from 'react-redux';
 import LoginScreen from '../screens/LoginScreen';
-import { navigationRef } from './RootNavigation';
+import RegisterScreen from '../screens/RegisterScreen';
+import IntroStack from './IntroStack';
+import OtpVerification from '../screens/OtpVerification';
+import RegisterTwoScreen from '../screens/RegisterTwoScreen';
+import Congratulation from '../screens/Congratulation';
+import MobileScreen from '../screens/MobileScreen';
+import ForgetPassword from '../screens/ForgetPassword';
+import CreateNewPass from '../screens/CreateNewPass';
+import RegisterStudentScreen from '../screens/RegisterStudentScreen';
+import ForgotPasswordOTP from '../screens/ForgotPasswordOTP';
+import DoctorOtp from '../screens/DoctorOtp';
+import OnboardingScreen from '../screens/OnboardingScreen';
+import InvitePeers from '../screens/InvitePeers';
+import SelectInterest from '../screens/SelectInterest';
+import ContactPermission from '../screens/ContactPermission';
+import QuizLevels from '../screens/QuizLevels/QuizLevels';
+import TermsAndCondition from '../screens/commonpage/TermsAndCondition';
+import ContactScreen from '../screens/commonpage/ContactScreen';
+import HandleBack from './HandleBack';
+import MultipleImagesUpload from '../screens/MiltipleImageUpload/MultipleImagesUpload';
+import { ViewPropTypes } from 'deprecated-react-native-prop-types';
 
 
 export default function AppNav() {
-const [data, setdata] = useState();
 const [loader, setLoader] = useState(false);
+const [defaultRoute, setDefaultRoute] = useState();
+const [statusKeyLoaded, setStatusKeyLoaded] = useState(false);
 const Stack = createNativeStackNavigator();
-
-// let loading = useSelector((state)=>{
-//   //console.log(state);
-//   return state.mylogin.loading;
-// });
-
-// let usertoken = useSelector((state)=>{
-//   //console.log(state);
-//   return state.mylogin.usertoken;
-// });
+const navigation  = useNavigation();
 
 if(loader){
   return(
@@ -36,32 +45,68 @@ if(loader){
   const getData = async (key) => {
     try {
       const jsonValue = await AsyncStorage.getItem(key);
-      // console.log(jsonValue);
-      setdata(jsonValue != null ? JSON.parse(JSON.parse(jsonValue)) : null)
+      const logData = jsonValue != null ? JSON.parse(JSON.parse(jsonValue)) : null;
+      if(logData?.login){
+        setDefaultRoute("HomeScreen");
+      }else{
+      setDefaultRoute("Intro");
+     // setDefaultRoute("ContactPermission");
+    //  setDefaultRoute("MultipleImagesUpload");
+      }
+      setStatusKeyLoaded(true);
     } catch(e) {
-     //console.log(e)
+      console.log(e);
     }
-}
+  }
+
   useEffect(() => {
-    setLoader(true);
-    getData('USER_INFO');
-    setLoader(false);
+      getData('USER_INFO');
   }, []);
 
-  const islogin =data?data.login:null;
-  return (
-    <NavigationContainer ref={navigationRef}>
-        {islogin ? <AppStack/>:<AuthStack/>}
-    </NavigationContainer>
-  );
+const handleMessage = () => {
+  alert("Successfully completed registration please login")
+  setTimeout(() => {
+    navigation.navigate('Login')
+   }, 2000);
 }
 
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  return (<>
+    {statusKeyLoaded && 
+    <>
+      <HandleBack/>
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={defaultRoute}>
+            {/* <Stack.Screen name="RegisterStudentScreen" component={RegisterStudentScreen}  options={{ title: 'Register', headerShown: true}} /> */}
+            {/* <Stack.Screen name="PracticeScreen" component={PracticeScreen} /> */}
+            <Stack.Screen name="Intro" component={IntroStack} />
+            <Stack.Screen name="InvitePeers" component={InvitePeers} options={{ title: 'Invite Peers', headerShown: true, headerRight: () => (<Text onPress={() => navigation.navigate('Login')} style={{color:"#2376E5"}}>Skip</Text>)}}  />
+            <Stack.Screen name="MobileScreen" component={MobileScreen} />
+            <Stack.Screen name="MultipleImagesUpload" component={MultipleImagesUpload} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Register" component={RegisterScreen}  options={{ title: 'Register', headerShown: true}}/>
+            <Stack.Screen name="OtpVerification" component={OtpVerification} options={{ title: 'Verification OTP', headerShown: true}} />
+            <Stack.Screen name="DoctorOtp" component={DoctorOtp} options={{ title: 'Verification OTP', headerShown: true}} />  
+            <Stack.Screen name="RegisterTwoScreen" component={RegisterTwoScreen} options={{ title: 'Register', headerShown: true}} />
+            <Stack.Screen name="RegisterStudentScreen" component={RegisterStudentScreen}  options={{ title: 'Register', headerShown: true}} />
+            <Stack.Screen name="Congratulation" component={Congratulation} />
+            <Stack.Screen name='ContactPermission' component={ContactPermission}  options={{ title: 'Invite Peers' , headerShown: true,
+              headerRight: () => (
+                <Text onPress={() => handleMessage()} style={{color:"#2376E5"}}>Skip</Text>)
+              }} /> 
+            <Stack.Screen name="ForgetPassword" component={ForgetPassword} options={{ title: 'Forgot Password' , headerShown: true}} />
+            <Stack.Screen name="CreateNewPass" component={CreateNewPass} options={{ title: 'Create New Password' , headerShown: true}} />
+            <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
+            <Stack.Screen name="ContactScreen"  component={ContactScreen} options={{ title: 'Contact Us', headerShown: true}}  />
+            <Stack.Screen name="SelectInterest" component={SelectInterest} options={{ title: 'Select your Interest', headerShown: true,  
+               headerRight: () => (
+                <Text onPress={() => navigation.navigate('Login')} style={{color:"#2376E5", fontWeight:"700"}} >Skip</Text>)
+              }} />
+            <Stack.Screen name="TermsAndCondition" component={TermsAndCondition} options={{ title: 'Terms & Condition', headerShown: true}} />
+            <Stack.Screen name="ForgotPasswordOTP" component={ForgotPasswordOTP} options={{ title: 'Verification OTP', headerShown: true}} />
+            <Stack.Screen name="QuizLevels" component={QuizLevels} />
+            <Stack.Screen name="HomeScreen" component={AppStack} options={{headerShown: false}} />
+      </Stack.Navigator>
+    </>
+  }
+  </>
+  );
+}

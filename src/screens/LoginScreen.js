@@ -6,7 +6,6 @@ import {
   TextInput,
   StyleSheet,
   ActivityIndicator,
-  Platform, Settings
   } from 'react-native';
 import { useDispatch } from "react-redux";
 const styelcss = require('../assets/css/style');
@@ -19,7 +18,6 @@ import { storeData, singlestoreData } from '../apis/Apicall';
 import { userLogin } from '../../redux/reducers/loginAuth';
 import Toast from 'react-native-simple-toast';
 import { useFonts } from 'expo-font';
-
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -49,52 +47,36 @@ const LoginScreen = () => {
     });
   }
 
-  // let isStoreNeedCleaning = false;
-  // console.log("Platform.OS",Platform.OS);
-
-  //   if (Platform.OS === 'ios' || Platform.OS === 'android') {
-  //       if (!Settings.get('hasRunBefore')) {
-  //           Settings.set({ hasRunBefore: true });
-  //           isStoreNeedCleaning = true;
-  //       }
-  //   }
-
-  //   if (isStoreNeedCleaning) {
-  //     AsyncStorage.removeItem("rememberme")
-  //   }
-  
-
-  const authLogin = async (e)=>{
+  const authLogin = async ()=>{
 
     register.email = register.email? register.email : datarm?.data.email;
     register.password = register.password ? register.password :datarm?.data.password ;
-
-    if(register.email !== "" &&  register.password !== ""){
-      setloader(true)
+    if(register.email !== "" &&  register.password !== "" && register.email !== undefined &&  register.password !== undefined){
+      setloader(true);
       const token = await dispatch(userLogin(register));
       if(token.payload.status == 'Success'){
-        setloader(false)
-        storeData('USER_INFO',JSON.stringify({
+          setloader(false)
+          await storeData('USER_INFO',JSON.stringify({
           login:true,
           data:token.payload.session_data
         }));
-          console.log("isChecked=====in",isChecked);
-
         if(isChecked){
-          storeData('rememberme',JSON.stringify({
+            storeData('rememberme',JSON.stringify({
             data:{...token.meta.arg, isChecked:isChecked }
           }))
         }else{
           AsyncStorage.removeItem("rememberme")
         }
         singlestoreData('isloggedin','true'); 
-        // Toast.show(token.payload.message);
-          navigation.navigate('HomeScreen')
+          navigation.navigate('HomeScreen');
+          setloader(true);
+          setshoweye(true)
       }else{
         setloader(false)
         Toast.show(token.payload.message);
       }
     }else{
+      setloader(false)
       setmessage('Please fill the above details');
     }
   }
@@ -102,7 +84,7 @@ const LoginScreen = () => {
   const getData = async (key) => {
     try {
       const jsonValue = await AsyncStorage.getItem(key);
-      setdata(jsonValue != null ? JSON.parse(JSON.parse(jsonValue)) : null)
+      setdata(jsonValue != null ? JSON.parse(JSON.parse(jsonValue)) : null);
       setloader(false);
     } catch(e) {
      console.log(e)
@@ -112,13 +94,11 @@ const LoginScreen = () => {
   const getDatarm = async (key) => {
     try {
       const jsonValue = await AsyncStorage.getItem(key);
-      // await setdatarm(jsonValue != null ? JSON.parse(JSON.parse(jsonValue)) : null);
       const result = jsonValue != null ? JSON.parse(JSON.parse(jsonValue)) : null;
-      console.log("result",result);
       setdatarm(result)
       setChecked(result?.data.isChecked);
       if(result == null){
-        setregister({email: "",password :""});
+        setregister({email: "",password:""});
       }
     } catch(e) {
      console.log(e)
@@ -152,7 +132,7 @@ const LoginScreen = () => {
     <SafeAreaView style={{paddingHorizontal:30}}>
       <View style={{marginTop:40}}>
         <Text  style={styles.headingtexts}>
-          Welcome 
+          Welcome
         </Text>
         <Text  style={styles.headingtext}>
          {data?((data.data.role<='4')?'Dr. ':''):''}{data?data.data.first_name+' '+data.data.last_name:''}
@@ -166,7 +146,6 @@ const LoginScreen = () => {
           placeholder='Email ID / Mobile Number*'
           placeholderTextColor='#51668A'
           onChangeText={(text)=>updateEmail(text)}
-          // value={datarm?.data.email}
           defaultValue={datarm?.data.email}
           blurOnSubmit={true}
          />
@@ -181,8 +160,6 @@ const LoginScreen = () => {
           inputType="password"
           placeholderTextColor='#51668A'
           hideShow={showeye}
-          fieldButtonFunction={() => {}}
-          // value={datarm?.data.password}
           defaultValue={datarm?.data.password}
           blurOnSubmit={true}
         />
@@ -207,7 +184,6 @@ const LoginScreen = () => {
           Remember Me
         </Text>
       </View>
-
           <Text style={{
             fontSize: 14,
             fontWeight: '600',
@@ -237,8 +213,8 @@ const styles = StyleSheet.create({
     zIndex:1, 
     alignSelf:'flex-end', 
     marginTop:-50,
-     marginRight:30,
-     marginBottom:30
+    marginRight:30,
+    marginBottom:30
 },
 red: {
   backgroundColor: 'red',

@@ -23,7 +23,6 @@ import { useNavigation } from '@react-navigation/native';
 import QuizLevels from '../screens/QuizLevels/QuizLevels';
 import TermsAndCondition from '../screens/commonpage/TermsAndCondition';
 import ContactScreen from '../screens/commonpage/ContactScreen';
-import HomeScreen from '../screens/HomeScreen/HomeScreen';
 
 
 
@@ -60,7 +59,6 @@ const AuthStack = () => {
           <Stack.Screen name="CreateNewPass" component={CreateNewPass} options={{ title: 'Create New Password' , headerShown: true}} />
           <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
           <Stack.Screen name="ContactScreen"  component={ContactScreen} options={{ title: 'Contact Us', headerShown: true}}  />
-        
           <Stack.Screen name="SelectInterest" component={SelectInterest} options={{ title: 'Select your Interest', headerShown: true,  headerRight: () => (
               <Text onPress={() => navigation.navigate('Login')} style={{color:"#2376E5", fontWeight:"700"}} >Skip</Text>)}} />
           <Stack.Screen name="TermsAndCondition" component={TermsAndCondition} options={{ title: 'Terms & Condition', headerShown: true}} />

@@ -17,7 +17,6 @@ const MobileScreen = () => {
 
 
 const updatePhone = (text)=>{
-  // console.log(text);
   if(!isValidphoneRegex.test(text)){
       setmessage("Please enter valid Phone Number");
   }else{
@@ -29,7 +28,6 @@ const updatePhone = (text)=>{
 }
 
 const  updateEmail = (text)=>{
-  // console.log(text);
   if(!isValidemailRegex.test(text)){
       setmessage("Please enter valid email");
   }else{
@@ -46,9 +44,6 @@ const userRegister = ()=>{
   if(register.email !== "" &&  register.mobile_no !== ""){
     quicklogin(register.email,register.mobile_no)
      .then(res => {
-      // setProcessingState('saved');
-      console.log(res['status']);
-    //  console.log(register.mobile_no);
        if(res['status'] == 'Success'){
         setTimeout(() => {
           navigation.navigate('OtpVerification', {
@@ -61,8 +56,6 @@ const userRegister = ()=>{
     })
     .catch(err => {
       setmessage('Error occured!');
-      // setErrorType('server');
-      // setProcessingState('');
       console.log(err);
     });
   }else{
