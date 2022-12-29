@@ -21,6 +21,7 @@ import OptionModal from './optionModal';
 import { getLocalData } from '../../apis/GetLocalData';
 import { Audio, Video } from 'expo-av';
 import AutoHeightImage from './AutoHeightImage';
+import Swiper from 'react-native-swiper';
 
 
 
@@ -204,8 +205,33 @@ const handleOption = (post_id) => {
               {item?.description.replace(/(<([^>]+)>)/gi, "")}
             </Text>
           </View>
-         <TouchableOpacity onPress={() => handlePost(item.imgPath)} style={{}}>
-          {item?.imgPath.includes("mp4") ?
+          {/* <TouchableOpacity onPress={() => handlePost(item.imgPath)} style={{}}> */}
+          {/* <Swiper style={styles.wrapper}>
+          {item?.attach_array.map((data) => {
+            console.log();
+            return(
+              <>
+                {data?.filename.includes("mp4") ?
+                <Video
+                  ref={video}
+                  resizeMode={"contain"}
+                  source={{uri:data?.filename}} 
+                  useNativeControls
+                  // shouldPlay={!videoPlayPause ? videoPlayPause : status[item.id]}
+                  isLooping={false}
+                  style={{width: width, height:300,marginHorizontal:10}} 
+                />
+                :
+                    <Image source={data?.filename?{uri:data?.filename}:''} 
+                    style={{width:"100%", height:350,marginHorizontal:10,alignSelf:'center',}} 
+                    resizeMode={"contain"}/> 
+                }
+              </>
+            )
+          })}
+          </Swiper> */}
+
+          {/* {item?.attach_array.includes("mp4") ?
             <View style={{justifyContent:'center',alignItems:'center'}}  >
             <Video
               ref={video}
@@ -218,9 +244,10 @@ const handleOption = (post_id) => {
             />
             </View>
             :
-            <AutoHeightImage autoHeightImg={item.imgPath} width={width}/>
-            }
-            </TouchableOpacity>
+            
+            } */}
+            {/* </TouchableOpacity> */}
+            <AutoHeightImage attachArray={item?.attach_array} width={width}/>
             <PublicReactions item={item} getStorageData={getStorageData}/>
         </Card>
       )

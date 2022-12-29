@@ -197,6 +197,10 @@ loaderStyle: {
   alignItems: "center",
   // borderWidth:10
 },
+wrapper:{
+  height:300,
+  borderWidth:1,
+},
 
 // ---------------------------postsScreen-----------------------------------
 PostContainer:{
