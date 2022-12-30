@@ -106,7 +106,7 @@ const handleOption = (post_id) => {
   };
 
   const loadMoreItem = () => {
-    console.log("currentPage",currentPage);
+    // console.log("currentPage",currentPage);
      setCurrentPage(currentPage + 1);
   };
 
@@ -142,12 +142,12 @@ const handleOption = (post_id) => {
   }
 
   const deletePostID = (postId) =>{
-    console.log("deletePost",postId);
+    // console.log("deletePost",postId);
     const deletePost = allPost.filter(pId => pId.post_id != postId);
     setallPost(deletePost);
   }
   const BlockId = (id) =>{
-    console.log("BlockId",id);
+    // console.log("BlockId",id);
     const BlockId = allPost.filter(Uid => Uid.id != id);
     setallPost(BlockId);
   }
@@ -191,12 +191,10 @@ const handleOption = (post_id) => {
             </TouchableOpacity>
               {item?.post_id == postId && <OptionModal 
                 modalVisible={modalVisible} 
-                id={item?.id} 
-                postId={item?.post_id} 
+                item={item} 
                 setModalVisible={setModalVisible}
                 deletePostID={deletePostID}
                 BlockId={BlockId} 
-                saveStatus={item?.saved_status}
               />}
             </View>
           </View>
@@ -205,49 +203,7 @@ const handleOption = (post_id) => {
               {item?.description.replace(/(<([^>]+)>)/gi, "")}
             </Text>
           </View>
-          {/* <TouchableOpacity onPress={() => handlePost(item.imgPath)} style={{}}> */}
-          {/* <Swiper style={styles.wrapper}>
-          {item?.attach_array.map((data) => {
-            console.log();
-            return(
-              <>
-                {data?.filename.includes("mp4") ?
-                <Video
-                  ref={video}
-                  resizeMode={"contain"}
-                  source={{uri:data?.filename}} 
-                  useNativeControls
-                  // shouldPlay={!videoPlayPause ? videoPlayPause : status[item.id]}
-                  isLooping={false}
-                  style={{width: width, height:300,marginHorizontal:10}} 
-                />
-                :
-                    <Image source={data?.filename?{uri:data?.filename}:''} 
-                    style={{width:"100%", height:350,marginHorizontal:10,alignSelf:'center',}} 
-                    resizeMode={"contain"}/> 
-                }
-              </>
-            )
-          })}
-          </Swiper> */}
-
-          {/* {item?.attach_array.includes("mp4") ?
-            <View style={{justifyContent:'center',alignItems:'center'}}  >
-            <Video
-              ref={video}
-              resizeMode={"contain"}
-              source={{uri:item?.imgPath}} 
-              useNativeControls
-              // shouldPlay={!videoPlayPause ? videoPlayPause : status[item.id]}
-              isLooping={false}
-              style={{width: width, height:300,marginHorizontal:10}} 
-            />
-            </View>
-            :
-            
-            } */}
-            {/* </TouchableOpacity> */}
-            <AutoHeightImage attachArray={item?.attach_array} width={width}/>
+            <AutoHeightImage item={item} width={width}/>
             <PublicReactions item={item} getStorageData={getStorageData}/>
         </Card>
       )

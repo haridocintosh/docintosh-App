@@ -35,6 +35,23 @@ export const BlockUserApi = createAsyncThunk("blockUserApi", async (data)=>{
      }
 })
 
+export const followApi = createAsyncThunk("follow", async (data)=>{
+    try{
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/change_follow_status`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body :JSON.stringify(data)
+         });
+        const result = await responce.json();
+        return result;
+     }
+     catch(e){
+        console.log(e);;
+     }
+})
+
 export const getsearchSplData = createAsyncThunk("searchSplData", async ()=>{
     try{
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/getsearchSplData`);
@@ -52,6 +69,7 @@ export const savePost = createSlice({
         savePostResult   : {},
         blockUserResult   : {},
         getsearchResult   : {},
+        followResult   : {},
         loading     : false,
         error       : false,
     },
@@ -91,6 +109,19 @@ export const savePost = createSlice({
             state.getsearchResult = action.payload;
         }, 
         [getsearchSplData.rejected] : (state)=>{
+            state.loading       = false;
+            state.error         = true
+        }, 
+    },
+    extraReducers :{
+        [followApi.pending] : (state)=>{   
+            state.loading       =  true;
+        }, 
+        [followApi.fulfilled] : (state, action)=>{   
+            state.loading         =  false;
+            state.followResult = action.payload;
+        }, 
+        [followApi.rejected] : (state)=>{
             state.loading       = false;
             state.error         = true
         }, 

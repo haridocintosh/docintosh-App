@@ -8,7 +8,7 @@ import { reportPost } from '../../../../redux/reducers/postAction';
 
 
 const ReportPost = ({navigation, route}) => {
-    const {post_id, id} = route?.params;
+    const {postId, id} = route?.params;
     const dispatch =  useDispatch();
     const [reportSelect,setReportSelect] = useState();
     const [modalVisible, setModalVisible] = useState(false);
@@ -50,7 +50,7 @@ const ReportPost = ({navigation, route}) => {
     }
     
     const handleSend = async() => {
-      const postDetails = {fromuserid:userdata.userid, post_id:post_id, touserid:id,postreason:reportSelect}
+      const postDetails = {fromuserid:userdata.userid, post_id:postId, touserid:id,postreason:reportSelect}
       const result      = await dispatch(reportPost(postDetails));
         if(result.payload.status  == 'Success'){
           setModalVisible(false);

@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, ScrollView,Image, ActivityIndicator,Platform,Linking, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, ScrollView,Image, ActivityIndicator,Platform,Linking, TouchableOpacity,FlatList,TextInput } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import * as Contacts from 'expo-contacts';
 import CheckBox from "react-native-check-box";
 const styelcss = require('../assets/css/style');
+import { AntDesign } from '@expo/vector-icons';
 
 export default function ContactPermission({navigation}) {
-  const [contactList, setContact]= useState([]);
+  const refInput = React.useRef(null);
+  const [contactList, setContact]= useState();
   const [isChecked, setisChecked] = useState(false);
+  // const [contactData, setcontactData] = useState('');
+  // const [contactData1, setcontactData1] = useState(contactList);
+  const [inputText,setInputText] = useState(null);
+  const [item, setItem] = useState()
   const [selectedList, setSelectedList] = useState();
   const [loading, setLoading]  = useState(false);
-  const [sliceData, setSliceData] = useState(10);
  
+
   const handleChange = (phoneNumbers) => {
     let temp = contactList.map((data) => {
       if (phoneNumbers === data.id) {
@@ -19,6 +25,7 @@ export default function ContactPermission({navigation}) {
       }
       return data;
     });
+
     setContact(temp);
     const trueVal = temp
       .filter((val) => val.isSelected == true)
@@ -56,7 +63,6 @@ export default function ContactPermission({navigation}) {
 
     const getPrermission = async()=>{
     const { status } = await Contacts.requestPermissionsAsync();
-    console.log(status);
     if(status === 'granted') {
       const { data } = await Contacts.getContactsAsync({
         fields: [Contacts.Fields.PhoneNumbers],
@@ -64,6 +70,7 @@ export default function ContactPermission({navigation}) {
        if(data.length > 0) {
         const contact = await data.map(element=> {return{...element,isSelected:false}});;       
         setContact(contact);
+        setItem(contact)
         setLoading(false);
        }
     }else{
@@ -74,74 +81,81 @@ export default function ContactPermission({navigation}) {
   
   const handleSubmit = async()=>{
     navigation.navigate('InvitePeers',{
-        alluserContact :contactList,
+      alluserContact :contactList,
     }) 
   };
-  
-  const handleAlldata = () => {
-    setSliceData();
-  };
 
+ const onChangeText =  (text) =>{
+  if (text) {
+      const newData = item?.filter((data) => {
+        const itemData = data?.name.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      setContact(newData);
+      setInputText(text);
+    } else {
+      setContact(item);
+      setInputText(text);
+    }
+}
 
- if(loading){
+if(loading){
   return(
   <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
       <ActivityIndicator size={'large'} color={"#2C8892"}/>
   </View>)
 }
 
-console.log(contactList.length);
+
+const renderItem = (item) => {
+  console.log("item",item.item);
+  return(
+    <View style={styelcss.peersmaniListArea}>
+        <View style={styelcss.peersSubiListArea}>
+            <Image style={styelcss.tinyLogo} source={require('../assets/dr-icon/normal.png')}/>
+            <View style={styelcss.peerListcontent}>
+              <Text style={[styelcss.peersubtext,{fontFamily:"Inter-Regular"}]}>{item?.item.name}</Text>
+              <Text style={[styelcss.peersubtextpara,{fontFamily:"Inter-Regular"}]}>
+                  {item?.item.phoneNumbers?.[0]?.number} 
+              </Text>
+            </View>
+        </View>
+        <TouchableOpacity>
+          <CheckBox
+              onClick={() => handleChange(item.item.id)}
+              isChecked={item.item.isSelected}
+              checkBoxColor="#2C8892"
+          />
+        </TouchableOpacity>
+    </View>
+  )
+}
+
   return (
-    <View style={{paddingTop:10,paddingHorizontal:20,flex:1,height:"100%"}}>
-
+    <View style={{paddingHorizontal:20,flex:1,height:"100%"}}>
     <Text>{(loading)?'Loading Data....':<Text></Text>}</Text> 
-
-    <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true}>
-        <View style={[styelcss.selectAllList,{flex:12,height:"100%",paddingBottom:20,}]}>
-            <Text style={[styelcss.invitePeersHeadTxt,{fontFamily:"PlusJakartaSans-Bold",}]}>Select all</Text>
+        <View style={styelcss.selectAllListContainer}>
+          <View style={styelcss.searchContactContainer}>
+            <AntDesign name="search1" size={24} color="black" onPress={() => refInput.current.focus()}/>
+            <TextInput
+              ref={refInput}
+              placeholder={"Search"}
+              style={styelcss.searchTextInput}
+              onChangeText={onChangeText}
+              value={inputText}
+            />
+          </View>
+          <View style={styelcss.selectAllList}>
+            <Text style={[styelcss.invitePeersHeadTxt]}>Select all</Text>
             <CheckBox  
               onClick={()=>{ onAllChecked()}} 
               isChecked={isChecked} 
             />
+          </View>
         </View>
-       {contactList?.length > 0 ? contactList?.slice(0, sliceData).map((element, index)=>{
-          return ( 
-            <View style={styelcss.peersmaniListArea} key={index} >
-                <View style={styelcss.peersSubiListArea}>
-                    <Image style={styelcss.tinyLogo} source={require('../assets/dr-icon/normal.png')}/>
-                    <View style={styelcss.peerListcontent}>
-                      <Text style={[styelcss.peersubtext,{fontFamily:"Inter-Regular"}]}>{element?.name}</Text>
-                      <Text style={[styelcss.peersubtextpara,{fontFamily:"Inter-Regular"}]}>
-                          {
-                              element?.phoneNumbers?.[0]?.number 
-                          } 
-                      </Text>
-                    </View>
-                </View>
-              
-                <TouchableOpacity>
-                  <CheckBox
-                      onClick={() => handleChange(element.id)}
-                      isChecked={element.isSelected}
-                      checkBoxColor="#2C8892"
-                  />
-                </TouchableOpacity>
-            </View>
-            )
-        })
-      :
-      <Text>You Don't have any contact's</Text>
-      }
- <View>
- 
-    <TouchableOpacity onPress={() => handleAlldata()}>
-    {contactList?.length > 10 && <Text style={styles.ViewAllText}>View All</Text>}
-    </TouchableOpacity>
-   
-
-    </View>
-  </ScrollView>
       <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true} keyboardShouldPersistTaps='handled'>
+       
       <FlatList
         data={contactList}
         // extraData={contactList.isSelected}
@@ -149,10 +163,15 @@ console.log(contactList.length);
         keyExtractor={(item,i) => i}
         // ItemSeparatorComponent={this.renderSeparator}
       />
+       
+       
+       {/* {contactList?.length > 0 ? contactList.map((element, index)=>{
+          return ()}):
+      <Text>You Don't have any contact's</Text>
+      } */}
     </ScrollView>
     <View style={{marginTop:10,zIndex:1,width:"100%",bottom:0,backgroundColor:"#f1f1f1",paddingTop:6}}>
-        <CustomButton label={'Continue'} onPress={() => sentInvite()} />
-            {/* <Text style={{textAlign:"center",fontSize:14,fontWeight:"700",color:"#2376E5",marginBottom:10,marginTop:-15}}>Select Manually</Text> */}
+          <CustomButton label={'Continue'} onPress={() => sentInvite()} />
     </View>
 </View>
   );
@@ -160,18 +179,10 @@ console.log(contactList.length);
 
 const styles = StyleSheet.create({
   container: {
-  height:"100%",
+    height:"100%",
     backgroundColor: '#fff',
     paddingHorizontal:20,
     position:"relative",
     width:"100%"
-
-  },
-  ViewAllText: {
-    color: "#2376E5",
-    alignSelf: "center",
-    fontWeight: "600",
-    marginTop: 10,
-    fontFamily: "PlusJakartaSans-Bold",
   }
 })

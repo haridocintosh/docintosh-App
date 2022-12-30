@@ -1,8 +1,12 @@
 import { View, Text, Image,StyleSheet } from 'react-native'
-import React, { useState, useCallback } from 'react'
+import React, { useState, useRef } from 'react'
 import Swiper from 'react-native-swiper';
+import { Audio, Video } from 'expo-av';
 
-const AutoHeightImage = ({attachArray}) => {
+const AutoHeightImage = ({item}) => {
+  const [index, setIndex] = useState();
+  
+  const video = useRef(null);
   
   const renderPagination = (index, total, context) => {
     return (
@@ -14,16 +18,36 @@ const AutoHeightImage = ({attachArray}) => {
     )
   }
 
+  const handleIndex = (i) => {
+    setIndex(i);
+  }
+
   return (
-      <Swiper style={styles.wrapper}>
-        {attachArray?.map((data) => {
+    <View>
+      <Swiper style={styles.wrapper} loop={false} >
+        {item?.attach_array?.map((data,i) => {
           return(
-            <Image source={data?.filename?{uri:data?.filename}:''} 
-            style={{width:"100%", height:350,marginHorizontal:10,alignSelf:'center',}} 
-            resizeMode={"contain"}/> 
+            <View key={i}>
+              {data?.filename.includes("mp4") ? 
+              <Video
+                  ref={video}
+                  resizeMode={"contain"}
+                  source={item?.attach_array.length > 0?{uri:data?.filename} :item.imgPath} 
+                  useNativeControls
+                  // shouldPlay={!videoPlayPause ? videoPlayPause : status[item.id]}
+                  isLooping={false}
+                  style={{width: "100%", height:300, marginHorizontal:10}} 
+              />
+              :
+              <Image source={item?.attach_array.length > 0?{uri:data?.filename}:item.imgPath} 
+                style={{width:"100%", height:350,marginHorizontal:10,alignSelf:'center',}} 
+                resizeMode={"contain"}/> 
+              }
+            </View>
           )
       })} 
       </Swiper>
+      </View>
   )
 }
 
