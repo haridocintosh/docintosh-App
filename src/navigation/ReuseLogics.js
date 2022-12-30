@@ -71,11 +71,13 @@ export const PickVideos = async () => {
             var library = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Videos,
             allowsEditing: false,
-            // aspect: [1, 1],
+            allowsMultipleSelection: true,
+            aspect: [1, 1],
             quality: 0.7,
             });
             if (!library.cancelled) {
-                  return [library];
+                  const selectedImg = library.uri ? [library] : library.selected;
+                  return selectedImg;
             }
       } else {
             const denied = 'Camera permission denied';

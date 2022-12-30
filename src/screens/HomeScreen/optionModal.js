@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity,Modal } from 'react-native'
 import React, { useEffect, useState } from 'react';
 import {MaterialCommunityIcons,Feather,Entypo,MaterialIcons } from '@expo/vector-icons';
 import {useNavigation} from '@react-navigation/native';
@@ -10,12 +10,13 @@ import { BlockUserApi, followApi, SavePostApi } from '../../../redux/reducers/AL
 import {Ionicons} from '@expo/vector-icons';
 import { getSavedPostsApi } from '../../../redux/reducers/SettingsSlice';
 
-
-
 const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible}) => {
   const [userData, setUserData] = useState();
+  const [toggle, setToggle] = useState(false);
   const [savedPost, setSavedPost] = useState(item.saved_status);
   const [follow, setFollow] = useState(item?.follow_status);
+  const [okay, setOkayCondition] = useState(null);
+
   const dispatch    = useDispatch();
   const navigation  = useNavigation();
 
@@ -32,16 +33,32 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible}) =
   },[])
 
   const handleDeletePost = async ()=>{
-    const postDetails = {post_id:item.post_id}
-    const result      = await dispatch(deletePost(postDetails));
+    setOkayCondition("delete");
+    setModalVisible(false);
+    setToggle(true);
+  }
+
+  const handleOkay = async () =>{
+    if(okay == "delete"){
+      const postDetails = {post_id:item.post_id}
+      const result      = await dispatch(deletePost(postDetails));
       if(result.payload.status  == 'Success'){
         const coinDetails = {task:15, receiverId:0, senderId:item.id} 
         const coinResult  = await dispatch(coinTransfer(coinDetails));
         if(coinResult.payload.status  == 'Success'){
           deletePostID(item.post_id);
+          setToggle(false);
         }
       }
+   }else if(okay == "block"){
+    const postDetails = {fromuserid:userData?.id,touserid:item.id};
+    const blockPostResult  = await dispatch(BlockUserApi(postDetails));
+    if(blockPostResult?.payload?.status == "Success"){
+      setToggle(false);
+      BlockId(item.id);
     }
+   }
+  }
 
   const SavedPostHandle = async () => {
     const postDetails = {user_id:userData?.id, post_id:item.post_id};
@@ -60,7 +77,6 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible}) =
       postId: item.post_id, id: item.id})
   }
 
-
   const handleUnfollow = async () => {
     const postDetails = {follow_from:userData?.id, follow_to:item.id};
     const followResult  = await dispatch(followApi(postDetails));
@@ -73,16 +89,13 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible}) =
   }
 
   const BlockPostHandle = async () => {
-    const postDetails = {fromuserid:userData?.id,touserid:item.id};
-    const blockPostResult  = await dispatch(BlockUserApi(postDetails));
-    if(blockPostResult?.payload?.status == "Success"){
-      setModalVisible(false);
-      BlockId(item.id);
-    }
+    setOkayCondition("block");
+    setModalVisible(false);
+    setToggle(true);
   }
 
   return (
-    <>
+    <View>
     {modalVisible &&
     <View style={styles.optionModal}>
       {userData?.id === item.id ?
@@ -116,11 +129,34 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible}) =
     }
     </View>
   }
-  </>
+
+  <Modal animationType="fade" transparent={true} visible={toggle} >
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+          <Text style={styles.textBold}>Are you sure,</Text>
+          <Text style={styles.textNormal}> Do you want to 
+          {okay == "block" ? "Block This user" : "Delete This post"}?</Text>
+          <View style={styles.buttonsContainer}>
+            <TouchableOpacity 
+              style={[styles.buttonsDesign,styles.leftButtonsDesign]} 
+              onPress={() =>{setToggle(false)}}>
+            <Text style={[styles.textBold,styles.leftText]}>Cancel</Text>
+            </TouchableOpacity>
+            <Text>{"           "}</Text>
+            <TouchableOpacity 
+              style={[styles.buttonsDesign,styles.RightButtonsDesign]}
+              onPress={() => handleOkay()}>
+            <Text style={[styles.textBold,styles.RightText]}>Okay</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+  </Modal>
+  </View>
   )
 }
 
-export default OptionModal
+export default OptionModal;
 
 export const styles = StyleSheet.create({
 optionModal:{
@@ -158,5 +194,56 @@ optionModal:{
   },
   optionListIcon:{
     marginRight:7
+  },
+
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor:'rgba(0,0,0,0.4)'  
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  textBold:{
+    fontFamily:'Inter-SemiBold',
+  },
+  textNormal:{
+    fontFamily:"Inter-Regular",
+  },
+  buttonsContainer:{
+    flexDirection:'row',
+  },
+  buttonsDesign:{
+    borderWidth:1,
+    paddingHorizontal:25,
+    borderRadius:5,
+    paddingVertical:7,
+    marginTop:20
+  },
+  leftButtonsDesign:{
+    borderColor:'#1A7078'
+  },
+  RightButtonsDesign:{
+    borderColor:'#1A7078',
+    backgroundColor:'#1A7078'
+  },
+  leftText:{
+    color:'#1A7078'
+  },
+  RightText:{
+    color:'#fff'
   },
   });
