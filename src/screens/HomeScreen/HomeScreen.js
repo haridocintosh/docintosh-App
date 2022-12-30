@@ -198,7 +198,7 @@ const handleOption = (post_id) => {
               {item?.description.replace(/(<([^>]+)>)/gi, "")}
             </Text>
           </View>
-            {/* <AutoHeightImage item={item} width={width}/> */}
+            <AutoHeightImage item={item} width={width}/>
             <PublicReactions item={item} getStorageData={getStorageData}/>
         </Card>
       )
