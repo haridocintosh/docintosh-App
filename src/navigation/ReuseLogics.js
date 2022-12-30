@@ -72,11 +72,12 @@ export const PickVideos = async () => {
             mediaTypes: ImagePicker.MediaTypeOptions.Videos,
             allowsEditing: false,
             allowsMultipleSelection: true,
-            // aspect: [1, 1],
+            aspect: [1, 1],
             quality: 0.7,
             });
             if (!library.cancelled) {
-                  return [library];
+                  const selectedImg = library.uri ? [library] : library.selected;
+                  return selectedImg;
             }
       } else {
             const denied = 'Camera permission denied';
