@@ -10,15 +10,19 @@ export default function ContactPermission({navigation}) {
   const refInput = React.useRef(null);
   const [contactList, setContact]= useState();
   const [isChecked, setisChecked] = useState(false);
+  const [sliceCount, setSliceCount] = useState(10);
+  const [totalSlice, setTotalSlice] = useState(0);
   // const [contactData, setcontactData] = useState('');
   // const [contactData1, setcontactData1] = useState(contactList);
   const [inputText,setInputText] = useState(null);
   const [item, setItem] = useState()
   const [selectedList, setSelectedList] = useState();
   const [loading, setLoading]  = useState(false);
+  const [spinner, setSpinner]  = useState(false);
  
 
   const handleChange = (phoneNumbers) => {
+    // setSpinner(true);
     let temp = contactList.map((data) => {
       if (phoneNumbers === data.id) {
         return { ...data, isSelected: !data.isSelected };
@@ -35,16 +39,17 @@ export default function ContactPermission({navigation}) {
 
 
   const onAllChecked=()=>{
-    setisChecked(!isChecked)
+    setisChecked(!isChecked);
+    // setSpinner(true);
     const selectAll = contactList.map((data) => {
-      return {...data , isSelected: !data.isSelected }
+      return {...data ,isSelected: !data.isSelected }
     });
     setContact(selectAll);
-
     const trueVal = selectAll
       .filter((val) => val.isSelected == true)
       .map((data) => data?.phoneNumbers?.[0].number);
-    setSelectedList(trueVal)
+    setSelectedList(trueVal);
+    // setSpinner(false);
   }
 
 
@@ -68,7 +73,8 @@ export default function ContactPermission({navigation}) {
         fields: [Contacts.Fields.PhoneNumbers],
       });
        if(data.length > 0) {
-        const contact = await data.map(element=> {return{...element,isSelected:false}});;       
+        const contact = await data.map(element=> {return{...element,isSelected:false}});
+        setTotalSlice(contact.length)  
         setContact(contact);
         setItem(contact)
         setLoading(false);
@@ -100,6 +106,13 @@ export default function ContactPermission({navigation}) {
     }
 }
 
+const loadMore =  () =>{
+  setSliceCount(sliceCount + 10);
+}
+
+console.log("spinner",spinner);
+console.log("isChecked",isChecked);
+
 if(loading){
   return(
   <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
@@ -107,9 +120,7 @@ if(loading){
   </View>)
 }
 
-
 const renderItem = (item) => {
-  console.log("item",item.item);
   return(
     <View style={styelcss.peersmaniListArea}>
         <View style={styelcss.peersSubiListArea}>
@@ -148,21 +159,25 @@ const renderItem = (item) => {
           </View>
           <View style={styelcss.selectAllList}>
             <Text style={[styelcss.invitePeersHeadTxt]}>Select all</Text>
+            {spinner ? <ActivityIndicator size={'small'} color={"#2C8892"}/>:
             <CheckBox  
-              onClick={()=>{ onAllChecked()}} 
+              onClick={()=> onAllChecked()} 
               isChecked={isChecked} 
-            />
+            />}
           </View>
         </View>
       <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true} keyboardShouldPersistTaps='handled'>
        
       <FlatList
-        data={contactList}
-        // extraData={contactList.isSelected}
+        data={contactList?.slice(0,sliceCount)}
         renderItem={renderItem}
         keyExtractor={(item,i) => i}
-        // ItemSeparatorComponent={this.renderSeparator}
       />
+      {totalSlice >= sliceCount &&
+      <TouchableOpacity style={{marginTop:10,width:"100%",alignItems:'center'}} onPress={() => loadMore()}>
+          <Text style={{color:'#2C8892',fontFamily:"PlusJakartaSans-Bold",}}>Load More...</Text>
+      </TouchableOpacity>}
+
        
        
        {/* {contactList?.length > 0 ? contactList.map((element, index)=>{

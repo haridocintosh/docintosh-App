@@ -104,7 +104,7 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible}) =
         <Text style={styles.optionListText}>delete</Text>
       </TouchableOpacity>
       :
-      <>
+      <View>
         <TouchableOpacity style={styles.optionList} onPress={() => SavedPostHandle()}>
         <Ionicons name={ savedPost ? 'bookmark':'bookmark-outline'} size={24} color={"#45B5C0"} style={styles.optionListIcon}/>
             <Text style={styles.optionListText}>
@@ -125,7 +125,7 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible}) =
         <Entypo name="block" size={24} color="#45B5C0" style={styles.optionListIcon}/>
             <Text style={styles.optionListText}>Block User</Text>
         </TouchableOpacity>
-      </>
+      </View>
     }
     </View>
   }
@@ -164,7 +164,7 @@ optionModal:{
     backgroundColor:'#fff',
     position:'absolute',
     right:0,
-    top:30,
+    top:-10,
     borderRadius:5,
     justifyContent:"center",
     // alignItems:'center',
