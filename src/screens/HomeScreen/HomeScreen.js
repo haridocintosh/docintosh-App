@@ -135,12 +135,7 @@ const handleOption = (post_id) => {
       setallPost(allPostData);
     })
   }
-  
-  const handlePost = (singleItem) => {
-    // console.log("singleItem",singleItem);
-    // navigation.navigate('PostsScreen', {singleItem})
-  }
-
+ 
   const deletePostID = (postId) =>{
     // console.log("deletePost",postId);
     const deletePost = allPost.filter(pId => pId.post_id != postId);
@@ -203,7 +198,7 @@ const handleOption = (post_id) => {
               {item?.description.replace(/(<([^>]+)>)/gi, "")}
             </Text>
           </View>
-            <AutoHeightImage item={item} width={width}/>
+            {/* <AutoHeightImage item={item} width={width}/> */}
             <PublicReactions item={item} getStorageData={getStorageData}/>
         </Card>
       )
