@@ -24,10 +24,12 @@ const AutoHeightImage = ({item}) => {
 
   return (
     <View>
+      <Text></Text>
       <Swiper style={styles.wrapper} loop={false} >
         {item?.attach_array?.map((data,i) => {
           return(
             <View key={i}>
+              
               {data?.filename.includes("mp4") ? 
               <Video
                   ref={video}
@@ -39,10 +41,19 @@ const AutoHeightImage = ({item}) => {
                   style={{width: "100%", height:300, marginHorizontal:10}} 
               />
               :
-              <Image source={item?.attach_array.length > 0?{uri:data?.filename}:item.imgPath} 
+              item?.attach_array.length >0 ?
+                <Image source={item?.attach_array.length > 0 && {uri:data?.filename}} 
                 style={{width:"100%", height:350,marginHorizontal:10,alignSelf:'center',}} 
                 resizeMode={"contain"}/> 
+                :
+                <Image source={{uri:item?.imgPath}} 
+                style={{width:"100%", height:350,marginHorizontal:10,alignSelf:'center',}} 
+                resizeMode={"contain"}/> 
+
+                
               }
+
+              
             </View>
           )
       })} 
