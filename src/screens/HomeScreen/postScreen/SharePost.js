@@ -21,9 +21,9 @@ import { PickImageAll, PickVideos } from "../../../navigation/ReuseLogics";
 import { Audio } from 'expo-av';
 import * as DocumentPicker from 'expo-document-picker';
 import data from "../../../model/data";
+import EmojiSelector, { Categories } from "react-native-emoji-selector";
 
 let recording = new Audio.Recording();
-
 
 const  Sharepost = () => {
   const dispatch    = useDispatch();
@@ -62,7 +62,7 @@ const  Sharepost = () => {
     city_id:''
   });
   const [uploadImage, setuploadImage]   = useState({pimage:[]});
-  const [recording, setRecording] = useState()
+  const [emojiTab, setEmojiTab] = useState(false)
   const bottomSheetModalRef       = useRef(null);
   const bottomSheetModalRefSecond = useRef(null);
   const uniqueId = useId();
@@ -84,6 +84,11 @@ const  Sharepost = () => {
   }
 
   // console.log("useId ","useId ",uniqueId);
+  const pickEmoji =  () => {
+  console.log("ppicked");
+  setEmojiTab(!emojiTab)
+  
+  }
   const pickImage =  () => {
     setDocument(null);
     PickImageAll().then(async (res) =>{
@@ -437,8 +442,15 @@ setSpecialNames(specialityName)
       </View>
 
       <View style={[styles.container]}> 
+      {/* <EmojiSelector
+        category={Categories.all}
+        onEmojiSelected={emoji => console.log(emoji)}
+        showSearchBar={false}
+        showSectionTitles={false}
+        // showTabs={emojiTab}
+      /> */}
         <View style={styles.bottomTabBar}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={pickEmoji}>
             <Fontisto name="smiley" size={24} color="#51668A" />
           </TouchableOpacity>
           <TouchableOpacity  onPress={pickImage}>

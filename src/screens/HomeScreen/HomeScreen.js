@@ -35,7 +35,7 @@ const HomeScreen = ({navigation})=> {
   const [modalVisible, setModalVisible] = useState(false);
   const [allcoins, setAllcoins] = useState(0);
   const [autoHeight, setAutoHeight] = useState(300);
-
+  const [sliceCount, setSliceCount] = useState(2);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const isFocused = useIsFocused();
@@ -93,6 +93,7 @@ const handleOption = (post_id) => {
     getLocalData('USER_INFO').then(async (res) =>{
       const allCoins = { user_id:res.data.id};
       const allCoinsResult = await dispatch(getAllCoins(allCoins));
+      
       setAllcoins(allCoinsResult.payload.coins);
     });
   };
@@ -107,7 +108,9 @@ const handleOption = (post_id) => {
 
   const loadMoreItem = () => {
     // console.log("currentPage",currentPage);
-     setCurrentPage(currentPage + 1);
+    //  setCurrentPage(currentPage + 1);
+     setSliceCount(sliceCount +2);
+     console.log("sliceCount +2",sliceCount +2);
   };
 
   useEffect(()=>{
@@ -202,17 +205,6 @@ const handleOption = (post_id) => {
             <PublicReactions item={item} getStorageData={getStorageData}/>
         </Card>
       )
-    }
-
-    const loadMore = () => {
-      // console.log("load more 10",allPost.length);
-      // const start = page*ITEMS_PER_PAGE;
-      // console.log(start);
-      // const end = (page+1)*ITEMS_PER_PAGE-1;
-      // console.log(end);
-      // const newData = allPost.slice(start, end); // here, we will receive next batch of the items
-      // console.log('newData',newData.length);
-      // setallPost({...allPost, ...newData});
     }
 
   return (

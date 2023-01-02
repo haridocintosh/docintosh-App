@@ -88,13 +88,13 @@ const PublicReactions = ({item,getStorageData}) => {
                     {likeCount}
                   </Text>
                 </View>
-
+{/* 
                 <View style={styles.socialCount}>
                   <TouchableOpacity>
                       <Image source={require('../../assets/dr-icon/gift.png')} style={styles.socialImages}/>
                   </TouchableOpacity>
                   <Text style={styles.socialCountText}></Text>
-                </View>
+                </View> */}
                 
                 <View style={styles.socialCount}>
                     <TouchableOpacity   onPress={() => GotoComments(item.post_id, item.comments_list)}>

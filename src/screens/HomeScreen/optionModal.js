@@ -94,6 +94,8 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible}) =
     setToggle(true);
   }
 
+  console.log("{Boolean follow}",follow);
+
   return (
     <View>
     {modalVisible &&
@@ -118,7 +120,7 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible}) =
         <TouchableOpacity style={styles.optionList} onPress={()=> handleUnfollow()}>
         <Feather name={follow ? "user-minus": "user-plus"} size={24} color="#45B5C0" style={styles.optionListIcon} />
             <Text style={styles.optionListText}>
-              {follow ? "Unfollow": "Follow"}
+              {follow ? "Follow" : "Unfollow" }
             </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.optionList} onPress={() => BlockPostHandle()}>
@@ -134,8 +136,7 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible}) =
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <Text style={styles.textBold}>Are you sure,</Text>
-          <Text style={styles.textNormal}> Do you want to 
-          {okay == "block" ? "Block This user" : "Delete This post"}?</Text>
+          <Text style={styles.textNormal}> Do you want to {okay == "block" ? "Block This user" : "Delete This post"}?</Text>
           <View style={styles.buttonsContainer}>
             <TouchableOpacity 
               style={[styles.buttonsDesign,styles.leftButtonsDesign]} 
