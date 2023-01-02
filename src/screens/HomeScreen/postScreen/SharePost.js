@@ -92,8 +92,8 @@ const  Sharepost = () => {
   const pickImage =  () => {
     setDocument(null);
     PickImageAll().then(async (res) =>{
-      console.log("resImage",res);
-      setData(res);
+      const data = res.map((data,i) => {return {...data, id:i}})
+      setData(data);
       var arrayLength = res.length
       console.log("countData",arrayLength);
       setloader(true);
@@ -112,7 +112,7 @@ const  Sharepost = () => {
         }
         formData.append('postImage', imageData);
         formData.append('post_id', '3032');
-        console.log("formData",formData);
+        // console.log("formData",formData);
         // return 
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/postuploadDocsReact`, {
           method : 'POST',
@@ -138,8 +138,8 @@ const  Sharepost = () => {
   const pickVideo =  () => {
     setDocument(null);
     PickVideos().then(async (res) =>{
-      console.log("localUri",res);
-      setData(res);
+      const data = res.map((data,i) => {return {...data, id:i}})
+      setData(data);
       let filename = localUri.split('/').pop();
       let uriParts = localUri.split('.');
       let fileType = uriParts[uriParts.length - 1];
@@ -327,11 +327,11 @@ setSpecialNames(specialityName)
     });
   };
 
-  if(loader){
-    return(<View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
-        <ActivityIndicator size={'large'} color={"#2C8892"}/>
-    </View>)
-  }
+  // if(loader){
+  //   return(<View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+  //       <ActivityIndicator size={'large'} color={"#2C8892"}/>
+  //   </View>)
+  // }
 
   //  const startRecording = async () => {
   //   try {
@@ -360,7 +360,7 @@ setSpecialNames(specialityName)
 
   const removeImg = (id) => {
     console.log(id);
-    const removed = pickedData?.filter(data => data.uid != id); 
+    const removed = pickedData?.filter(data => data.id != id); 
     console.log(removed);
     setData(removed);
   }
@@ -422,7 +422,7 @@ setSpecialNames(specialityName)
           return(
             <>
               <ImageBackground source={{uri: data.uri}} style={{ width: 100, height: 100 ,borderRadius:5,margin:7}}>
-                <TouchableOpacity style={styles.removeImg} onPress={() => removeImg(data.uid)}>
+                <TouchableOpacity style={styles.removeImg} onPress={() => removeImg(data.id)}>
                 <AntDesign name="close" size={15}/>
                 </TouchableOpacity>
               </ImageBackground>
