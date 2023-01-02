@@ -4,7 +4,7 @@ import Swiper from 'react-native-swiper';
 import { Audio, Video } from 'expo-av';
 
 const AutoHeightImage = ({item}) => {
-  const [index, setIndex] = useState();
+  // const [index, setIndex] = useState(0);
   
   const video = useRef(null);
   
@@ -18,21 +18,20 @@ const AutoHeightImage = ({item}) => {
     )
   }
 
-  const handleIndex = (i) => {
-    setIndex(i);
-  }
+  // const handleIndex = (i) => {
+  //   setIndex(i);
+  // }
 
   return (
-    <View>
-      <Swiper style={styles.wrapper} loop={false} >
+      <Swiper style={styles.wrapper} > 
         {item?.attach_array?.map((data,i) => {
           return(
             <View key={i}>
-              {data?.filename.includes("mp4") ? 
+              {data?.filename?.includes("mp4") ? 
               <Video
                   ref={video}
                   resizeMode={"contain"}
-                  source={item?.attach_array.length > 0?{uri:data?.filename} :item.imgPath} 
+                  source={item?.attach_array.length > 0 ? {uri:data?.filename} :item.imgPath} 
                   useNativeControls
                   // shouldPlay={!videoPlayPause ? videoPlayPause : status[item.id]}
                   isLooping={false}
@@ -46,8 +45,7 @@ const AutoHeightImage = ({item}) => {
             </View>
           )
       })} 
-      </Swiper>
-      </View>
+       </Swiper> 
   )
 }
 

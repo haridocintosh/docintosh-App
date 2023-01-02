@@ -28,8 +28,11 @@
    const [message , setmessage] = useState();
    const [editNumber , setEditNumber] = useState(false);
    const [loader, setLoader] = useState(false);
+   const [verify, setVerifying] = useState('Verify');
+
     
    const submitOtp = ()=>{
+    setVerifying("Verifying...")
    if(otpInput !== ""){
    forgotverifyOtp(otpInput,user_id)
     .then(res => {
@@ -44,6 +47,7 @@
    }else{
    setmessage('Please Enter Otp');
    }
+   setVerifying("Verify")
    };
 
 
@@ -107,11 +111,11 @@
    <View style={styles.InputFieldVerify}>
 
     {/* <TextInput style={{fontSize:16,color:"#071B36",paddingRight:12}} 
-      autoCapitalize="none"
-      keyboardType="email-address"
-      value={mobile_no}
-      onChangeText={e=>
-    setPhone(e)
+          autoCapitalize="none"
+          keyboardType="email-address"
+          value={mobile_no}
+          onChangeText={e=>
+          setPhone(e)
       }
       /> */}
 
@@ -163,7 +167,7 @@
    </View>
     <View >
    <View style={{paddingHorizontal:6}}>
-   <CustomButton label={"Verify"}onPress={()=>submitOtp()} />
+   <CustomButton label={verify}onPress={()=>submitOtp()} />
    </View>
    </View>
    </ScrollView>

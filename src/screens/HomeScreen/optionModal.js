@@ -13,7 +13,7 @@ import { getSavedPostsApi } from '../../../redux/reducers/SettingsSlice';
 const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible}) => {
   const [userData, setUserData] = useState();
   const [toggle, setToggle] = useState(false);
-  const [savedPost, setSavedPost] = useState(item.saved_status);
+  const [savedPost, setSavedPost] = useState(item?.saved_status);
   const [follow, setFollow] = useState(item?.follow_status);
   const [okay, setOkayCondition] = useState(null);
 
@@ -40,28 +40,28 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible}) =
 
   const handleOkay = async () =>{
     if(okay == "delete"){
-      const postDetails = {post_id:item.post_id}
+      const postDetails = {post_id:item?.post_id}
       const result      = await dispatch(deletePost(postDetails));
       if(result.payload.status  == 'Success'){
-        const coinDetails = {task:15, receiverId:0, senderId:item.id} 
+        const coinDetails = {task:15, receiverId:0, senderId:item?.id} 
         const coinResult  = await dispatch(coinTransfer(coinDetails));
         if(coinResult.payload.status  == 'Success'){
-          deletePostID(item.post_id);
+          deletePostID(item?.post_id);
           setToggle(false);
         }
       }
    }else if(okay == "block"){
-    const postDetails = {fromuserid:userData?.id,touserid:item.id};
+    const postDetails = {fromuserid:userData?.id,touserid:item?.id};
     const blockPostResult  = await dispatch(BlockUserApi(postDetails));
     if(blockPostResult?.payload?.status == "Success"){
       setToggle(false);
-      BlockId(item.id);
+      BlockId(item?.id);
     }
    }
   }
 
   const SavedPostHandle = async () => {
-    const postDetails = {user_id:userData?.id, post_id:item.post_id};
+    const postDetails = {user_id:userData?.id, post_id:item?.post_id};
     const savedPostResult = await dispatch(SavePostApi(postDetails));
     // console.log("savedPostResult",savedPostResult.payload);
     if(savedPostResult.payload.status == "Saved"){
@@ -74,11 +74,11 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible}) =
   const handleReport = () => {
     setModalVisible(false);
     navigation.navigate('ReportPost', {
-      postId: item.post_id, id: item.id})
+      postId: item?.post_id, id: item?.id})
   }
 
   const handleUnfollow = async () => {
-    const postDetails = {follow_from:userData?.id, follow_to:item.id};
+    const postDetails = {follow_from:userData?.id, follow_to:item?.id};
     const followResult  = await dispatch(followApi(postDetails));
     console.log("followApi",followResult.payload);
     if(followResult.payload.status){
@@ -94,7 +94,6 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible}) =
     setToggle(true);
   }
 
-  console.log("{Boolean follow}",follow);
 
   return (
     <View>

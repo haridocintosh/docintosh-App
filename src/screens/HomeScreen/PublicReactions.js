@@ -88,7 +88,8 @@ const PublicReactions = ({item,getStorageData}) => {
                     {likeCount}
                   </Text>
                 </View>
-{/* 
+                
+                {/* 
                 <View style={styles.socialCount}>
                   <TouchableOpacity>
                       <Image source={require('../../assets/dr-icon/gift.png')} style={styles.socialImages}/>

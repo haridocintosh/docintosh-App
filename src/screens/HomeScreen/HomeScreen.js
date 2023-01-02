@@ -34,7 +34,6 @@ const HomeScreen = ({navigation})=> {
   const [postId, setPostId] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const [allcoins, setAllcoins] = useState(0);
-  const [autoHeight, setAutoHeight] = useState(300);
   const [sliceCount, setSliceCount] = useState(2);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -93,7 +92,6 @@ const handleOption = (post_id) => {
     getLocalData('USER_INFO').then(async (res) =>{
       const allCoins = { user_id:res.data.id};
       const allCoinsResult = await dispatch(getAllCoins(allCoins));
-      
       setAllcoins(allCoinsResult.payload.coins);
     });
   };
@@ -108,7 +106,7 @@ const handleOption = (post_id) => {
 
   const loadMoreItem = () => {
     // console.log("currentPage",currentPage);
-    //  setCurrentPage(currentPage + 1);
+    // setCurrentPage(currentPage + 1);
      setSliceCount(sliceCount +2);
      console.log("sliceCount +2",sliceCount +2);
   };
@@ -149,7 +147,6 @@ const handleOption = (post_id) => {
     const BlockId = allPost.filter(Uid => Uid.id != id);
     setallPost(BlockId);
   }
-
 
     const renderItem = ({item}) => {
       return(
@@ -228,7 +225,7 @@ const handleOption = (post_id) => {
               </Animated.View>
             </View>
             <Animated.View style={{flexDirection:'row'}} >
-              <TouchableOpacity onPress={()=>{ navigation.navigate('CommonSearchScreen') }}>
+              <TouchableOpacity onPress={()=>{ navigation.navigate('CommonSearchScreen')}}>
                 <Feather name="search" size={24} color="#ffff"  />
               </TouchableOpacity>
               <TouchableOpacity style={{marginLeft:10}} onPress={() => navigation.navigate('BellNotification')}>

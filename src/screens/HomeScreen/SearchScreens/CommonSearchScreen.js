@@ -75,7 +75,6 @@ const CommonSearchScreen = () => {
     fourth : fourthRoute,
   });
   
-  console.log(index);
 
   const renderTabBar = (props) => {
     const inputRange = props.navigationState.routes.map((x, i) => i);
@@ -105,17 +104,18 @@ const CommonSearchScreen = () => {
 
   const GetsearchData = async () => {
       const result = await dispatch(getsearchSplData());
+      // console.log("result?.payload",result?.payload);
       setItem(result?.payload);
       setFilteredDataSource(result?.payload);
   }
 
   useEffect(() => {
     GetsearchData();
-    Voice.onSpeechError = onSpeechError;
-    Voice.onSpeechResults = onSpeechResults;
-    return () => {
-      Voice.destroy().then(Voice.removeAllListeners);
-    }
+    // Voice.onSpeechError = onSpeechError;
+    // Voice.onSpeechResults = onSpeechResults;
+    // return () => {
+    //   Voice.destroy().then(Voice.removeAllListeners);
+    // }
   }, []);
 
   const onSpeechResults = (result) => {
@@ -132,12 +132,12 @@ const CommonSearchScreen = () => {
   }
   const startVoice = async () =>{
     refInput.current.focus();
-    await Voice.start("en-US");
-    console.log("startVoice");
+    // await Voice.start("en-US");
+    // console.log("startVoice");
   }
 
 return (
-  <SafeAreaView>
+  <>
     <View style={styelcss.headerContainer}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
          <Ionicons name="arrow-back" size={25} color={"#fff"}/>
@@ -165,7 +165,7 @@ return (
       swipeEnabled={true}
       renderTabBar={renderTabBar}
     />
-  </SafeAreaView>
+  </>
 )
 }
 export default CommonSearchScreen
