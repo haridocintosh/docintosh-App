@@ -41,7 +41,7 @@ const AutoHeightImage = ({item}) => {
                   style={{width: "100%", height:300, marginHorizontal:10}} 
               />
               :
-              item?.attach_array.length >0 ?
+                item?.attach_array.length >0 ?
                 <Image source={item?.attach_array.length > 0 && {uri:data?.filename}} 
                 style={{width:"100%", height:350,marginHorizontal:10,alignSelf:'center',}} 
                 resizeMode={"contain"}/> 
@@ -49,8 +49,6 @@ const AutoHeightImage = ({item}) => {
                 <Image source={{uri:item?.imgPath}} 
                 style={{width:"100%", height:350,marginHorizontal:10,alignSelf:'center',}} 
                 resizeMode={"contain"}/> 
-
-                
               }
 
               
