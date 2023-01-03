@@ -5,6 +5,7 @@ import * as Contacts from 'expo-contacts';
 import CheckBox from "react-native-check-box";
 const styelcss = require('../assets/css/style');
 import { AntDesign } from '@expo/vector-icons';
+import { getLocalData } from '../apis/GetLocalData';
 import { sendInvitation } from '../../redux/reducers/ALL_APIs';
 import { useDispatch } from "react-redux";
 import Toast from 'react-native-simple-toast';
@@ -41,10 +42,8 @@ export default function ContactPermission({navigation}) {
     setSelectedList(trueVal)
   };
 
-console.log("out",isChecked);
   const onAllChecked=()=>{
     setisChecked(prev => !prev);
-    console.log("in",isChecked);
     if(isChecked){
       const selectAll = contactList.map((data) => {
         return {...data ,isSelected: false}
@@ -54,9 +53,7 @@ console.log("out",isChecked);
       .filter((val) => val.isSelected == true)
       .map((data) => data?.phoneNumbers?.[0].number);
     setSelectedList(trueVal);
-    
     }else{
-
       const selectAll = contactList.map((data) => {
         return {...data ,isSelected: true }
       });
@@ -68,8 +65,15 @@ console.log("out",isChecked);
     }
   }
 
-
   const sentInvite = async () => {
+    getLocalData("USER_INFO").then((res) => {
+      console.log("resresres",res?.login);
+      if(res?.login){
+        navigation.goBack();
+      }else{
+        navigation.navigate("Login");
+      }
+    })
     const separator = Platform.OS === 'ios' ? '&' : '?';
     const uploadData = {usercontact:selectedList};
     console.log(uploadData);
