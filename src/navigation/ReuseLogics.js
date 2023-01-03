@@ -44,10 +44,12 @@ export const PickImage = async (arg) => {
             return denied;
       }
 }
-export const PickImageAll = async () => {
-   const { granted } = await ImagePicker.requestCameraPermissionsAsync();
+export const PickImageAll = async (setloader) => {
+      const { granted } = await ImagePicker.requestCameraPermissionsAsync();
       if (granted === true) {
+            setloader(true);
             var library = await ImagePicker.launchImageLibraryAsync({
+            selectionLimit: 5,
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: false,
             allowsMultipleSelection: true,
@@ -69,6 +71,7 @@ export const PickVideos = async () => {
    const { granted } = await ImagePicker.requestCameraPermissionsAsync();
       if (granted === true) {
             var library = await ImagePicker.launchImageLibraryAsync({
+            selectionLimit: 5,
             mediaTypes: ImagePicker.MediaTypeOptions.Videos,
             allowsEditing: false,
             allowsMultipleSelection: true,

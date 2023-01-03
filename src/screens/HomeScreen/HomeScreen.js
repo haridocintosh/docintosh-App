@@ -24,8 +24,6 @@ import AutoHeightImage from './AutoHeightImage';
 import Swiper from 'react-native-swiper';
 
 
-
-
 const HomeScreen = ({navigation})=> {
   const [userdata, setuserdata]     = useState({profile:'',user_id:'',role:''});
   const [allPost, setallPost]  = useState();

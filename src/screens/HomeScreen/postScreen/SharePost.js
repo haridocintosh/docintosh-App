@@ -1,15 +1,13 @@
-import { useEffect, useRef, useState,useId } from "react";
+import { useEffect, useRef, useState } from "react";
 import "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
 import {StyleSheet, Text, TouchableOpacity, View, Image, ActivityIndicator, ImageBackground} from "react-native";
 import {BottomSheetModal, BottomSheetModalProvider,BottomSheetScrollView} from "@gorhom/bottom-sheet";
-import * as ImagePicker from 'expo-image-picker';
 import {Entypo, Ionicons, MaterialIcons, Fontisto,MaterialCommunityIcons, AntDesign, FontAwesome5,FontAwesome, Feather} from "@expo/vector-icons";
 import { TextInput } from "react-native-gesture-handler";
 import { List } from 'react-native-paper';
 import CheckBox from "react-native-check-box";
 import { useDispatch } from "react-redux";
-// import { getAllSpeciality } from "../../redux/reducers/getSpeciality";
 import Toast from 'react-native-simple-toast';
 import { postCreate } from "../../../../redux/reducers/postData";
 import { useNavigation } from "@react-navigation/native";
@@ -32,7 +30,6 @@ const  Sharepost = () => {
   const [expanded, setExpanded] = useState(true);
   const [pickedData, setData]   = useState(null);
   const [document, setDocument]   = useState(null);
-  const [err,seterr] =useState();
   const [circlespeciality, setSpl] = useState([]);
   const [post ,setPost] = useState({
       publishto:"",
@@ -46,10 +43,8 @@ const  Sharepost = () => {
   });
   const handlePress = () => setExpanded(!expanded);
   const [isOpen, setIsOpen]     = useState(false);
-  const [checked, setChecked]   = useState(false);
   const [specialNames, setSpecialNames]   = useState();
   const [whoCanSee, setWhoCanSee]   = useState();
-  const [iconColor, setIconColor]   = useState(null);
   const [userdata, setuserdata] = useState({
     fullname:'',
     profile:'',
@@ -65,7 +60,6 @@ const  Sharepost = () => {
   const [emojiTab, setEmojiTab] = useState(false)
   const bottomSheetModalRef       = useRef(null);
   const bottomSheetModalRefSecond = useRef(null);
-  const uniqueId = useId();
   const snapPointsOne = ["1%","48%"];
   const snapPoints = ["60%","60%"];
 
@@ -82,25 +76,19 @@ const  Sharepost = () => {
       setIsOpen(true);
     }, 100);
   }
-
   // console.log("useId ","useId ",uniqueId);
   const pickEmoji =  () => {
   console.log("ppicked");
-  setEmojiTab(!emojiTab)
-  
+    setEmojiTab(!emojiTab)
   }
   const pickImage =  () => {
     setDocument(null);
-    PickImageAll().then(async (res) =>{
-      const data = res.map((data,i) => {return {...data, id:i}})
+    PickImageAll(setloader).then(async (res) =>{
+      const data = res?.map((data,i) => {return {...data, id:i}})
       setData(data);
-      var arrayLength = res.length
-      console.log("countData",arrayLength);
-      setloader(true);
-      res.map(async(data) => {
-        // console.log("returnURI",data.uri);
+       res?.length
+      res?.map(async(data) => {
         let localUri = data.uri
-        // console.log("localUri",localUri);
         let filename = localUri.split('/').pop();
         let uriParts = localUri.split('.');
         let fileType = uriParts[uriParts.length - 1];
@@ -112,8 +100,6 @@ const  Sharepost = () => {
         }
         formData.append('postImage', imageData);
         formData.append('post_id', '3032');
-        // console.log("formData",formData);
-        // return 
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/postuploadDocsReact`, {
           method : 'POST',
           headers:{
@@ -122,23 +108,23 @@ const  Sharepost = () => {
           body :formData
        });
        const result1=  await responce.json();
-     //  console.log("result1",result1);
         setuploadImage({...uploadImage,
           uploadImage:uploadImage.pimage.push(result1.postImage)
         })
         setPost({...post, 
           type:'i'
         });
-      //console.log("postdataShow", uploadImage);
       });
       setloader(false);
     })
   };
 
   const pickVideo =  () => {
+    
     setDocument(null);
     PickVideos().then(async (res) =>{
-      const data = res.map((data,i) => {return {...data, id:i}})
+      setloader(true);
+      const data = res?.map((data,i) => {return {...data, id:i}})
       setData(data);
       let filename = localUri.split('/').pop();
       let uriParts = localUri.split('.');
@@ -158,11 +144,12 @@ const  Sharepost = () => {
         },
         body :formData
      });
-    const result1=  await responce.json();
+    const result1 =  await responce.json();
       setPost({...post, 
         postImage: result1.postImage,
         type:'v'
       });
+      setloader(false);
     })
   };
 
@@ -233,7 +220,7 @@ const publishCheck1 = (e, text)=>{
           const coinResult  = await dispatch(coinTransfer(coinDetails));
           if(coinResult.payload.status == 'Success')
           {
-              navigation.navigate('HomeScreen');
+            navigation.navigate('HomeScreen');
           }
         }
         setloader(false);
@@ -417,16 +404,19 @@ setSpecialNames(specialityName)
           autoCapitalize="none"
           onChangeText={(e)=>{postDesc(e)}}
         />
-        <View style={{flexDirection:'row',borderRadius:5,flexWrap:'wrap'}}>
-        {pickedData?.map((data) => {
+        <View style={{flexDirection:'row',flexWrap:'wrap'}}>
+        {loader && <View style={{flexDirection:'row',justifyContent:'center',flex:1}}>
+           <ActivityIndicator/>
+        </View>}
+        {pickedData?.map((data,i) => {
           return(
-            <>
-              <ImageBackground source={{uri: data.uri}} style={{ width: 100, height: 100 ,borderRadius:5,margin:7}}>
+            <View style={{margin:8,borderRadius:5,}} key={i}>
+              <ImageBackground source={{uri: data.uri}} style={{ width: 100, height: 100}}>
                 <TouchableOpacity style={styles.removeImg} onPress={() => removeImg(data.id)}>
                 <AntDesign name="close" size={15}/>
                 </TouchableOpacity>
               </ImageBackground>
-            </>
+            </View>
           )
         })}
         {document &&
@@ -530,7 +520,7 @@ setSpecialNames(specialityName)
           backgroundStyle={{ borderRadius: 30 }}
           onDismiss={() => setIsOpen(false)}>
 
-          <BottomSheetScrollView>
+          <BottomSheetScrollView keyboardShouldPersistTaps='handled'>
             <View style={styles.contentContainer}>
               <Text style={styles.title}>Who can see this post? </Text>
             <View style={{margin:10, alignSelf:'flex-start'}}>
