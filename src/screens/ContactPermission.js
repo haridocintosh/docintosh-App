@@ -5,14 +5,11 @@ import * as Contacts from 'expo-contacts';
 import CheckBox from "react-native-check-box";
 const styelcss = require('../assets/css/style');
 import { AntDesign } from '@expo/vector-icons';
-<<<<<<< HEAD
 import { getLocalData } from '../apis/GetLocalData';
-=======
 import { sendInvitation } from '../../redux/reducers/ALL_APIs';
 import { useDispatch } from "react-redux";
 import Toast from 'react-native-simple-toast';
  
->>>>>>> 1c7fe8cead9e08667ff2014389e77c0c2ecf392c
 
 export default function ContactPermission({navigation}) {
   const refInput = React.useRef(null);
