@@ -63,6 +63,24 @@ export const getsearchSplData = createAsyncThunk("searchSplData", async ()=>{
      }
 })
 
+
+export const sendInvitation = createAsyncThunk("sendinvite", async (data)=>{
+    try{
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/sendInvitation`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body :JSON.stringify(data)
+         });
+        const result = await responce.json();
+        console.log('inviteStatus',result);
+     }
+     catch(e){
+        console.log(e);;
+     }
+})
+
 export const savePost = createSlice({
     name : "savePost",
     initialState :{

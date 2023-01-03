@@ -5,7 +5,14 @@ import * as Contacts from 'expo-contacts';
 import CheckBox from "react-native-check-box";
 const styelcss = require('../assets/css/style');
 import { AntDesign } from '@expo/vector-icons';
+<<<<<<< HEAD
 import { getLocalData } from '../apis/GetLocalData';
+=======
+import { sendInvitation } from '../../redux/reducers/ALL_APIs';
+import { useDispatch } from "react-redux";
+import Toast from 'react-native-simple-toast';
+ 
+>>>>>>> 1c7fe8cead9e08667ff2014389e77c0c2ecf392c
 
 export default function ContactPermission({navigation}) {
   const refInput = React.useRef(null);
@@ -20,7 +27,7 @@ export default function ContactPermission({navigation}) {
   const [selectedList, setSelectedList] = useState();
   const [loading, setLoading]  = useState(false);
   const [spinner, setSpinner]  = useState(false);
- 
+  const dispatch = useDispatch();
 
   const handleChange = (phoneNumbers) => {
     // setSpinner(true);
@@ -71,10 +78,17 @@ export default function ContactPermission({navigation}) {
       }
     })
     const separator = Platform.OS === 'ios' ? '&' : '?';
-    await selectedList.map((number)=>{
-      Linking.openURL(`sms:${number}${separator}body=${"I think you got Invitation"}`);
-    });
-  }
+    const uploadData = {usercontact:selectedList};
+    console.log(uploadData);
+    const result = await dispatch(postCreate(uploadData));
+     if(token.payload.status=="Success"){
+      Toast.show(token.payload.message);
+    // navigation.navigate('Login');
+     }
+    }
+     
+    
+  
 
   useEffect(() => {
     navigation.setOptions({ title: 'Invite Peers'});

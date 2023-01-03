@@ -127,7 +127,7 @@ const handleOption = (post_id) => {
       setModalVisible(false);
       setIsLoading(true);
       const postDetails = {role:reData?.role,city_id:reData?.city_id,assoc_id:reData?.assoc_id,profileimage:reData?.profileimage, pageCounter:currentPage, userId:reData?.id,circle_type:reData?.role == 5 ? 3 : 1};
-      // console.log(postDetails);
+       //console.log(postDetails);
       const result = await dispatch(userPostData(postDetails));
       setIsLoading(false);
       const allPostData = result?.payload.filter(Post => Post.user_role != 5);
