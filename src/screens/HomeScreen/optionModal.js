@@ -10,8 +10,7 @@ import { BlockUserApi, followApi, SavePostApi } from '../../../redux/reducers/AL
 import {Ionicons} from '@expo/vector-icons';
 import { getSavedPostsApi } from '../../../redux/reducers/SettingsSlice';
 
-const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible}) => {
-  const [userData, setUserData] = useState();
+const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,resData}) => {
   const [toggle, setToggle] = useState(false);
   const [savedPost, setSavedPost] = useState(item?.saved_status);
   const [follow, setFollow] = useState(item?.follow_status);
@@ -19,18 +18,6 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible}) =
 
   const dispatch    = useDispatch();
   const navigation  = useNavigation();
-
-  const getId = async () => {
-    getLocalData('USER_INFO').then( async (res) => {
-      const reData = res?.data;
-      const savedResult = await dispatch(getSavedPostsApi({user_id:res?.data?.id}))
-      setUserData(reData);
-    });
-  }
-  
-  useEffect(() => {
-    getId();
-  },[])
 
   const handleDeletePost = async ()=>{
     setOkayCondition("delete");
@@ -51,7 +38,7 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible}) =
         }
       }
    }else if(okay == "block"){
-    const postDetails = {fromuserid:userData?.id,touserid:item?.id};
+    const postDetails = {fromuserid:resData?.id,touserid:item?.id};
     const blockPostResult  = await dispatch(BlockUserApi(postDetails));
     if(blockPostResult?.payload?.status == "Success"){
       setToggle(false);
@@ -61,7 +48,8 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible}) =
   }
 
   const SavedPostHandle = async () => {
-    const postDetails = {user_id:userData?.id, post_id:item?.post_id};
+
+    const postDetails = {user_id:resData?.id, post_id:item?.post_id};
     const savedPostResult = await dispatch(SavePostApi(postDetails));
     // console.log("savedPostResult",savedPostResult.payload);
     if(savedPostResult.payload.status == "Saved"){
@@ -78,7 +66,7 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible}) =
   }
 
   const handleUnfollow = async () => {
-    const postDetails = {follow_from:userData?.id, follow_to:item?.id};
+    const postDetails = {follow_from:resData?.id, follow_to:item?.id};
     const followResult  = await dispatch(followApi(postDetails));
     console.log("followApi",followResult.payload);
     if(followResult.payload.status){
@@ -94,12 +82,12 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible}) =
     setToggle(true);
   }
 
-
+// console.log("savedPost",savedPost);
   return (
     <View>
     {modalVisible &&
     <View style={styles.optionModal}>
-      {userData?.id === item.id ?
+      {resData?.id === item.id ?
       <TouchableOpacity style={styles.optionList} onPress={() =>{handleDeletePost()}}>
         <MaterialCommunityIcons name='delete-outline' size={23} color={'#45B5C0'}/>
         <Text style={styles.optionListText}>delete</Text>
@@ -142,7 +130,7 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible}) =
               onPress={() =>{setToggle(false)}}>
             <Text style={[styles.textBold,styles.leftText]}>Cancel</Text>
             </TouchableOpacity>
-            <Text>{"           "}</Text>
+            <Text>{"            "}</Text>
             <TouchableOpacity 
               style={[styles.buttonsDesign,styles.RightButtonsDesign]}
               onPress={() => handleOkay()}>

@@ -35,7 +35,6 @@ export default function ContactPermission({navigation}) {
       }
       return data;
     });
-
     setContact(temp);
     const trueVal = temp
       .filter((val) => val.isSelected == true)

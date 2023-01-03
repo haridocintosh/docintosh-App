@@ -102,4 +102,4 @@ export const styles = StyleSheet.create({
     RightText:{
       color:'#fff'
     },
-    })
+})
