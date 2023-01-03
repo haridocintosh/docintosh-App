@@ -74,7 +74,7 @@ export const sendInvitation = createAsyncThunk("sendinvite", async (data)=>{
             body :JSON.stringify(data)
          });
         const result = await responce.json();
-        console.log('inviteStatus',result);
+        return result;
      }
      catch(e){
         console.log(e);;
@@ -88,6 +88,7 @@ export const savePost = createSlice({
         blockUserResult   : {},
         getsearchResult   : {},
         followResult   : {},
+        sendInviteResult   : {},
         loading     : false,
         error       : false,
     },
@@ -140,6 +141,19 @@ export const savePost = createSlice({
             state.followResult = action.payload;
         }, 
         [followApi.rejected] : (state)=>{
+            state.loading       = false;
+            state.error         = true
+        }, 
+    },
+    extraReducers :{
+        [sendInvitation.pending] : (state)=>{   
+            state.loading       =  true;
+        }, 
+        [sendInvitation.fulfilled] : (state, action)=>{   
+            state.loading         =  false;
+            state.sendInviteResult = action.payload;
+        }, 
+        [sendInvitation.rejected] : (state)=>{
             state.loading       = false;
             state.error         = true
         }, 
