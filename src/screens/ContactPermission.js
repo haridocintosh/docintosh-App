@@ -37,19 +37,31 @@ export default function ContactPermission({navigation}) {
     setSelectedList(trueVal)
   };
 
-
+console.log("out",isChecked);
   const onAllChecked=()=>{
-    setisChecked(!isChecked);
-    // setSpinner(true);
-    const selectAll = contactList.map((data) => {
-      return {...data ,isSelected: !data.isSelected }
-    });
+    setisChecked(prev => !prev);
+    console.log("in",isChecked);
+    if(isChecked){
+      const selectAll = contactList.map((data) => {
+        return {...data ,isSelected: false}
+      });
     setContact(selectAll);
     const trueVal = selectAll
       .filter((val) => val.isSelected == true)
       .map((data) => data?.phoneNumbers?.[0].number);
     setSelectedList(trueVal);
-    // setSpinner(false);
+    
+    }else{
+
+      const selectAll = contactList.map((data) => {
+        return {...data ,isSelected: true }
+      });
+      setContact(selectAll);
+      const trueVal = selectAll
+      .filter((val) => val.isSelected == true)
+      .map((data) => data?.phoneNumbers?.[0].number);
+       setSelectedList(trueVal);
+    }
   }
 
 
@@ -110,8 +122,6 @@ const loadMore =  () =>{
   setSliceCount(sliceCount + 10);
 }
 
-console.log("spinner",spinner);
-console.log("isChecked",isChecked);
 
 if(loading){
   return(
