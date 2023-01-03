@@ -50,7 +50,7 @@ if(loader){
         setDefaultRoute("HomeScreen");
       }else{
         setDefaultRoute("Intro");
-      // setDefaultRoute("ContactPermission");
+        //setDefaultRoute("ContactPermission");
       }
       setStatusKeyLoaded(true);
     } catch(e) {

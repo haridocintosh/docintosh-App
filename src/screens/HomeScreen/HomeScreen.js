@@ -34,8 +34,7 @@ const HomeScreen = ({navigation})=> {
   const [postId, setPostId] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const [allcoins, setAllcoins] = useState(0);
-  const [autoHeight, setAutoHeight] = useState(300);
-
+  const [sliceCount, setSliceCount] = useState(2);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const isFocused = useIsFocused();
@@ -107,7 +106,9 @@ const handleOption = (post_id) => {
 
   const loadMoreItem = () => {
     // console.log("currentPage",currentPage);
-     setCurrentPage(currentPage + 1);
+    // setCurrentPage(currentPage + 1);
+     setSliceCount(sliceCount +2);
+     console.log("sliceCount +2",sliceCount +2);
   };
 
   useEffect(()=>{
@@ -146,7 +147,6 @@ const handleOption = (post_id) => {
     const BlockId = allPost.filter(Uid => Uid.id != id);
     setallPost(BlockId);
   }
-
 
     const renderItem = ({item}) => {
       return(
@@ -204,17 +204,6 @@ const handleOption = (post_id) => {
       )
     }
 
-    const loadMore = () => {
-      // console.log("load more 10",allPost.length);
-      // const start = page*ITEMS_PER_PAGE;
-      // console.log(start);
-      // const end = (page+1)*ITEMS_PER_PAGE-1;
-      // console.log(end);
-      // const newData = allPost.slice(start, end); // here, we will receive next batch of the items
-      // console.log('newData',newData.length);
-      // setallPost({...allPost, ...newData});
-    }
-
   return (
   <SafeAreaView>
       <Animated.View style={{backgroundColor:'#071B36',height:headerHeight,position:'relative'}}>
@@ -236,7 +225,7 @@ const handleOption = (post_id) => {
               </Animated.View>
             </View>
             <Animated.View style={{flexDirection:'row'}} >
-              <TouchableOpacity onPress={()=>{ navigation.navigate('CommonSearchScreen') }}>
+              <TouchableOpacity onPress={()=>{ navigation.navigate('CommonSearchScreen')}}>
                 <Feather name="search" size={24} color="#ffff"  />
               </TouchableOpacity>
               <TouchableOpacity style={{marginLeft:10}} onPress={() => navigation.navigate('BellNotification')}>

@@ -148,6 +148,7 @@ const LoginScreen = () => {
           onChangeText={(text)=>updateEmail(text)}
           defaultValue={datarm?.data.email}
           blurOnSubmit={true}
+          autoComplete={"off"}
          />
 
       <TextInput style={[styelcss.customInputVerifyFullMobile,{ fontFamily: 'PlusJakartaSans-Regular',}]} 
@@ -162,6 +163,7 @@ const LoginScreen = () => {
           hideShow={showeye}
           defaultValue={datarm?.data.password}
           blurOnSubmit={true}
+          autoComplete={"off"}
         />
       <Ionicons  style={styles.eyeIcon} name={showeye ? 'eye-off' : 'eye'} size={24} color="#51668A" onPress={() => setshoweye(!showeye)} />
       
