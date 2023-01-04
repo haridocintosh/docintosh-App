@@ -28,7 +28,7 @@ import {MaterialCommunityIcons, Ionicons, FontAwesome5,Fontisto} from 'react-nat
 export default function RegisterScreen() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const [checked, setChecked] = useState(4);
+  const [checked, setChecked] = useState('');
   const [checkgender, setcheckgender] = useState('');
   const [err,seterr] =useState();
   const [open, setOpen] = useState(false);
@@ -158,6 +158,7 @@ const setuserrole= (e)=>{
     ...register,
     role: e,
    })
+   setroleErr('')
 }
 
 const form_submit = async() =>{
@@ -174,7 +175,7 @@ const form_submit = async() =>{
   else if(emailIderr != ''){
     setemail("This Email ID is registered with us");
   }else if(mobileId !=''){
-    setemail("This mobile no. is registred with us");
+    setmobile("This mobile no. is registred with us");
   }
   else if(!register.mobile){
     setmobile("Pleaes enter valid mobile no.");
@@ -224,7 +225,7 @@ const form_submit = async() =>{
     else if(emailIderr != ''){
       setemail("This Email ID is registered with us");
     }else if(mobileId !=''){
-      setemail("This mobile no. is registred with us");
+      setmobile("This mobile no. is registred with us");
     }
     else if(!register.email){
       setemail("Please enter valid Email ID");
