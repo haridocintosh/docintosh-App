@@ -171,19 +171,28 @@ const pickupImage = (arg) => {
 };
 
 const form_submit = async() =>{ 
-  if (ref.current) {
-    ref.current.scrollTo({ y: 0, animated: true })
-  }
   console.log("register",register);
   if(!register.pincode){
     setPincode("Please enter a valid pincode");
+    if (ref.current) {
+      ref.current.scrollTo({ y: 0, animated: true })
+    }
   }else if(!register.university){
     setuniversityerr("Please Select University ");
+    if (ref.current) {
+      ref.current.scrollTo({ y: 0, animated: true })
+    }
   }else if(!register.college){
     setclgerr("Please Select College");
+    if (ref.current) {
+      ref.current.scrollTo({ y: 0, animated: true })
+    }
   }else if(!register.password){
     setPasswordErr("Please enter your password");
   }else if(!register.profile_pic){
+    if (ref.current) {
+      ref.current.scrollTo({ y: 0, animated: true })
+    }
     setprofilErr("Please Upload your Profile Photo");
   }else if(!register.mrnproof){
     setmrnproofErr("Please Upload CollegeId/Library Card");

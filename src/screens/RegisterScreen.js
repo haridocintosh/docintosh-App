@@ -161,11 +161,11 @@ const setuserrole= (e)=>{
 }
 
 const form_submit = async() =>{
-  if (ref.current) {
-    ref.current.scrollTo({ y: 0, animated: true })
-  }
   if(!register.fname){
     fnerr("Please enter First Name");
+    if (ref.current) {
+      ref.current.scrollTo({ y: 0, animated: true })
+    }
   }else if(!register.lname){
     lnerr("Please enter Last Name");
   }else if(!register.email){
@@ -211,11 +211,11 @@ const form_submit = async() =>{
   }
 
   const handleStudentSubmit = async() =>{
-    if (ref.current) {
-      ref.current.scrollTo({ y: 0, animated: true })
-    }
     if(!register.fname){
       fnerr("Please enter First Name");
+      if (ref.current) {
+        ref.current.scrollTo({ y: 0, animated: true })
+      }
     }else if(!register.lname){
       lnerr("Please enter Last Name");
     }else if(!register.gender){

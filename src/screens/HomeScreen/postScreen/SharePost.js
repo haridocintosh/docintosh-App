@@ -487,7 +487,6 @@ setSpecialNames(specialityName)
             <MaterialCommunityIcons name="dots-horizontal-circle" size={26} color="#51668A"  onPress={ () => handlePresentModal()}  />
           </TouchableOpacity>
         </View>
-          
         <StatusBar style="auto" />
 
         <BottomSheetModal

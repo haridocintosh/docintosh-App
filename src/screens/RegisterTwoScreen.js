@@ -221,21 +221,33 @@ useEffect(()=>{
   },[]);
 
   const form_submit = async() =>{
-    if (ref.current) {
-      ref.current.scrollTo({ y: 0, animated: true })
-    }
     if(!register.pincode){
       setPincode("Please enter a valid pincode");
+      if (ref.current) {
+        ref.current.scrollTo({ y: 0, animated: true })
+      }
     }else if(!register.mrn){
       setmrnId("Please enter MRN");
+      if (ref.current) {
+        ref.current.scrollTo({ y: 0, animated: true })
+      }
     }else if(!register.mry){
       setmrnYear("Please enter MRN Year");
+      if (ref.current) {
+        ref.current.scrollTo({ y: 0, animated: true })
+      }
     }else if(!register.medicalcouncil_id){
       setStateErr("Please enter State Council");
+      if (ref.current) {
+        ref.current.scrollTo({ y: 0, animated: true })
+      }
     }else if(!register.password){
       setPasswordErr("Please enter your password");
     }else if(!register.profile_pic){
       setprofilErr("Please upload your profile photo");
+      if (ref.current) {
+        ref.current.scrollTo({ y: 0, animated: true })
+      }
     }else if(!register.mrnproof){
       setmrnproofErr("Please upload MRN document");
     }else{
