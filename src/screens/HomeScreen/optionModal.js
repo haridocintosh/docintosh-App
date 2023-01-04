@@ -68,9 +68,9 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,res
     const followResult  = await dispatch(followApi(postDetails));
     console.log("followApi",followResult.payload);
     if(followResult.payload.status){
-      setFollow(true);
-    }else{
       setFollow(false);
+    }else{
+      setFollow(true);
     }
   }
 
