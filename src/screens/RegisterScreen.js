@@ -59,7 +59,6 @@ export default function RegisterScreen() {
 
   const ref = useRef(null);
   
-
   useEffect(()=>{
     async function fetchSpecialities(){
       const allSpeciality = await dispatch(getAllSpeciality());
@@ -172,11 +171,11 @@ const form_submit = async() =>{
   }else if(!register.email){
     setemail("Please enter valid Email ID");
   }
-  // else if(emailIderr != ''){
-  //   setemail("This Email ID is registered with us");
-  // }else if(mobileId !=''){
-  //   setemail("This mobile no. is registred with us");
-  // }
+  else if(emailIderr != ''){
+    setemail("This Email ID is registered with us");
+  }else if(mobileId !=''){
+    setemail("This mobile no. is registred with us");
+  }
   else if(!register.mobile){
     setmobile("Pleaes enter valid mobile no.");
   }else if(!register.gender){
@@ -222,11 +221,11 @@ const form_submit = async() =>{
     }else if(!register.gender){
       errgender("Please Select gender");
     }
-    // else if(emailIderr != ''){
-    //   setemail("This Email ID is registered with us");
-    // }else if(mobileId !=''){
-    //   setemail("This mobile no. is registred with us");
-    // }
+    else if(emailIderr != ''){
+      setemail("This Email ID is registered with us");
+    }else if(mobileId !=''){
+      setemail("This mobile no. is registred with us");
+    }
     else if(!register.email){
       setemail("Please enter valid Email ID");
     }else if(!register.mobile){

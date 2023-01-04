@@ -84,7 +84,6 @@ const  Sharepost = () => {
       const data = res?.map((data,i) => {return {...data, id:i}})
       setData(data);
       console.log("res?.length",res?.length);
-      console.log("selectedImg",selectedImg);
       return;
       data?.map(async(data) => {
         let localUri = data.uri
@@ -153,6 +152,7 @@ const  Sharepost = () => {
   };
 
   const handleDocPicker = async () => {
+    setData();
     let result = await DocumentPicker.getDocumentAsync({ 
       type: "application/*",
       copyToCacheDirectory: false, 
@@ -344,8 +344,37 @@ setSpecialNames(specialityName)
   const removeImg = (id) => {
     console.log(id);
     const removed = pickedData?.filter(data => data.id != id); 
+    console.log("removed",removed);
     setData(removed);
-    setSelectedImg(removed);
+    return;
+    removed?.map(async(data) => {
+      let localUri = data.uri
+      let filename = localUri.split('/').pop();
+      let uriParts = localUri.split('.');
+      let fileType = uriParts[uriParts.length - 1];
+      let formData = new FormData();
+      const imageData = {
+        uri : localUri,
+        name: filename,
+        type: `image/${fileType}`,
+      }
+      formData.append('postImage', imageData);
+      formData.append('post_id', '3032');
+      const responce = await fetch(`${mainApi.baseUrl}/ApiController/postuploadDocsReact`, {
+        method : 'POST',
+        headers:{
+            'Content-Type': 'multipart/form-data'
+        },
+        body :formData
+     });
+     const result1=  await responce.json();
+      setuploadImage({...uploadImage,
+        uploadImage:uploadImage.pimage.push(result1.postImage)
+      })
+      setPost({...post, 
+        type:'i'
+      });
+    });
   }
 
   const handleDocType = (type) => {
@@ -417,8 +446,12 @@ setSpecialNames(specialityName)
         })}
         {document &&
         <View style={styles.pdfUploadContainer}>
-           <AntDesign name={handleDocType(document?.uri)} size={24} color={"black"} />
-           <Text style={styles.pdfFileName}>{document?.name}</Text>
+          <View style={{flexDirection:'row',alignItems:'center'}}>
+          <AntDesign name={handleDocType(document?.uri)} size={24} color={"black"} />
+           <Text style={styles.pdfFileName}>
+            {document?.name.length > 30 ? `${document?.name.slice(0,30)}...` : document?.name}
+           </Text>
+          </View>
            <TouchableOpacity style={styles.pdfFileClose} onPress={() => setDocument(null)}>
              <AntDesign name="closecircle" size={15} color="#45B5C0" />
            </TouchableOpacity>
@@ -426,7 +459,6 @@ setSpecialNames(specialityName)
         </View>
         <View style={styles.line}/>
       </View>
-
       <View style={[styles.container]}> 
       {/* <EmojiSelector
         category={Categories.all}
@@ -657,6 +689,7 @@ const styles = StyleSheet.create({
   },
   pdfUploadContainer:{
     // borderWidth:1,
+    width:"100%",
     padding:13,
     borderRadius:5,
     backgroundColor:'#fff',
@@ -668,9 +701,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3,
     elevation: 3,
+    justifyContent:'space-between'
   },
   pdfFileName:{
-    marginLeft:10
+    marginLeft:10,
+    marginRight:5
   },
   pdfFileClose:{
     marginLeft:10

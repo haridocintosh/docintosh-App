@@ -8,8 +8,6 @@ import { navigationRef } from './src/navigation/RootNavigation';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { Platform ,LogBox} from 'react-native';
-import { ViewPropTypes } from 'deprecated-react-native-prop-types';
-// import OneSignal from 'react-native-onesignal';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -38,13 +36,11 @@ const App = () => {
       Notifications.removeNotificationSubscription(notificationListener.current);
       Notifications.removeNotificationSubscription(responseListener.current);
     };
-    
   }, []);
 
   // const notificationSetup= async()=>{
   //   const deviceState = await OneSignal.getDeviceState();
   //   console.log("deviceState",deviceState);
-  
   // }
 
   LogBox.ignoreLogs(['Warning: ...']); 
@@ -71,12 +67,10 @@ if (!fontsLoaded) return null;
   //   notificationReceivedEvent.complete(notification);
   // });
 
-
   // //Method for handling notifications opened
   // OneSignal.setNotificationOpenedHandler(notification => {
   //   console.log("OneSignal: notification opened:", notification);
   // });
-
 
   return (
     <Provider store={store}>
