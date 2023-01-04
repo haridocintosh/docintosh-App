@@ -18,9 +18,6 @@ import { coinTransfer } from "../../../../redux/reducers/coinSlice";
 import { PickImageAll, PickVideos } from "../../../navigation/ReuseLogics";
 import { Audio } from 'expo-av';
 import * as DocumentPicker from 'expo-document-picker';
-import data from "../../../model/data";
-import EmojiSelector, { Categories } from "react-native-emoji-selector";
-
 let recording = new Audio.Recording();
 
 const  Sharepost = () => {
@@ -31,6 +28,7 @@ const  Sharepost = () => {
   const [pickedData, setData]   = useState(null);
   const [document, setDocument]   = useState(null);
   const [circlespeciality, setSpl] = useState([]);
+  const [selectedImg, setSelectedImg] = useState();
   const [post ,setPost] = useState({
       publishto:"",
       description :"",
@@ -78,7 +76,6 @@ const  Sharepost = () => {
   }
   // console.log("useId ","useId ",uniqueId);
   const pickEmoji =  () => {
-  console.log("ppicked");
     setEmojiTab(!emojiTab)
   }
   const pickImage =  () => {
@@ -86,8 +83,10 @@ const  Sharepost = () => {
     PickImageAll(setloader).then(async (res) =>{
       const data = res?.map((data,i) => {return {...data, id:i}})
       setData(data);
-       res?.length
-      res?.map(async(data) => {
+      console.log("res?.length",res?.length);
+      console.log("selectedImg",selectedImg);
+      return;
+      data?.map(async(data) => {
         let localUri = data.uri
         let filename = localUri.split('/').pop();
         let uriParts = localUri.split('.');
@@ -199,8 +198,6 @@ const publishCheck1 = (e, text)=>{
 
 
   const handleStudentSubmit = async() =>{
-    console.log("postDAta",post);
-    console.log("uploadImage",uploadImage);
     if(post.publishto ==''){
       Toast.show('Please Select Publish to');
       bottomSheetModalRefSecond.current?.present();
@@ -228,7 +225,6 @@ const publishCheck1 = (e, text)=>{
     }
 
   const uploadPostImage = async (post_id) => {
-    //console.log(post_id);
     let localUri = {pickedData};
     //console.log(localUri);
     let filename = localUri.split('/').pop();
@@ -348,8 +344,8 @@ setSpecialNames(specialityName)
   const removeImg = (id) => {
     console.log(id);
     const removed = pickedData?.filter(data => data.id != id); 
-    console.log(removed);
     setData(removed);
+    setSelectedImg(removed);
   }
 
   const handleDocType = (type) => {

@@ -9,6 +9,7 @@ import { getLocalData } from '../apis/GetLocalData';
 import { sendInvitation } from '../../redux/reducers/ALL_APIs';
 import { useDispatch } from "react-redux";
 import Toast from 'react-native-simple-toast';
+
  
 
 export default function ContactPermission({navigation}) {
@@ -34,7 +35,6 @@ export default function ContactPermission({navigation}) {
       }
       return data;
     });
-
     setContact(temp);
     const trueVal = temp
       .filter((val) => val.isSelected == true)
@@ -66,21 +66,18 @@ export default function ContactPermission({navigation}) {
   }
 
   const sentInvite = async () => {
-    getLocalData("USER_INFO").then((res) => {
-      console.log("resresres",res?.login);
-      if(res?.login){
-        navigation.goBack();
-      }else{
-        navigation.navigate("Login");
-      }
-    })
-    const separator = Platform.OS === 'ios' ? '&' : '?';
     const uploadData = {usercontact:selectedList};
-    console.log(uploadData);
-    const result = await dispatch(postCreate(uploadData));
-     if(token.payload.status=="Success"){
-      Toast.show(token.payload.message);
-    // navigation.navigate('Login');
+    const result = await dispatch(sendInvitation(uploadData));
+    console.log("result",result.payload);
+     if(result.payload.status=="Success"){
+      Toast.show(result.payload.message);
+      getLocalData("USER_INFO").then((res) => {
+        if(res?.login){
+          navigation.goBack();
+        }else{
+          navigation.navigate("Login");
+        }
+      })
      }
     }
      
@@ -191,7 +188,8 @@ const renderItem = (item) => {
             />}
           </View>
         </View>
-      <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true} keyboardShouldPersistTaps='handled'>
+      <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true} 
+      keyboardShouldPersistTaps='handled'>
        
       <FlatList
         data={contactList?.slice(0,sliceCount)}
@@ -202,13 +200,6 @@ const renderItem = (item) => {
       <TouchableOpacity style={{marginTop:10,width:"100%",alignItems:'center'}} onPress={() => loadMore()}>
           <Text style={{color:'#2C8892',fontFamily:"PlusJakartaSans-Bold",}}>Load More...</Text>
       </TouchableOpacity>}
-
-       
-       
-       {/* {contactList?.length > 0 ? contactList.map((element, index)=>{
-          return ()}):
-      <Text>You Don't have any contact's</Text>
-      } */}
     </ScrollView>
     <View style={{marginTop:10,zIndex:1,width:"100%",bottom:0,backgroundColor:"#f1f1f1",paddingTop:6}}>
           <CustomButton label={'Continue'} onPress={() => sentInvite()} />
