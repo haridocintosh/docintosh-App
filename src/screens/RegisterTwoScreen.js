@@ -7,28 +7,29 @@ import {
   TouchableOpacity,
   Image,
   ActivityIndicator,
-  TextInput,Pressable} from 'react-native'
+  TextInput,
+  Pressable
+} from 'react-native'
 import React, {useEffect, useState, useRef, useCallback} from 'react'
 import { useDispatch } from 'react-redux';
-import { Camera, CameraType } from 'expo-camera';
-import {Ionicons,Entypo, FontAwesome} from 'react-native-vector-icons';
+import {Ionicons} from 'react-native-vector-icons';
 import Modal from "react-native-modal";
 import CustomButton from '../components/CustomButton';
 import DropDownPicker from 'react-native-dropdown-picker';
-import * as ImagePicker from 'expo-image-picker';  // not react-image-picker
 import { useNavigation } from '@react-navigation/native';
 import { getAllState } from '../../redux/reducers/getSpeciality';
 import { userRegisterSecond } from '../../redux/reducers/loginAuth';
 import { coinTransfer } from '../../redux/reducers/coinSlice';
 import Toast from 'react-native-simple-toast';
 import Lottie from 'lottie-react-native';
-import { BottomSheetModal,BottomSheetModalProvider} from "@gorhom/bottom-sheet";
+import {BottomSheetModalProvider} from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { PickImage } from '../navigation/ReuseLogics';
 
 
 const RegisterTwoScreen = ({route}) => {
 const navigation  = useNavigation();
+const ref = useRef(null);
 
 const dispatch    = useDispatch();
   // const fullname = 'asj'
@@ -220,6 +221,9 @@ useEffect(()=>{
   },[]);
 
   const form_submit = async() =>{
+    if (ref.current) {
+      ref.current.scrollTo({ y: 0, animated: true })
+    }
     if(!register.pincode){
       setPincode("Please enter a valid pincode");
     }else if(!register.mrn){
@@ -275,7 +279,7 @@ return (
    <BottomSheetModalProvider>
     
  <SafeAreaView style={{flex: 0, justifyContent: 'center',paddingTop:0}}>
-  <ScrollView
+  <ScrollView ref={ref}
     keyboardShouldPersistTaps='handled'
     showsVerticalScrollIndicator={true}
     nestedScrollEnable={true}>

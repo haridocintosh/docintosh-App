@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -57,10 +57,12 @@ export default function RegisterScreen() {
     role:"",
   });
 
+  const ref = useRef(null);
+  
+
   useEffect(()=>{
     async function fetchSpecialities(){
       const allSpeciality = await dispatch(getAllSpeciality());
-   
       setSpl(allSpeciality.payload.map((ele,index)=>{
         return {label: ele.speciality, value: ele.speciality_id};
      }))
@@ -160,6 +162,9 @@ const setuserrole= (e)=>{
 }
 
 const form_submit = async() =>{
+  if (ref.current) {
+    ref.current.scrollTo({ y: 0, animated: true })
+  }
   if(!register.fname){
     fnerr("Please enter First Name");
   }else if(!register.lname){
@@ -167,11 +172,11 @@ const form_submit = async() =>{
   }else if(!register.email){
     setemail("Please enter valid Email ID");
   }
-  else if(emailIderr != ''){
-    setemail("This Email ID is registered with us");
-  }else if(mobileId !=''){
-    setemail("This mobile no. is registred with us");
-  }
+  // else if(emailIderr != ''){
+  //   setemail("This Email ID is registered with us");
+  // }else if(mobileId !=''){
+  //   setemail("This mobile no. is registred with us");
+  // }
   else if(!register.mobile){
     setmobile("Pleaes enter valid mobile no.");
   }else if(!register.gender){
@@ -207,17 +212,22 @@ const form_submit = async() =>{
   }
 
   const handleStudentSubmit = async() =>{
+    if (ref.current) {
+      ref.current.scrollTo({ y: 0, animated: true })
+    }
     if(!register.fname){
       fnerr("Please enter First Name");
     }else if(!register.lname){
       lnerr("Please enter Last Name");
     }else if(!register.gender){
       errgender("Please Select gender");
-    }else if(emailIderr != ''){
-      setemail("This Email ID is registered with us");
-    }else if(mobileId !=''){
-      setemail("This mobile no. is registred with us");
-    }else if(!register.email){
+    }
+    // else if(emailIderr != ''){
+    //   setemail("This Email ID is registered with us");
+    // }else if(mobileId !=''){
+    //   setemail("This mobile no. is registred with us");
+    // }
+    else if(!register.email){
       setemail("Please enter valid Email ID");
     }else if(!register.mobile){
       setmobile("Pleaes enter valid mobile no.");
@@ -256,9 +266,11 @@ const form_submit = async() =>{
   }
 
   return (
-    <SafeAreaView style={{ display:"flex",justifyContent: 'center',paddingHorizontal: 20}}>
-          <ScrollView keyboardShouldPersistTaps='handled'showsVerticalScrollIndicator={false}nestedScrollEnable={true} >
-          <View style={{ marginTop :30}}>
+    <View style={{ display:"flex",justifyContent: 'center',paddingHorizontal: 20}}  >
+      <ScrollView ref={ref} keyboardShouldPersistTaps='handled' 
+          showsVerticalScrollIndicator={false} 
+          nestedScrollEnable={true}>
+          <View style={{ marginTop :30}} >
             <Text  style={styles.headingtext}>Hey There!</Text>
             <Text style={styles.headingpara} >Welcome to Docintosh. Let’s create your account.</Text>
           </View>
@@ -272,12 +284,12 @@ const form_submit = async() =>{
           onChangeText={(e)=> firstName(e)}
         />
         <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{fn}</Text>
-
         <TextInput 
           style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular',}]}  
           placeholderTextColor='#687690' 
           placeholder='Last Name' 
-          onChangeText={(e)=>{lastName(e);}} 
+          onChangeText={(e)=>{lastName(e);}}
+          
         />
         <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{ln}</Text>
 
@@ -330,7 +342,6 @@ const form_submit = async() =>{
               <Text style={styles.roleTabText}>Student</Text>
             </TouchableOpacity>
           </View>
-
      </View>
 
      <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{userrole}</Text>
@@ -403,9 +414,8 @@ const form_submit = async() =>{
       </View> */}
       <View>
     </View>
-    </ScrollView>
-  </SafeAreaView>
-      
+      </ScrollView>
+    </View>
   );
 }
 

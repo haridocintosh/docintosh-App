@@ -48,10 +48,8 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,res
   }
 
   const SavedPostHandle = async () => {
-
     const postDetails = {user_id:resData?.id, post_id:item?.post_id};
     const savedPostResult = await dispatch(SavePostApi(postDetails));
-    // console.log("savedPostResult",savedPostResult.payload);
     if(savedPostResult.payload.status == "Saved"){
       setSavedPost(true);
     }else{

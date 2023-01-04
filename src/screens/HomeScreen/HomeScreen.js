@@ -16,11 +16,10 @@ import Svg, {Path} from 'react-native-svg';
 import PublicReactions from './PublicReactions';
 import { styles } from './Homestyle';
 import moment from "moment";
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused, useScrollToTop } from '@react-navigation/native';
 import OptionModal from './optionModal';
 import { getLocalData } from '../../apis/GetLocalData';
 import AutoHeightImage from './AutoHeightImage';
-
 
 
 const HomeScreen = ({navigation})=> {
@@ -38,7 +37,7 @@ const HomeScreen = ({navigation})=> {
 
   const isFocused = useIsFocused();
 
-  const video = useRef(null);
+  const ref = useRef(null);
 
   const { width,height } = Dimensions.get('window')
 
@@ -107,10 +106,12 @@ const handleOption = (post_id,id) => {
     // console.log("currentPage",currentPage);
     // setCurrentPage(currentPage + 1);
      setSliceCount(sliceCount +2);
-     console.log("sliceCount +2",sliceCount +2);
   };
 
   useEffect(()=>{
+    if(ref.current) {
+      ref.current.scrollToOffset({ offset: 0 })
+    }
     if(isFocused){
       asyncFetchDailyData();
       getStorageData();
@@ -118,7 +119,7 @@ const handleOption = (post_id,id) => {
   },[isFocused,currentPage]);
 
   const asyncFetchDailyData = async () => {
-    getLocalData('USER_INFO').then(async (res) =>{
+    getLocalData('USER_INFO').then(async (res) => {
       const reData = res?.data;
       setResData(reData)
       setuserdata({
@@ -259,6 +260,7 @@ const handleOption = (post_id,id) => {
           </View>
           <View style={{paddingBottom:550}}>
           <Animated.FlatList
+              ref={ref}
               onScroll={Animated.event(
                 [{nativeEvent: {contentOffset: {y: scrollPosition}}}],
                 {useNativeDriver: false},
