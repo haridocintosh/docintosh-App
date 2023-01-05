@@ -68,46 +68,50 @@ export const surveyData = createSlice({
   initialState: {
     postData: [],
     survayList:[],
+    saveSurveyData:[],
     loading: false,
     error: false,
   },
   reducers: {},
-  extraReducers: {
-    [survayList.pending]: (state) => {
-      state.loading = true;
-    },
-    [survayList.fulfilled]: (state, action) => {
-      state.loading = false;
-      state.survayList = action.payload;
-    },
-    [survayList.rejected]: (state) => {
-      state.loading = false;
-      state.error = true;
-    },
+  extraReducers: builder => {
+    //--------------------------survayList-------------------------------
+    builder.addCase(survayList.pending, (state) => {
+      state.loading       =  true;
+    })
+    builder.addCase(survayList.fulfilled, (state, action) => {
+        state.loading       =  false;
+        state.survayList    = action.payload;
+    })
+    builder.addCase(survayList.rejected, (state) => {
+        state.loading = false;
+        state.error = false
+    })
 
-    [getSurveyQuestions.pending]: (state) => {
-      state.loading = true;
-    },
-    [getSurveyQuestions.fulfilled]: (state, action) => {
-      state.loading = false;
-      state.postData = action.payload;
-    },
-    [getSurveyQuestions.rejected]: (state) => {
-      state.loading = false;
-      state.error = true;
-    },
+    //--------------------------getSurveyQuestions-------------------------------
+    builder.addCase(getSurveyQuestions.pending, (state) => {
+      state.loading       =  true;
+    })
+    builder.addCase(getSurveyQuestions.fulfilled, (state, action) => {
+        state.loading       =  false;
+        state.postData    = action.payload;
+    })
+    builder.addCase(getSurveyQuestions.rejected, (state) => {
+        state.loading = false;
+        state.error = false
+    })
 
-    [saveSurveyAnswers.pending]: (state) => {
-      state.loading = true;
-    },
-    [saveSurveyAnswers.fulfilled]: (state, action) => {
-      state.loading = false;
-      state.postData = action.payload;
-    },
-    [saveSurveyAnswers.rejected]: (state) => {
-      state.loading = false;
-      state.error = true;
-    },
+    //--------------------------saveSurveyAnswers-------------------------------
+    builder.addCase(saveSurveyAnswers.pending, (state) => {
+      state.loading       =  true;
+    })
+    builder.addCase(saveSurveyAnswers.fulfilled, (state, action) => {
+        state.loading       =  false;
+        state.saveSurveyData    = action.payload;
+    })
+    builder.addCase(saveSurveyAnswers.rejected, (state) => {
+        state.loading = false;
+        state.error = false
+    })
   },
 });
 

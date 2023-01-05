@@ -57,7 +57,7 @@ export const getMycircle = createAsyncThunk("getCircle", async (data)=>{
     return result;
 })
 
-export const getMyPostsApi = createAsyncThunk("getCircle", async (data)=>{
+export const getMyPostsApi = createAsyncThunk("MyPosts", async (data)=>{
     const response = await fetch(`${mainApi.baseUrl}/ApiController/getmyPost`,{
         method : 'POST',
         headers:{
@@ -69,7 +69,7 @@ export const getMyPostsApi = createAsyncThunk("getCircle", async (data)=>{
     return getMyPostsResult;
 })
 
-export const getAllCoins = createAsyncThunk("getCircle", async (data)=>{
+export const getAllCoins = createAsyncThunk("AllCoins", async (data)=>{
     const response = await fetch(`${mainApi.baseUrl}/ApiController/totalCoins`,{
         method : 'POST',
         headers:{
@@ -81,7 +81,7 @@ export const getAllCoins = createAsyncThunk("getCircle", async (data)=>{
     return getAllCoinsResult;
 });
 
-export const getCointransfer = createAsyncThunk("getCircle", async (data)=>{
+export const getCointransfer = createAsyncThunk("Cointransfer", async (data)=>{
     const response = await fetch(`${mainApi.baseUrl}/ApiController/cointransfer`,{
         method : 'POST',
         headers:{
@@ -93,6 +93,30 @@ export const getCointransfer = createAsyncThunk("getCircle", async (data)=>{
     return getCointransferResult;
 })
 
+export const getFollowersDataApi = createAsyncThunk("followers", async (data)=>{
+    const response = await fetch(`${mainApi.baseUrl}/ApiController/followers`,{
+        method : 'POST',
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        body : JSON.stringify(data)
+    });
+    const getFollowersResult = await response.json();
+    return getFollowersResult;
+})
+
+export const getFollowingDataApi = createAsyncThunk("following", async (data)=>{
+    const response = await fetch(`${mainApi.baseUrl}/ApiController/following`,{
+        method : 'POST',
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        body : JSON.stringify(data)
+    });
+    const getFollowingResult = await response.json();
+    return getFollowingResult;
+})
+
 
 export const postData = createSlice({
     name : "usersfetch",
@@ -102,104 +126,114 @@ export const postData = createSlice({
         error :false,
     },
     reducers : {},
-    extraReducers :{
-        [userPostData.pending] : (state)=>
-            {
-                state.loading =  true;
-            }, 
-        [userPostData.fulfilled] : (state, action)=>
-            {   
-                state.loading  =  false;
-                state.postData = action.payload;
-            }, 
-        [userPostData.rejected] : (state)=>
-            {
-                state.loading = false;
-                state.error   = true
-            }, 
+    extraReducers : builder =>{
+
+        //---------------------userPostData----------------------
+        builder.addCase(userPostData.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(userPostData.fulfilled, (state, action) => {
+            state.loading  =  false;
+            state.postData = action.payload;
+        })
+        builder.addCase(userPostData.rejected, (state) => {
+            state.loading = false;
+            state.error = false
+        })
+
+        //---------------------postCreate----------------------
+        builder.addCase(postCreate.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(postCreate.fulfilled, (state, action) => {
+            state.loading       = false,
+            state.isLoggedIn    = true
+            state.registerData  = action.payload;
+        })
+        builder.addCase(postCreate.rejected, (state) => {
+            state.loading = false;
+            state.error = false
+        })
+
+        //---------------------getMycircle----------------------
+        builder.addCase(getMycircle.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(getMycircle.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.circleData    = action.payload;
+        })
+        builder.addCase(getMycircle.rejected, (state) => {
+            state.loading = false;
+            state.error = false
+        })
 
 
-        [postCreate.pending] : (state)=>
-            {
-                state.loading =  true
-            }, 
-        [postCreate.fulfilled] : (state, action)=>
-            {  
-                state.loading       = false,
-                state.isLoggedIn    = true
-                state.registerData  = action.payload;
-            }, 
-        [postCreate.rejected] : (state, action)=>
-            {   
-                state.isLoggedIn = false,
-                state.loading = false;
-                state.error = false
-            },
+        //---------------------getMyPostsApi----------------------
+        builder.addCase(getMyPostsApi.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(getMyPostsApi.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.circleData    = action.payload;
+        })
+        builder.addCase(getMyPostsApi.rejected, (state) => {
+            state.loading = false;
+            state.error = false
+        })
 
 
-        [getMycircle.pending] : (state)=>
-            {
-                state.loading   =  true;
-            }, 
-        [getMycircle.fulfilled] : (state, action)=>
-            {   
-                state.loading       =  false;
-                state.circleData    = action.payload;
-            }, 
-        [getMycircle.rejected] : (state)=>
-            {
-                state.loading = false;
-                state.error   = true
-            }, 
+        //---------------------getAllCoins----------------------
+        builder.addCase(getAllCoins.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(getAllCoins.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.circleData    = action.payload;
+        })
+        builder.addCase(getAllCoins.rejected, (state) => {
+            state.loading = false;
+            state.error = false
+        })
 
-        // get My post    
-        [getMyPostsApi.pending] : (state)=>
-            {
-                state.loading   =  true;
-            }, 
-        [getMyPostsApi.fulfilled] : (state, action)=>
-            {   
-                state.loading       =  false;
-                state.circleData    = action.payload;
-            }, 
-        [getMyPostsApi.rejected] : (state)=>
-            {
-                state.loading = false;
-                state.error   = true
-            }, 
+        //---------------------getCointransfer----------------------
+        builder.addCase(getCointransfer.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(getCointransfer.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.circleData    = action.payload;
+        })
+        builder.addCase(getCointransfer.rejected, (state) => {
+            state.loading = false;
+            state.error = false
+        })
 
-        // get all Coins    
-        [getAllCoins.pending] : (state)=>
-            {
-                state.loading   =  true;
-            }, 
-        [getAllCoins.fulfilled] : (state, action)=>
-            {   
-                state.loading       =  false;
-                state.circleData    = action.payload;
-            }, 
-        [getAllCoins.rejected] : (state)=>
-            {
-                state.loading = false;
-                state.error   = true
-            }, 
+        //---------------------getFollowersDataApi----------------------
+        builder.addCase(getFollowersDataApi.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(getFollowersDataApi.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.circleData    = action.payload;
+        })
+        builder.addCase(getFollowersDataApi.rejected, (state) => {
+            state.loading = false;
+            state.error = false
+        })
 
-        // get Coins transfer    
-        [getCointransfer.pending] : (state)=>
-            {
-                state.loading   =  true;
-            }, 
-        [getCointransfer.fulfilled] : (state, action)=>
-            {   
-                state.loading       =  false;
-                state.circleData    = action.payload;
-            }, 
-        [getCointransfer.rejected] : (state)=>
-            {
-                state.loading = false;
-                state.error   = true
-            }, 
-
+        //---------------------getFollowingDataApi----------------------
+        builder.addCase(getFollowingDataApi.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(getFollowingDataApi.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.circleData    = action.payload;
+        })
+        builder.addCase(getFollowingDataApi.rejected, (state) => {
+            state.loading = false;
+            state.error = false
+        })
     }
 });
 

@@ -48,37 +48,33 @@ export const getBlockedUsersApi = createAsyncThunk("blockedUsers", async(data)=>
     reducers : {
 
     },
-    extraReducers :{
-        [getSavedPostsApi.pending] : (state)=>
-        {
-          state.loading =  true;
-        }, 
-        [getSavedPostsApi.fulfilled] : (state, action)=>
-        {   
-          state.loading =  false;
-          state.users = action.payload;
-        }, 
-        [getSavedPostsApi.rejected] : (state)=>
-        {
+    extraReducers : builder => {
+      //--------------------------getSavedPostsApi-------------------------------
+      builder.addCase(getSavedPostsApi.pending, (state) => {
+          state.loading       =  true;
+      })
+      builder.addCase(getSavedPostsApi.fulfilled, (state, action) => {
+          state.loading       =  false;
+          state.users    = action.payload;
+      })
+      builder.addCase(getSavedPostsApi.rejected, (state) => {
           state.loading = false;
-          state.error = true
-        },
-    },
-    extraReducers :{
-        [getBlockedUsersApi.pending] : (state)=>
-        {
-          state.loading =  true;
-        }, 
-        [getBlockedUsersApi.fulfilled] : (state, action)=>
-        {   
-          state.loading =  false;
-          state.getBlockedUsers = action.payload;
-        }, 
-        [getBlockedUsersApi.rejected] : (state)=>
-        {
+          state.error = false
+      })
+
+      //--------------------------getBlockedUsersApi-------------------------------
+      builder.addCase(getBlockedUsersApi.pending, (state) => {
+          state.loading       =  true;
+      })
+      builder.addCase(getBlockedUsersApi.fulfilled, (state, action) => {
+          state.loading       =  false;
+          state.getBlockedUsers    = action.payload;
+      })
+      builder.addCase(getBlockedUsersApi.rejected, (state) => {
           state.loading = false;
-          state.error = true
-        },
+          state.error = false
+      })
+
     },
 });
 

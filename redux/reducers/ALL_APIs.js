@@ -93,70 +93,72 @@ export const savePost = createSlice({
         error       : false,
     },
     reducers : {},
-    extraReducers :{
-        [SavePostApi.pending] : (state)=>{   
+
+    extraReducers: builder => {
+        //-------------------------SavePostApi----------------------------------
+        builder.addCase(SavePostApi.pending, (state) => {
             state.loading       =  true;
-        }, 
-        [SavePostApi.fulfilled] : (state, action)=>{   
+        })
+        builder.addCase(SavePostApi.fulfilled, (state, action) => {
             state.loading       =  false;
             state.savePostResult    = action.payload;
-        }, 
-        [SavePostApi.rejected] : (state)=>{
+        })
+        builder.addCase(SavePostApi.rejected, (state) => {
             state.loading       = false;
             state.error         = true
-        }, 
-    },
-    extraReducers :{
-        [BlockUserApi.pending] : (state)=>{   
+        })
+
+        //-------------------------BlockUserApi----------------------------------
+        builder.addCase(BlockUserApi.pending, (state) => {
             state.loading       =  true;
-        }, 
-        [BlockUserApi.fulfilled] : (state, action)=>{   
-            state.loading         =  false;
-            state.blockUserResult = action.payload;
-        }, 
-        [BlockUserApi.rejected] : (state)=>{
+        })
+        builder.addCase(BlockUserApi.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.blockUserResult    = action.payload;
+        })
+        builder.addCase(BlockUserApi.rejected, (state) => {
             state.loading       = false;
             state.error         = true
-        }, 
-    },
-    extraReducers :{
-        [getsearchSplData.pending] : (state)=>{   
+        })
+
+        //-------------------------getsearchSplData----------------------------------
+        builder.addCase(getsearchSplData.pending, (state) => {
             state.loading       =  true;
-        }, 
-        [getsearchSplData.fulfilled] : (state, action)=>{   
-            state.loading         =  false;
-            state.getsearchResult = action.payload;
-        }, 
-        [getsearchSplData.rejected] : (state)=>{
+        })
+        builder.addCase(getsearchSplData.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.getsearchResult    = action.payload;
+        })
+        builder.addCase(getsearchSplData.rejected, (state) => {
             state.loading       = false;
             state.error         = true
-        }, 
-    },
-    extraReducers :{
-        [followApi.pending] : (state)=>{   
+        })
+
+        //-------------------------followApi----------------------------------
+        builder.addCase(followApi.pending, (state) => {
             state.loading       =  true;
-        }, 
-        [followApi.fulfilled] : (state, action)=>{   
-            state.loading         =  false;
-            state.followResult = action.payload;
-        }, 
-        [followApi.rejected] : (state)=>{
+        })
+        builder.addCase(followApi.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.followResult    = action.payload;
+        })
+        builder.addCase(followApi.rejected, (state) => {
             state.loading       = false;
             state.error         = true
-        }, 
-    },
-    extraReducers :{
-        [sendInvitation.pending] : (state)=>{   
+        })
+
+        //-------------------------sendInvitation----------------------------------
+        builder.addCase(sendInvitation.pending, (state) => {
             state.loading       =  true;
-        }, 
-        [sendInvitation.fulfilled] : (state, action)=>{   
-            state.loading         =  false;
-            state.sendInviteResult = action.payload;
-        }, 
-        [sendInvitation.rejected] : (state)=>{
+        })
+        builder.addCase(sendInvitation.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.sendInviteResult    = action.payload;
+        })
+        builder.addCase(sendInvitation.rejected, (state) => {
             state.loading       = false;
             state.error         = true
-        }, 
+        })
     },
 });
 

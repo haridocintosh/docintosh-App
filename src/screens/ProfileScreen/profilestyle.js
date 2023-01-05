@@ -92,12 +92,17 @@ export const styles = StyleSheet.create({
     height: 60,
     width: 60,
     marginRight: 15,
+    borderRadius:50
   },
   followerLhs: {
     flexDirection: "row",
     alignItems: "center",
   },
-  followerName: {},
+  Nodata: {
+    textAlign:'center',
+    fontSize: 16,
+    fontFamily: "PlusJakartaSans-Bold",
+  },
   followerNameText: {
     fontSize: 16,
     fontWeight: "500",
@@ -110,9 +115,6 @@ export const styles = StyleSheet.create({
     marginTop: 5,
     fontFamily: "Inter-Regular",
   },
-
-
- 
  
   // ==============================Profilescreen =================================
   box1: {

@@ -18,6 +18,9 @@ import { coinTransfer } from "../../../../redux/reducers/coinSlice";
 import { PickImageAll, PickVideos } from "../../../navigation/ReuseLogics";
 import { Audio } from 'expo-av';
 import * as DocumentPicker from 'expo-document-picker';
+import data from "../../../model/data";
+import EmojiSelector, { Categories } from "react-native-emoji-selector";
+
 let recording = new Audio.Recording();
 
 const  Sharepost = () => {
@@ -28,7 +31,6 @@ const  Sharepost = () => {
   const [pickedData, setData]   = useState(null);
   const [document, setDocument]   = useState(null);
   const [circlespeciality, setSpl] = useState([]);
-  const [selectedImg, setSelectedImg] = useState();
   const [post ,setPost] = useState({
       publishto:"",
       description :"",
@@ -76,6 +78,7 @@ const  Sharepost = () => {
   }
   // console.log("useId ","useId ",uniqueId);
   const pickEmoji =  () => {
+  console.log("ppicked");
     setEmojiTab(!emojiTab)
   }
   const pickImage =  () => {
@@ -83,9 +86,7 @@ const  Sharepost = () => {
     PickImageAll(setloader).then(async (res) =>{
       const data = res?.map((data,i) => {return {...data, id:i}})
       setData(data);
-      console.log("res?.length",res?.length);
-      return;
-      data?.map(async(data) => {
+      res?.map(async(data) => {
         let localUri = data.uri
         let filename = localUri.split('/').pop();
         let uriParts = localUri.split('.');
@@ -152,7 +153,6 @@ const  Sharepost = () => {
   };
 
   const handleDocPicker = async () => {
-    setData();
     let result = await DocumentPicker.getDocumentAsync({ 
       type: "application/*",
       copyToCacheDirectory: false, 
@@ -198,6 +198,8 @@ const publishCheck1 = (e, text)=>{
 
 
   const handleStudentSubmit = async() =>{
+    console.log("postDAta",post);
+    console.log("uploadImage",uploadImage);
     if(post.publishto ==''){
       Toast.show('Please Select Publish to');
       bottomSheetModalRefSecond.current?.present();
@@ -225,6 +227,7 @@ const publishCheck1 = (e, text)=>{
     }
 
   const uploadPostImage = async (post_id) => {
+    //console.log(post_id);
     let localUri = {pickedData};
     //console.log(localUri);
     let filename = localUri.split('/').pop();
@@ -344,37 +347,8 @@ setSpecialNames(specialityName)
   const removeImg = (id) => {
     console.log(id);
     const removed = pickedData?.filter(data => data.id != id); 
-    console.log("removed",removed);
+    console.log(removed);
     setData(removed);
-    return;
-    removed?.map(async(data) => {
-      let localUri = data.uri
-      let filename = localUri.split('/').pop();
-      let uriParts = localUri.split('.');
-      let fileType = uriParts[uriParts.length - 1];
-      let formData = new FormData();
-      const imageData = {
-        uri : localUri,
-        name: filename,
-        type: `image/${fileType}`,
-      }
-      formData.append('postImage', imageData);
-      formData.append('post_id', '3032');
-      const responce = await fetch(`${mainApi.baseUrl}/ApiController/postuploadDocsReact`, {
-        method : 'POST',
-        headers:{
-            'Content-Type': 'multipart/form-data'
-        },
-        body :formData
-     });
-     const result1=  await responce.json();
-      setuploadImage({...uploadImage,
-        uploadImage:uploadImage.pimage.push(result1.postImage)
-      })
-      setPost({...post, 
-        type:'i'
-      });
-    });
   }
 
   const handleDocType = (type) => {
@@ -446,12 +420,8 @@ setSpecialNames(specialityName)
         })}
         {document &&
         <View style={styles.pdfUploadContainer}>
-          <View style={{flexDirection:'row',alignItems:'center'}}>
-          <AntDesign name={handleDocType(document?.uri)} size={24} color={"black"} />
-           <Text style={styles.pdfFileName}>
-            {document?.name.length > 30 ? `${document?.name.slice(0,30)}...` : document?.name}
-           </Text>
-          </View>
+           <AntDesign name={handleDocType(document?.uri)} size={24} color={"black"} />
+           <Text style={styles.pdfFileName}>{document?.name}</Text>
            <TouchableOpacity style={styles.pdfFileClose} onPress={() => setDocument(null)}>
              <AntDesign name="closecircle" size={15} color="#45B5C0" />
            </TouchableOpacity>
@@ -459,6 +429,7 @@ setSpecialNames(specialityName)
         </View>
         <View style={styles.line}/>
       </View>
+
       <View style={[styles.container]}> 
       {/* <EmojiSelector
         category={Categories.all}
@@ -487,6 +458,7 @@ setSpecialNames(specialityName)
             <MaterialCommunityIcons name="dots-horizontal-circle" size={26} color="#51668A"  onPress={ () => handlePresentModal()}  />
           </TouchableOpacity>
         </View>
+          
         <StatusBar style="auto" />
 
         <BottomSheetModal
@@ -688,7 +660,6 @@ const styles = StyleSheet.create({
   },
   pdfUploadContainer:{
     // borderWidth:1,
-    width:"100%",
     padding:13,
     borderRadius:5,
     backgroundColor:'#fff',
@@ -700,11 +671,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3,
     elevation: 3,
-    justifyContent:'space-between'
   },
   pdfFileName:{
-    marginLeft:10,
-    marginRight:5
+    marginLeft:10
   },
   pdfFileClose:{
     marginLeft:10

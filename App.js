@@ -54,7 +54,6 @@ const [fontsLoaded] = useFonts({
 });
 
 if (!fontsLoaded) return null;
-
   // OneSignal.promptForPushNotificationsWithUserResponse();
   // //Method for handling notifications received while app in foreground
   // OneSignal.setNotificationWillShowInForegroundHandler(notificationReceivedEvent => {

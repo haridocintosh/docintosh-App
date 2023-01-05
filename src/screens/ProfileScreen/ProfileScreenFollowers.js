@@ -1,9 +1,15 @@
 import { View, Text,SafeAreaView, ScrollView, StyleSheet, Image } from 'react-native'
-import React,{useEffect} from 'react';
+import React,{useEffect, useState} from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { styles } from './profilestyle';
+import { getLocalData } from '../../apis/GetLocalData';
+import { getFollowersDataApi } from '../../../redux/reducers/postData';
+import { useDispatch } from 'react-redux';
 
-const ProfileScreenFollowers = ({navigation}) => {
+
+const ProfileScreenFollowers = ({navigation,route}) => {
+   const {followersData} = route.params;
+
    useEffect(() => {
       navigation.setOptions({ title: 'Followers' });
     },[])
@@ -13,48 +19,28 @@ const ProfileScreenFollowers = ({navigation}) => {
           showsVerticalScrollIndicator={false}
           nestedScrollEnable={true}>
             <View style={styles.followerHeader}>
-                <Text style={styles.followerHeader}>829 Followers</Text>
+                <Text style={styles.followerHeader}>{followersData?.length} Followers</Text>
             </View>
 
-            <View style={styles.followerContainer}>
-                <View style={styles.followerLhs}>
-                   <Image source={require('../../assets/images/p2.png')} style={styles.profileimgfollower}/>
-                   <View style={styles.followerName}>
-                        <Text style={styles.followerNameText}>Dr. Kiran</Text>
-                        <Text style={styles.followerSpecialist}>Urology</Text>
-                   </View>
-                </View>
-                <View style={styles.followerLhs}>
-                   <Entypo name="dots-three-vertical" size={20} color="#51668A"  style={{display:"flex",justifyContent:"center",alignContent:"flex-end"}}/>
-                </View>
-            </View>
-            <View style={styles.followerContainer}>
-                <View style={styles.followerLhs}>
-                   <Image source={require('../../assets/images/p2.png')} style={styles.profileimgfollower}/>
-                   <View style={styles.followerName}>
-                        <Text style={styles.followerNameText}>Dr. Kiran</Text>
-                        <Text style={styles.followerSpecialist}>Urology</Text>
-                   </View>
-                </View>
-                <View style={styles.followerLhs}>
-                   <Entypo name="dots-three-vertical" size={20} color="#51668A"  style={{display:"flex",justifyContent:"center",alignContent:"flex-end"}}/>
-                </View>
-            </View>
-            <View style={styles.followerContainer}>
-                <View style={styles.followerLhs}>
-                   <Image source={require('../../assets/images/p2.png')} style={styles.profileimgfollower}/>
-                   <View style={styles.followerName}>
-                        <Text style={styles.followerNameText}>Dr. Kiran</Text>
-                        <Text style={styles.followerSpecialist}>Urology</Text>
-                   </View>
-                </View>
-                <View style={styles.followerLhs}>
-                   <Entypo name="dots-three-vertical" size={20} color="#51668A"  style={{display:"flex",justifyContent:"center",alignContent:"flex-end"}}/>
-                </View>
-            </View>
-
-            
-            
+            {followersData?.length > 0 ?followersData?.map((data,index) => {
+               return(
+               <View style={styles.followerContainer} key={index}>
+                     <View style={styles.followerLhs}>
+                        <Image source={{uri:data.userprofile}} style={styles.profileimgfollower}/>
+                        <View style={styles.followerName}>
+                           <Text style={styles.followerNameText}>{data.username}</Text>
+                           <Text style={styles.followerSpecialist}>{data.speciality}</Text>
+                        </View>
+                     </View>
+                     <View style={styles.followerLhs}>
+                        <Entypo name="dots-three-vertical" size={20} color="#51668A"  style={{display:"flex",justifyContent:"center",alignContent:"flex-end"}}/>
+                     </View>
+               </View>
+               )
+            })
+            : 
+            <Text style={styles.Nodata}>You don't have any followers yet</Text>
+         }
         </ScrollView>
     </SafeAreaView>
   )

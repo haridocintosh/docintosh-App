@@ -47,21 +47,20 @@ export const otpSlice = createSlice({
     reducers : {
 
     },
-    extraReducers :{
-        [doctorOtp.pending] : (state)=>
-        {   
-            state.loading =  true;
-        }, 
-        [doctorOtp.fulfilled] : (state, action)=>
-        {   
-            state.loading =  false;
+    extraReducers : builder =>{
+        //-------------------------doctorOtp-----------------------------
+        builder.addCase(doctorOtp.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(doctorOtp.fulfilled, (state, action) => {
+            state.loading  =  false;
             state.doctorOtp = action.payload;
-        }, 
-        [doctorOtp.rejected] : (state)=>
-        {
+        })
+        builder.addCase(doctorOtp.rejected, (state) => {
             state.loading = false;
-            state.error = true
-        }, 
+            state.error = false
+        })
+
     }
 });
 

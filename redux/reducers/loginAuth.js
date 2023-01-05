@@ -125,60 +125,55 @@ export const loginAuth = createSlice({
             currentState.loading    = false;
         },
     },
-    extraReducers :{
-       [userLogin.pending] : (state)=>
-        {
-         state.loading =  true
-        }, 
-        [userLogin.fulfilled] : (state, action)=>
-        {
+    extraReducers : builder =>{
+        //-------------------------userLogin-----------------------------
+        builder.addCase(userLogin.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(userLogin.fulfilled, (state, action) => {
             state.loading       = false;
             state.isLoggedIn    = true;
             state.usertoken     = 'userLogin'
             state.userInfo      =  action.payload;
-        }, 
-        [userLogin.rejected] : (state, action)=>
-        {   
+        })
+        builder.addCase(userLogin.rejected, (state) => {
             state.isLoggedIn = false;
             state.loading = false;
             state.error = false
-        },
-        
+        })
 
-        [userRegisterOne.pending] : (state)=>
-        {
-            state.loading =  true
-        }, 
-        [userRegisterOne.fulfilled] : (state, action)=>
-        {  
+
+        //-------------------------userRegisterOne-----------------------------
+        builder.addCase(userRegisterOne.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(userRegisterOne.fulfilled, (state, action) => {
             state.loading       = false,
             state.isLoggedIn    = true
             state.registerData  = action.payload;
-        }, 
-        [userRegisterOne.rejected] : (state, action)=>
-        {   
-            state.isLoggedIn = false,
+        })
+        builder.addCase(userRegisterOne.rejected, (state) => {
+            state.isLoggedIn = false;
             state.loading = false;
             state.error = false
-        },
+        })
 
 
-        [userRegisterSecond.pending] : (state)=>
-        {
-            state.loading =  true
-        }, 
-        [userRegisterSecond.fulfilled] : (state, action)=>
-        {  
+        //-------------------------userRegisterSecond-----------------------------
+        builder.addCase(userRegisterSecond.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(userRegisterSecond.fulfilled, (state, action) => {
             state.loading       = false,
             state.isLoggedIn    = true
             state.registerTwoData  = action.payload;
-        }, 
-        [userRegisterSecond.rejected] : (state, action)=>
-        {   
-            state.isLoggedIn = false,
+        })
+        builder.addCase(userRegisterSecond.rejected, (state) => {
+            state.isLoggedIn = false;
             state.loading = false;
             state.error = false
-        }
+        })
+
     }
 });
 

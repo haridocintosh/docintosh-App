@@ -2,62 +2,44 @@ import { View, Text,SafeAreaView, ScrollView, StyleSheet, Image } from 'react-na
 import React,{useEffect} from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { styles } from './profilestyle';
+import { getFollowingDataApi } from '../../../redux/reducers/postData';
 
 
-const ProfileScreenFollowing = ({navigation}) => {
+const ProfileScreenFollowing = ({navigation,route}) => {
+   const {followingData} = route.params;
    useEffect(() => {
       navigation.setOptions({ title: 'Following' });
     },[])
   return (
-    <SafeAreaView style={styles.container}>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          nestedScrollEnable={true}>
-            <View style={styles.followerHeader}>
-                <Text style={styles.followerHeader}>520 Following</Text>
-            </View>
+   <SafeAreaView style={styles.Follwerscontainer}>
+   <ScrollView
+     showsVerticalScrollIndicator={false}
+     nestedScrollEnable={true}>
+       <View style={styles.followerHeader}>
+           <Text style={styles.followerHeader}>{followingData?.length} Followers</Text>
+       </View>
 
-            <View style={styles.followerContainer}>
+       {followingData?.length > 0 ? followingData?.map((data,index) => {
+          return(
+          <View style={styles.followerContainer} key={index}>
                 <View style={styles.followerLhs}>
-                   <Image source={require('../../assets/images/p3.png')} style={styles.profileimg}/>
+                   <Image source={{uri:data.userprofile}} style={styles.profileimgfollower}/>
                    <View style={styles.followerName}>
-                        <Text style={styles.followerNameText}>Dr. Sudeep Bhatra</Text>
-                        <Text style={styles.followerSpecialist}>Pediatric Surgeon</Text>
+                      <Text style={styles.followerNameText}>{data.username}</Text>
+                      <Text style={styles.followerSpecialist}>{data.speciality}</Text>
                    </View>
                 </View>
                 <View style={styles.followerLhs}>
                    <Entypo name="dots-three-vertical" size={20} color="#51668A"  style={{display:"flex",justifyContent:"center",alignContent:"flex-end"}}/>
                 </View>
-            </View>
-            <View style={styles.followerContainer}>
-                <View style={styles.followerLhs}>
-                   <Image source={require('../../assets/images/p3.png')} style={styles.profileimg}/>
-                   <View style={styles.followerName}>
-                        <Text style={styles.followerNameText}>Dr. Sudeep Bhatra</Text>
-                        <Text style={styles.followerSpecialist}>Pediatric Surgeon</Text>
-                   </View>
-                </View>
-                <View style={styles.followerLhs}>
-                   <Entypo name="dots-three-vertical" size={20} color="#51668A"  style={{display:"flex",justifyContent:"center",alignContent:"flex-end"}}/>
-                </View>
-            </View>
-            <View style={styles.followerContainer}>
-                <View style={styles.followerLhs}>
-                   <Image source={require('../../assets/images/p3.png')} style={styles.profileimg}/>
-                   <View style={styles.followerName}>
-                        <Text style={styles.followerNameText}>Dr. Sudeep Bhatra</Text>
-                        <Text style={styles.followerSpecialist}>Pediatric Surgeon</Text>
-                   </View>
-                </View>
-                <View style={styles.followerLhs}>
-                   <Entypo name="dots-three-vertical" size={20} color="#51668A"  style={{display:"flex",justifyContent:"center",alignContent:"flex-end"}}/>
-                </View>
-            </View>
-
-          
-            
-        </ScrollView>
-    </SafeAreaView>
+          </View>
+          )
+       })
+       : 
+       <Text style={styles.Nodata}>You're not following anyone</Text>
+       }
+   </ScrollView>
+</SafeAreaView>
   )
 }
 

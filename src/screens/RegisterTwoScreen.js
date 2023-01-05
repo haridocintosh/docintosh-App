@@ -223,22 +223,22 @@ useEffect(()=>{
   const form_submit = async() =>{
     if(!register.pincode){
       setPincode("Please enter a valid pincode");
-      if (ref.current) {
+      if(ref.current){
         ref.current.scrollTo({ y: 0, animated: true })
       }
     }else if(!register.mrn){
       setmrnId("Please enter MRN");
-      if (ref.current) {
+      if(ref.current){
         ref.current.scrollTo({ y: 0, animated: true })
       }
     }else if(!register.mry){
       setmrnYear("Please enter MRN Year");
-      if (ref.current) {
+      if(ref.current){
         ref.current.scrollTo({ y: 0, animated: true })
       }
     }else if(!register.medicalcouncil_id){
       setStateErr("Please enter State Council");
-      if (ref.current) {
+      if(ref.current){
         ref.current.scrollTo({ y: 0, animated: true })
       }
     }else if(!register.password){

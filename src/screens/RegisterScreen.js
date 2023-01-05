@@ -14,8 +14,6 @@ import CustomButton from '../components/CustomButton';
 // import DeviceInfo from 'react-native-device-info';
 // import { getUniqueId, getManufacturer } from 'react-native-device-info';
 import { useDispatch } from "react-redux";
-import { SvgUri } from 'react-native-svg';
-import { RadioButton } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import DropDownPicker from 'react-native-dropdown-picker'
 const styelcss = require('../assets/css/style');
