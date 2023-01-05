@@ -27,21 +27,18 @@ export const coinSlice = createSlice({
     },
     reducers : {
     },
-    extraReducers :{
-        [coinTransfer.pending] : (state)=>
-        {   
-            state.loading       =  true;
-        }, 
-        [coinTransfer.fulfilled] : (state, action)=>
-        {   
+    extraReducers :builder=> {
+        builder.addCase(coinTransfer.pending, (state) => {
+             state.loading       =  true;
+        })
+        builder.addCase(coinTransfer.fulfilled, (state, action) => {
             state.loading       =  false;
             state.coinResult    = action.payload;
-        }, 
-        [coinTransfer.rejected] : (state)=>
-        {
+        })
+        builder.addCase(coinTransfer.rejected, (state) => {
             state.loading       = false;
             state.error         = true
-        }, 
+        })
     }
 });
 

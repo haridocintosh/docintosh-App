@@ -11,16 +11,17 @@ import Svg, {Path} from 'react-native-svg';
 import OptionModal from '../HomeScreen/optionModal';
 import { useNavigation } from '@react-navigation/native';
 import { getLocalData } from '../../apis/GetLocalData';
+import AutoHeightImage from '../HomeScreen/AutoHeightImage';
 
 
-
-const ProfileScreenPost = () => {
+const ProfileScreenPost = ({postLength}) => {
   const [myPost,setMyPost] = useState();
   const [postId, setPostId] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
+  const { width } = Dimensions.get('window')
 
   const handleOption = (post_id) => {
     setPostId(post_id);
@@ -39,9 +40,9 @@ const ProfileScreenPost = () => {
       }
       const allPostResult = await dispatch(getMyPostsApi(postDetails));
       setMyPost(allPostResult.payload);
+      await postLength(allPostResult.payload.length);
     });
   }
-
 
   const handlePost = (item) => {
     navigation.navigate('PostsScreen', {item:item})
@@ -52,6 +53,7 @@ const ProfileScreenPost = () => {
   }, [])
 
   const renderItem = ({item}) => {
+    console.log("item",item);
     return(
       <Card style={styles.cardOfPosts} >
         <View style={styles.userInfo}>
@@ -92,14 +94,8 @@ const ProfileScreenPost = () => {
           {item?.ptitle }
           </Text>
         </View>
-
-        <TouchableOpacity style={{justifyContent:'center',alignItems:'center'}} onPress={() => handlePost(item)} >
-          <Image source={item.imgPath && {uri:item.imgPath}} 
-          style={{flex: 1, 
-            width: Dimensions.get("window").width, 
-            height:300}} resizeMode={'contain'}/>
-        </TouchableOpacity>
-          <PublicReactions item={item}/>
+        <AutoHeightImage item={item} width={width}/>
+        <PublicReactions item={item}/>
       </Card>
     )
   }

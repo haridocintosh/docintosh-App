@@ -94,98 +94,80 @@ export const likesData = createSlice({
         loading : false,
         error :false,
         commentsData:[],
-        gelAllLikes:[]
+        getAllLikes:[],
+        deleteComment:[]
     },
     reducers : {},
-    extraReducers :{
-        [postLikeData.pending] : (state)=>
-            {
-                state.loading =  true;
-            }, 
-        [postLikeData.fulfilled] : (state, action)=>
-            {   
-                state.loading  =  false;
-                state.likesData = action.payload;
-            }, 
-        [postLikeData.rejected] : (state)=>
-            {
-                state.loading = false;
-                state.error   = true
-            }, 
-  
-    },
+    extraReducers : builder =>{
+        //-------------------------postLikeData---------------------------
+        builder.addCase(postLikeData.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(postLikeData.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.likesData    = action.payload;
+        })
+        builder.addCase(postLikeData.rejected, (state) => {
+            state.loading = false;
+            state.error = false
+        })
+
+        //-------------------------commentData---------------------------
+        builder.addCase(commentData.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(commentData.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.commentsData    = action.payload;
+        })
+        builder.addCase(commentData.rejected, (state) => {
+            state.loading = false;
+            state.error = false
+        })
+
+        //-------------------------getallcomment---------------------------
+        builder.addCase(getallcomment.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(getallcomment.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.commentsData    = action.payload;
+        })
+        builder.addCase(getallcomment.rejected, (state) => {
+            state.loading = false;
+            state.error = false
+        })
+
+        //-------------------------getallLikes---------------------------
+        builder.addCase(getallLikes.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(getallLikes.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.getAllLikes    = action.payload;
+        })
+        builder.addCase(getallLikes.rejected, (state) => {
+            state.loading = false;
+            state.error = false
+        })
+
+        //-------------------------deleteComment---------------------------
+        builder.addCase(deleteComment.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(deleteComment.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.deleteComment    = action.payload;
+        })
+        builder.addCase(deleteComment.rejected, (state) => {
+            state.loading = false;
+            state.error = false
+        })
 
 
-    extraReducers :{
-        [commentData.pending] : (state)=>
-            {
-                state.loading =  true;
-            }, 
-        [commentData.fulfilled] : (state, action)=>
-            {   
-                state.loading  =  false;
-                state.commentsData = action.payload;
-            }, 
-        [commentData.rejected] : (state)=>
-            {
-                state.loading = false;
-                state.error   = true
-            }, 
+        
   
     },
-    extraReducers :{
-        [getallcomment.pending] : (state)=>
-            {
-                state.loading =  true;
-            }, 
-        [getallcomment.fulfilled] : (state, action)=>
-            {   
-                state.loading  =  false;
-                state.commentsData = action.payload;
-            }, 
-        [getallcomment.rejected] : (state)=>
-            {
-                state.loading = false;
-                state.error   = true
-            }, 
-  
-    },
-
-    extraReducers :{
-        [getallLikes.pending] : (state)=>
-            {
-                state.loading =  true;
-            }, 
-        [getallLikes.fulfilled] : (state, action)=>
-            {   
-                state.loading  =  false;
-                state.gelAllLikes = action.payload;
-            }, 
-        [getallLikes.rejected] : (state)=>
-            {
-                state.loading = false;
-                state.error   = true
-            }, 
-  
-    },
-
-    extraReducers :{
-        [deleteComment.pending] : (state)=>
-            {
-                state.loading =  true;
-            }, 
-        [deleteComment.fulfilled] : (state, action)=>
-            {   
-                state.loading  =  false;
-                state.gelAllLikes = action.payload;
-            }, 
-        [deleteComment.rejected] : (state)=>
-            {
-                state.loading = false;
-                state.error   = true
-            }, 
-  
-    }
 });
 
 export const { reducer : commentResults} = likesData;

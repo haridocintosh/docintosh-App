@@ -41,33 +41,32 @@ export const forgotPasswordSlice = createSlice({
     name : "forgotpasswordData",
     initialState :{
         forgotpasswordData : [],
+        setpasswordData : [],
         loading : false,
         error :false,
     },
-    reducers : {
+    reducers : {},
 
-    },
-    extraReducers :{
-       [forgotPassword_.pending] : (state)=>
-        {
-            state.loading =  true;
-        }, 
-        [forgotPassword_.fulfilled] : (state, action)=>
-        {   
-            state.loading =  false;
-            state.forgotpasswordData = action.payload;
-         }, 
-         [forgotPassword_.rejected] : (state)=>
-         {
+    extraReducers : builder => {
+        //----------------------------forgotPassword----------------------------
+        builder.addCase(forgotPassword_.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(forgotPassword_.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.forgotpasswordData    = action.payload;
+        })
+        builder.addCase(forgotPassword_.rejected, (state) => {
+            state.loading       = false;
+            state.error         = true
+        })
 
-            state.loading = false;
-            state.error = true
-          }, 
-          [setpassword.fulfilled] : (state, action)=>
-          {   
-              state.loading =  false;
-              state.forgotpasswordData = action.payload;
-           },
+        //----------------------setpassword----------------------------
+        builder.addCase(setpassword.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.setpasswordData    = action.payload;
+        })
+
     }
 });
 
