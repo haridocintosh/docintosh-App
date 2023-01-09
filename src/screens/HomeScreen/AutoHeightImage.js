@@ -44,8 +44,8 @@ const AutoHeightImage = ({item}) => {
         lockScrollWhileSnapping={true}
         autoplayInterval={10000}
         data={item?.attach_array}
-        sliderWidth={Dimensions.get("window").width - 40}
-        itemWidth={Dimensions.get("window").width - 40}
+        sliderWidth={Dimensions.get("window").width - 50}
+        itemWidth={Dimensions.get("window").width - 50}
         renderItem={_renderItem}
         pagingEnabled={true}
         onSnapToItem={index => setActiveIndex(index)} />
