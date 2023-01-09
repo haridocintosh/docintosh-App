@@ -23,7 +23,7 @@ const AutoHeightImage = ({item}) => {
   // }
 
   return (
-      <Swiper style={styles.wrapper} > 
+      <Swiper style={styles.wrapper} loop={false} key={item?.attach_array.length} removeClippedSubviews={false}> 
         {item?.attach_array?.map((data,i) => {
           return(
             <View key={i}>
@@ -38,7 +38,7 @@ const AutoHeightImage = ({item}) => {
                   style={{width: "100%", height:300, marginHorizontal:10}} 
               />
               :
-                item?.attach_array.length >0 ?
+                item?.attach_array.length > 0 ?
                 <Image source={item?.attach_array.length > 0 && {uri:data?.filename}} 
                 style={{width:"100%", height:350,marginHorizontal:10,alignSelf:'center',}} 
                 resizeMode={"contain"}/> 
@@ -47,8 +47,6 @@ const AutoHeightImage = ({item}) => {
                 style={{width:"100%", height:350,marginHorizontal:10,alignSelf:'center',}} 
                 resizeMode={"contain"}/> 
               }
-
-              
             </View>
           )
       })} 

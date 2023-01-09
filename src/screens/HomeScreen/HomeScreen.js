@@ -148,8 +148,26 @@ const handleOption = (post_id,id) => {
     const BlockId = allPost.filter(Uid => Uid.id != id);
     setallPost(BlockId);
   }
-
+  
+  // const handleSaveState = (status) =>{
+  //   // console.log("status",status);
+  //   const temp = allPost?.map((data) => {
+  //     // console.log("data.post_id",data.post_id );
+  //     if (data.post_id === status) {
+  //       return { ...data, saved_status: !data.saved_status };
+  //     }
+  //     console.log("temp",temp);
+  //     return temp;
+  //   })
+    
+  // }
+  
     const renderItem = ({item}) => {
+      const handleSaveState = (status) => {
+          if (item.post_id === status) {
+            return {...data, saved_status: !data.saved_status };
+          }
+      }
       return(
         <Card style={styles.cardOfPosts}>
           <View style={styles.userInfo}>
@@ -191,6 +209,7 @@ const handleOption = (post_id,id) => {
                 deletePostID={deletePostID}
                 BlockId={BlockId} 
                 resData={resData} 
+                saveState={handleSaveState}
               />}
             </View>
           </View>
@@ -220,7 +239,7 @@ const handleOption = (post_id,id) => {
                 <View style={styles.darkBlueOnWhatsNew}/>
                 <TouchableOpacity  onPress={()=>{ navigation.navigate('WhatsNew') }}>
                 <Animated.Text style={{fontSize:sizeFont,color:'#fff',marginLeft:10,opacity:opacity}}>
-                  What’s New
+                  What’s new
                 </Animated.Text>
                 </TouchableOpacity>
               </Animated.View>

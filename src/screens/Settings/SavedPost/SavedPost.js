@@ -30,7 +30,6 @@ const SavedPost = ({navigation}) => {
   const LocalStorage = () => {
     getLocalData('USER_INFO').then(async (res) => {
       const savedResult = await dispatch(getSavedPostsApi({user_id:res?.data?.id}));
-      console.log("savedResult.payload",savedResult.payload);
       setItem(savedResult.payload)
     });
   }
