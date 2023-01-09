@@ -1,56 +1,74 @@
-import { View, Text, Image,StyleSheet } from 'react-native'
+import { View, Text, Image,StyleSheet,Dimensions } from 'react-native'
 import React, { useState, useRef } from 'react'
 import Swiper from 'react-native-swiper';
 import { Audio, Video } from 'expo-av';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 const AutoHeightImage = ({item}) => {
-  // const [index, setIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [carouselItems] = useState(item?.attach_array)
   
   const video = useRef(null);
   
-  const renderPagination = (index, total, context) => {
+  const _renderItem = ({ item, index }) => {
     return (
-      <View style={styles.paginationStyle}>
-        <Text style={{ color: 'grey' }}>
-          <Text style={styles.paginationText}>{index + 1}</Text>/{total}
-        </Text>
-      </View>
-    )
-  }
-
-  // const handleIndex = (i) => {
-  //   setIndex(i);
-  // }
-
-  return (
-      <Swiper style={styles.wrapper} loop={false} key={item?.attach_array.length} removeClippedSubviews={false}> 
-        {item?.attach_array?.map((data,i) => {
-          return(
-            <View key={i}>
-              {data?.filename?.includes("mp4") ? 
+           <View key={index}>
+              {item?.filename?.includes("mp4") ? 
               <Video
                   ref={video}
                   resizeMode={"contain"}
-                  source={item?.attach_array.length > 0 ? {uri:data?.filename} :item.imgPath} 
+                  source={{uri:item?.filename}} 
                   useNativeControls
-                  // shouldPlay={!videoPlayPause ? videoPlayPause : status[item.id]}
+                   // shouldPlay={!videoPlayPause ? videoPlayPause : status[item.id]}
                   isLooping={false}
                   style={{width: "100%", height:300, marginHorizontal:10}} 
               />
               :
-                item?.attach_array.length > 0 ?
-                <Image source={item?.attach_array.length > 0 && {uri:data?.filename}} 
-                style={{width:"100%", height:350,marginHorizontal:10,alignSelf:'center',}} 
-                resizeMode={"contain"}/> 
-                :
-                <Image source={{uri:item?.imgPath}} 
-                style={{width:"100%", height:350,marginHorizontal:10,alignSelf:'center',}} 
-                resizeMode={"contain"}/> 
+                <Image 
+                  source={{uri:item?.filename}}
+                  style={{width:"100%", height:350,marginHorizontal:10,alignSelf:'center',}} 
+                  resizeMode={"contain"}/> 
               }
-            </View>
-          )
-      })} 
-       </Swiper> 
+          </View>
+    )
+  }
+
+  return (
+    <View>
+      {carouselItems?.length > 1?<Text style={styles.ImagePaginationCount}>{activeIndex +1}/{carouselItems?.length}</Text> :null}
+    <Carousel
+        layout={"default"}
+        loop={false}
+        autoplay={false}
+        enableMomentum={false}
+        lockScrollWhileSnapping={true}
+        autoplayInterval={10000}
+        data={item?.attach_array}
+        sliderWidth={Dimensions.get("window").width - 40}
+        itemWidth={Dimensions.get("window").width - 40}
+        renderItem={_renderItem}
+        pagingEnabled={true}
+        onSnapToItem={index => setActiveIndex(index)} />
+        <Pagination
+          dotsLength={carouselItems?.length}
+          activeDotIndex={activeIndex}
+          dotStyle={{
+            width: 25,
+            height: 10,
+            marginHorizontal: -7,
+            borderRadius: 5,
+            backgroundColor: '#2C8892',
+          }}
+          inactiveDotStyle={{
+            backgroundColor: 'rgba(0,0,0,0.8)',
+            width: 15,
+            height: 15,
+            borderRadius: 10,
+          }}
+          inactiveDotOpacity={0 + .4}
+          inactiveDotScale={0.6}
+        />
+    </View>
   )
 }
 
@@ -69,6 +87,18 @@ export const styles = StyleSheet.create({
     paddingVertical:5,
     borderRadius:20
   },
+  ImagePaginationCount:{
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    position:'absolute',
+    paddingHorizontal:10,
+    borderRadius:15,
+    paddingVertical:2,
+    color:'#fff',
+    zIndex:1,
+    right:10,
+    top:10,
+    fontFamily:'Inter-SemiBold'
+  }
 
 
 })

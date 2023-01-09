@@ -156,7 +156,7 @@ optionModal:{
     // alignItems:'center',
     paddingHorizontal:15,
     paddingVertical:10,
-    zIndex:1,
+    zIndex:2,
   
     shadowColor: 'black',
     shadowOpacity: 0.26,
