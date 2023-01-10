@@ -19,7 +19,7 @@ const AutoHeightImage = ({item}) => {
                   resizeMode={"contain"}
                   source={{uri:item?.filename}} 
                   useNativeControls
-                   // shouldPlay={!videoPlayPause ? videoPlayPause : status[item.id]}
+                  //shouldPlay={!videoPlayPause ? videoPlayPause : status[item.id]}
                   isLooping={false}
                   style={{width: "100%", height:300, marginHorizontal:10}} 
               />
@@ -35,7 +35,7 @@ const AutoHeightImage = ({item}) => {
 
   return (
     <View>
-      {carouselItems?.length > 1?<Text style={styles.ImagePaginationCount}>{activeIndex +1}/{carouselItems?.length}</Text> :null}
+    {carouselItems?.length > 1?<Text style={styles.ImagePaginationCount}>{activeIndex +1}/{carouselItems?.length}</Text> :null}
     <Carousel
         layout={"default"}
         loop={false}
@@ -72,7 +72,7 @@ const AutoHeightImage = ({item}) => {
   )
 }
 
-export default AutoHeightImage
+export default AutoHeightImage;
 
 export const styles = StyleSheet.create({
   wrapper:{
@@ -99,6 +99,4 @@ export const styles = StyleSheet.create({
     top:10,
     fontFamily:'Inter-SemiBold'
   }
-
-
 })

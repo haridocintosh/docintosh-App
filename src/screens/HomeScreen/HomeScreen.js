@@ -30,16 +30,14 @@ const HomeScreen = ({navigation})=> {
   const [postId, setPostId] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const [allcoins, setAllcoins] = useState(0);
-  const [sliceCount, setSliceCount] = useState(2);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [toggle, setToggle] = useState(false);
 
   const isFocused = useIsFocused();
 
   const ref = useRef(null);
 
-  const { width,height } = Dimensions.get('window')
+  const { width, height} = Dimensions.get('window')
 
   //---------------- header Animation------------------
   const scrollPosition = useRef(new Animated.Value(0)).current;
@@ -102,10 +100,8 @@ const handleOption = (post_id,id) => {
     );
   };
 
-  const loadMoreItem = () => {
-    // console.log("currentPage",currentPage);
-    // setCurrentPage(currentPage + 1);
-     setSliceCount(sliceCount +2);
+  const handleLoadeMore = () => {
+    console.log("more...");
   };
 
   useEffect(()=>{
@@ -133,7 +129,7 @@ const handleOption = (post_id,id) => {
        //console.log(postDetails);
       const result = await dispatch(userPostData(postDetails));
       setIsLoading(false);
-      const allPostData = result?.payload.filter(Post => Post.user_role != 5);
+      const allPostData = result?.payload.result.filter(Post => Post.user_role != 5);
       setallPost(allPostData);
     })
   }
@@ -149,25 +145,7 @@ const handleOption = (post_id,id) => {
     setallPost(BlockId);
   }
   
-  // const handleSaveState = (status) =>{
-  //   // console.log("status",status);
-  //   const temp = allPost?.map((data) => {
-  //     // console.log("data.post_id",data.post_id );
-  //     if (data.post_id === status) {
-  //       return { ...data, saved_status: !data.saved_status };
-  //     }
-  //     console.log("temp",temp);
-  //     return temp;
-  //   })
-    
-  // }
-  
     const renderItem = ({item}) => {
-      const handleSaveState = (status) => {
-          if (item.post_id === status) {
-            return {...data, saved_status: !data.saved_status };
-          }
-      }
       return(
         <Card style={styles.cardOfPosts}>
           <View style={styles.userInfo}>
@@ -209,7 +187,7 @@ const handleOption = (post_id,id) => {
                 deletePostID={deletePostID}
                 BlockId={BlockId} 
                 resData={resData} 
-                saveState={handleSaveState}
+                // saveState={handleSaveState}
               />}
             </View>
           </View>
@@ -289,7 +267,7 @@ const handleOption = (post_id,id) => {
               renderItem={renderItem}
               keyExtractor={(item,index) => index}
               ListFooterComponent={renderLoader}
-              onEndReached={loadMoreItem}
+              onEndReached={handleLoadeMore}
               onEndReachedThreshold={0}
               showsVerticalScrollIndicator={false}
           />
