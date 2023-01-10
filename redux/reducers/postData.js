@@ -1,23 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { mainApi } from "../../src/apis/constant";
 
-export const userPostData = createAsyncThunk("getAllPost", async (postDetails)=>{
+export const userPostData = createAsyncThunk("getAllPost", async (postData)=>{
     try{
         const responce = await fetch(`${mainApi.baseUrl}/ApiController/getPost`, {
             method : 'POST',
             headers:{
                 'Content-Type': 'application/json'
             },
-            body :JSON.stringify({
-                postType:0,
-                role:postDetails.role,
-                circle_type:postDetails.circle_type,
-                city_id:postDetails.city_id,
-                assoc_id:postDetails.assoc_id,
-                pageCounter:postDetails.pageCounter,
-                id:postDetails.userId,
-                profile:postDetails.profileimage,
-            })
+            body :JSON.stringify(postData)
          });
         const result=  await responce.json();
         return result;

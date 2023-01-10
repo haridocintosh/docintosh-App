@@ -49,6 +49,8 @@ const AutoHeightImage = ({item}) => {
         renderItem={_renderItem}
         pagingEnabled={true}
         onSnapToItem={index => setActiveIndex(index)} />
+
+        <View>
         <Pagination
           dotsLength={carouselItems?.length}
           activeDotIndex={activeIndex}
@@ -68,6 +70,7 @@ const AutoHeightImage = ({item}) => {
           inactiveDotOpacity={0 + .4}
           inactiveDotScale={0.6}
         />
+        </View>
     </View>
   )
 }

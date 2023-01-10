@@ -16,7 +16,7 @@ import Svg, {Path} from 'react-native-svg';
 import PublicReactions from './PublicReactions';
 import { styles } from './Homestyle';
 import moment from "moment";
-import { useIsFocused, useScrollToTop } from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 import OptionModal from './optionModal';
 import { getLocalData } from '../../apis/GetLocalData';
 import AutoHeightImage from './AutoHeightImage';
@@ -30,8 +30,9 @@ const HomeScreen = ({navigation})=> {
   const [postId, setPostId] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const [allcoins, setAllcoins] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
+  const [endNull, setEndNull] = useState();
   const [currentPage, setCurrentPage] = useState(1);
+  const [bottumLoader, setBottumLoader] = useState(false);
 
   const isFocused = useIsFocused();
 
@@ -93,16 +94,35 @@ const handleOption = (post_id,id) => {
   };
   const renderLoader = () => {
     return (
-      isLoading ?
+      bottumLoader ?
         <View style={styles.loaderStyle}>
-          <ActivityIndicator size="large" color="#aaa" />
+          <ActivityIndicator size="small" color="#1A7078" />
         </View> : null
     );
   };
 
   const handleLoadeMore = () => {
-    console.log("more...");
+    if(endNull !== null){
+      LoadPost(currentPage + 1);
+    }
   };
+
+  
+  const LoadPost = async (page) => {
+    setBottumLoader(true);
+    const postDetails = {postType:0,role:resData?.role,city_id:resData?.city_id,assoc_id:resData?.assoc_id, pageCounter:page, id:resData?.id,circle_type:resData?.role == 5 ? 2 : 1,speciality_id:resData?.speciality_id};
+    // console.log(postDetails);
+    const result = await dispatch(userPostData(postDetails));
+    setEndNull(result.payload.result)
+     if(result.payload.result !== null){
+      setCurrentPage(prev => prev + 1);
+      const allPostData = result?.payload.result.filter(Post => Post.user_role != 5);
+      setallPost([...allPost, ...allPostData]);
+     }
+     setBottumLoader(false);
+  }
+
+  // console.log("bottumLoader",bottumLoader);
 
   useEffect(()=>{
     if(ref.current) {
@@ -112,7 +132,7 @@ const handleOption = (post_id,id) => {
       asyncFetchDailyData();
       getStorageData();
     }
-  },[isFocused,currentPage]);
+  },[isFocused]);
 
   const asyncFetchDailyData = async () => {
     getLocalData('USER_INFO').then(async (res) => {
@@ -124,11 +144,11 @@ const handleOption = (post_id,id) => {
         role:reData?.role,
       });
       setModalVisible(false);
-      setIsLoading(true);
-      const postDetails = {role:reData?.role,city_id:reData?.city_id,assoc_id:reData?.assoc_id,profileimage:reData?.profileimage, pageCounter:currentPage, userId:reData?.id,circle_type:reData?.role == 5 ? 3 : 1};
+      setBottumLoader(true);
+      const postDetails = {postType:0,role:reData?.role,city_id:reData?.city_id,assoc_id:reData?.assoc_id, pageCounter:1, id:reData?.id,circle_type:reData?.role == 5 ? 2 : 1,speciality_id:reData?.speciality_id};
        //console.log(postDetails);
       const result = await dispatch(userPostData(postDetails));
-      setIsLoading(false);
+      setBottumLoader(false);
       const allPostData = result?.payload.result.filter(Post => Post.user_role != 5);
       setallPost(allPostData);
     })
@@ -262,18 +282,21 @@ const handleOption = (post_id,id) => {
                 [{nativeEvent: {contentOffset: {y: scrollPosition}}}],
                 {useNativeDriver: false},
               )}
-              contentInsetAdjustmentBehavior="automatic"
+              // contentInsetAdjustmentBehavior="automatic"
               data={allPost}
               renderItem={renderItem}
               keyExtractor={(item,index) => index}
               ListFooterComponent={renderLoader}
-              onEndReached={handleLoadeMore}
-              onEndReachedThreshold={0}
+              onEndReached={() => handleLoadeMore()}
               showsVerticalScrollIndicator={false}
           />
+          
           </View>
       </View>
       </View>
+      {/* {bottumLoader && <View style={{ backgroundColor:'#fff',position:'absolute',width:'100%',bottom:194,padding:10 }}>
+          <ActivityIndicator size='small' color={"#000"} />
+      </View>} */}
   </SafeAreaView>
   );
 }
