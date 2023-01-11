@@ -86,6 +86,7 @@ const  Sharepost = () => {
     PickImageAll(setloader).then(async (res) =>{
       const data = res?.map((data,i) => {return {...data, id:i}})
       setData(data);
+      // return;
       res?.map(async(data) => {
         let localUri = data.uri
         let filename = localUri.split('/').pop();

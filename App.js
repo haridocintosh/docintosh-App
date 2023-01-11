@@ -11,13 +11,7 @@ import { Platform ,LogBox} from 'react-native';
 import { registerForPushNotificationsAsync } from './src/screens/PushNotification';
 
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
+
 
 const App = () => {
   const [expoPushToken, setExpoPushToken] = useState('');
@@ -30,9 +24,7 @@ const App = () => {
     registerForPushNotificationsAsync().then(token => {
       setExpoPushToken(token);
       console.log("token---------token",token);
-    }
-      
-      );
+    });
     // notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
     //   setNotification(notification);
     // });
