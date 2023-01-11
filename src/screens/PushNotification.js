@@ -13,7 +13,6 @@ Notifications.setNotificationHandler({
 
 export const registerForPushNotificationsAsync = async () => {
     let token;
-  
     if (Platform.OS === 'android') {
       await Notifications.setNotificationChannelAsync('default', {
         name: 'default',
@@ -36,7 +35,6 @@ export const registerForPushNotificationsAsync = async () => {
         return;
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log("token",token);
     } else {
       alert('Must use physical device for Push Notifications');
     }

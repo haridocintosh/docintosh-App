@@ -21,24 +21,20 @@ const App = () => {
   // OneSignal Initialization
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then(token => {
-      setExpoPushToken(token);
-      console.log("token---------token",token);
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
     });
-    // notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-    //   setNotification(notification);
-    // });
-    // responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-    //   // console.log("response",response);
-    // });
-    // return () => {
-    //   Notifications.removeNotificationSubscription(notificationListener.current);
-    //   Notifications.removeNotificationSubscription(responseListener.current);
-    // };
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      // console.log("response",response);
+    });
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
   }, []);
 
 
-  console.log("expoPushToken",expoPushToken);
   // const notificationSetup= async()=>{
   //   const deviceState = await OneSignal.getDeviceState();
   //   console.log("deviceState",deviceState);
