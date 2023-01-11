@@ -44,6 +44,7 @@ const  Sharepost = () => {
   const handlePress = () => setExpanded(!expanded);
   const [isOpen, setIsOpen]     = useState(false);
   const [specialNames, setSpecialNames]   = useState();
+  const [countData, setCountData]   = useState();
   const [whoCanSee, setWhoCanSee]   = useState();
   const [userdata, setuserdata] = useState({
     fullname:'',
@@ -86,70 +87,49 @@ const  Sharepost = () => {
     PickImageAll(setloader).then(async (res) =>{
       const data = res?.map((data,i) => {return {...data, id:i}})
       setData(data);
-      // return;
-      res?.map(async(data) => {
-        let localUri = data.uri
-        let filename = localUri.split('/').pop();
-        let uriParts = localUri.split('.');
-        let fileType = uriParts[uriParts.length - 1];
-        let formData = new FormData();
-        const imageData = {
-          uri : localUri,
-          name: filename,
-          type: `image/${fileType}`,
-        }
-        formData.append('postImage', imageData);
-        formData.append('post_id', '3032');
-        const responce = await fetch(`${mainApi.baseUrl}/ApiController/postuploadDocsReact`, {
-          method : 'POST',
-          headers:{
-              'Content-Type': 'multipart/form-data'
-          },
-          body :formData
-       });
-       const result1=  await responce.json();
-        setuploadImage({...uploadImage,
-          uploadImage:uploadImage.pimage.push(result1.postImage)
-        })
-        setPost({...post, 
+      setPost({...post, 
           type:'i'
-        });
       });
-      setloader(false);
+      setCountData(data.length);
+      //setloader(false);
     })
   };
 
   const pickVideo =  () => {
-    
     setDocument(null);
     PickVideos().then(async (res) =>{
       setloader(true);
       const data = res?.map((data,i) => {return {...data, id:i}})
       setData(data);
-      let filename = localUri.split('/').pop();
-      let uriParts = localUri.split('.');
-      let fileType = uriParts[uriParts.length - 1];
-      let formData = new FormData();
-      const imageData = {
-        uri : localUri,
-        name: filename,
-        type: `video/${fileType}`,
-      }
-      formData.append('postImage', imageData);
-      formData.append('post_id', '3032');
-      const responce = await fetch(`${mainApi.baseUrl}/ApiController/postuploadDocsReact`, {
-        method : 'POST',
-        headers:{
-            'Content-Type': 'multipart/form-data'
-        },
-        body :formData
-     });
-    const result1 =  await responce.json();
       setPost({...post, 
-        postImage: result1.postImage,
         type:'v'
       });
-      setloader(false);
+      setCountData(data.length);
+
+    //   let filename = localUri.split('/').pop();
+    //   let uriParts = localUri.split('.');
+    //   let fileType = uriParts[uriParts.length - 1];
+    //   let formData = new FormData();
+    //   const imageData = {
+    //     uri : localUri,
+    //     name: filename,
+    //     type: `video/${fileType}`,
+    //   }
+    //   formData.append('postImage', imageData);
+    //   formData.append('post_id', '3032');
+    //   const responce = await fetch(`${mainApi.baseUrl}/ApiController/postuploadDocsReact`, {
+    //     method : 'POST',
+    //     headers:{
+    //         'Content-Type': 'multipart/form-data'
+    //     },
+    //     body :formData
+    //  });
+    // const result1 =  await responce.json();
+    //   setPost({...post, 
+    //     postImage: result1.postImage,
+    //     type:'v'
+    //   });
+    //   setloader(false);
     })
   };
 
@@ -197,10 +177,7 @@ const publishCheck1 = (e, text)=>{
     setWhoCanSee(text)
 }
 
-
   const handleStudentSubmit = async() =>{
-    console.log("postDAta",post);
-    console.log("uploadImage",uploadImage);
     if(post.publishto ==''){
       Toast.show('Please Select Publish to');
       bottomSheetModalRefSecond.current?.present();
@@ -210,24 +187,60 @@ const publishCheck1 = (e, text)=>{
       Toast.show("Please Select PostType");
       bottomSheetModalRef.current?.present();
     }else{
-    
-      const uploadData = {userdata,post,uploadImage};
-      setloader(true);
-      const result = await dispatch(postCreate(uploadData));
-      console.log(result);
-        if(result.payload.status == 'Success'){
-          setloader(false);
-          Toast.show(result.payload.message);
-          const coinDetails = {task : 4, receiverId:userdata.id } 
-          const coinResult  = await dispatch(coinTransfer(coinDetails));
-          if(coinResult.payload.status == 'Success')
-          {
-            navigation.navigate('HomeScreen');
-          }
+      pickedData?.map(async(data) => {
+        let localUri = data.uri
+        let filename = localUri.split('/').pop();
+        let uriParts = localUri.split('.');
+        let fileType = uriParts[uriParts.length - 1];
+        let formData = new FormData();
+        const imageData = {
+          uri : localUri,
+          name: filename,
+          type: `image/${fileType}`,
         }
-        setloader(false);
+        formData.append('postImage', imageData);
+        formData.append('post_id', '3032');
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/postuploadDocsCompress`, {
+          method : 'POST',
+          headers:{
+              'Content-Type': 'multipart/form-data'
+          },
+          body :formData
+       });
+
+        var result1=  await responce.json();
+          getFun({...uploadImage,
+            uploadImage:uploadImage.pimage.push(result1.postImage)
+          })
+        });
+
+      const getFun = async(data) => {
+        console.log("datasfdgh",data);
+        const uniqueData = data.pimage.filter((x, i, a) => a.indexOf(x) == i);
+        console.log('filtercount', uniqueData);
+        console.log('filtercount', uniqueData.length);
+        console.log('realcount',countData);
+
+        if(countData == uniqueData.length){
+              const uploadData = {userdata,post,uploadImage:uniqueData};
+              console.log('uploadDatacheck', uploadData);
+            // setloader(true);
+              const result = await dispatch(postCreate(uploadData));
+              console.log(result);
+              if(result.payload.status == 'Success'){
+              // setloader(false);
+                Toast.show(result.payload.message);
+                const coinDetails = {task : 4, receiverId:userdata.id } 
+                const coinResult  = await dispatch(coinTransfer(coinDetails));
+                if(coinResult.payload.status == 'Success')
+                {
+                  navigation.navigate('HomeScreen');
+                }
+              }
+            }
+          } 
+        }
       }
-    }
 
   const uploadPostImage = async (post_id) => {
     //console.log(post_id);
@@ -352,6 +365,8 @@ setSpecialNames(specialityName)
     const removed = pickedData?.filter(data => data.id != id); 
     console.log(removed);
     setData(removed);
+    setCountData(removed.length);
+   // console.log('removepickedData',pickedData );
   }
 
   const handleDocType = (type) => {
