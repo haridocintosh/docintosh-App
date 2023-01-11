@@ -21,9 +21,6 @@ import { getSavedPostsApi } from '../../../../redux/reducers/SettingsSlice';
 import { useDispatch } from 'react-redux';
 import OptionModal from '../../HomeScreen/optionModal';
 import AutoHeightImage from '../../HomeScreen/AutoHeightImage';
-import { userPostData } from '../../../../redux/reducers/postData';
-import { returnKeyType } from 'deprecated-react-native-prop-types/DeprecatedTextInputPropTypes';
-
 
 const SavedPost = ({navigation}) => {
   const [item, setItem] = useState();
@@ -34,18 +31,19 @@ const SavedPost = ({navigation}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [userData, setUserData] = useState();
   const dispatch = useDispatch();
-  
+
   const ref = useRef(null);
 
   const LocalStorage = () => {
+    setBottumLoader(true);
     getLocalData('USER_INFO').then(async (res) => {
       setUserData(res?.data)
       const savedResult = await dispatch(getSavedPostsApi({user_id:res?.data?.id,pageCounter:1}));
       setItem(savedResult?.payload?.result)
     });
+    setBottumLoader(false);
   }
 
-  // console.log("item",item);
   const handleOption = (post_id) => {
     setPostId(post_id);
     if(postId == post_id){
@@ -81,7 +79,6 @@ const SavedPost = ({navigation}) => {
      setBottumLoader(false);
   }
 
-  
   const BlockId = (id) =>{
     console.log("BlockId",id);
     const BlockId = item?.filter(Uid => Uid.id != id);
@@ -92,7 +89,7 @@ const SavedPost = ({navigation}) => {
     return (
       bottumLoader ?
         <View style={styles.loaderStyle}>
-          <ActivityIndicator size="small" color="#1A7078" />
+          <ActivityIndicator size="small" color="#1A7078"/>
         </View> : null
     );
   };
@@ -105,14 +102,14 @@ const SavedPost = ({navigation}) => {
               <Image source={{uri:item?.profileimage}} 
                 style={{width:38, height:38,marginRight:5,borderRadius:50}}
               />
-              <View >
+              <View>
                 <Text style={{fontSize:14, fontWeight:'400', fontFamily:"Inter-Regular"}}>
                   {item.utitle && item.utitle} {item.first_name && item.first_name} {item.last_name && item.last_name}
                   <MaterialCommunityIcons name="check-decagram" size={12} color="#0F9C69" />
                 </Text>
                 <View style={{flexDirection:'row',alignItems:'flex-start',}}>
                   <Text style={{marginLeft:5}}>
-                    <FontAwesome5 name="users" size={17} color="#45B5C0" />  
+                    <FontAwesome5 name="users" size={17} color="#45B5C0"/>  
                   </Text>
                   <View style={styles.dot}/>
                   <Text style={{fontSize:12, fontWeight:'400',color:'#51668A', fontFamily:"Inter-Regular",maxWidth:130,marginTop:1}}>
@@ -125,7 +122,7 @@ const SavedPost = ({navigation}) => {
                     {moment(item?.created_at).fromNow()} 
                   </Text>
                 </View>
-              </View> 
+              </View>
             </View>
             <View>
             <TouchableOpacity style={{padding:10,right:-10,top:-10}} onPress={() => handleOption(item?.post_id)}>
@@ -145,7 +142,7 @@ const SavedPost = ({navigation}) => {
             </View>
           </View>
           <View >
-            <Text style={{color:'#51668A',fontFamily:"Inter-Regular" }}>
+            <Text style={{color:'#51668A',fontFamily:"Inter-Regular"}}>
               {item?.description.replace(/<[^>]+>/g, "")}
             </Text>
           </View>
