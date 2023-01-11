@@ -11,13 +11,7 @@ import { Platform ,LogBox} from 'react-native';
 import { registerForPushNotificationsAsync } from './src/screens/PushNotification';
 
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
+
 
 const App = () => {
   const [expoPushToken, setExpoPushToken] = useState('');
