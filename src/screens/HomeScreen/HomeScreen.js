@@ -290,13 +290,9 @@ const handleOption = (post_id,id) => {
               onEndReached={() => handleLoadeMore()}
               showsVerticalScrollIndicator={false}
           />
-          
           </View>
       </View>
       </View>
-      {/* {bottumLoader && <View style={{ backgroundColor:'#fff',position:'absolute',width:'100%',bottom:194,padding:10 }}>
-          <ActivityIndicator size='small' color={"#000"} />
-      </View>} */}
   </SafeAreaView>
   );
 }
