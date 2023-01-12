@@ -46,6 +46,7 @@ const  Sharepost = () => {
   const [specialNames, setSpecialNames]   = useState();
   const [countData, setCountData]   = useState();
   const [whoCanSee, setWhoCanSee]   = useState();
+  const [postLoad, setPostLoad]   = useState(false);
   const [userdata, setuserdata] = useState({
     fullname:'',
     profile:'',
@@ -83,6 +84,7 @@ const  Sharepost = () => {
     setEmojiTab(!emojiTab)
   }
   const pickImage =  () => {
+    setData(null)
     setDocument(null);
     PickImageAll(setloader).then(async (res) =>{
       const data = res?.map((data,i) => {return {...data, id:i}})
@@ -91,21 +93,21 @@ const  Sharepost = () => {
           type:'i'
       });
       setCountData(data.length);
-      //setloader(false);
+      setloader(false);
     })
   };
 
   const pickVideo =  () => {
+    
     setDocument(null);
-    PickVideos().then(async (res) =>{
+    PickVideos(setloader).then(async (res) => {
       setloader(true);
       const data = res?.map((data,i) => {return {...data, id:i}})
       setData(data);
-      setPost({...post, 
-        type:'v'
-      });
+      setPost({...post,  type:'v' });
       setCountData(data.length);
-
+      setloader(false);
+      
     //   let filename = localUri.split('/').pop();
     //   let uriParts = localUri.split('.');
     //   let fileType = uriParts[uriParts.length - 1];
@@ -177,7 +179,11 @@ const publishCheck1 = (e, text)=>{
     setWhoCanSee(text)
 }
 
+// console.log("postLoad",postLoad);
+
   const handleStudentSubmit = async() =>{
+    console.log("start");
+    setPostLoad(true);
     if(post.publishto ==''){
       Toast.show('Please Select Publish to');
       bottomSheetModalRefSecond.current?.present();
@@ -215,18 +221,18 @@ const publishCheck1 = (e, text)=>{
         });
 
       const getFun = async(data) => {
-        console.log("datasfdgh",data);
+        // console.log("datasfdgh",data);
         const uniqueData = data.pimage.filter((x, i, a) => a.indexOf(x) == i);
-        console.log('filtercount', uniqueData);
-        console.log('filtercount', uniqueData.length);
-        console.log('realcount',countData);
+        // console.log('filtercount', uniqueData);
+        // console.log('filtercount', uniqueData.length);
+        // console.log('realcount',countData);
 
         if(countData == uniqueData.length){
               const uploadData = {userdata,post,uploadImage:uniqueData};
-              console.log('uploadDatacheck', uploadData);
+              // console.log('uploadDatacheck', uploadData);
             // setloader(true);
               const result = await dispatch(postCreate(uploadData));
-              console.log(result);
+              // console.log(result);
               if(result.payload.status == 'Success'){
               // setloader(false);
                 Toast.show(result.payload.message);
@@ -234,12 +240,16 @@ const publishCheck1 = (e, text)=>{
                 const coinResult  = await dispatch(coinTransfer(coinDetails));
                 if(coinResult.payload.status == 'Success')
                 {
-                  navigation.navigate('HomeScreen');
+                  navigation.navigate('HomeScreen', {reload :"reload"});
+                  setPostLoad(false);
+                  console.log("end");
                 }
               }
             }
           } 
         }
+        // setPostLoad(false);
+        // console.log("end2");
       }
 
   const uploadPostImage = async (post_id) => {
@@ -403,9 +413,9 @@ setSpecialNames(specialityName)
             </View>
           </View> 
         </View>
-        <TouchableOpacity onPress={()=>handleStudentSubmit()}>
+        <TouchableOpacity onPress={postLoad ? null : ()=>handleStudentSubmit()}>
           <Text style={{fontFamily:'Inter-SemiBold',color:'#51668A'}}   >
-            Post
+           {postLoad ? <ActivityIndicator size="small" color="#1A7078"/> : "Post"} 
           </Text>
         </TouchableOpacity>
       </View>

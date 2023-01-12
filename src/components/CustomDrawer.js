@@ -112,10 +112,10 @@ const CustomDrawer = (props) => {
               <Ionicons name="md-newspaper" size={25} color="white"/>
               <Text style={styles.sideDrawerName}>What’s New</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
+            {/* <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
               <MaterialCommunityIcons name="chat-question" size={25} color="white"/>
               <Text style={styles.sideDrawerName}>Take a Tour</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
               <Entypo name="text-document-inverted" size={25} color="white"/>
               <Text style={styles.sideDrawerName}>Business Page</Text>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, BackHandler, ActivityIndicator,Modal,TouchableOpacity,View,Text } from 'react-native';
+import { Text } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -35,12 +35,12 @@ const [statusKeyLoaded, setStatusKeyLoaded] = useState(false);
 const Stack = createNativeStackNavigator();
 const navigation  = useNavigation();
 
-if(loader){
-  return(
-  <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
-      <ActivityIndicator size={'large'} />
-  </View>)
-}
+// if(loader){
+//   return(
+//   <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+//       <ActivityIndicator size={'large'} />
+//   </View>)
+// }
 
   const getData = async (key) => {
     try {

@@ -47,7 +47,7 @@ export const PickImage = async (arg) => {
 export const PickImageAll = async (setloader) => {
       const { granted } = await ImagePicker.requestCameraPermissionsAsync();
       if (granted === true) {
-            // setloader(true);
+            setloader(true);
             var library = await ImagePicker.launchImageLibraryAsync({
             selectionLimit: 5,
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -67,9 +67,10 @@ export const PickImageAll = async (setloader) => {
       }
 }
 
-export const PickVideos = async () => {
+export const PickVideos = async (setloader) => {
    const { granted } = await ImagePicker.requestCameraPermissionsAsync();
       if (granted === true) {
+            setloader(true);
             var library = await ImagePicker.launchImageLibraryAsync({
             selectionLimit: 5,
             mediaTypes: ImagePicker.MediaTypeOptions.Videos,
