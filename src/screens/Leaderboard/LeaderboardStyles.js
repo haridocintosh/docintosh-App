@@ -1,0 +1,131 @@
+import { StyleSheet, Dimensions } from "react-native";
+
+export const styles = StyleSheet.create({
+    ScoreContainer:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+        alignItems:'flex-end'
+    },
+    rankConatiner:{
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    achiveConatiner:{
+        borderRadius:50,
+        flexDirection:'row',
+        paddingHorizontal:25,
+        backgroundColor: '#20324A',
+        height:42,
+        alignItems:'center'
+    },
+    rankText:{
+        fontSize:28,
+        color: '#2C8892',
+        fontFamily:'PlusJakartaSans-Bold'
+    },
+    ownRankText:{
+        fontSize:12,
+        color: '#51668A',
+        fontFamily:'Inter-Regular'
+    },
+    dcoinImag:{
+        width:25,
+        height:25,
+        marginRight:10,
+    },
+    achivedText:{
+        color:'#fff',
+        fontFamily:'PlusJakartaSans-Regular',
+        fontSize:16
+    },
+    rankersLederboard:{
+        flexDirection:'row',
+        height:113,
+        borderRadius:15,
+        backgroundColor:'#F2FAFA',
+        marginTop:150,
+    },
+    blueCrown:{
+        position:'absolute',
+        width:40,
+        height:32,
+        top:-37
+    },
+    rankersScoreBoad2:{
+        height:159,
+        borderRadius:30,
+        backgroundColor:'#F2FAFA',
+        justifyContent:'center',
+        alignItems:'center',
+        top:-46,
+        width:122,
+    },
+    rankersScoreBoad:{
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center',
+    },
+    rankerName:{
+        fontFamily:'PlusJakartaSans-Bold',
+        fontSize:12,
+        marginTop:20
+    },
+    rankerScore:{
+        fontSize:16,
+        color:'#2C8892',
+        fontFamily:'Inter-SemiBold'
+    },
+    rankerSpeciality:{
+        fontSize:10,
+        color:'#51668A',
+        fontFamily:'Inter-Regular'
+    },
+    rankerProfile:{
+        width:68,
+        height:68,
+        borderRadius:50
+    },
+    rankerProfile2:{
+        width:82,
+        height:82,
+        borderRadius:50
+    },
+    rankerProfileContainer:{
+        justifyContent:'center',
+        alignItems:'center',
+        borderWidth:3,
+        borderRadius:50,
+        borderColor:'#45B5C0',
+        top:-50,
+        position:'absolute'
+    },
+    rankerProfileContainer2:{
+        justifyContent:'center',
+        alignItems:'center',
+        borderWidth:3,
+        borderRadius:50,
+        borderColor:'#45B5C0',
+        top:-60,
+        position:'absolute'
+    },
+    rankedNumberText:{
+        position:'absolute',
+        transform: [{ rotate: '-45deg'}],
+        color:'#fff',
+        fontSize:8
+    },
+    rankedNumber:{
+        position:'absolute',
+        bottom:-10,
+        // right:31.5,
+        backgroundColor:'#45B5C0',
+        width:17,
+        height:17,
+        borderRadius:5,
+        transform: [{ rotate: '45deg'}],
+        justifyContent:'center',
+        alignItems:'center',
+    }
+    
+   
+})

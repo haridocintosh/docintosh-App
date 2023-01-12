@@ -44,8 +44,9 @@ const ProfileScreenPost = ({postLength}) => {
         city_id:resData?.city_id,assoc_id:resData?.assoc_id,pageCounter:1,user_id:resData?.id,id:resData?.id
       }
       const allPostResult = await dispatch(getMyPostsApi(postDetails));
+      // console.log("allPostResult.payload.result",allPostResult.payload.count);
       setMyPost(allPostResult.payload.result);
-      await postLength(allPostResult.payload.length);
+      await postLength(allPostResult.payload.count);
     });
   }
 

@@ -107,7 +107,7 @@ const  Sharepost = () => {
       setPost({...post,  type:'v' });
       setCountData(data.length);
       setloader(false);
-      
+
     //   let filename = localUri.split('/').pop();
     //   let uriParts = localUri.split('.');
     //   let fileType = uriParts[uriParts.length - 1];
@@ -185,11 +185,14 @@ const publishCheck1 = (e, text)=>{
     console.log("start");
     setPostLoad(true);
     if(post.publishto ==''){
+      setPostLoad(false);
       Toast.show('Please Select Publish to');
       bottomSheetModalRefSecond.current?.present();
     }else if(!post.description){
+      setPostLoad(false);
       Toast.show("Please Write Something About Your Post!!!!!!!");
     }else if(!post.postType){
+      setPostLoad(false);
       Toast.show("Please Select PostType");
       bottomSheetModalRef.current?.present();
     }else{
