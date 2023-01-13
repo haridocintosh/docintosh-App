@@ -46,21 +46,19 @@ export const postAction = createSlice({
     reducers : {
 
     },
-    extraReducers :{
-        [deletePost.pending] : (state)=>
-        {
-          state.loading     =  true;
-        }, 
-        [deletePost.fulfilled] : (state, action)=>
-        {   
-          state.loading     =  false;
-          state.postaction  =  action.payload;
-        }, 
-        [deletePost.rejected] : (state)=>
-        {
-          state.loading     = false;
-          state.error       = true
-        },
+    extraReducers :builder =>{
+      //-------------------------deletePost-----------------------------
+      builder.addCase(deletePost.pending, (state) => {
+        state.loading       =  true;
+      })
+      builder.addCase(deletePost.fulfilled, (state, action) => {
+          state.loading  =  false;
+          state.postaction = action.payload;
+      })
+      builder.addCase(deletePost.rejected, (state) => {
+          state.loading = false;
+          state.error = false
+      })
     }
 });
 

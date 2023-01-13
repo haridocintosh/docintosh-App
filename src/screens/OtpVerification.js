@@ -101,7 +101,7 @@ const OtpVerification = ({route}) => {
         <View
           style={styles.verifiactionSubText}>
           <Text style={styles.verifiactionInnerText}>Didn’t Receive OTP? </Text>
-          <TouchableOpacity onPress={() => userRegister()}>
+          <TouchableOpacity onPress={() => counter == 0? userRegister() : null}>
           <Text style={{color: '#2376E5', fontWeight: '600',fontSize:16,}}>
             {counter == 0? "Resend OTP" : `Resend in ${counter}s`}
           </Text>

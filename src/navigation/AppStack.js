@@ -27,9 +27,9 @@ const AppStack = () => {
         drawerLabelStyle: {marginLeft: -20,fontFamily:'Inter-SemiBold',fontSize: 15,},
       }}
       >
-      <Drawer.Screen name="Leaderboard" component={TabNavigator} options={{headerShown: false,
+      <Drawer.Screen name="Home" component={TabNavigator} options={{headerShown: false,
           drawerIcon: () => (
-            <Entypo name="trophy" size={25} style={{color:'#ffff'}} />
+            <Entypo name="home" size={25} style={{color:'#ffff'}} />
           ),
         }}
       />

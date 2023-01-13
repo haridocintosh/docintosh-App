@@ -67,7 +67,7 @@ const PostsScreen = ({route}) => {
                         {singleItem?.post_id == postId && <OptionModal modalVisible={optionModal}/>}
                     </View>
                 </View>
-                <Image source={{uri:data.filename}} style={{width:"100%",height:300,borderRadius:3,marginVertical:10}}/>
+                <Image source={{uri:data?.filename}} style={{width:"100%",height:300,borderRadius:3,marginVertical:10}}/>
                 <View>
                     <PublicReactions item={singleItem}/>
                 </View>

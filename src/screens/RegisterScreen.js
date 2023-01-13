@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -14,8 +14,6 @@ import CustomButton from '../components/CustomButton';
 // import DeviceInfo from 'react-native-device-info';
 // import { getUniqueId, getManufacturer } from 'react-native-device-info';
 import { useDispatch } from "react-redux";
-import { SvgUri } from 'react-native-svg';
-import { RadioButton } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import DropDownPicker from 'react-native-dropdown-picker'
 const styelcss = require('../assets/css/style');
@@ -28,7 +26,7 @@ import {MaterialCommunityIcons, Ionicons, FontAwesome5,Fontisto} from 'react-nat
 export default function RegisterScreen() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const [checked, setChecked] = useState(4);
+  const [checked, setChecked] = useState('');
   const [checkgender, setcheckgender] = useState('');
   const [err,seterr] =useState();
   const [open, setOpen] = useState(false);
@@ -57,10 +55,11 @@ export default function RegisterScreen() {
     role:"",
   });
 
+  const ref = useRef(null);
+  
   useEffect(()=>{
     async function fetchSpecialities(){
       const allSpeciality = await dispatch(getAllSpeciality());
-   
       setSpl(allSpeciality.payload.map((ele,index)=>{
         return {label: ele.speciality, value: ele.speciality_id};
      }))
@@ -157,11 +156,15 @@ const setuserrole= (e)=>{
     ...register,
     role: e,
    })
+   setroleErr('')
 }
 
 const form_submit = async() =>{
   if(!register.fname){
     fnerr("Please enter First Name");
+    if (ref.current) {
+      ref.current.scrollTo({ y: 0, animated: true })
+    }
   }else if(!register.lname){
     lnerr("Please enter Last Name");
   }else if(!register.email){
@@ -170,7 +173,7 @@ const form_submit = async() =>{
   else if(emailIderr != ''){
     setemail("This Email ID is registered with us");
   }else if(mobileId !=''){
-    setemail("This mobile no. is registred with us");
+    setmobile("This mobile no. is registred with us");
   }
   else if(!register.mobile){
     setmobile("Pleaes enter valid mobile no.");
@@ -209,15 +212,20 @@ const form_submit = async() =>{
   const handleStudentSubmit = async() =>{
     if(!register.fname){
       fnerr("Please enter First Name");
+      if (ref.current) {
+        ref.current.scrollTo({ y: 0, animated: true })
+      }
     }else if(!register.lname){
       lnerr("Please enter Last Name");
     }else if(!register.gender){
       errgender("Please Select gender");
-    }else if(emailIderr != ''){
+    }
+    else if(emailIderr != ''){
       setemail("This Email ID is registered with us");
     }else if(mobileId !=''){
-      setemail("This mobile no. is registred with us");
-    }else if(!register.email){
+      setmobile("This mobile no. is registred with us");
+    }
+    else if(!register.email){
       setemail("Please enter valid Email ID");
     }else if(!register.mobile){
       setmobile("Pleaes enter valid mobile no.");
@@ -256,9 +264,11 @@ const form_submit = async() =>{
   }
 
   return (
-    <SafeAreaView style={{ display:"flex",justifyContent: 'center',paddingHorizontal: 20}}>
-          <ScrollView keyboardShouldPersistTaps='handled'showsVerticalScrollIndicator={false}nestedScrollEnable={true} >
-          <View style={{ marginTop :30}}>
+    <View style={{ display:"flex",justifyContent: 'center',paddingHorizontal: 20}}  >
+      <ScrollView ref={ref} keyboardShouldPersistTaps='handled' 
+          showsVerticalScrollIndicator={false} 
+          nestedScrollEnable={true}>
+          <View style={{ marginTop :30}} >
             <Text  style={styles.headingtext}>Hey There!</Text>
             <Text style={styles.headingpara} >Welcome to Docintosh. Let’s create your account.</Text>
           </View>
@@ -272,12 +282,12 @@ const form_submit = async() =>{
           onChangeText={(e)=> firstName(e)}
         />
         <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{fn}</Text>
-
         <TextInput 
           style={[styelcss.customInputVerifyFullMobile,{fontFamily: 'PlusJakartaSans-Regular',}]}  
           placeholderTextColor='#687690' 
           placeholder='Last Name' 
-          onChangeText={(e)=>{lastName(e);}} 
+          onChangeText={(e)=>{lastName(e);}}
+          
         />
         <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{ln}</Text>
 
@@ -330,7 +340,6 @@ const form_submit = async() =>{
               <Text style={styles.roleTabText}>Student</Text>
             </TouchableOpacity>
           </View>
-
      </View>
 
      <Text style={{color:"red", fontFamily:"PlusJakartaSans-Regular"}}>{userrole}</Text>
@@ -403,9 +412,8 @@ const form_submit = async() =>{
       </View> */}
       <View>
     </View>
-    </ScrollView>
-  </SafeAreaView>
-      
+      </ScrollView>
+    </View>
   );
 }
 

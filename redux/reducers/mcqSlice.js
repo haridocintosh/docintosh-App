@@ -67,55 +67,47 @@ export const quizData = createSlice({
         error :false,
     },
     reducers : {},
-    extraReducers :{
-        [quizPostData.pending] : (state)=>
-            {
-                state.loading =  true;
-            }, 
-        [quizPostData.fulfilled] : (state, action)=>
-            {   
-                state.loading  =  false;
-                state.postData = action.payload;
-            }, 
-        [quizPostData.rejected] : (state)=>
-            {
-                state.loading = false;
-                state.error   = true
-            }, 
+    extraReducers :builder =>{
 
+        //-------------------------quizPostData-----------------------------
+        builder.addCase(quizPostData.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(quizPostData.fulfilled, (state, action) => {
+            state.loading  =  false;
+            state.postData = action.payload;
+        })
+        builder.addCase(quizPostData.rejected, (state) => {
+            state.loading = false;
+            state.error = false
+        })
 
+        //-------------------------GetQuizQuestions-----------------------------
+        builder.addCase(GetQuizQuestions.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(GetQuizQuestions.fulfilled, (state, action) => {
+            state.loading  =  false;
+            state.postData = action.payload;
+        })
+        builder.addCase(GetQuizQuestions.rejected, (state) => {
+            state.loading = false;
+            state.error = false
+        })
 
+        //-------------------------saveQuizAnswer-----------------------------
+        builder.addCase(saveQuizAnswer.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(saveQuizAnswer.fulfilled, (state, action) => {
+            state.loading  =  false;
+            state.postData = action.payload;
+        })
+        builder.addCase(saveQuizAnswer.rejected, (state) => {
+            state.loading = false;
+            state.error = false
+        })
 
-        [GetQuizQuestions.pending] : (state)=>
-            {
-                state.loading =  true;
-            }, 
-        [GetQuizQuestions.fulfilled] : (state, action)=>
-            {   
-                state.loading  =  false;
-                state.postData = action.payload;
-            }, 
-        [GetQuizQuestions.rejected] : (state)=>
-            {
-                state.loading = false;
-                state.error   = true
-            }, 
-
-
-        [saveQuizAnswer.pending] : (state)=>
-            {
-                state.loading =  true;
-            }, 
-        [saveQuizAnswer.fulfilled] : (state, action)=>
-            {   
-                state.loading  =  false;
-                state.postData = action.payload;
-            }, 
-        [saveQuizAnswer.rejected] : (state)=>
-            {
-                state.loading = false;
-                state.error   = true
-            }, 
     }
 });
 

@@ -65,50 +65,47 @@ export const circleSlice = createSlice({
     reducers : {
 
     },
-    extraReducers :{
-        [getInterestSpl.pending] : (state)=>
-        {
-          state.loading =  true;
-        }, 
-        [getInterestSpl.fulfilled] : (state, action)=>
-        {   
-          state.loading =  false;
-          state.users = action.payload;
-        }, 
-        [getInterestSpl.rejected] : (state)=>
-        {
-          state.loading = false;
-          state.error = true
-        },
-        [addCircle.pending] : (state)=>
-        {
-          state.loading =  true;
-        }, 
-        [addCircle.fulfilled] : (state, action)=>
-        {   
-          state.loading =  false;
-          state.users = action.payload;
-        }, 
-        [addCircle.rejected] : (state)=>
-        {
-          state.loading = false;
-          state.error = true
-        },
-         
-        [removeCircle.pending] : (state)=>
-        {
-          state.loading =  true;
-        }, 
-        [removeCircle.fulfilled] : (state, action)=>
-        {   
-          state.loading =  false;
-          state.users = action.payload;
-        }, 
-        [removeCircle.rejected] : (state)=>
-        {
-          state.loading = false;
-          state.error = true
-        }, 
+    extraReducers :builder => {
+//---------------------------------getInterestSpl-----------------------------
+      builder.addCase(getInterestSpl.pending, (state) => {
+        state.loading       =  true;
+      })
+      builder.addCase(getInterestSpl.fulfilled, (state, action) => {
+          state.loading       =  false;
+          state.users    = action.payload;
+      })
+      builder.addCase(getInterestSpl.rejected, (state) => {
+          state.loading       = false;
+          state.error         = true
+      })
+
+//---------------------------------addCircle-----------------------------
+
+      builder.addCase(addCircle.pending, (state) => {
+        state.loading       =  true;
+      })
+      builder.addCase(addCircle.fulfilled, (state, action) => {
+          state.loading       =  false;
+          state.users    = action.payload;
+      })
+      builder.addCase(addCircle.rejected, (state) => {
+          state.loading       = false;
+          state.error         = true
+      })
+      
+//---------------------------------removeCircle-----------------------------
+
+      builder.addCase(removeCircle.pending, (state) => {
+        state.loading       =  true;
+      })
+      builder.addCase(removeCircle.fulfilled, (state, action) => {
+          state.loading       =  false;
+          state.users    = action.payload;
+      })
+      builder.addCase(removeCircle.rejected, (state) => {
+          state.loading       = false;
+          state.error         = true
+      })
     }
 });
 

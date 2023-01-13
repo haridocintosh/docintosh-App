@@ -54,10 +54,10 @@ const PublicReactions = ({item,getStorageData}) => {
   navigation.navigate('CommentsScreen', {post_id:post_id,comments_list });
  }
 
- const onShare = async () => {
+ const onShare = async (post_id) => {
   try {
     const result = await Share.share({
-      message:"gagan",
+      message:`https://docintosh.com/app-share/${post_id}`,
     });
     if (result.action === Share.sharedAction) {
       if (result.activityType) {
@@ -88,13 +88,14 @@ const PublicReactions = ({item,getStorageData}) => {
                     {likeCount}
                   </Text>
                 </View>
-
+                
+                {/* 
                 <View style={styles.socialCount}>
                   <TouchableOpacity>
                       <Image source={require('../../assets/dr-icon/gift.png')} style={styles.socialImages}/>
                   </TouchableOpacity>
                   <Text style={styles.socialCountText}></Text>
-                </View>
+                </View> */}
                 
                 <View style={styles.socialCount}>
                     <TouchableOpacity   onPress={() => GotoComments(item.post_id, item.comments_list)}>

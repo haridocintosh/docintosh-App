@@ -44,10 +44,12 @@ export const PickImage = async (arg) => {
             return denied;
       }
 }
-export const PickImageAll = async () => {
-   const { granted } = await ImagePicker.requestCameraPermissionsAsync();
+export const PickImageAll = async (setloader) => {
+      const { granted } = await ImagePicker.requestCameraPermissionsAsync();
       if (granted === true) {
+            setloader(true);
             var library = await ImagePicker.launchImageLibraryAsync({
+            selectionLimit: 5,
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: false,
             allowsMultipleSelection: true,
@@ -65,17 +67,21 @@ export const PickImageAll = async () => {
       }
 }
 
-export const PickVideos = async () => {
+export const PickVideos = async (setloader) => {
    const { granted } = await ImagePicker.requestCameraPermissionsAsync();
       if (granted === true) {
+            setloader(true);
             var library = await ImagePicker.launchImageLibraryAsync({
+            selectionLimit: 5,
             mediaTypes: ImagePicker.MediaTypeOptions.Videos,
             allowsEditing: false,
-            // aspect: [1, 1],
+            allowsMultipleSelection: true,
+            aspect: [1, 1],
             quality: 0.7,
             });
             if (!library.cancelled) {
-                  return [library];
+                  const selectedImg = library.uri ? [library] : library.selected;
+                  return selectedImg;
             }
       } else {
             const denied = 'Camera permission denied';

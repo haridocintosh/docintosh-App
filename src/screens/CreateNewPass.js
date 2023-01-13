@@ -34,8 +34,9 @@ const CreateNewPass = ({route}) => {
  return (
   <SafeAreaView style={styelcss.maindDivBannerCnp}>
   <ScrollView
-  showsVerticalScrollIndicator={false}
-  nestedScrollEnable={true}
+    showsVerticalScrollIndicator={false}
+    nestedScrollEnable={true}
+    keyboardShouldPersistTaps='handled'
   >
     <View style={styelcss.forgetmainPara}>
       <Text style={styelcss.forgetPara}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </Text>

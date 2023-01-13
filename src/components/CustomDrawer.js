@@ -96,6 +96,11 @@ const CustomDrawer = (props) => {
         <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor: '#071B36',}}>
           <View style={styles.drowerChilds}>
             <DrawerItemList {...props} />
+            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("Leaderboard")}}>
+              {/*<MaterialIcons name="person-add-alt-1" size={25} color="white"/>*/}
+              <Entypo name="trophy" size={25} style={{color:'#ffff'}} />
+              <Text style={styles.sideDrawerName}>Leaderboard</Text>
+            </TouchableOpacity>
             <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("insideContactPermission")}}>
               <MaterialIcons name="person-add-alt-1" size={25} color="white" />
               <Text style={styles.sideDrawerName}>Invite</Text>
@@ -104,18 +109,18 @@ const CustomDrawer = (props) => {
               <AntDesign name="select1" size={25} color="white" />
               <Text style={styles.sideDrawerName}>Select Interest</Text>
             </TouchableOpacity >
-            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
+            {/* <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
               <MaterialCommunityIcons name="gift" size={25} color="white"/>
               <Text style={styles.sideDrawerName}>Gift DocCoins</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("WhatsNew")}}>
               <Ionicons name="md-newspaper" size={25} color="white"/>
               <Text style={styles.sideDrawerName}>What’s New</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
+            {/* <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
               <MaterialCommunityIcons name="chat-question" size={25} color="white"/>
               <Text style={styles.sideDrawerName}>Take a Tour</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("ProfileScreen")}}>
               <Entypo name="text-document-inverted" size={25} color="white"/>
               <Text style={styles.sideDrawerName}>Business Page</Text>

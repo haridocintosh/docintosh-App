@@ -8,12 +8,8 @@ import {
   Image,
   TextInput, Pressable,
   ActivityIndicator,
-  PermissionsAndroid,
-  Platform
 } from 'react-native'
-import React, {useState, useEffect} from 'react'
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { useFonts } from 'expo-font';
+import React, {useState, useEffect,useRef} from 'react'
 import CustomButton from '../components/CustomButton';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Modal from "react-native-modal";
@@ -21,7 +17,6 @@ import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { getAllUniversity } from '../../redux/reducers/getSpeciality';
 import { getcollegelist } from '../../redux/reducers/getSpeciality';
-import * as ImagePicker from 'expo-image-picker';
 import { userRegisterSecond } from '../../redux/reducers/loginAuth';
 import Toast from 'react-native-simple-toast';
 import Lottie from 'lottie-react-native';
@@ -60,7 +55,7 @@ const [register , setregister] = useState({
   role:role,
   user_id:user_id,
 });
-
+const ref = useRef(null);
 const [open, setOpen] = useState(false);
 const [value, setValue] = useState(null);
 const [open1, setOpen1] = useState(false);
@@ -179,13 +174,25 @@ const form_submit = async() =>{
   console.log("register",register);
   if(!register.pincode){
     setPincode("Please enter a valid pincode");
+    if (ref.current) {
+      ref.current.scrollTo({ y: 0, animated: true })
+    }
   }else if(!register.university){
     setuniversityerr("Please Select University ");
+    if (ref.current) {
+      ref.current.scrollTo({ y: 0, animated: true })
+    }
   }else if(!register.college){
     setclgerr("Please Select College");
+    if (ref.current) {
+      ref.current.scrollTo({ y: 0, animated: true })
+    }
   }else if(!register.password){
     setPasswordErr("Please enter your password");
   }else if(!register.profile_pic){
+    if (ref.current) {
+      ref.current.scrollTo({ y: 0, animated: true })
+    }
     setprofilErr("Please Upload your Profile Photo");
   }else if(!register.mrnproof){
     setmrnproofErr("Please Upload CollegeId/Library Card");
@@ -226,6 +233,7 @@ const form_submit = async() =>{
 return (
   <SafeAreaView style={{flex: 0, justifyContent: 'center',paddingTop:0}}>
   <ScrollView
+    ref={ref}
     keyboardShouldPersistTaps='handled'
     showsVerticalScrollIndicator={false}
     nestedScrollEnable={true}>
