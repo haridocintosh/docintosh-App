@@ -54,10 +54,10 @@ const PublicReactions = ({item,getStorageData}) => {
   navigation.navigate('CommentsScreen', {post_id:post_id,comments_list });
  }
 
- const onShare = async () => {
+ const onShare = async (post_id) => {
   try {
     const result = await Share.share({
-      message:"gagan",
+      message:`https://docintosh.com/app-share/${post_id}`,
     });
     if (result.action === Share.sharedAction) {
       if (result.activityType) {

@@ -44,6 +44,7 @@ import AudioScreen from '../screens/HomeScreen/postScreen/AudioScreen';
 import AccountSettings from '../screens/Settings/Account Setting/AccountSettins';
 import ResetPassword from '../screens/Settings/Account Setting/ResetPassword/ResetPassword';
 import Leaderboard from '../screens/Leaderboard/Leaderboard';
+import EarnDocCoins from '../screens/Leaderboard/EarnDocCoins';
 
 
 
@@ -102,7 +103,8 @@ const HomeNavigation = () => {
         <Stack.Screen name="AccountSettings" component={AccountSettings} options={showHeaderItem} />
         <Stack.Screen name="ResetPassword" component={ResetPassword} options={showHeaderItem} />
         <Stack.Screen name="Leaderboard" component={Leaderboard} options={showHeaderItem} />
-        
+        <Stack.Screen name="EarnDocCoins" component={EarnDocCoins} options={showHeaderItem} />
+
         {/* <Stack.Screen name="MultipleImagesUpload" component={MultipleImagesUpload}/>
           <Stack.Screen name="SentimentrixCong" component={SentimentrixCong} options={showHeaderItem}/>
           <Stack.Screen name="Sentimentrix6" component={Sentimentrix6} options={showHeaderItem}/>
