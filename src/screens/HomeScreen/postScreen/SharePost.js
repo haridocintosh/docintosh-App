@@ -59,6 +59,7 @@ const  Sharepost = () => {
   });
   const [uploadImage, setuploadImage]   = useState({pimage:[]});
   const [emojiTab, setEmojiTab] = useState(false)
+  const [media, setMedia] = useState('')
   const bottomSheetModalRef       = useRef(null);
   const bottomSheetModalRefSecond = useRef(null);
   const snapPointsOne = ["1%","48%"];
@@ -85,13 +86,15 @@ const  Sharepost = () => {
   const pickImage =  () => {
     setDocument(null);
     PickImageAll(setloader).then(async (res) =>{
+      setloader(true);
       const data = res?.map((data,i) => {return {...data, id:i}})
       setData(data);
       setPost({...post, 
           type:'i'
       });
       setCountData(data.length);
-      //setloader(false);
+      setMedia('images');
+      setloader(false);
     })
   };
 
@@ -100,11 +103,13 @@ const  Sharepost = () => {
     PickVideos().then(async (res) =>{
       setloader(true);
       const data = res?.map((data,i) => {return {...data, id:i}})
+      console.log(data);
       setData(data);
       setPost({...post, 
         type:'v'
       });
       setCountData(data.length);
+      setMedia('videos');
 
     //   let filename = localUri.split('/').pop();
     //   let uriParts = localUri.split('.');
@@ -129,7 +134,7 @@ const  Sharepost = () => {
     //     postImage: result1.postImage,
     //     type:'v'
     //   });
-    //   setloader(false);
+  setloader(false);
     })
   };
 
@@ -187,60 +192,103 @@ const publishCheck1 = (e, text)=>{
       Toast.show("Please Select PostType");
       bottomSheetModalRef.current?.present();
     }else{
-      pickedData?.map(async(data) => {
-        let localUri = data.uri
-        let filename = localUri.split('/').pop();
-        let uriParts = localUri.split('.');
-        let fileType = uriParts[uriParts.length - 1];
-        let formData = new FormData();
-        const imageData = {
-          uri : localUri,
-          name: filename,
-          type: `image/${fileType}`,
-        }
-        formData.append('postImage', imageData);
-        formData.append('post_id', '3032');
-        const responce = await fetch(`${mainApi.baseUrl}/ApiController/postuploadDocsCompress`, {
-          method : 'POST',
-          headers:{
-              'Content-Type': 'multipart/form-data'
-          },
-          body :formData
-       });
+      if(media == 'images'){
+        pickedData?.map(async(data) => {
+          let localUri = data.uri
+          let filename = localUri.split('/').pop();
+          let uriParts = localUri.split('.');
+          let fileType = uriParts[uriParts.length - 1];
+          let formData = new FormData();
+          const imageData = {
+            uri : localUri,
+            name: filename,
+            type: `image/${fileType}`,
+          }
+          formData.append('postImage', imageData);
+          formData.append('post_id', '3032');
+          const responce = await fetch(`${mainApi.baseUrl}/ApiController/postuploadDocsCompress`, {
+              method : 'POST',
+              headers:{
+                  'Content-Type': 'multipart/form-data'
+              },
+              body :formData
+          });
+  
+          var result1=  await responce.json();
+            getFun({...uploadImage,
+              uploadImage:uploadImage.pimage.push(result1.postImage)
+            })
+          });
 
+      }else if(media == 'videos'){
+
+          let filename = localUri.split('/').pop();
+          let uriParts = localUri.split('.');
+          let fileType = uriParts[uriParts.length - 1];
+          let formData = new FormData();
+          const imageData = {
+            uri : localUri,
+            name: filename,
+            type: `video/${fileType}`,
+          }
+          formData.append('postImage', imageData);
+          formData.append('post_id', '3032');
+          const responce = await fetch(`${mainApi.baseUrl}/ApiController/postuploadDocsReact`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'multipart/form-data'
+            },
+            body :formData
+          });
         var result1=  await responce.json();
-          getFun({...uploadImage,
-            uploadImage:uploadImage.pimage.push(result1.postImage)
-          })
-        });
 
-      const getFun = async(data) => {
-        console.log("datasfdgh",data);
-        const uniqueData = data.pimage.filter((x, i, a) => a.indexOf(x) == i);
-        console.log('filtercount', uniqueData);
-        console.log('filtercount', uniqueData.length);
-        console.log('realcount',countData);
-
-        if(countData == uniqueData.length){
-              const uploadData = {userdata,post,uploadImage:uniqueData};
-              console.log('uploadDatacheck', uploadData);
-            // setloader(true);
-              const result = await dispatch(postCreate(uploadData));
-              console.log(result);
-              if(result.payload.status == 'Success'){
-              // setloader(false);
-                Toast.show(result.payload.message);
-                const coinDetails = {task : 4, receiverId:userdata.id } 
-                const coinResult  = await dispatch(coinTransfer(coinDetails));
-                if(coinResult.payload.status == 'Success')
-                {
-                  navigation.navigate('HomeScreen');
-                }
-              }
-            }
-          } 
-        }
+      
+      
       }
+
+      getFun({...uploadImage,
+        uploadImage:uploadImage.pimage.push(result1.postImage)
+      })
+  
+      // console.log("evenet k phle",uploadImage.pimage.length);
+      //   if(uploadImage.pimage.length > 0){
+      //     Toast.show("uploaded");
+      //     console.log("uploaded");
+      //     getFun(data);
+      // }else{
+      //   Toast.show("Please Select atleast One Images or Video");
+      // }
+    }
+  }
+
+  const getFun = async(data) => {
+    console.log("datasfdgh",data);
+    console.log("uploaded");
+    const uniqueData = data.pimage.filter((x, i, a) => a.indexOf(x) == i);
+    console.log('filtercount', uniqueData);
+    console.log('filtercount', uniqueData.length);
+    console.log('realcount',countData);
+  
+    if(countData == uniqueData.length){
+  
+          const uploadData = {userdata,post,uploadImage:uniqueData};
+          console.log('uploadDatacheck', uploadData);
+        // setloader(true);
+          const result = await dispatch(postCreate(uploadData));
+          console.log(result);
+          if(result.payload.status == 'Success'){
+          // setloader(false);
+            Toast.show(result.payload.message);
+            const coinDetails = {task : 4, receiverId:userdata.id } 
+            const coinResult  = await dispatch(coinTransfer(coinDetails));
+            if(coinResult.payload.status == 'Success')
+            {
+              navigation.navigate('HomeScreen');
+            }
+          }
+        }
+   
+    } 
 
   const uploadPostImage = async (post_id) => {
     //console.log(post_id);

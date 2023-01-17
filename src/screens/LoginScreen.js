@@ -18,6 +18,7 @@ import { storeData, singlestoreData } from '../apis/Apicall';
 import { userLogin } from '../../redux/reducers/loginAuth';
 import Toast from 'react-native-simple-toast';
 import { useFonts } from 'expo-font';
+import { registerForPushNotificationsAsync } from './PushNotification';
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -27,7 +28,7 @@ const LoginScreen = () => {
   const [isChecked, setChecked] = useState(false);
   const [message , setmessage]  = useState();
   const isValidemailRegex  = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.[a-z]{1,3})+([a-zA-Z0-9]{1,3})|(^[0-9]{10})+$/;
-  const [register ,setregister] = useState({email:"",password:""});
+  const [register ,setregister] = useState({email:"",password:"",device_id:""});
   const [data, setdata] = useState();
   const [datarm, setdatarm] = useState();
   const isFocused = useIsFocused();
@@ -110,7 +111,15 @@ const LoginScreen = () => {
     if(isFocused){
       getDatarm('rememberme');
     }
+    fetchToken();
   },[isFocused])
+
+  function fetchToken(){
+    registerForPushNotificationsAsync().then(token => setregister({
+      ...register,
+      device_id: token,
+     }));
+  }
 
   const [fontsLoaded] = useFonts({
     'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),

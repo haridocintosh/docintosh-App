@@ -21,7 +21,7 @@ import { getAllSpeciality } from "../../redux/reducers/getSpeciality";
 import { checkMobile, userRegisterOne,checkEmail } from '../../redux/reducers/loginAuth';
 import Toast from 'react-native-simple-toast';
 import {MaterialCommunityIcons, Ionicons, FontAwesome5,Fontisto} from 'react-native-vector-icons';
-
+import { registerForPushNotificationsAsync } from './PushNotification';
 
 export default function RegisterScreen() {
   const dispatch = useDispatch();
@@ -42,9 +42,10 @@ export default function RegisterScreen() {
   const [spl, setSpl] = useState([
     {label: 'Doctor', value: '1'},
   ]);
-  const [openGender, setOpenGender] = useState(false);
-  const [valueGender, setValueGender] = useState('');
-  
+  // const [openGender, setOpenGender] = useState(false);
+  // const [valueGender, setValueGender] = useState('');
+
+
   const [register , setregister] = useState({
     fname : "",
     lname:"",
@@ -53,6 +54,7 @@ export default function RegisterScreen() {
     speciality:"",
     gender:"",
     role:"",
+    device_id:""
   });
 
   const ref = useRef(null);
@@ -64,8 +66,16 @@ export default function RegisterScreen() {
         return {label: ele.speciality, value: ele.speciality_id};
      }))
     }
-    fetchSpecialities()
+    fetchSpecialities();
+    fetchToken();
   },[]);
+
+  function fetchToken(){
+    registerForPushNotificationsAsync().then(token => setregister({
+      ...register,
+      device_id: token,
+     }));
+  }
 
  
 
@@ -160,6 +170,7 @@ const setuserrole= (e)=>{
 }
 
 const form_submit = async() =>{
+  console.log('expoToken',register);
   if(!register.fname){
     fnerr("Please enter First Name");
     if (ref.current) {
