@@ -54,7 +54,7 @@ const LoginScreen = () => {
     if(register.email !== "" &&  register.password !== "" && register.email !== undefined &&  register.password !== undefined){
       setloader(true);
       const token = await dispatch(userLogin(register));
-      if(token.payload.status == 'Success'){
+      if(token?.payload?.status == 'Success'){
           setloader(false)
           await storeData('USER_INFO',JSON.stringify({
           login:true,

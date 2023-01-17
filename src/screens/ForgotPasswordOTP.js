@@ -76,7 +76,7 @@
         email:phone
       }))
       Toast.show(token.payload.message);
-      if(token.payload.status == 'Success'){
+      if(token?.payload?.status == 'Success'){
         navigation.navigate('ForgotPasswordOTP',{
           mobile_no: phone,
           email:'',

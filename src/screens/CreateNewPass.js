@@ -23,7 +23,7 @@ const CreateNewPass = ({route}) => {
     id:user_id,
     pwd:password
   }));
-  if(token.payload.status=="Success"){
+  if(token?.payload?.status=="Success"){
    Toast.show(token.payload.message);
   navigation.navigate('Login');
   }

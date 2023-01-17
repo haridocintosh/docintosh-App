@@ -29,7 +29,7 @@ const Leaderboard = ({navigation}) => {
                 <View style={styles.rankerProfileContainer}>
                     <Image source={require('../../assets/images/grid1.png')} style={styles.rankerProfile}/>
                     <View style={styles.rankedNumber}>
-                        <Text style={styles.rankedNumberText}>1</Text>
+                        <Text style={styles.rankedNumberText}>2</Text>
                     </View>
                 </View>
                 <Text style={styles.rankerName}>Dr. Mahesh</Text>
@@ -41,7 +41,7 @@ const Leaderboard = ({navigation}) => {
                     <Image source={require('../../assets/dr-icon/blueCrown.png')} style={styles.blueCrown}/>
                     <Image source={require('../../assets/images/grid4.png')} style={styles.rankerProfile2}/>
                     <View style={styles.rankedNumber}>
-                        <Text style={styles.rankedNumberText}>2</Text>
+                        <Text style={styles.rankedNumberText}>1</Text>
                     </View>
                 </View>
                 <Text style={styles.rankerName}>Dr. Kiran</Text>

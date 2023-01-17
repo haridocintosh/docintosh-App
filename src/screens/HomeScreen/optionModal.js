@@ -82,7 +82,7 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,res
     <View>
     {modalVisible &&
     <View style={styles.optionModal}>
-      {resData?.id === item.id ?
+      {resData?.id === item?.id ?
       <TouchableOpacity style={styles.optionList} onPress={() =>{handleDeletePost()}}>
         <MaterialCommunityIcons name='delete-outline' size={23} color={'#45B5C0'}/>
         <Text style={styles.optionListText}>Delete Post</Text>

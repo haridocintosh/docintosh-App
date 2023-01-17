@@ -206,10 +206,11 @@ const KnowYourHeart = ({ route,navigation }) => {
                     );
                   })}
                   <View>
+                    {sliceData &&
                     <TouchableOpacity onPress={() => handleAlldata()}>
                       <Text style={styles.ViewAllText}>View All</Text>
-                    </TouchableOpacity>
-
+                    </TouchableOpacity>}
+                    
                     <Button
                       title="Back to Categories"
                       buttonStyle={styles.buttonStyle}
