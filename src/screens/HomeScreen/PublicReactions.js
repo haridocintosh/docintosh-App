@@ -73,7 +73,7 @@ const PublicReactions = ({item,getStorageData}) => {
   }
 };
 
-console.log("heart",item?.post_like_status?.[0].flag == 1);
+// console.log("heart",item?.post_like_status?.[0].flag == 1);
  
   return (
     <View>
