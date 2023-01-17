@@ -46,6 +46,7 @@ const  Sharepost = () => {
   const [specialNames, setSpecialNames]   = useState();
   const [countData, setCountData]   = useState();
   const [whoCanSee, setWhoCanSee]   = useState();
+  const [postLoad, setPostLoad]   = useState(false);
   const [userdata, setuserdata] = useState({
     fullname:'',
     profile:'',
@@ -84,6 +85,7 @@ const  Sharepost = () => {
     setEmojiTab(!emojiTab)
   }
   const pickImage =  () => {
+    setData(null)
     setDocument(null);
     PickImageAll(setloader).then(async (res) =>{
       setloader(true);
@@ -99,15 +101,14 @@ const  Sharepost = () => {
   };
 
   const pickVideo =  () => {
+    
     setDocument(null);
-    PickVideos().then(async (res) =>{
+    PickVideos(setloader).then(async (res) => {
       setloader(true);
       const data = res?.map((data,i) => {return {...data, id:i}})
       console.log(data);
       setData(data);
-      setPost({...post, 
-        type:'v'
-      });
+      setPost({...post,  type:'v' });
       setCountData(data.length);
       setMedia('videos');
 
@@ -182,13 +183,20 @@ const publishCheck1 = (e, text)=>{
     setWhoCanSee(text)
 }
 
+// console.log("postLoad",postLoad);
+
   const handleStudentSubmit = async() =>{
+    console.log("start");
+    setPostLoad(true);
     if(post.publishto ==''){
+      setPostLoad(false);
       Toast.show('Please Select Publish to');
       bottomSheetModalRefSecond.current?.present();
     }else if(!post.description){
+      setPostLoad(false);
       Toast.show("Please Write Something About Your Post!!!!!!!");
     }else if(!post.postType){
+      setPostLoad(false);
       Toast.show("Please Select PostType");
       bottomSheetModalRef.current?.present();
     }else{
@@ -451,9 +459,9 @@ setSpecialNames(specialityName)
             </View>
           </View> 
         </View>
-        <TouchableOpacity onPress={()=>handleStudentSubmit()}>
+        <TouchableOpacity onPress={postLoad ? null : ()=>handleStudentSubmit()}>
           <Text style={{fontFamily:'Inter-SemiBold',color:'#51668A'}}   >
-            Post
+           {postLoad ? <ActivityIndicator size="small" color="#1A7078"/> : "Post"} 
           </Text>
         </TouchableOpacity>
       </View>

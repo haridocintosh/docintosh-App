@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity,Dimensions,Image,FlatList } from 'react-native'
+import { View, Text, TouchableOpacity,Dimensions,Image,FlatList,ActivityIndicator } from 'react-native'
 import React,{ useEffect,useState }  from 'react';
 import { Card } from 'react-native-paper';
 import {Ionicons,MaterialCommunityIcons,FontAwesome5} from '@expo/vector-icons';
@@ -18,8 +18,12 @@ const ProfileScreenPost = ({postLength}) => {
   const [myPost,setMyPost] = useState();
   const [postId, setPostId] = useState();
   const [modalVisible, setModalVisible] = useState(false);
+  const [endNull, setEndNull] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [userData, setUserData] = useState();
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const [bottumLoader, setBottumLoader] = useState(false);
 
   const { width } = Dimensions.get('window')
 
@@ -34,26 +38,57 @@ const ProfileScreenPost = ({postLength}) => {
 
   const getMyPosts = async () => {
     getLocalData('USER_INFO').then( async (res) =>{
+      setUserData(res?.data)
       const resData = res?.data;
       const postDetails = { postType:0,role:resData?.role,circle_type:resData?.role == 4 ? 1 : resData?.circle_type,
-        city_id:resData?.city_id,assoc_id:resData?.assoc_id,pageCounter:600,user_id:resData?.id,id:resData?.id
+        city_id:resData?.city_id,assoc_id:resData?.assoc_id,pageCounter:1,user_id:resData?.id,id:resData?.id
       }
       const allPostResult = await dispatch(getMyPostsApi(postDetails));
-      setMyPost(allPostResult.payload);
-      await postLength(allPostResult.payload.length);
+      // console.log("allPostResult.payload.result",allPostResult.payload.count);
+      setMyPost(allPostResult.payload.result);
+      await postLength(allPostResult.payload.count);
     });
+  }
+
+  const handleLoadeMore = () => {
+    if(endNull !== null){
+      LoadPost(currentPage + 1);
+    }
+  };
+  
+  const LoadPost = async (page) => {
+    console.log(page);
+    setBottumLoader(true);
+    const postDetails = { postType:0,role:userData?.role,circle_type:userData?.role == 4 ? 1 : userData?.circle_type,
+      city_id:userData?.city_id,assoc_id:userData?.assoc_id,pageCounter:page,user_id:userData?.id,id:userData?.id
+    }
+    const result = await dispatch(getMyPostsApi(postDetails));
+    setEndNull(result.payload.result)
+     if(result.payload.result !== null){
+      setCurrentPage(prev => prev + 1);
+      setMyPost([...myPost, ...result?.payload.result]);
+     }
+     setBottumLoader(false);
   }
 
   const handlePost = (item) => {
     navigation.navigate('PostsScreen', {item:item})
   }
+
+  const renderLoader = () => {
+    return (
+      bottumLoader ?
+        <View style={styles.loaderStyle}>
+          <ActivityIndicator size="small" color="#1A7078" />
+        </View> : null
+    );
+  };
   
   useEffect(() => {
       getMyPosts();
   }, [])
 
   const renderItem = ({item}) => {
-    console.log("item",item);
     return(
       <Card style={styles.cardOfPosts} >
         <View style={styles.userInfo}>
@@ -107,7 +142,8 @@ const ProfileScreenPost = ({postLength}) => {
         data={myPost}
         renderItem={renderItem}
         keyExtractor={(item,index) => index}
-        // onEndReached={loadMore}
+        ListFooterComponent={renderLoader}
+        onEndReached={() => handleLoadeMore()}
         showsVerticalScrollIndicator={false}
     />
     </View>

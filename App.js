@@ -7,10 +7,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { navigationRef } from './src/navigation/RootNavigation';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
-import { Platform ,LogBox} from 'react-native';
+import { LogBox} from 'react-native';
 import { registerForPushNotificationsAsync } from './src/screens/PushNotification';
-
-
 
 
 const App = () => {

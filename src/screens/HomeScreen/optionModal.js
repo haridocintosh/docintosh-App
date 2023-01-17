@@ -1,14 +1,12 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity,Modal } from 'react-native'
-import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity,Modal } from 'react-native'
+import React, { useState } from 'react';
 import {MaterialCommunityIcons,Feather,Entypo,MaterialIcons } from '@expo/vector-icons';
 import {useNavigation} from '@react-navigation/native';
-import { getLocalData } from '../../apis/GetLocalData';
 import { deletePost } from '../../../redux/reducers/postAction';
 import { useDispatch } from 'react-redux';
 import { coinTransfer } from '../../../redux/reducers/coinSlice';
 import { BlockUserApi, followApi, SavePostApi } from '../../../redux/reducers/ALL_APIs';
 import {Ionicons} from '@expo/vector-icons';
-import { getSavedPostsApi } from '../../../redux/reducers/SettingsSlice';
 
 const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,resData}) => {
   const [toggle, setToggle] = useState(false);
@@ -59,8 +57,7 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,res
 
   const handleReport = () => {
     setModalVisible(false);
-    navigation.navigate('ReportPost', {
-      postId: item?.post_id, id: item?.id})
+    navigation.navigate('ReportPost', {postId: item?.post_id, id: item?.id})
   }
 
   const handleUnfollow = async () => {
@@ -85,7 +82,7 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,res
     <View>
     {modalVisible &&
     <View style={styles.optionModal}>
-      {resData?.id === item.id ?
+      {resData?.id === item?.id ?
       <TouchableOpacity style={styles.optionList} onPress={() =>{handleDeletePost()}}>
         <MaterialCommunityIcons name='delete-outline' size={23} color={'#45B5C0'}/>
         <Text style={styles.optionListText}>Delete Post</Text>

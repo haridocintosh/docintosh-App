@@ -10,7 +10,7 @@ import { getLocalData } from '../../apis/GetLocalData';
 
 
 const PublicReactions = ({item,getStorageData}) => {
- const [likeCount,setLikeCount] = useState(item.likecount);
+ const [likeCount,setLikeCount] = useState(item?.likecount);
  const [allLikeData,setAllLikeData] = useState();
  const [heart,setHeart] = useState(item?.post_like_status?.[0].flag == 1);
  const [result,setResult] = useState();
@@ -54,10 +54,10 @@ const PublicReactions = ({item,getStorageData}) => {
   navigation.navigate('CommentsScreen', {post_id:post_id,comments_list });
  }
 
- const onShare = async () => {
+ const onShare = async (post_id) => {
   try {
     const result = await Share.share({
-      message:"gagan",
+      message:`https://docintosh.com/app-share/${post_id}`,
     });
     if (result.action === Share.sharedAction) {
       if (result.activityType) {
@@ -72,13 +72,15 @@ const PublicReactions = ({item,getStorageData}) => {
     alert(error.message);
   }
 };
+
+console.log("heart",item?.post_like_status?.[0].flag == 1);
  
   return (
     <View>
      <View style={styles.publicReactionsContainer}>
               <View style={{ flexDirection: 'row',marginVertical:5,}}>
                 <View style={styles.socialCount}>
-                  <TouchableOpacity onPress={()=> handleLikes(item.post_id,item.likecount)} >
+                  <TouchableOpacity onPress={()=> handleLikes(item?.post_id,item?.likecount)} >
                       <AntDesign
                         name={ heart ? "heart":"hearto"} 
                         size={22} color="red"
@@ -88,6 +90,8 @@ const PublicReactions = ({item,getStorageData}) => {
                     {likeCount}
                   </Text>
                 </View>
+
+                
                 
                 {/* 
                 <View style={styles.socialCount}>
@@ -98,14 +102,14 @@ const PublicReactions = ({item,getStorageData}) => {
                 </View> */}
                 
                 <View style={styles.socialCount}>
-                    <TouchableOpacity   onPress={() => GotoComments(item.post_id, item.comments_list)}>
+                    <TouchableOpacity   onPress={() => GotoComments(item?.post_id, item?.comments_list)}>
                         <Image source={require('../../assets/dr-icon/socialComment.png')} style={styles.socialImages}/>
                     </TouchableOpacity>
-                  <Text style={styles.socialCountText}>{item.commentcount}</Text>
+                  <Text style={styles.socialCountText}>{item?.commentcount}</Text>
                 </View>
 
                 <View style={styles.socialCount}>
-                    <TouchableOpacity onPress={() => onShare(item.post_id)}>
+                    <TouchableOpacity onPress={() => onShare(item?.post_id)}>
                         <Image source={require('../../assets/dr-icon/Share.png')} style={styles.socialImages}/>
                     </TouchableOpacity>
                   <Text style={styles.socialCountText}>4k</Text>
@@ -123,7 +127,7 @@ const PublicReactions = ({item,getStorageData}) => {
               })}
               <Text style={{fontSize:12, fontWeight:'400',color:'#51668A',padding:5}}>
                 { likeCount == 1 ? `Liked by ${allLikeData?.data?.[0]?.username}` :
-                `Liked by ${allLikeData?.data?.[0]?.username} and ${likeCount ? likeCount-1 : parseInt(item.likecount-1)} others`}
+                `Liked by ${allLikeData?.data?.[0]?.username} and ${likeCount ? likeCount-1 : parseInt(item?.likecount-1)} others`}
               </Text>
           </View>
           }

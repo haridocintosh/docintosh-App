@@ -1,5 +1,5 @@
 import { View, Text, Image,StyleSheet,Dimensions } from 'react-native'
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import Swiper from 'react-native-swiper';
 import { Audio, Video } from 'expo-av';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
@@ -9,7 +9,7 @@ const AutoHeightImage = ({item}) => {
   const [carouselItems] = useState(item?.attach_array)
   
   const video = useRef(null);
-  
+
   const _renderItem = ({ item, index }) => {
     return (
            <View key={index}>

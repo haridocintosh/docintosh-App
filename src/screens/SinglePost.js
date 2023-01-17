@@ -1,103 +1,54 @@
-import React, {useState, useEffect,useRef} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  Dimensions,
-  SafeAreaView,
-  ScrollView,
-  FlatList,
-  ActivityIndicator
-} from 'react-native';
-import { Card } from 'react-native-paper';
+import { View, Text, SafeAreaView,TouchableOpacity,Image,Dimensions, ScrollView } from 'react-native'
+import React,{useState,useEffect} from 'react';
 import {Ionicons,MaterialCommunityIcons,FontAwesome5} from '@expo/vector-icons';
+import { Card } from 'react-native-paper';
+import { styles } from './HomeScreen/Homestyle';
 import Svg, {Path} from 'react-native-svg';
-import moment from "moment";
-import PublicReactions from '../../HomeScreen/PublicReactions';
-import { styles } from '../../HomeScreen/Homestyle';
-import { getLocalData } from '../../../apis/GetLocalData';
-import { getSavedPostsApi } from '../../../../redux/reducers/SettingsSlice';
+import AutoHeightImage from './HomeScreen/AutoHeightImage';
+import OptionModal from './HomeScreen/optionModal';
+import PublicReactions from './HomeScreen/PublicReactions';
+import { singlePostDataAPI } from '../../redux/reducers/ALL_APIs';
 import { useDispatch } from 'react-redux';
-import OptionModal from '../../HomeScreen/optionModal';
-import AutoHeightImage from '../../HomeScreen/AutoHeightImage';
+import moment from "moment";
+import { useIsFocused } from '@react-navigation/native';
 
-const SavedPost = ({navigation}) => {
+const SinglePost = () => {
   const [item, setItem] = useState();
   const [postId, setPostId] = useState();
   const [modalVisible, setModalVisible] = useState(false);
-  const [bottumLoader, setBottumLoader] = useState(false);
-  const [endNull, setEndNull] = useState();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [userData, setUserData] = useState();
   const dispatch = useDispatch();
-
-  const ref = useRef(null);
-
-  const LocalStorage = () => {
-    setBottumLoader(true);
-    getLocalData('USER_INFO').then(async (res) => {
-      setUserData(res?.data)
-      const savedResult = await dispatch(getSavedPostsApi({user_id:res?.data?.id,pageCounter:1}));
-      setItem(savedResult?.payload?.result)
-    });
-    setBottumLoader(false);
-  }
-
-  const handleOption = (post_id) => {
-    setPostId(post_id);
-    if(postId == post_id){
-      setModalVisible(!modalVisible);
-      return;
-    }
-    setModalVisible(true);
-  }
-  
-  useEffect(() => {
-      navigation.setOptions({ title:'Saved Posts'});
-      if(ref.current) {
-        ref.current.scrollToOffset({ offset: 0 })
+  const isFocused = useIsFocused();
+ 
+    const handleOption = (post_id) => {
+        setPostId(post_id);
+        if(postId == post_id){
+          setModalVisible(!modalVisible);
+          return;
+        }
+        setModalVisible(true);
       }
-      LocalStorage();
-  },[])
 
-  const handleLoadeMore = () => {
-    if(endNull !== null){
-      LoadPost(currentPage + 1);
-    }
-  };
-  
-  const LoadPost = async (page) => {
-    console.log(page);
-    setBottumLoader(true);
-    const result = await dispatch(getSavedPostsApi({user_id:userData?.id,pageCounter:page}));
-    setEndNull(result.payload.result)
-     if(result.payload.result !== null){
-      setCurrentPage(prev => prev + 1);
-      setItem([...item, ...result?.payload.result]);
-     }
-     setBottumLoader(false);
-  }
+    const GetSinglePOstData = async () => {
+        const singleResult = await dispatch(singlePostDataAPI({post_id : 3176}));
+        console.log("singleResult",singleResult.payload[0]);
+        setItem(singleResult.payload[0])
+    }  
+    // console.log("item",item?.profileimage);
 
-  const BlockId = (id) =>{
+    useEffect(() => {
+    GetSinglePOstData();
+    },[isFocused])  
+
+    const BlockId = (id) =>{
     console.log("BlockId",id);
     const BlockId = item?.filter(Uid => Uid.id != id);
     setItem(BlockId);
-  }
+    }
 
-  
-  const renderLoader = () => {
-    return (
-      bottumLoader ?
-        <View style={styles.loaderStyle}>
-          <ActivityIndicator size="small" color="#1A7078"/>
-        </View> : null
-    );
-  };
-
-  const renderItem = ({item}) => {
-    return(
-      <Card style={styles.SavePostsContainer} >
+  return (
+    <SafeAreaView style={{padding:10,marginTop:10,flex:1,backgroundColor:'#ecf2f6'}}>
+        <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnable={true}>
+        <Card style={styles.SavePostsContainer} >
           <View style={styles.userInfo}>
             <View  style={{flexDirection:'row',alignItems:'center'}}>
               <Image source={{uri:item?.profileimage}} 
@@ -105,7 +56,7 @@ const SavedPost = ({navigation}) => {
               />
               <View>
                 <Text style={{fontSize:14, fontWeight:'400', fontFamily:"Inter-Regular"}}>
-                  {item.utitle && item.utitle} {item.first_name && item.first_name} {item.last_name && item.last_name}
+                  {item?.utitle} {item?.first_name} {item?.last_name}
                   <MaterialCommunityIcons name="check-decagram" size={12} color="#0F9C69" />
                 </Text>
                 <View style={{flexDirection:'row',alignItems:'flex-start',}}>
@@ -120,7 +71,7 @@ const SavedPost = ({navigation}) => {
                     <Ionicons name="time-outline" size={19} color="#51668A" />  
                   </Text>
                   <Text style={{fontSize:12, paddingRight:5, fontWeight:'400',color:'#51668A',fontFamily:"Inter-Regular",marginTop:1.5}}>
-                    {moment(item?.created_at).fromNow()} 
+                    {moment(item?.created_at).fromNow()}  
                   </Text>
                 </View>
               </View>
@@ -144,28 +95,15 @@ const SavedPost = ({navigation}) => {
           </View>
           <View >
             <Text style={{color:'#51668A',fontFamily:"Inter-Regular"}}>
-              {item?.description.replace(/<[^>]+>/g, "")}
+              {item?.description.replace(/<[^>]+>/g, "")} 
             </Text>
           </View>
-          <AutoHeightImage item={item} width={Dimensions.get('window').width}/>
-          <PublicReactions item={item}/>
+          {item && <AutoHeightImage item={item} width={Dimensions.get('window').width}/>}
+          {item && <PublicReactions item={item}/>}
       </Card> 
-    )
-  }
-
-  return (
-    <SafeAreaView style={{padding:10,marginTop:10,flex:1,backgroundColor:'#ecf2f6'}}>
-      <FlatList
-        ref={ref}
-        data={item}
-        renderItem={renderItem}
-        keyExtractor={(item,index) => index}
-        ListFooterComponent={renderLoader}
-        onEndReached={() => handleLoadeMore()}
-        showsVerticalScrollIndicator={false}
-      />
+      </ScrollView>
     </SafeAreaView>
   )
 }
 
-export default SavedPost
+export default SinglePost

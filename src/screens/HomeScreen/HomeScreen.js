@@ -6,7 +6,8 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
-  Animated,ActivityIndicator,
+  Animated,
+  ActivityIndicator,
 } from 'react-native';
 import { Card } from 'react-native-paper';
 import { useDispatch } from "react-redux";
@@ -21,8 +22,8 @@ import OptionModal from './optionModal';
 import { getLocalData } from '../../apis/GetLocalData';
 import AutoHeightImage from './AutoHeightImage';
 
-
-const HomeScreen = ({navigation})=> {
+const HomeScreen = ({navigation,route})=> {
+  const postLoader = route?.params?.reload;
   const [userdata, setuserdata]     = useState({profile:'',user_id:'',role:''});
   const [allPost, setallPost]  = useState();
   const [resData, setResData]  = useState();
@@ -35,9 +36,7 @@ const HomeScreen = ({navigation})=> {
   const [bottumLoader, setBottumLoader] = useState(false);
 
   const isFocused = useIsFocused();
-
   const ref = useRef(null);
-
   const { width, height} = Dimensions.get('window')
 
   //---------------- header Animation------------------
@@ -73,10 +72,6 @@ const HomeScreen = ({navigation})=> {
     extrapolateRight: 'clamp',
   });
 
-//  const tooglePlay =() => {
-//    isPlaying === false ? setIsPlaying(true) : setIsPlaying(false);
-//  };
-
 const handleOption = (post_id,id) => {
   setPostId(post_id);
   if(postId == post_id){
@@ -92,6 +87,14 @@ const handleOption = (post_id,id) => {
       setAllcoins(allCoinsResult.payload.coins);
     });
   };
+
+  // if(postLoader){
+  //   return(
+  //   <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+  //       <ActivityIndicator size={'large'} color="#1A7078"/>
+  //   </View>)
+  // }
+
   const renderLoader = () => {
     return (
       bottumLoader ?
@@ -290,13 +293,9 @@ const handleOption = (post_id,id) => {
               onEndReached={() => handleLoadeMore()}
               showsVerticalScrollIndicator={false}
           />
-          
           </View>
       </View>
       </View>
-      {/* {bottumLoader && <View style={{ backgroundColor:'#fff',position:'absolute',width:'100%',bottom:194,padding:10 }}>
-          <ActivityIndicator size='small' color={"#000"} />
-      </View>} */}
   </SafeAreaView>
   );
 }

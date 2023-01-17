@@ -43,6 +43,10 @@ import SelectInterestInnerScreen from '../screens/SelectInterestInnerScreen';
 import AudioScreen from '../screens/HomeScreen/postScreen/AudioScreen';
 import AccountSettings from '../screens/Settings/Account Setting/AccountSettins';
 import ResetPassword from '../screens/Settings/Account Setting/ResetPassword/ResetPassword';
+import Leaderboard from '../screens/Leaderboard/Leaderboard';
+import EarnDocCoins from '../screens/Leaderboard/EarnDocCoins';
+import Rewards from '../components/Rewards/Rewards';
+import SinglePost from '../screens/SinglePost';
 
 
 
@@ -99,7 +103,10 @@ const HomeNavigation = () => {
         <Stack.Screen name="AudioScreen" component={AudioScreen} options={showHeaderItem} />
         <Stack.Screen name="AccountSettings" component={AccountSettings} options={showHeaderItem} />
         <Stack.Screen name="ResetPassword" component={ResetPassword} options={showHeaderItem} />
-        
+        <Stack.Screen name="Leaderboard" component={Leaderboard} options={showHeaderItem} />
+        <Stack.Screen name="EarnDocCoins" component={EarnDocCoins} options={showHeaderItem} />
+        <Stack.Screen name="Rewards" component={Rewards} options={showHeaderItem} />
+        <Stack.Screen name="SinglePost" component={SinglePost} options={showHeaderItem}/>
         {/* <Stack.Screen name="MultipleImagesUpload" component={MultipleImagesUpload}/>
           <Stack.Screen name="SentimentrixCong" component={SentimentrixCong} options={showHeaderItem}/>
           <Stack.Screen name="Sentimentrix6" component={Sentimentrix6} options={showHeaderItem}/>

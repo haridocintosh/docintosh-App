@@ -81,6 +81,23 @@ export const sendInvitation = createAsyncThunk("sendinvite", async (data)=>{
      }
 })
 
+export const singlePostDataAPI = createAsyncThunk("singlePostData", async (data)=>{
+    try{
+        const responce = await fetch(`${mainApi.baseUrl}/ApiController/singlePostData`, {
+            method : 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body :JSON.stringify(data)
+         });
+        const result = await responce.json();
+        return result;
+     }
+     catch(e){
+        console.log(e);;
+     }
+})
+
 export const savePost = createSlice({
     name : "savePost",
     initialState :{
@@ -89,6 +106,7 @@ export const savePost = createSlice({
         getsearchResult   : {},
         followResult   : {},
         sendInviteResult   : {},
+        singlePostDataResult   : {},
         loading     : false,
         error       : false,
     },
@@ -156,6 +174,19 @@ export const savePost = createSlice({
             state.sendInviteResult    = action.payload;
         })
         builder.addCase(sendInvitation.rejected, (state) => {
+            state.loading       = false;
+            state.error         = true
+        })
+
+        //-------------------------single Post Data----------------------------------
+        builder.addCase(singlePostDataAPI.pending, (state) => {
+            state.loading       =  true;
+        })
+        builder.addCase(singlePostDataAPI.fulfilled, (state, action) => {
+            state.loading       =  false;
+            state.singlePostDataResult    = action.payload;
+        })
+        builder.addCase(singlePostDataAPI.rejected, (state) => {
             state.loading       = false;
             state.error         = true
         })

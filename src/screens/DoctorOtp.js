@@ -87,7 +87,7 @@ import { View,
         id:user_id
       }))
       Toast.show(token.payload.message);
-      if(token.payload.status == 'Success'){
+      if(token?.payload?.status == 'Success'){
         navigation.navigate('DoctorOtp',{
           mobile_no: token.payload.userdetails,
           email:email,

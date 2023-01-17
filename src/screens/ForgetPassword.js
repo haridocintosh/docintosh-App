@@ -25,7 +25,7 @@ const ForgetPassword = () => {
       const token =await dispatch(forgotPassword_({
         email:inputtext
       }))
-      if(token.payload.status == 'Success'){
+      if(token?.payload?.status == 'Success'){
         navigation.navigate('ForgotPasswordOTP',{
           mobile_no: inputtext,
           email:token.payload.email,
