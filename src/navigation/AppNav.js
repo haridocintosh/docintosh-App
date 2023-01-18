@@ -27,20 +27,12 @@ import HandleBack from './HandleBack';
 import MultipleImagesUpload from '../screens/MiltipleImageUpload/MultipleImagesUpload';
 import { ViewPropTypes } from 'deprecated-react-native-prop-types';
 
-
 export default function AppNav() {
-const [loader, setLoader] = useState(false);
+  
 const [defaultRoute, setDefaultRoute] = useState();
 const [statusKeyLoaded, setStatusKeyLoaded] = useState(false);
 const Stack = createNativeStackNavigator();
 const navigation  = useNavigation();
-
-// if(loader){
-//   return(
-//   <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
-//       <ActivityIndicator size={'large'} />
-//   </View>)
-// }
 
   const getData = async (key) => {
     try {
@@ -65,8 +57,8 @@ const navigation  = useNavigation();
 const handleMessage = () => {
   alert("Successfully completed registration please login")
   setTimeout(() => {
-    navigation.navigate('Login')
-   }, 2000);
+    navigation.navigate('Login');
+  }, 2000);
 }
 
   return (<>

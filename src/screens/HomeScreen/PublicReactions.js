@@ -73,8 +73,6 @@ const PublicReactions = ({item,getStorageData}) => {
   }
 };
 
-console.log("heart",item?.post_like_status?.[0].flag == 1);
- 
   return (
     <View>
      <View style={styles.publicReactionsContainer}>
@@ -91,10 +89,7 @@ console.log("heart",item?.post_like_status?.[0].flag == 1);
                   </Text>
                 </View>
 
-                
-                
-                {/* 
-                <View style={styles.socialCount}>
+                {/* <View style={styles.socialCount}>
                   <TouchableOpacity>
                       <Image source={require('../../assets/dr-icon/gift.png')} style={styles.socialImages}/>
                   </TouchableOpacity>

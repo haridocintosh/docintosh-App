@@ -36,7 +36,7 @@ const SinglePost = () => {
     // console.log("item",item?.profileimage);
 
     useEffect(() => {
-    GetSinglePOstData();
+        GetSinglePOstData();
     },[isFocused])  
 
     const BlockId = (id) =>{
