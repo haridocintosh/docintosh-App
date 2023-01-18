@@ -528,8 +528,8 @@ setSpecialNames(specialityName)
           <TouchableOpacity onPress={handleDocPicker}>
             <MaterialCommunityIcons name="file-document-multiple" size={24} color="#51668A" />
           </TouchableOpacity>
-          <TouchableOpacity >
-            <MaterialCommunityIcons name="dots-horizontal-circle" size={26} color="#51668A"  onPress={ () => handlePresentModal()}  />
+          <TouchableOpacity onPress={ () => handlePresentModal()}>
+            <MaterialCommunityIcons name="dots-horizontal-circle" size={26} color="#51668A"    />
           </TouchableOpacity>
         </View>
           

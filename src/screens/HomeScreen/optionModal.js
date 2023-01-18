@@ -18,7 +18,6 @@ const OptionModal = ({modalVisible,item,deletePostID,BlockId,setModalVisible,res
   const navigation  = useNavigation();
 
   const handleDeletePost = async ()=>{
-    console.log("deleted");
     setOkayCondition("delete");
     setModalVisible(false);
     setToggle(true);
