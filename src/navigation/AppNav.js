@@ -49,8 +49,8 @@ const navigation  = useNavigation();
       if(logData?.login){
         setDefaultRoute("HomeScreen");
       }else{
-        setDefaultRoute("Intro");
-        //setDefaultRoute("ContactPermission");
+       setDefaultRoute("Intro");
+       // setDefaultRoute("SelectInterest");
       }
       setStatusKeyLoaded(true);
     } catch(e) {

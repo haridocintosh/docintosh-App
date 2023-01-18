@@ -25,9 +25,10 @@ const SelectInterest = ({route}) => {
   const [selectitem,setselectitem]=useState('');
   const [loader, setLoader] = useState(true);
 
-  //const user_id ='229533'
+  // const user_id ='229533';
+  // const specialityId ='59';
   const {user_id, specialityId} = route.params;
- console.log(user_id, specialityId)
+  console.log(user_id, specialityId)
   const getItem = (item) => {
    // alert(item.speciality);
     // Function for click on an item

@@ -27,7 +27,9 @@ const App = () => {
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
       // console.log("response",response);
     });
-    console.log('AppVersionnn',Application.applicationId);
+   alert(`nativeversion ${Application.nativeApplicationVersion}`);
+   alert(`nativeversion ${Application.applicationId}`);
+   //console.log('AppVersionnn',Application.nativeApplicationVersion);
     return () => {
       Notifications.removeNotificationSubscription(notificationListener.current);
       Notifications.removeNotificationSubscription(responseListener.current);

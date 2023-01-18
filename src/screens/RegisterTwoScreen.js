@@ -255,10 +255,12 @@ useEffect(()=>{
       setloader(true);
       const result = await dispatch(userRegisterSecond(register));
       Toast.show(result.payload.message);
+      console.log('imageUploadData', result.payload);
         if(result.payload.status == 'Success'){
           setloader(false);
           const coinDetails = {task : 1, receiverId:result.payload.user_id } 
           const coinResult  = await dispatch(coinTransfer(coinDetails));
+          console.log('coinsStatus', coinResult.payload);
           if(coinResult.payload.status == 'Success'){
             setIsModalVisible(true);
             setTimeout(() => {
