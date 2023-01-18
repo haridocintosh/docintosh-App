@@ -9,6 +9,7 @@ import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { LogBox} from 'react-native';
 import { registerForPushNotificationsAsync } from './src/screens/PushNotification';
+import * as Application from 'expo-application';
 
 
 const App = () => {
@@ -24,10 +25,13 @@ const App = () => {
     });
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
     });
+    console.log('AppVersionnn',Application.applicationId);
     return () => {
       Notifications.removeNotificationSubscription(notificationListener.current);
       Notifications.removeNotificationSubscription(responseListener.current);
     };
+
+    
   }, []);
 
   LogBox.ignoreLogs(['Warning: ...']); 

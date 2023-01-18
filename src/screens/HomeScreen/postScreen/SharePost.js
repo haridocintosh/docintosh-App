@@ -230,6 +230,9 @@ const publishCheck1 = (e, text)=>{
 
       }else if(media == 'videos'){
 
+        console.log('videoPicked',pickedData);
+        pickedData?.map(async(data) => {
+          let localUri = data.uri;
           let filename = localUri.split('/').pop();
           let uriParts = localUri.split('.');
           let fileType = uriParts[uriParts.length - 1];
@@ -248,16 +251,16 @@ const publishCheck1 = (e, text)=>{
             },
             body :formData
           });
-        var result1=  await responce.json();
+          var result1=  await responce.json();
+          console.log('videoResult',result1);
 
+          getFun({...uploadImage,
+            uploadImage:uploadImage.pimage.push(result1.postImage)
+          })
+      });
       
-      
-      }
+    }
 
-      getFun({...uploadImage,
-        uploadImage:uploadImage.pimage.push(result1.postImage)
-      })
-  
       // console.log("evenet k phle",uploadImage.pimage.length);
       //   if(uploadImage.pimage.length > 0){
       //     Toast.show("uploaded");
