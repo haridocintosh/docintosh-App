@@ -52,13 +52,17 @@ export const PickImageAll = async (setloader) => {
             selectionLimit: 5,
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: false,
-            allowsMultipleSelection: true,
+            allowsMultipleSelection: false,
             aspect: [1, 1],
             quality: 0.7,
             });
+            console.log("library",library);
+            
             if (!library.cancelled) {
-                 const selectedImg = library.uri ? [library] : library.selected;
-                 return selectedImg;
+                  
+                  const selectedImg = library.uri ? [library] : library.selected;
+                  // console.log("selectedImg",selectedImg);
+                  return selectedImg;
             }
       } else {
             const denied = 'Camera permission denied';
@@ -75,7 +79,7 @@ export const PickVideos = async (setloader) => {
             selectionLimit: 5,
             mediaTypes: ImagePicker.MediaTypeOptions.Videos,
             allowsEditing: false,
-            allowsMultipleSelection: true,
+            allowsMultipleSelection: false,
             aspect: [1, 1],
             quality: 0.7,
             });

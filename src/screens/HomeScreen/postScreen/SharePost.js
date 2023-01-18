@@ -28,7 +28,7 @@ const  Sharepost = () => {
   const navigation  = useNavigation();
   const [loader, setloader] = useState(false);
   const [expanded, setExpanded] = useState(true);
-  const [pickedData, setData]   = useState(null);
+  const [pickedData, setData]   = useState(undefined);
   const [document, setDocument]   = useState(null);
   const [circlespeciality, setSpl] = useState([]);
   const [post ,setPost] = useState({
@@ -85,7 +85,7 @@ const  Sharepost = () => {
     setEmojiTab(!emojiTab)
   }
   const pickImage =  () => {
-    setData(null)
+    setData([]);
     setDocument(null);
     PickImageAll(setloader).then(async (res) =>{
       setloader(true);
@@ -94,14 +94,14 @@ const  Sharepost = () => {
       setPost({...post, 
           type:'i'
       });
-      setCountData(data.length);
+      setCountData(data?.length);
       setMedia('images');
       setloader(false);
     })
   };
 
   const pickVideo =  () => {
-    
+    setData([]);
     setDocument(null);
     PickVideos(setloader).then(async (res) => {
       setloader(true);
@@ -140,6 +140,7 @@ const  Sharepost = () => {
   };
 
   const handleDocPicker = async () => {
+    setData(null);
     let result = await DocumentPicker.getDocumentAsync({ 
       type: "application/*",
       copyToCacheDirectory: false, 
@@ -186,7 +187,11 @@ const publishCheck1 = (e, text)=>{
 // console.log("postLoad",postLoad);
 
   const handleStudentSubmit = async() =>{
-    console.log("start");
+    console.log("start",pickedData);
+    // if(pickedData.length == 0){
+    //   console.log("true");
+    // }
+    // return;
     setPostLoad(true);
     if(post.publishto ==''){
       setPostLoad(false);
@@ -199,6 +204,11 @@ const publishCheck1 = (e, text)=>{
       setPostLoad(false);
       Toast.show("Please Select PostType");
       bottomSheetModalRef.current?.present();
+    }else if(pickedData == undefined){
+      setPostLoad(false);
+      console.log("true");
+      Toast.show("Please Select Image");
+      // bottomSheetModalRef.current?.present();
     }else{
       if(media == 'images'){
         pickedData?.map(async(data) => {

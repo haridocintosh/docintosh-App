@@ -21,13 +21,13 @@ const AutoHeightImage = ({item}) => {
                   useNativeControls
                   //shouldPlay={!videoPlayPause ? videoPlayPause : status[item.id]}
                   isLooping={false}
-                  style={{width: "100%", height:300, marginHorizontal:10}} 
+                  style={{width: "100%", marginHorizontal:10,aspectRatio: 0.8}} 
               />
               :
                 <Image 
                   source={{uri:item?.filename}}
-                  style={{width:"100%", height:350,marginHorizontal:10,alignSelf:'center',}} 
-                  resizeMode={"contain"}/> 
+                  style={{width:"100%",marginHorizontal:10,alignSelf:'center',aspectRatio: 1,borderRadius:5}} 
+                  resizeMode={"cover"}/> 
               }
           </View>
     )
