@@ -4,24 +4,22 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  ActivityIndicator,
   StyleSheet
 } from 'react-native';
 import {
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import docintoshlogo from '../assets/dr-icon/docintoshlogo.png';
+// import docintoshlogo from '../assets/dr-icon/docintoshlogo.png';
 import profilePicture from '../assets/images/profilePicture.png';
 import {AntDesign} from 'react-native-vector-icons';
-import { MaterialIcons,MaterialCommunityIcons,Ionicons,Entypo } from '@expo/vector-icons';
+import { MaterialIcons,Ionicons,Entypo } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation,DrawerActions, useIsFocused } from '@react-navigation/native';
 import { storeData } from '../apis/Apicall';
 import { useDispatch } from 'react-redux';
-import { useDrawerStatus } from '@react-navigation/drawer';
-import {createDrawerNavigator,DrawerItem} from '@react-navigation/drawer';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import { getLocalData } from '../apis/GetLocalData';
 
 
@@ -30,7 +28,6 @@ const CustomDrawer = (props) => {
   const [logoutdata,setlogoutdata]=useState();
   const dispatch = useDispatch();
   const [loader, setLoader] = useState(false);
-  const [colour, setColour] = useState();
   const profile_url="https://docintosh-assets.s3.us-west-2.amazonaws.com/IMAUP/profile/2021_03_17_04_46_55maledefault.png?response-content-disposition=attachment%3B%20filename%3D%222021_03_17_04_46_55maledefault.png%22&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIATI7R7JS76FDN7AZB%2F20220908%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220908T080043Z&X-Amz-SignedHeaders=host&X-Amz-Expires=518400&X-Amz-Signature=8d3da3b8bec2f627811e1c90332193b36525941c260202c7fbbde63af8adf7ab";
   const [userdata,setuserdata]=useState({
     fullname : "",
@@ -96,11 +93,10 @@ const CustomDrawer = (props) => {
         <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor: '#071B36',}}>
           <View style={styles.drowerChilds}>
             <DrawerItemList {...props} />
-            <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("Leaderboard")}}>
-              {/*<MaterialIcons name="person-add-alt-1" size={25} color="white"/>*/}
+            {/* <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("Leaderboard")}}>
               <Entypo name="trophy" size={25} style={{color:'#ffff'}} />
               <Text style={styles.sideDrawerName}>Leaderboard</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity style={styles.sideDrawerComp} onPress={() => {navigation.navigate("insideContactPermission")}}>
               <MaterialIcons name="person-add-alt-1" size={25} color="white" />
               <Text style={styles.sideDrawerName}>Invite</Text>

@@ -23,7 +23,7 @@ import OptionModal from '../../HomeScreen/optionModal';
 import AutoHeightImage from '../../HomeScreen/AutoHeightImage';
 
 const SavedPost = ({navigation}) => {
-  const [item, setItem] = useState();
+  const [item, setItem] = useState([]);
   const [postId, setPostId] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const [bottumLoader, setBottumLoader] = useState(false);
@@ -39,7 +39,8 @@ const SavedPost = ({navigation}) => {
     getLocalData('USER_INFO').then(async (res) => {
       setUserData(res?.data)
       const savedResult = await dispatch(getSavedPostsApi({user_id:res?.data?.id,pageCounter:1}));
-      setItem(savedResult?.payload?.result)
+      setItem(savedResult?.payload.result);
+      console.log("result.payload.result",savedResult.message);
     });
     setBottumLoader(false);
   }
@@ -71,7 +72,8 @@ const SavedPost = ({navigation}) => {
     console.log(page);
     setBottumLoader(true);
     const result = await dispatch(getSavedPostsApi({user_id:userData?.id,pageCounter:page}));
-    setEndNull(result.payload.result)
+    console.log("result.payload.result",result.payload.result);
+    setEndNull(result?.payload?.result)
      if(result.payload.result !== null){
       setCurrentPage(prev => prev + 1);
       setItem([...item, ...result?.payload.result]);
@@ -85,6 +87,7 @@ const SavedPost = ({navigation}) => {
     setItem(BlockId);
   }
 
+
   
   const renderLoader = () => {
     return (
@@ -96,6 +99,7 @@ const SavedPost = ({navigation}) => {
   };
 
   const renderItem = ({item}) => {
+    // console.log("item",item);
     return(
       <Card style={styles.SavePostsContainer} >
           <View style={styles.userInfo}>
@@ -133,12 +137,10 @@ const SavedPost = ({navigation}) => {
             </TouchableOpacity>
                   {item?.post_id == postId && <OptionModal 
                     modalVisible={modalVisible} 
-                    id={item?.id} 
-                    postId={item?.post_id} 
+                    item={item} 
                     setModalVisible={setModalVisible}
-                    // deletePostID={deletePostID}
                     BlockId={BlockId} 
-                    saveStatus={item?.saved_status}
+                    resData={userData}
                   />}
             </View>
           </View>
@@ -153,6 +155,14 @@ const SavedPost = ({navigation}) => {
     )
   }
 
+  const _listEmptyComponent = () => {
+    return ( 
+      <View style={{flex:1, justifyContent:'center', alignItems:'center' }} >
+          <Text>There is no data available</Text>
+      </View>
+    )
+}
+
   return (
     <SafeAreaView style={{padding:10,marginTop:10,flex:1,backgroundColor:'#ecf2f6'}}>
       <FlatList
@@ -163,6 +173,7 @@ const SavedPost = ({navigation}) => {
         ListFooterComponent={renderLoader}
         onEndReached={() => handleLoadeMore()}
         showsVerticalScrollIndicator={false}
+        ListEmptyComponent={_listEmptyComponent}
       />
     </SafeAreaView>
   )
